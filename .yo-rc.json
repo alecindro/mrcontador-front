@@ -26,6 +26,7 @@
     "nativeLanguage": "pt-br",
     "languages": ["pt-br"],
     "blueprints": [],
-    "skipServer": true
+    "skipServer": true,
+    "lastLiquibaseTimestamp": 1592928389000
   }
 }

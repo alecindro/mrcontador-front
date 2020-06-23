@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="contador">
+            <h2><span jhiTranslate="mrcontadorFrontApp.contador.detail.title">Contador</span> {{ contador.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.razao">Razao</span></dt>
+                <dd>
+                    <span>{{ contador.razao }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.fantasia">Fantasia</span></dt>
+                <dd>
+                    <span>{{ contador.fantasia }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.telefones">Telefones</span></dt>
+                <dd>
+                    <span>{{ contador.telefones }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.datasource">Datasource</span></dt>
+                <dd>
+                    <span>{{ contador.datasource }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.cnpj">Cnpj</span></dt>
+                <dd>
+                    <span>{{ contador.cnpj }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.cidade">Cidade</span></dt>
+                <dd>
+                    <span>{{ contador.cidade }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.estado">Estado</span></dt>
+                <dd>
+                    <span>{{ contador.estado }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.cep">Cep</span></dt>
+                <dd>
+                    <span>{{ contador.cep }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.contador.email">Email</span></dt>
+                <dd>
+                    <span>{{ contador.email }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/contador', contador.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

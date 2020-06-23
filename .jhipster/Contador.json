@@ -1,0 +1,52 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "razao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fantasia",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telefones",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "datasource",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cnpj",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cidade",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "cep",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20200623160629",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "no",
+  "entityTableName": "contador",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}
