@@ -17,15 +17,15 @@ export class ContadorUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    razao: [],
-    fantasia: [],
-    telefones: [],
+    razao: ['', [Validators.required, Validators.maxLength(254)]],
+    fantasia: ['', [Validators.required, Validators.maxLength(254)]],
+    telefones: ['', [Validators.maxLength(254)]],
     datasource: [],
-    cnpj: [],
-    cidade: [],
-    estado: [],
-    cep: [],
-    email: [],
+    cnpj: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(18)]],
+    cidade: ['', [Validators.required, Validators.maxLength(254)]],
+    estado: ['', [Validators.maxLength(254)]],
+    cep: ['', [Validators.minLength(8), Validators.maxLength(10)]],
+    email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
   });
 
   constructor(protected contadorService: ContadorService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}

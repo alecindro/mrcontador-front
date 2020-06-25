@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpHeaders } from '@angular/common/http';
 
 import { SERVER_API_URL } from 'app/app.constants';
 
@@ -15,12 +15,14 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     const token = this.localStorage.retrieve('authenticationToken') || this.sessionStorage.retrieve('authenticationToken');
+    const tenant = this.localStorage.retrieve('tenant_uuid') || this.sessionStorage.retrieve('tenant_uuid');
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + token,
+      'tenant-uuid': tenant,
+    });
+
     if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      request = request.clone({ headers });
     }
     return next.handle(request);
   }

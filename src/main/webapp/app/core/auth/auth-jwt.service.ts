@@ -9,6 +9,7 @@ import { Login } from 'app/core/login/login.model';
 
 type JwtToken = {
   id_token: string;
+  tenant_uuid: string;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -17,6 +18,10 @@ export class AuthServerProvider {
 
   getToken(): string {
     return this.$localStorage.retrieve('authenticationToken') || this.$sessionStorage.retrieve('authenticationToken') || '';
+  }
+
+  getTenant(): string {
+    return this.$localStorage.retrieve('tenant_uuid') || this.$sessionStorage.retrieve('tenant_uuid') || '';
   }
 
   login(credentials: Login): Observable<void> {
@@ -29,16 +34,21 @@ export class AuthServerProvider {
     return new Observable(observer => {
       this.$localStorage.clear('authenticationToken');
       this.$sessionStorage.clear('authenticationToken');
+      this.$localStorage.clear('tenant_uuid');
+      this.$sessionStorage.clear('tenant_uuid');
       observer.complete();
     });
   }
 
   private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
     const jwt = response.id_token;
+    const tenantUuid = response.tenant_uuid;
     if (rememberMe) {
       this.$localStorage.store('authenticationToken', jwt);
+      this.$localStorage.store('tenant_uuid', tenantUuid);
     } else {
       this.$sessionStorage.store('authenticationToken', jwt);
+      this.$sessionStorage.store('tenant_uuid', tenantUuid);
     }
   }
 }
