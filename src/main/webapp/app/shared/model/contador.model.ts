@@ -9,6 +9,8 @@ export interface IContador {
   estado?: string;
   cep?: string;
   email?: string;
+  crc?: string;
+  sistema?: string;
 }
 
 export class Contador implements IContador {
@@ -22,6 +24,8 @@ export class Contador implements IContador {
     public cidade?: string,
     public estado?: string,
     public cep?: string,
-    public email?: string
+    public email?: string,
+    public crc?: string,
+    public sistema?: string
   ) {}
 }

@@ -4,8 +4,10 @@
       "home": {
         "title": "Contadors",
         "createLabel": "Criar novo Contador",
-        "createOrEditLabel": "Criar ou editar Contador",
-        "notFound": "Nenhum Contador encontrado"
+        "createOrEditLabel": "Cadastro de Contador",
+        "notFound": "Nenhum Contador encontrado",
+        "add": "Adicionar",
+        "notAdd": "Nenhum Telefone Cadastrado"
       },
       "created": "Um novo Contador foi criado com o identificador {{ param }}",
       "updated": "Um Contador foi atualizado com o identificador {{ param }}",
@@ -24,7 +26,11 @@
       "cidade": "Cidade",
       "estado": "Estado",
       "cep": "Cep",
-      "email": "Email"
+      "email": "Email",
+      "ddd": "DDD",
+      "telefone": "Telefone",
+      "crc": "CRC",
+      "sistema": "Sistema"
     }
   }
 }
