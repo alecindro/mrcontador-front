@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IContador } from 'app/shared/model/contador.model';
+import { JsonUtil } from 'app/shared/util/json-util';
 
 @Component({
   selector: 'jhi-contador-detail',
@@ -13,9 +14,11 @@ export class ContadorDetailComponent implements OnInit {
   constructor(protected activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ contador }) => (this.contador = contador));
+    this.activatedRoute.data.subscribe(({ contador }) => {
+      contador.telefones = JsonUtil.telefonesToString(contador.telefones);
+      this.contador = contador;
+    });
   }
-
   previousState(): void {
     window.history.back();
   }

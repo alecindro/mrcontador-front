@@ -1,6 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="mrcontadorFrontApp.contador.home.title">Contadors</span>
+        <span jhiTranslate="mrcontadorFrontApp.contador.home.title">Contadores</span>
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-contador" [routerLink]="['/contador/new']">
             <fa-icon icon="plus"></fa-icon>
@@ -40,7 +40,7 @@
                     <td><a [routerLink]="['/contador', contador.id, 'view']">{{ contador.id }}</a></td>
                     <td>{{ contador.razao }}</td>
                     <td>{{ contador.fantasia }}</td>
-                    <td>{{ contador.telefones }}</td>
+                    <td>{{ contador.telefones}}</td>
                     <td>{{ contador.datasource }}</td>
                     <td>{{ contador.cnpj }}</td>
                     <td>{{ contador.cidade }}</td>

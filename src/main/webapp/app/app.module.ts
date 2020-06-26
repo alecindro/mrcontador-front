@@ -13,6 +13,12 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
+import { LoginPageModule } from './login/login-page.module';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
+const maskConfig: Partial<IConfig> = {
+  validation: true,
+};
 
 @NgModule({
   imports: [
@@ -20,6 +26,8 @@ import { ErrorComponent } from './layouts/error/error.component';
     MrcontadorFrontSharedModule,
     MrcontadorFrontCoreModule,
     MrcontadorFrontHomeModule,
+    LoginPageModule,
+    NgxMaskModule.forRoot(maskConfig),
     // jhipster-needle-angular-add-module JHipster will add new module here
     MrcontadorFrontAppRoutingModule,
   ],

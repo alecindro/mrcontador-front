@@ -2,7 +2,7 @@
   "mrcontadorFrontApp": {
     "contador": {
       "home": {
-        "title": "Contadors",
+        "title": "Contadores",
         "createLabel": "Criar novo Contador",
         "createOrEditLabel": "Cadastro de Contador",
         "notFound": "Nenhum Contador encontrado",

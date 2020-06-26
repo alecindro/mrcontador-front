@@ -7,9 +7,10 @@ import { ContadorDetailComponent } from './contador-detail.component';
 import { ContadorUpdateComponent } from './contador-update.component';
 import { ContadorDeleteDialogComponent } from './contador-delete-dialog.component';
 import { contadorRoute } from './contador.route';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
-  imports: [MrcontadorFrontSharedModule, RouterModule.forChild(contadorRoute)],
+  imports: [MrcontadorFrontSharedModule, RouterModule.forChild(contadorRoute), NgxMaskModule.forChild()],
   declarations: [ContadorComponent, ContadorDetailComponent, ContadorUpdateComponent, ContadorDeleteDialogComponent],
   entryComponents: [ContadorDeleteDialogComponent],
 })
