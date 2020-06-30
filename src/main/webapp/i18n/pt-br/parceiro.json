@@ -2,43 +2,43 @@
   "mrcontadorFrontApp": {
     "parceiro": {
       "home": {
-        "title": "Parceiros",
-        "createLabel": "Criar novo Parceiro",
-        "createOrEditLabel": "Criar ou editar Parceiro",
-        "notFound": "Nenhum Parceiro encontrado"
+        "title": "Clientes",
+        "createLabel": "Cadastrar clientes",
+        "createOrEditLabel": "Cadastro de Clientes",
+        "notFound": "Nenhum cliente encontrado"
       },
-      "created": "Um novo Parceiro foi criado com o identificador {{ param }}",
-      "updated": "Um Parceiro foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Parceiro foi excluído com o identificador {{ param }}",
+      "created": "O cliente {{ param }} foi criado",
+      "updated": "O cliente {{ param }} foi atualizado",
+      "deleted": "O cliente {{ param }} foi excluído",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Parceiro {{ id }}?"
+        "question": "Tem certeza de que deseja excluir o cliente {{ id }}?"
       },
       "detail": {
-        "title": "Parceiro"
+        "title": "Cliente"
       },
-      "par_descricao": "Par Descricao",
-      "par_razaosocial": "Par Razaosocial",
-      "par_tipopessoa": "Par Tipopessoa",
-      "par_cnpjcpf": "Par Cnpjcpf",
-      "par_rgie": "Par Rgie",
-      "par_obs": "Par Obs",
-      "par_datacadastro": "Par Datacadastro",
-      "spa_codigo": "Spa Codigo",
+      "par_descricao": "Descrição",
+      "par_razaosocial": "Razão Social",
+      "par_tipopessoa": "Tipo de Pessoa",
+      "par_cnpjcpf": "CPF/CNPJ",
+      "par_rgie": "RG",
+      "par_obs": "Observação",
+      "par_datacadastro": "Data de Cadastro",
+      "spa_codigo": "Código SPA",
       "logradouro": "Logradouro",
       "cep": "Cep",
       "cidade": "Cidade",
       "estado": "Estado",
-      "area_atuacao": "Area Atuacao",
-      "comercio": "Comercio",
-      "nfc_e": "Nfc E",
-      "danfe": "Danfe",
-      "servico": "Servico",
-      "nfs_e": "Nfs E",
-      "transportadora": "Transportadora",
-      "conhec_transporte": "Conhec Transporte",
-      "industria": "Industria",
-      "ct": "Ct",
-      "outras": "Outras"
+      "area_atuacao": "Área de atuação",
+      "comercio": "Comércio (S/N)",
+      "nfc_e": "Nfc-E (S/N)",
+      "danfe": "Danfe (S/N)",
+      "servico": "Serviço (S/N)",
+      "nfs_e": "Nfs-E (S/N)",
+      "transportadora": "Transportadora (S/N)",
+      "conhec_transporte": "CTe (S/N)",
+      "industria": "Indústria (S/N)",
+      "ct": "CT (S/N)",
+      "outras": "Outras:"
     }
   }
 }

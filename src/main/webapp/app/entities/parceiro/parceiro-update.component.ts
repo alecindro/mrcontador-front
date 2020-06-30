@@ -9,6 +9,8 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IParceiro, Parceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from './parceiro.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ViaCepService } from 'app/shared/services/viacepservice';
 
 @Component({
   selector: 'jhi-parceiro-update',
@@ -17,17 +19,26 @@ import { ParceiroService } from './parceiro.service';
 export class ParceiroUpdateComponent implements OnInit {
   isSaving = false;
 
+  maskJuridica = '00.000.000/0000-00';
+  maskFisica = '000.000.000-00';
+  mask = this.maskJuridica;
+  _false = false;
+  _true = true;
+  juridica = 'J';
+  fisica = 'F';
+
   editForm = this.fb.group({
     id: [],
     par_descricao: [null, [Validators.maxLength(50)]],
-    par_razaosocial: [null, [Validators.maxLength(70)]],
+    par_razaosocial: [null, [Validators.maxLength(70), Validators.required]],
     par_tipopessoa: [null, [Validators.maxLength(1)]],
-    par_cnpjcpf: [null, [Validators.maxLength(20)]],
+    par_cnpjcpf: [null, [Validators.maxLength(20), Validators.required]],
     par_rgie: [null, [Validators.maxLength(20)]],
     par_obs: [null, [Validators.maxLength(200)]],
     par_datacadastro: [],
     spa_codigo: [],
     logradouro: [],
+    pessoafisica: [],
     cep: [null, [Validators.maxLength(8)]],
     cidade: [],
     estado: [],
@@ -44,7 +55,13 @@ export class ParceiroUpdateComponent implements OnInit {
     outras: [],
   });
 
-  constructor(protected parceiroService: ParceiroService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected parceiroService: ParceiroService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private viacepService: ViaCepService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ parceiro }) => {
@@ -52,8 +69,16 @@ export class ParceiroUpdateComponent implements OnInit {
         const today = moment().startOf('day');
         parceiro.par_datacadastro = today;
       }
-
       this.updateForm(parceiro);
+      this.mask = this.maskJuridica;
+      this.editForm.controls['par_rgie'].disable();
+      this.editForm.patchValue({ pessoafisica: this._false });
+      this.editForm.patchValue({ par_tipopessoa: this.juridica });
+      if (parceiro.par_tipopessoa && parceiro.par_tipopessoa === this.fisica) {
+        this.mask = this.maskFisica;
+        this.editForm.controls['par_rgie'].enable();
+        this.editForm.patchValue({ par_tipopessoa: this.fisica });
+      }
     });
   }
 
@@ -106,7 +131,7 @@ export class ParceiroUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       par_descricao: this.editForm.get(['par_descricao'])!.value,
       par_razaosocial: this.editForm.get(['par_razaosocial'])!.value,
-      par_tipopessoa: this.editForm.get(['par_tipopessoa'])!.value,
+      par_tipopessoa: this.editForm.get(['pessoafisica'])!.value ? this.fisica : this.juridica,
       par_cnpjcpf: this.editForm.get(['par_cnpjcpf'])!.value,
       par_rgie: this.editForm.get(['par_rgie'])!.value,
       par_obs: this.editForm.get(['par_obs'])!.value,
@@ -146,5 +171,35 @@ export class ParceiroUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  onChange(): void {
+    if (this.editForm.get(['pessoafisica'])!.value) {
+      this.mask = this.maskFisica;
+      this.editForm.controls['par_rgie'].enable();
+    } else {
+      this.mask = this.maskJuridica;
+      this.editForm.controls['par_rgie'].disable();
+    }
+  }
+
+  onCep(): void {
+    if (this.editForm.get(['cep'])!.value) {
+      this.spinner.show();
+      this.viacepService.query(this.editForm.get(['cep'])!.value).subscribe(
+        response => {
+          this.editForm.patchValue({
+            cidade: response.body?.localidade,
+            estado: response.body?.uf,
+            logradouro: response.body?.logradouro,
+          });
+          this.spinner.hide();
+        },
+        error => {
+          console.log(error);
+          this.spinner.hide();
+        }
+      );
+    }
   }
 }

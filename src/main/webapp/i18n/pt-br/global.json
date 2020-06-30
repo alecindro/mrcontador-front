@@ -6,7 +6,7 @@
       "home": "Início",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
-        "main": "Entidades",
+        "main": "Cadastros",
         "contador": "Contador",
         "banco": "Banco",
         "parceiro": "Parceiro",
@@ -132,6 +132,7 @@
     }
   },
   "error": {
+    "viaceperror": "Cep não encontrado",
     "internalServerError": "Erro interno do servidor",
     "server.not.reachable": "Servidor indisponível",
     "url.not.found": "Não encontrado",

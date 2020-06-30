@@ -24,6 +24,7 @@ export class NotificationInterceptor implements HttpInterceptor {
           });
 
           if (alert) {
+            console.log('NotificationInterceptor', alert);
             this.alertService.success(alert, { param: alertParams });
           }
         }

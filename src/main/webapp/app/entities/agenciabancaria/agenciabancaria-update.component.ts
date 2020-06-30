@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { IAgenciabancaria, Agenciabancaria } from 'app/shared/model/agenciabancaria.model';
 import { AgenciabancariaService } from './agenciabancaria.service';
@@ -11,6 +11,7 @@ import { IBanco } from 'app/shared/model/banco.model';
 import { BancoService } from 'app/entities/banco/banco.service';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { debounceTime, distinctUntilChanged, tap, switchMap, catchError, map } from 'rxjs/operators';
 
 type SelectableEntity = IBanco | IParceiro;
 
@@ -20,6 +21,8 @@ type SelectableEntity = IBanco | IParceiro;
 })
 export class AgenciabancariaUpdateComponent implements OnInit {
   isSaving = false;
+  searching = false;
+  searchFailed = false;
   bancos: IBanco[] = [];
   parceiros: IParceiro[] = [];
 
@@ -111,5 +114,35 @@ export class AgenciabancariaUpdateComponent implements OnInit {
 
   trackById(index: number, item: SelectableEntity): any {
     return item.id;
+  }
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => (this.searching = true)),
+      switchMap(term =>
+        term.length < 3
+          ? []
+          : this.bancoService
+              .query({ 'ban_descricao.contains': term })
+              .pipe(map((res: HttpResponse<IBanco[]>) => (this.bancos = res.body || [])))
+              .pipe(
+                tap(() => (this.searchFailed = false)),
+                catchError(() => {
+                  this.searchFailed = true;
+                  return of([]);
+                })
+              )
+      ),
+      tap(() => (this.searching = false))
+    );
+
+  resultFormatBandListValue(value: IBanco): string {
+    return value.ban_descricao || '';
+  }
+
+  inputFormatBandListValue(value: IBanco): any {
+    return value.id;
   }
 }

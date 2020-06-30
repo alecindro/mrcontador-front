@@ -1,55 +1,45 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-parceiro-heading" jhiTranslate="mrcontadorFrontApp.parceiro.home.createOrEditLabel">Create or edit a Parceiro</h2>
+                <div class="text-center">
+                        <h5 id="jhi-parceiro-heading" jhiTranslate="mrcontadorFrontApp.parceiro.home.createOrEditLabel">Create or edit a Parceiro</h5>
+                </div>
 
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                <div class="form-group" [hidden]="true">
+                    <input type="text" class="form-control" id="id" name="id" formControlName="par_tipopessoa" readonly />
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_descricao" for="field_par_descricao">Par Descricao</label>
-                    <input type="text" class="form-control" name="par_descricao" id="field_par_descricao"
-                           formControlName="par_descricao"/>
-                    <div *ngIf="editForm.get('par_descricao')!.invalid && (editForm.get('par_descricao')!.dirty || editForm.get('par_descricao')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('par_descricao')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }">
-                        This field cannot be longer than 50 characters.
-                        </small>
+                <div class="form-row">
+                    <div class="form-group col-md-8">
+                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial" for="field_par_razaosocial">Par Razaosocial</label>
+                        <input type="text" class="form-control" name="par_razaosocial" id="field_par_razaosocial"
+                               formControlName="par_razaosocial"/>
+                        <div *ngIf="editForm.get('par_razaosocial')!.invalid && (editForm.get('par_razaosocial')!.dirty || editForm.get('par_razaosocial')!.touched)">
+                            <small class="form-text text-danger"
+                                   *ngIf="editForm.get('par_razaosocial')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 70 }">
+                            This field cannot be longer than 70 characters.
+                            </small>
+                        </div>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.tipopessoa"
+                            for="field_juridica"></label>
+                        <select id="field_juridica" name="field_juridica" class="form-control custom-select"
+                            (change)="onChange()" formControlName="pessoafisica">
+                            <option [ngValue]="_false"><span jhiTranslate="mrcontadorFrontApp.contador.juridica"></span>
+                            </option>
+                            <option [ngValue]="_true"><span jhiTranslate="mrcontadorFrontApp.contador.fisica"></span>
+                            </option>
+                        </select>
+                    </div>            
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial" for="field_par_razaosocial">Par Razaosocial</label>
-                    <input type="text" class="form-control" name="par_razaosocial" id="field_par_razaosocial"
-                           formControlName="par_razaosocial"/>
-                    <div *ngIf="editForm.get('par_razaosocial')!.invalid && (editForm.get('par_razaosocial')!.dirty || editForm.get('par_razaosocial')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('par_razaosocial')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 70 }">
-                        This field cannot be longer than 70 characters.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_tipopessoa" for="field_par_tipopessoa">Par Tipopessoa</label>
-                    <input type="text" class="form-control" name="par_tipopessoa" id="field_par_tipopessoa"
-                           formControlName="par_tipopessoa"/>
-                    <div *ngIf="editForm.get('par_tipopessoa')!.invalid && (editForm.get('par_tipopessoa')!.dirty || editForm.get('par_tipopessoa')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('par_tipopessoa')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 1 }">
-                        This field cannot be longer than 1 characters.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
+                <div class="form-row">
+                <div class="form-group col-md-4">
                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_par_cnpjcpf">Par Cnpjcpf</label>
-                    <input type="text" class="form-control" name="par_cnpjcpf" id="field_par_cnpjcpf"
+                    <input type="text" class="form-control" [mask]="mask" [showMaskTyped]="true" name="par_cnpjcpf" id="field_par_cnpjcpf"
                            formControlName="par_cnpjcpf"/>
                     <div *ngIf="editForm.get('par_cnpjcpf')!.invalid && (editForm.get('par_cnpjcpf')!.dirty || editForm.get('par_cnpjcpf')!.touched)">
                         <small class="form-text text-danger"
@@ -58,10 +48,9 @@
                         </small>
                     </div>
                 </div>
-
-                <div class="form-group">
+                <div class="form-group col-md-4">
                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_rgie" for="field_par_rgie">Par Rgie</label>
-                    <input type="text" class="form-control" name="par_rgie" id="field_par_rgie"
+                    <input type="text" class="form-control" name="par_rgie" id="field_par_rgie" 
                            formControlName="par_rgie"/>
                     <div *ngIf="editForm.get('par_rgie')!.invalid && (editForm.get('par_rgie')!.dirty || editForm.get('par_rgie')!.touched)">
                         <small class="form-text text-danger"
@@ -70,41 +59,16 @@
                         </small>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_obs" for="field_par_obs">Par Obs</label>
-                    <input type="text" class="form-control" name="par_obs" id="field_par_obs"
-                           formControlName="par_obs"/>
-                    <div *ngIf="editForm.get('par_obs')!.invalid && (editForm.get('par_obs')!.dirty || editForm.get('par_obs')!.touched)">
-                        <small class="form-text text-danger"
-                               *ngIf="editForm.get('par_obs')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
-                        This field cannot be longer than 200 characters.
-                        </small>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro" for="field_par_datacadastro">Par Datacadastro</label>
-                    <div class="d-flex">
-                        <input id="field_par_datacadastro" type="datetime-local" class="form-control" name="par_datacadastro" formControlName="par_datacadastro" placeholder="YYYY-MM-DD HH:mm"/>
-                    </div>
-                </div>
-
-                <div class="form-group">
+                <div class="form-group col-md-4">
                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo" for="field_spa_codigo">Spa Codigo</label>
                     <input type="number" class="form-control" name="spa_codigo" id="field_spa_codigo"
                            formControlName="spa_codigo"/>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.logradouro" for="field_logradouro">Logradouro</label>
-                    <input type="text" class="form-control" name="logradouro" id="field_logradouro"
-                           formControlName="logradouro"/>
-                </div>
-
-                <div class="form-group">
+            </div>
+             <div class="form-row">  
+                <div class="form-group col-md-3">
                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.cep" for="field_cep">Cep</label>
-                    <input type="text" class="form-control" name="cep" id="field_cep"
+                    <input type="text" class="form-control"  (blur)="onCep()" name="cep" id="field_cep" mask="00.000-000"
                            formControlName="cep"/>
                     <div *ngIf="editForm.get('cep')!.invalid && (editForm.get('cep')!.dirty || editForm.get('cep')!.touched)">
                         <small class="form-text text-danger"
@@ -113,92 +77,132 @@
                         </small>
                     </div>
                 </div>
+            <div class="form-group col-md-9">
+                <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.logradouro" for="field_logradouro">Logradouro</label>
+                <input type="text" class="form-control" name="logradouro" id="field_logradouro"
+                       formControlName="logradouro"/>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.cidade" for="field_cidade">Cidade</label>
+                <input type="text" class="form-control" name="cidade" id="field_cidade"
+                       formControlName="cidade"/>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.cidade" for="field_cidade">Cidade</label>
-                    <input type="text" class="form-control" name="cidade" id="field_cidade"
-                           formControlName="cidade"/>
-                </div>
+            <div class="form-group col-md-3">
+                <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.estado" for="field_estado">Estado</label>
+                <input type="text" class="form-control" name="estado" id="field_estado"
+                       formControlName="estado"/>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.estado" for="field_estado">Estado</label>
-                    <input type="text" class="form-control" name="estado" id="field_estado"
-                           formControlName="estado"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.area_atuacao" for="field_area_atuacao">Area Atuacao</label>
-                    <input type="text" class="form-control" name="area_atuacao" id="field_area_atuacao"
-                           formControlName="area_atuacao"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.comercio" for="field_comercio">Comercio</label>
-                    <input type="checkbox" class="form-control" name="comercio" id="field_comercio"
-                           formControlName="comercio"/>
-                    <div *ngIf="editForm.get('comercio')!.invalid && (editForm.get('comercio')!.dirty || editForm.get('comercio')!.touched)">
+            <div class="form-group col-md-3">
+                <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.area_atuacao" for="field_area_atuacao">Area Atuacao</label>
+                <input type="text" class="form-control" name="area_atuacao" id="field_area_atuacao"
+                       formControlName="area_atuacao"/>
+            </div>
+        </div>
+        <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_descricao" for="field_par_descricao">Par Descricao</label>
+            <textarea type="text" class="form-control" name="par_descricao" id="field_par_descricao"
+                   formControlName="par_descricao"></textarea>
+            <div *ngIf="editForm.get('par_descricao')!.invalid && (editForm.get('par_descricao')!.dirty || editForm.get('par_descricao')!.touched)">
+                <small class="form-text text-danger"
+                       *ngIf="editForm.get('par_descricao')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 50 }">
+                This field cannot be longer than 50 characters.
+                </small>
+            </div>
+        </div>
+            <div class="form-group col-md-6">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_obs" for="field_par_obs">Par Obs</label>
+                    <textarea type="text" class="form-control" name="par_obs" id="field_par_obs"
+                           formControlName="par_obs"></textarea>
+                    <div *ngIf="editForm.get('par_obs')!.invalid && (editForm.get('par_obs')!.dirty || editForm.get('par_obs')!.touched)">
                         <small class="form-text text-danger"
-                               *ngIf="editForm.get('comercio')?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
+                               *ngIf="editForm.get('par_obs')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+                        This field cannot be longer than 200 characters.
                         </small>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.nfc_e" for="field_nfc_e">Nfc E</label>
-                    <input type="checkbox" class="form-control" name="nfc_e" id="field_nfc_e"
-                           formControlName="nfc_e"/>
+            </div>
+          <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label ngbButtonLabel class="form-control-label" for="field_comercio">
+                    <input type="checkbox" ngbButton class="form-control" name="comercio" id="field_comercio"
+                           formControlName="comercio"> <span jhiTranslate="mrcontadorFrontApp.parceiro.comercio"></span>
+                     </label>
+                </div>
+                
+                <div class="form-group col-md-2">
+                    <label ngbButtonLabel class="form-control-label" for="field_nfc_e">
+                    <input ngbButton type="checkbox" class="form-control" name="nfc_e" id="field_nfc_e"
+                           formControlName="nfc_e">
+                           <span jhiTranslate="mrcontadorFrontApp.parceiro.nfc_e"></span> 
+                    </label>
+                </div>
+                <div class="form-group col-md-2">
+                    <label ngbButtonLabel class="form-control-label"  for="field_danfe">
+                    <input ngbButton type="checkbox" class="form-control" name="danfe" id="field_danfe"
+                           formControlName="danfe">
+                           <span jhiTranslate="mrcontadorFrontApp.parceiro.danfe"></span>
+                        </label>
+                </div>
+                <div class="form-group col-md-2">
+                    <label ngbButtonLabel class="form-control-label" for="field_servico">
+                    <input ngbButton type="checkbox" class="form-control" name="servico" id="field_servico"
+                           formControlName="servico"><span jhiTranslate="mrcontadorFrontApp.parceiro.servico"></span>
+                        </label>
+                </div>
+                <div class="form-group col-md-2">
+                    <label ngbButtonLabel class="form-control-label"  for="field_nfs_e">
+                    <input ngbButton type="checkbox" class="form-control" name="nfs_e" id="field_nfs_e"
+                           formControlName="nfs_e">
+                           <span jhiTranslate="mrcontadorFrontApp.parceiro.nfs_e"></span>
+                        </label>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.danfe" for="field_danfe">Danfe</label>
-                    <input type="checkbox" class="form-control" name="danfe" id="field_danfe"
-                           formControlName="danfe"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.servico" for="field_servico">Servico</label>
-                    <input type="checkbox" class="form-control" name="servico" id="field_servico"
-                           formControlName="servico"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.nfs_e" for="field_nfs_e">Nfs E</label>
-                    <input type="checkbox" class="form-control" name="nfs_e" id="field_nfs_e"
-                           formControlName="nfs_e"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.transportadora" for="field_transportadora">Transportadora</label>
-                    <input type="checkbox" class="form-control" name="transportadora" id="field_transportadora"
-                           formControlName="transportadora"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.conhec_transporte" for="field_conhec_transporte">Conhec Transporte</label>
-                    <input type="checkbox" class="form-control" name="conhec_transporte" id="field_conhec_transporte"
-                           formControlName="conhec_transporte"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.industria" for="field_industria">Industria</label>
-                    <input type="checkbox" class="form-control" name="industria" id="field_industria"
-                           formControlName="industria"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.ct" for="field_ct">Ct</label>
-                    <input type="checkbox" class="form-control" name="ct" id="field_ct"
-                           formControlName="ct"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.outras" for="field_outras">Outras</label>
-                    <input type="text" class="form-control" name="outras" id="field_outras"
-                           formControlName="outras"/>
+                <div class="form-group col-md-2">
+                    <label ngbButtonLabel class="form-control-label" for="field_transportadora">
+                    <input ngbButton type="checkbox" class="form-control" name="transportadora" id="field_transportadora"
+                           formControlName="transportadora">
+                           <span jhiTranslate="mrcontadorFrontApp.parceiro.transportadora"></span>
+                        </label>
                 </div>
             </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label class="form-control-label" ngbButtonLabel  for="field_industria">
+                           <input ngbButton type="checkbox" class="form-control" name="industria" id="field_industria"
+                           formControlName="industria">
+                           <span jhiTranslate="mrcontadorFrontApp.parceiro.industria"></span>
+                        </label>  
+                </div>
 
+                <div class="form-group col-md-2">
+                    <label class="form-control-label"  ngbButtonLabel for="field_ct">
+                    <input type="checkbox" class="form-control" ngbButton name="ct" id="field_ct"
+                           formControlName="ct">
+                           <span jhiTranslate="mrcontadorFrontApp.parceiro.ct"></span>
+                           </label>
+                </div>
+
+                <div class="form-group col-md-2">
+                        <label ngbButtonLabel class="form-control-label" for="field_conhec_transporte">
+                        <input ngbButton type="checkbox" class="form-control" name="conhec_transporte" id="field_conhec_transporte"
+                               formControlName="conhec_transporte">
+                               <span jhiTranslate="mrcontadorFrontApp.parceiro.conhec_transporte"></span>
+                            </label>
+                    </div>
+            </div>
+            <div class="form-row">
+                    <div class="form-group col-md-6">
+                            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.outras" for="field_outras">Outras</label>
+                            <input type="text" class="form-control" name="outras" id="field_outras"
+                                   formControlName="outras"/>
+                        </div>
+            </div>
+        </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>

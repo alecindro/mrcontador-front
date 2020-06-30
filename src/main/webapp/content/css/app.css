@@ -15,3 +15,13 @@
   -moz-appearance: none;
   appearance: none;
 }
+
+.btn-checkbox:focus {
+  color: #fff;
+  background-color: #0062cc;
+  border-color: #005cbf;
+}
+
+input[type='checkbox'][readonly] {
+  pointer-events: none;
+}

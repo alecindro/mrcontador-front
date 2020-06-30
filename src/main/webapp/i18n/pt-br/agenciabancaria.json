@@ -2,27 +2,27 @@
   "mrcontadorFrontApp": {
     "agenciabancaria": {
       "home": {
-        "title": "Agenciabancarias",
-        "createLabel": "Criar novo Agenciabancaria",
-        "createOrEditLabel": "Criar ou editar Agenciabancaria",
-        "notFound": "Nenhum Agenciabancaria encontrado"
+        "title": "Agências bancárias",
+        "createLabel": "Cadastrar Agência Bancária",
+        "createOrEditLabel": "Cadastro de Agência Bancária",
+        "notFound": "Nenhuma agência bancária encontrada"
       },
-      "created": "Um novo Agenciabancaria foi criado com o identificador {{ param }}",
-      "updated": "Um Agenciabancaria foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Agenciabancaria foi excluído com o identificador {{ param }}",
+      "created": "Agência bancária cadastrada com sucesso",
+      "updated": "Agência bancária atualizada com sucesso",
+      "deleted": "Agência bancária excluída com sucesso",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Agenciabancaria {{ id }}?"
+        "question": "Tem certeza de que deseja excluir?"
       },
       "detail": {
-        "title": "Agenciabancaria"
+        "title": "Agência bancária"
       },
-      "age_numero": "Age Numero",
-      "age_digito": "Age Digito",
-      "age_agencia": "Age Agencia",
-      "age_descricao": "Age Descricao",
-      "age_situacao": "Age Situacao",
+      "age_numero": "Número",
+      "age_digito": "Dígito",
+      "age_agencia": "Agência",
+      "age_descricao": "Descrição",
+      "age_situacao": "Situação",
       "banco": "Banco",
-      "parceiro": "Parceiro"
+      "parceiro": "Cliente"
     }
   }
 }

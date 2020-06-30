@@ -11,6 +11,9 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       tap(null, (err: HttpErrorResponse) => {
+        if (err.url && err.url.includes('https://viacep.com.br')) {
+          this.eventManager.broadcast(new JhiEventWithContent('error.viaceperror', err));
+        }
         if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('api/account'))))) {
           this.eventManager.broadcast(new JhiEventWithContent('mrcontadorFrontApp.httpError', err));
         }

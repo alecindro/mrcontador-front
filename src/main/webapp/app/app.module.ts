@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import './vendor';
@@ -16,11 +16,14 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { LoginPageModule } from './login/login-page.module';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { registerLocaleData } from '@angular/common';
+import localeBr from '@angular/common/locales/pt';
 
 const maskConfig: Partial<IConfig> = {
   validation: true,
 };
 
+registerLocaleData(localeBr, 'pt');
 @NgModule({
   imports: [
     BrowserModule,
@@ -37,5 +40,6 @@ const maskConfig: Partial<IConfig> = {
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt' }],
 })
 export class MrcontadorFrontAppModule {}

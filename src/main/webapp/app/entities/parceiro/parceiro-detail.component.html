@@ -1,118 +1,209 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="parceiro">
-            <h2><span jhiTranslate="mrcontadorFrontApp.parceiro.detail.title">Parceiro</span> {{ parceiro.id }}</h2>
-
-            <hr>
-
+                <div class="text-center">
+            <h5><span jhiTranslate="mrcontadorFrontApp.parceiro.detail.title">Parceiro</span>
+                {{ parceiro.par_razaosocial }}</h5>
+                </div>
             <jhi-alert-error></jhi-alert-error>
 
-            <dl class="row-md jh-entity-details">
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_descricao">Par Descricao</span></dt>
-                <dd>
-                    <span>{{ parceiro.par_descricao }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial">Par Razaosocial</span></dt>
-                <dd>
-                    <span>{{ parceiro.par_razaosocial }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_tipopessoa">Par Tipopessoa</span></dt>
-                <dd>
-                    <span>{{ parceiro.par_tipopessoa }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf">Par Cnpjcpf</span></dt>
-                <dd>
-                    <span>{{ parceiro.par_cnpjcpf }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_rgie">Par Rgie</span></dt>
-                <dd>
-                    <span>{{ parceiro.par_rgie }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_obs">Par Obs</span></dt>
-                <dd>
-                    <span>{{ parceiro.par_obs }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro">Par Datacadastro</span></dt>
-                <dd>
-                    <span>{{ parceiro.par_datacadastro }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo">Spa Codigo</span></dt>
-                <dd>
-                    <span>{{ parceiro.spa_codigo }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.logradouro">Logradouro</span></dt>
-                <dd>
-                    <span>{{ parceiro.logradouro }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.cep">Cep</span></dt>
-                <dd>
-                    <span>{{ parceiro.cep }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.cidade">Cidade</span></dt>
-                <dd>
-                    <span>{{ parceiro.cidade }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.estado">Estado</span></dt>
-                <dd>
-                    <span>{{ parceiro.estado }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.area_atuacao">Area Atuacao</span></dt>
-                <dd>
-                    <span>{{ parceiro.area_atuacao }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.comercio">Comercio</span></dt>
-                <dd>
-                    <span>{{ parceiro.comercio }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.nfc_e">Nfc E</span></dt>
-                <dd>
-                    <span>{{ parceiro.nfc_e }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.danfe">Danfe</span></dt>
-                <dd>
-                    <span>{{ parceiro.danfe }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.servico">Servico</span></dt>
-                <dd>
-                    <span>{{ parceiro.servico }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.nfs_e">Nfs E</span></dt>
-                <dd>
-                    <span>{{ parceiro.nfs_e }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.transportadora">Transportadora</span></dt>
-                <dd>
-                    <span>{{ parceiro.transportadora }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.conhec_transporte">Conhec Transporte</span></dt>
-                <dd>
-                    <span>{{ parceiro.conhec_transporte }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.industria">Industria</span></dt>
-                <dd>
-                    <span>{{ parceiro.industria }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.ct">Ct</span></dt>
-                <dd>
-                    <span>{{ parceiro.ct }}</span>
-                </dd>
-                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.outras">Outras</span></dt>
-                <dd>
-                    <span>{{ parceiro.outras }}</span>
-                </dd>
-            </dl>
+            <div class="container">
+                <div class="jumbotron bg-primary">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.par_descricao">Par Descricao</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.par_descricao }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial">Par Razaosocial</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.par_razaosocial }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_tipopessoa">Par
+                                Tipopessoa</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.par_tipopessoa }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf">Par Cnpjcpf</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span *ngIf="parceiro.par_cnpjcpf">{{ parceiro.par_cnpjcpf | mask: '00.000.000/0000-00'}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.par_rgie">Par Rgie</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.par_rgie }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.par_obs">Par Obs</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.par_obs }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro">Par Datacadastro</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.par_datacadastro | date: 'dd/MM/yyyy'}}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo">Spa Codigo</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.spa_codigo }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.logradouro">Logradouro</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.logradouro }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.cep">Cep</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span *ngIf="parceiro.cep">{{ parceiro.cep | mask: '00.000-000' }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.cidade">Cidade</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.cidade }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.estado">Estado</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.estado }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.area_atuacao">Area Atuacao</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.area_atuacao }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.comercio">Comercio</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.comercio" readonly>                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.nfc_e">Nfc E</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.nfc_e" readonly>
+                                                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.danfe">Danfe</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.danfe" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.servico">Servico</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.servico" readonly>
+                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.nfs_e">Nfs E</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.nfs_e" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.transportadora">Transportadora</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.transportadora" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.conhec_transporte">Conhec
+                                Transporte</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.conhec_transporte" readonly>                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.industria">Industria</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.industria" readonly>                            
+                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.ct">Ct</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                                <input type="checkbox" [(ngModel)]="parceiro.ct" readonly>                            
+                                
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.parceiro.outras">Outras</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ parceiro.outras }}</span>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" (click)="previousState()" class="btn btn-info">
+                    <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+                </button>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/parceiro', parceiro.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
-            </button>
+                <button type="button" [routerLink]="['/parceiro', parceiro.id, 'edit']" class="btn btn-primary">
+                    <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

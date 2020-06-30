@@ -1,14 +1,15 @@
 <div>
-    <h2 id="page-heading">
+    <h5 id="page-heading">
+            <div class="text-center">
         <span jhiTranslate="mrcontadorFrontApp.parceiro.home.title">Parceiros</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-parceiro" [routerLink]="['/parceiro/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">
-            Create a new Parceiro
-            </span>
-        </button>
-    </h2>
+</div>
+    </h5>
+    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-parceiro" [routerLink]="['/parceiro/new']">
+        <fa-icon icon="plus"></fa-icon>
+        <span  jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">
+        Create a new Parceiro
+        </span>
+    </button>
 
     <jhi-alert-error></jhi-alert-error>
 
@@ -22,59 +23,29 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="par_descricao"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_descricao">Par Descricao</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="par_razaosocial"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial">Par Razaosocial</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="par_tipopessoa"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_tipopessoa">Par Tipopessoa</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="par_cnpjcpf"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf">Par Cnpjcpf</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="par_rgie"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_rgie">Par Rgie</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="par_obs"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_obs">Par Obs</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="par_datacadastro"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro">Par Datacadastro</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="spa_codigo"><span jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo">Spa Codigo</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="logradouro"><span jhiTranslate="mrcontadorFrontApp.parceiro.logradouro">Logradouro</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cep"><span jhiTranslate="mrcontadorFrontApp.parceiro.cep">Cep</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cidade"><span jhiTranslate="mrcontadorFrontApp.parceiro.cidade">Cidade</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="estado"><span jhiTranslate="mrcontadorFrontApp.parceiro.estado">Estado</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="area_atuacao"><span jhiTranslate="mrcontadorFrontApp.parceiro.area_atuacao">Area Atuacao</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="comercio"><span jhiTranslate="mrcontadorFrontApp.parceiro.comercio">Comercio</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="nfc_e"><span jhiTranslate="mrcontadorFrontApp.parceiro.nfc_e">Nfc E</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="danfe"><span jhiTranslate="mrcontadorFrontApp.parceiro.danfe">Danfe</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="servico"><span jhiTranslate="mrcontadorFrontApp.parceiro.servico">Servico</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="nfs_e"><span jhiTranslate="mrcontadorFrontApp.parceiro.nfs_e">Nfs E</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="transportadora"><span jhiTranslate="mrcontadorFrontApp.parceiro.transportadora">Transportadora</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="conhec_transporte"><span jhiTranslate="mrcontadorFrontApp.parceiro.conhec_transporte">Conhec Transporte</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="industria"><span jhiTranslate="mrcontadorFrontApp.parceiro.industria">Industria</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="ct"><span jhiTranslate="mrcontadorFrontApp.parceiro.ct">Ct</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="outras"><span jhiTranslate="mrcontadorFrontApp.parceiro.outras">Outras</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let parceiro of parceiros ;trackBy: trackId">
-                    <td><a [routerLink]="['/parceiro', parceiro.id, 'view']">{{ parceiro.id }}</a></td>
-                    <td>{{ parceiro.par_descricao }}</td>
                     <td>{{ parceiro.par_razaosocial }}</td>
                     <td>{{ parceiro.par_tipopessoa }}</td>
                     <td>{{ parceiro.par_cnpjcpf }}</td>
                     <td>{{ parceiro.par_rgie }}</td>
-                    <td>{{ parceiro.par_obs }}</td>
-                    <td>{{ parceiro.par_datacadastro | date:'medium' }}</td>
+                    <td>{{ parceiro.par_datacadastro |  date: 'dd/MM/yyyy' }}</td>
                     <td>{{ parceiro.spa_codigo }}</td>
-                    <td>{{ parceiro.logradouro }}</td>
                     <td>{{ parceiro.cep }}</td>
                     <td>{{ parceiro.cidade }}</td>
                     <td>{{ parceiro.estado }}</td>
-                    <td>{{ parceiro.area_atuacao }}</td>
-                    <td>{{ parceiro.comercio }}</td>
-                    <td>{{ parceiro.nfc_e }}</td>
-                    <td>{{ parceiro.danfe }}</td>
-                    <td>{{ parceiro.servico }}</td>
-                    <td>{{ parceiro.nfs_e }}</td>
-                    <td>{{ parceiro.transportadora }}</td>
-                    <td>{{ parceiro.conhec_transporte }}</td>
-                    <td>{{ parceiro.industria }}</td>
-                    <td>{{ parceiro.ct }}</td>
-                    <td>{{ parceiro.outras }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

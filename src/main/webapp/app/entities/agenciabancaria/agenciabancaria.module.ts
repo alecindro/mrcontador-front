@@ -7,9 +7,10 @@ import { AgenciabancariaDetailComponent } from './agenciabancaria-detail.compone
 import { AgenciabancariaUpdateComponent } from './agenciabancaria-update.component';
 import { AgenciabancariaDeleteDialogComponent } from './agenciabancaria-delete-dialog.component';
 import { agenciabancariaRoute } from './agenciabancaria.route';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  imports: [MrcontadorFrontSharedModule, RouterModule.forChild(agenciabancariaRoute)],
+  imports: [MrcontadorFrontSharedModule, RouterModule.forChild(agenciabancariaRoute), NgbTypeaheadModule],
   declarations: [
     AgenciabancariaComponent,
     AgenciabancariaDetailComponent,
