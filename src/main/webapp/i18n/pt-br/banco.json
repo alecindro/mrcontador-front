@@ -1,0 +1,25 @@
+{
+  "mrcontadorFrontApp": {
+    "banco": {
+      "home": {
+        "title": "Cadastro de Bancos",
+        "createLabel": "Criar novo Banco",
+        "createOrEditLabel": "Criar ou editar Banco",
+        "notFound": "Nenhum Banco encontrado"
+      },
+      "created": "Um novo Banco foi criado com o identificador {{ param }}",
+      "updated": "Um Banco foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Banco foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Banco {{ id }}?"
+      },
+      "detail": {
+        "title": "Banco"
+      },
+      "ban_descricao": "Descrição",
+      "ban_codigobancario": "Código Bancário",
+      "ban_sigla": "Sigla",
+      "ban_ispb": "Ispb"
+    }
+  }
+}

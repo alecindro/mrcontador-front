@@ -1,0 +1,28 @@
+{
+  "mrcontadorFrontApp": {
+    "agenciabancaria": {
+      "home": {
+        "title": "Agenciabancarias",
+        "createLabel": "Criar novo Agenciabancaria",
+        "createOrEditLabel": "Criar ou editar Agenciabancaria",
+        "notFound": "Nenhum Agenciabancaria encontrado"
+      },
+      "created": "Um novo Agenciabancaria foi criado com o identificador {{ param }}",
+      "updated": "Um Agenciabancaria foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Agenciabancaria foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Agenciabancaria {{ id }}?"
+      },
+      "detail": {
+        "title": "Agenciabancaria"
+      },
+      "age_numero": "Age Numero",
+      "age_digito": "Age Digito",
+      "age_agencia": "Age Agencia",
+      "age_descricao": "Age Descricao",
+      "age_situacao": "Age Situacao",
+      "banco": "Banco",
+      "parceiro": "Parceiro"
+    }
+  }
+}

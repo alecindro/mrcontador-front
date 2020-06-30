@@ -1,0 +1,118 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="parceiro">
+            <h2><span jhiTranslate="mrcontadorFrontApp.parceiro.detail.title">Parceiro</span> {{ parceiro.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_descricao">Par Descricao</span></dt>
+                <dd>
+                    <span>{{ parceiro.par_descricao }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial">Par Razaosocial</span></dt>
+                <dd>
+                    <span>{{ parceiro.par_razaosocial }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_tipopessoa">Par Tipopessoa</span></dt>
+                <dd>
+                    <span>{{ parceiro.par_tipopessoa }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf">Par Cnpjcpf</span></dt>
+                <dd>
+                    <span>{{ parceiro.par_cnpjcpf }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_rgie">Par Rgie</span></dt>
+                <dd>
+                    <span>{{ parceiro.par_rgie }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_obs">Par Obs</span></dt>
+                <dd>
+                    <span>{{ parceiro.par_obs }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro">Par Datacadastro</span></dt>
+                <dd>
+                    <span>{{ parceiro.par_datacadastro }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo">Spa Codigo</span></dt>
+                <dd>
+                    <span>{{ parceiro.spa_codigo }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.logradouro">Logradouro</span></dt>
+                <dd>
+                    <span>{{ parceiro.logradouro }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.cep">Cep</span></dt>
+                <dd>
+                    <span>{{ parceiro.cep }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.cidade">Cidade</span></dt>
+                <dd>
+                    <span>{{ parceiro.cidade }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.estado">Estado</span></dt>
+                <dd>
+                    <span>{{ parceiro.estado }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.area_atuacao">Area Atuacao</span></dt>
+                <dd>
+                    <span>{{ parceiro.area_atuacao }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.comercio">Comercio</span></dt>
+                <dd>
+                    <span>{{ parceiro.comercio }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.nfc_e">Nfc E</span></dt>
+                <dd>
+                    <span>{{ parceiro.nfc_e }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.danfe">Danfe</span></dt>
+                <dd>
+                    <span>{{ parceiro.danfe }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.servico">Servico</span></dt>
+                <dd>
+                    <span>{{ parceiro.servico }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.nfs_e">Nfs E</span></dt>
+                <dd>
+                    <span>{{ parceiro.nfs_e }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.transportadora">Transportadora</span></dt>
+                <dd>
+                    <span>{{ parceiro.transportadora }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.conhec_transporte">Conhec Transporte</span></dt>
+                <dd>
+                    <span>{{ parceiro.conhec_transporte }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.industria">Industria</span></dt>
+                <dd>
+                    <span>{{ parceiro.industria }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.ct">Ct</span></dt>
+                <dd>
+                    <span>{{ parceiro.ct }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.parceiro.outras">Outras</span></dt>
+                <dd>
+                    <span>{{ parceiro.outras }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/parceiro', parceiro.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

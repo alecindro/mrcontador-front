@@ -1,0 +1,26 @@
+{
+  "mrcontadorFrontApp": {
+    "regra": {
+      "home": {
+        "title": "Regras",
+        "createLabel": "Criar novo Regra",
+        "createOrEditLabel": "Criar ou editar Regra",
+        "notFound": "Nenhum Regra encontrado"
+      },
+      "created": "Um novo Regra foi criado com o identificador {{ param }}",
+      "updated": "Um Regra foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Regra foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Regra {{ id }}?"
+      },
+      "detail": {
+        "title": "Regra"
+      },
+      "par_codigo": "Par Codigo",
+      "reg_descricao": "Reg Descricao",
+      "reg_conta": "Reg Conta",
+      "reg_historico": "Reg Historico",
+      "reg_todos": "Reg Todos"
+    }
+  }
+}

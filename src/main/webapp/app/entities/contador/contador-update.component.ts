@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { IContador, Contador } from 'app/shared/model/contador.model';
 import { ContadorService } from './contador.service';
 import { TelefoneDTO } from 'app/shared/dto/telefoneDTO';
+import { ViaCepService } from 'app/shared/services/viacepservice';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'jhi-contador-update',
@@ -15,6 +17,12 @@ import { TelefoneDTO } from 'app/shared/dto/telefoneDTO';
 })
 export class ContadorUpdateComponent implements OnInit {
   isSaving = false;
+  maskJuridica = '00.000.000/0000-00';
+  maskFisica = '000.000.000-00';
+  mask = this.maskJuridica;
+  _false = false;
+  _true = true;
+
   telefoneDTOs: TelefoneDTO[] = [];
   sistemas: string[] = ['Dominio Sistemas'];
   editForm = this.fb.group({
@@ -23,6 +31,8 @@ export class ContadorUpdateComponent implements OnInit {
     fantasia: ['', [Validators.maxLength(254)]],
     ddd: [],
     numero: [],
+    logradouro: [],
+    pessoafisica: [],
     datasource: [],
     cnpj: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(18)]],
     cidade: ['', [Validators.maxLength(254)]],
@@ -33,7 +43,13 @@ export class ContadorUpdateComponent implements OnInit {
     sistema: ['', [Validators.required]],
   });
 
-  constructor(protected contadorService: ContadorService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected contadorService: ContadorService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    private viacepService: ViaCepService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ contador }) => {
@@ -57,6 +73,8 @@ export class ContadorUpdateComponent implements OnInit {
       email: contador.email,
       crc: contador.crc,
       sistema: contador.sistema,
+      pessoafisica: contador.pessoafisica ? this._true : this._false,
+      logradouro: contador.logradouro,
     });
   }
 
@@ -67,6 +85,7 @@ export class ContadorUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const contador = this.createFromForm();
+    this.spinner.show();
     if (contador.id !== undefined) {
       this.subscribeToSaveResponse(this.contadorService.update(contador));
     } else {
@@ -89,6 +108,8 @@ export class ContadorUpdateComponent implements OnInit {
       email: this.editForm.get(['email'])!.value,
       crc: this.editForm.get(['crc'])!.value,
       sistema: this.editForm.get(['sistema'])!.value,
+      logradouro: this.editForm.get(['logradouro'])!.value,
+      pessoafisica: this.editForm.get(['pessoafisica'])!.value,
     };
   }
 
@@ -100,11 +121,13 @@ export class ContadorUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
+    this.spinner.hide();
     this.isSaving = false;
     this.previousState();
   }
 
   protected onSaveError(): void {
+    this.spinner.hide();
     this.isSaving = false;
   }
   add(): void {
@@ -122,5 +145,33 @@ export class ContadorUpdateComponent implements OnInit {
     this.editForm.patchValue({ ddd: telefoneDTO.ddd });
     this.editForm.patchValue({ numero: telefoneDTO.numero });
     this.remove(telefoneDTO);
+  }
+
+  onChange(): void {
+    if (this.editForm.get(['pessoafisica'])!.value) {
+      this.mask = this.maskFisica;
+    } else {
+      this.mask = this.maskJuridica;
+    }
+  }
+
+  onCep(): void {
+    if (this.editForm.get(['cep'])!.value) {
+      this.spinner.show();
+      this.viacepService.query(this.editForm.get(['cep'])!.value).subscribe(
+        response => {
+          this.editForm.patchValue({
+            cidade: response.body?.localidade,
+            estado: response.body?.uf,
+            logradouro: response.body?.logradouro,
+          });
+          this.spinner.hide();
+        },
+        error => {
+          console.log(error);
+          this.spinner.hide();
+        }
+      );
+    }
   }
 }

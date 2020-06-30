@@ -1,0 +1,62 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-banco-heading" jhiTranslate="mrcontadorFrontApp.banco.home.createOrEditLabel">Create or edit a Banco</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.banco.ban_descricao" for="field_ban_descricao">Ban Descricao</label>
+                    <input type="text" class="form-control" name="ban_descricao" id="field_ban_descricao"
+                           formControlName="ban_descricao"/>
+                    <div *ngIf="editForm.get('ban_descricao')!.invalid && (editForm.get('ban_descricao')!.dirty || editForm.get('ban_descricao')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('ban_descricao')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 200 }">
+                        This field cannot be longer than 200 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.banco.ban_codigobancario" for="field_ban_codigobancario">Ban Codigobancario</label>
+                    <input type="number" class="form-control" name="ban_codigobancario" id="field_ban_codigobancario"
+                           formControlName="ban_codigobancario"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.banco.ban_sigla" for="field_ban_sigla">Ban Sigla</label>
+                    <input type="text" class="form-control" name="ban_sigla" id="field_ban_sigla"
+                           formControlName="ban_sigla"/>
+                    <div *ngIf="editForm.get('ban_sigla')!.invalid && (editForm.get('ban_sigla')!.dirty || editForm.get('ban_sigla')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('ban_sigla')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 100 }">
+                        This field cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.banco.ban_ispb" for="field_ban_ispb">Ban Ispb</label>
+                    <input type="number" class="form-control" name="ban_ispb" id="field_ban_ispb"
+                           formControlName="ban_ispb"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

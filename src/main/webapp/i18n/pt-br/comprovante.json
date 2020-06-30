@@ -1,0 +1,31 @@
+{
+  "mrcontadorFrontApp": {
+    "comprovante": {
+      "home": {
+        "title": "Comprovantes",
+        "createLabel": "Criar novo Comprovante",
+        "createOrEditLabel": "Criar ou editar Comprovante",
+        "notFound": "Nenhum Comprovante encontrado"
+      },
+      "created": "Um novo Comprovante foi criado com o identificador {{ param }}",
+      "updated": "Um Comprovante foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Comprovante foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Comprovante {{ id }}?"
+      },
+      "detail": {
+        "title": "Comprovante"
+      },
+      "par_codigo": "Par Codigo",
+      "age_codigo": "Age Codigo",
+      "com_cnpj": "Com Cnpj",
+      "com_beneficiario": "Com Beneficiario",
+      "com_documento": "Com Documento",
+      "com_datavencimento": "Com Datavencimento",
+      "com_datapagamento": "Com Datapagamento",
+      "com_valordocumento": "Com Valordocumento",
+      "com_valorpagamento": "Com Valorpagamento",
+      "com_observacao": "Com Observacao"
+    }
+  }
+}

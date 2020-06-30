@@ -1,0 +1,101 @@
+<div class="col-12 justify-content-center">
+    <div class="text-center">
+        <h5 id="page-heading">
+            <span jhiTranslate="mrcontadorFrontApp.banco.home.title">Bancos</span>
+        </h5>
+    </div>
+
+    <div class="bg-primary" style="border-radius: 0.3rem;padding: 1rem 1rem;">
+        <div class="text-right pb-3">
+            <div class="row align-items-end">
+                <div class="col-8">
+                </div>
+                <div class="col-md-2">
+                    <input class="custom-input" [(ngModel)]="pesquisa" (search)="pesquisar()" placeholder="Pesquisar..."
+                        type="search">
+                    <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+                        style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+                </div>
+                <div class="col-md-2">
+                    <select class="custom-select" (change)="onChange()" [(ngModel)]="selected">
+                        <option value="ban_descricao.contains"><span
+                                jhiTranslate="mrcontadorFrontApp.banco.ban_descricao"></span>
+                        </option>
+                        <option value="ban_codigobancario.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.banco.ban_codigobancario"></span>
+                        </option>
+                        
+                        <option value="ban_sigla.contains"><span
+                                jhiTranslate="mrcontadorFrontApp.banco.ban_sigla"></span>
+                            </option>
+                        <option value="ban_codigobancario.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.banco.ban_ispb"></span>
+                            </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="bancos?.length === 0">
+        <span jhiTranslate="mrcontadorFrontApp.banco.home.notFound">No bancos found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="bancos && bancos.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col" jhiSortBy="ban_descricao"><span
+                            jhiTranslate="mrcontadorFrontApp.banco.ban_descricao">Ban Descricao</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="ban_codigobancario"><span
+                            jhiTranslate="mrcontadorFrontApp.banco.ban_codigobancario">Ban Codigobancario</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="ban_sigla"><span jhiTranslate="mrcontadorFrontApp.banco.ban_sigla">Ban
+                            Sigla</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="ban_ispb"><span jhiTranslate="mrcontadorFrontApp.banco.ban_ispb">Ban
+                            Ispb</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let banco of bancos ;trackBy: trackId">
+                    <td>{{ banco.ban_descricao }}</td>
+                    <td>{{ banco.ban_codigobancario }}</td>
+                    <td>{{ banco.ban_sigla }}</td>
+                    <td>{{ banco.ban_ispb }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit" [routerLink]="['/banco', banco.id, 'view']"
+                                class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="bancos && bancos.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+                [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

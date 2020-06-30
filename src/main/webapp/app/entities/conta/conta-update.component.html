@@ -1,0 +1,94 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-conta-heading" jhiTranslate="mrcontadorFrontApp.conta.home.createOrEditLabel">Create or edit a Conta</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.conta.con_conta" for="field_con_conta">Con Conta</label>
+                    <input type="number" class="form-control" name="con_conta" id="field_con_conta"
+                           formControlName="con_conta"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.conta.con_classificacao" for="field_con_classificacao">Con Classificacao</label>
+                    <input type="text" class="form-control" name="con_classificacao" id="field_con_classificacao"
+                           formControlName="con_classificacao"/>
+                    <div *ngIf="editForm.get('con_classificacao')!.invalid && (editForm.get('con_classificacao')!.dirty || editForm.get('con_classificacao')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('con_classificacao')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 20 }">
+                        This field cannot be longer than 20 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.conta.con_tipo" for="field_con_tipo">Con Tipo</label>
+                    <input type="text" class="form-control" name="con_tipo" id="field_con_tipo"
+                           formControlName="con_tipo"/>
+                    <div *ngIf="editForm.get('con_tipo')!.invalid && (editForm.get('con_tipo')!.dirty || editForm.get('con_tipo')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('con_tipo')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 1 }">
+                        This field cannot be longer than 1 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.conta.con_descricao" for="field_con_descricao">Con Descricao</label>
+                    <input type="text" class="form-control" name="con_descricao" id="field_con_descricao"
+                           formControlName="con_descricao"/>
+                    <div *ngIf="editForm.get('con_descricao')!.invalid && (editForm.get('con_descricao')!.dirty || editForm.get('con_descricao')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('con_descricao')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 60 }">
+                        This field cannot be longer than 60 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.conta.con_cnpj" for="field_con_cnpj">Con Cnpj</label>
+                    <input type="text" class="form-control" name="con_cnpj" id="field_con_cnpj"
+                           formControlName="con_cnpj"/>
+                    <div *ngIf="editForm.get('con_cnpj')!.invalid && (editForm.get('con_cnpj')!.dirty || editForm.get('con_cnpj')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('con_cnpj')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 18 }">
+                        This field cannot be longer than 18 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.conta.con_grau" for="field_con_grau">Con Grau</label>
+                    <input type="number" class="form-control" name="con_grau" id="field_con_grau"
+                           formControlName="con_grau"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.conta.parceiro" for="field_parceiro">Parceiro</label>
+                    <select class="form-control" id="field_parceiro" name="parceiro" formControlName="parceiroId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="parceiroOption.id" *ngFor="let parceiroOption of parceiros; trackBy: trackById">{{ parceiroOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

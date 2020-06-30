@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="notafiscal">
+            <h2><span jhiTranslate="mrcontadorFrontApp.notafiscal.detail.title">Notafiscal</span> {{ notafiscal.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not Numero</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_numero }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_descricao">Not Descricao</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_descricao }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_cnpj">Not Cnpj</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_cnpj }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not Empresa</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_empresa }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_datasaida">Not Datasaida</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_datasaida }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valornota</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_valornota }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_dataparcela }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valorparcela">Not Valorparcela</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_valorparcela }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.tno_codigo">Tno Codigo</span></dt>
+                <dd>
+                    <span>{{ notafiscal.tno_codigo }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not Parcela</span></dt>
+                <dd>
+                    <span>{{ notafiscal.not_parcela }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.parceiro">Parceiro</span></dt>
+                <dd>
+                    <div *ngIf="notafiscal.parceiroId">
+                        <a [routerLink]="['/parceiro', notafiscal.parceiroId, 'view']">{{ notafiscal.parceiroId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/notafiscal', notafiscal.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

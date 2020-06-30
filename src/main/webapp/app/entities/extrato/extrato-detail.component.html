@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="extrato">
+            <h2><span jhiTranslate="mrcontadorFrontApp.extrato.detail.title">Extrato</span> {{ extrato.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento">Ext Datalancamento</span></dt>
+                <dd>
+                    <span>{{ extrato.ext_datalancamento }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico">Ext Historico</span></dt>
+                <dd>
+                    <span>{{ extrato.ext_historico }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento">Ext Numerodocumento</span></dt>
+                <dd>
+                    <span>{{ extrato.ext_numerodocumento }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerocontrole">Ext Numerocontrole</span></dt>
+                <dd>
+                    <span>{{ extrato.ext_numerocontrole }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito">Ext Debito</span></dt>
+                <dd>
+                    <span>{{ extrato.ext_debito }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito">Ext Credito</span></dt>
+                <dd>
+                    <span>{{ extrato.ext_credito }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_descricao">Ext Descricao</span></dt>
+                <dd>
+                    <span>{{ extrato.ext_descricao }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.parceiro">Parceiro</span></dt>
+                <dd>
+                    <div *ngIf="extrato.parceiroId">
+                        <a [routerLink]="['/parceiro', extrato.parceiroId, 'view']">{{ extrato.parceiroId }}</a>
+                    </div>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.extrato.agenciabancaria">Agenciabancaria</span></dt>
+                <dd>
+                    <div *ngIf="extrato.agenciabancariaId">
+                        <a [routerLink]="['/agenciabancaria', extrato.agenciabancariaId, 'view']">{{ extrato.agenciabancariaId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/extrato', extrato.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

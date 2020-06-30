@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import './vendor';
 import { MrcontadorFrontSharedModule } from 'app/shared/shared.module';
 import { MrcontadorFrontCoreModule } from 'app/core/core.module';
@@ -15,6 +15,7 @@ import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { LoginPageModule } from './login/login-page.module';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const maskConfig: Partial<IConfig> = {
   validation: true,
@@ -28,9 +29,12 @@ const maskConfig: Partial<IConfig> = {
     MrcontadorFrontHomeModule,
     LoginPageModule,
     NgxMaskModule.forRoot(maskConfig),
+    NgxSpinnerModule,
+    BrowserAnimationsModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     MrcontadorFrontAppRoutingModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   bootstrap: [MainComponent],
 })

@@ -8,6 +8,15 @@
       "entities": {
         "main": "Entidades",
         "contador": "Contador",
+        "banco": "Banco",
+        "parceiro": "Parceiro",
+        "comprovante": "Comprovante",
+        "conta": "Conta",
+        "notafiscal": "Notafiscal",
+        "agenciabancaria": "Agenciabancaria",
+        "notaservico": "Notaservico",
+        "regra": "Regra",
+        "extrato": "Extrato",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

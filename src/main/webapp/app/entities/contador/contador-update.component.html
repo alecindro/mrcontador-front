@@ -5,130 +5,150 @@
                 <h5 id="jhi-contador-heading" jhiTranslate="mrcontadorFrontApp.contador.home.createOrEditLabel">Create
                     or edit a Contador</h5>
             </div>
-            
-                <jhi-alert-error></jhi-alert-error>
-                <div class="form-row">
-                    <div class="form-group col-md-12" hidden="true">
-                        <input type="text" class="form-control" id="id" name="id" formControlName="datasource"
-                            readonly />
-                        <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.razao"
-                            for="field_razao">Razao</label>
-                        <input type="text" class="form-control" name="razao" id="field_razao" formControlName="razao" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.fantasia"
-                            for="field_fantasia">Fantasia</label>
-                        <input type="text" class="form-control" name="fantasia" id="field_fantasia"
-                            formControlName="fantasia" />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.email"
-                            for="field_email">Email</label>
-                        <input type="text" class="form-control" name="email" id="field_email" formControlName="email" />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.cnpj"
-                            for="field_cnpj">Cnpj</label>
-                        <input type="text" mask="00.000.000/0000-00" [showMaskTyped]="true" class="form-control" name="cnpj" id="field_cnpj" formControlName="cnpj" />
-                    </div>
-                    <div class="form-group col-md-4">
-                            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.crc"
-                                for="field_crc">CRC</label>
-                            <input type="text" mask="SS000000/S-0" [showMaskTyped]="true" class="form-control" name="crc" id="field_crc" formControlName="crc" />
-                        </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.cep"
-                            for="field_cep">Cep</label>
-                        <input type="text" class="form-control" name="cep" id="field_cep" formControlName="cep" />
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.cidade"
-                            for="field_cidade">Cidade</label>
-                        <input type="text" class="form-control" name="cidade" id="field_cidade"
-                            formControlName="cidade" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.estado"
-                            for="field_estado">Estado</label>
-                        <input type="text" class="form-control" name="estado" id="field_estado"
-                            formControlName="estado" />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.sistema"
-                            for="field_sistema">Sistema</label>
-                            <select id="field_sistema" name="sistema"  class="form-control" formControlName="sistema" >
-                                <option [ngValue]="sistema" *ngFor="let sistema of sistemas">
-                                    {{sistema}}</option>
-                            </select>
-                    </div>
-                    <div class="form-group col-md-1">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.ddd"
-                            for="field_ddd">DDD</label>
-                        <input type="text" class="form-control" mask="00" maxlength="2" name="ddd" id="field_ddd" formControlName="ddd" />
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.telefone"
-                            for="field_telefone">Telefone</label>
-                        <input type="number" class="form-control" name="telefone" id="field_telefone"
-                            formControlName="numero" />
-                    </div>
-                    <div class="form-group col-md-1 align-self-end">
-                        <button type="button" class="btn btn-primary" (click)="add()">
-                            <span jhiTranslate="mrcontadorFrontApp.contador.home.add">Save</span>
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="alert alert-warning" *ngIf="telefoneDTOs.length === 0">
-                            <span jhiTranslate="mrcontadorFrontApp.contador.home.notAdd">No telefone add</span>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped" aria-describedby="page-heading">
-                                <tbody *ngIf="telefoneDTOs.length > 0">
-                                    <tr *ngFor="let telefoneDTO of telefoneDTOs">
-                                        <td class="text-right">{{telefoneDTO.ddd}}</td>
-                                        <td class="text-right">{{telefoneDTO.numero}}</td>
-                                        <td class="text-right">
-                                            <div class="btn-group">
-                                                <button class="btn btn-primary btn-sm" (click)="edit(telefoneDTO)">
-                                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                                    <span class="d-none d-md-inline"
-                                                        jhiTranslate="entity.action.edit">Edit</span>
-                                                </button>
-                                                <button class="btn btn-danger btn-sm" (click)="remove(telefoneDTO)">
-                                                    <fa-icon [icon]="'times'"></fa-icon>
-                                                    <span class="d-none d-md-inline"
-                                                        jhiTranslate="entity.action.delete">Delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
 
-
+            <jhi-alert-error></jhi-alert-error>
+            <div class="form-row">
+                <div class="form-group col-md-12" hidden="true">
+                    <input type="text" class="form-control" id="id" name="id" formControlName="datasource" readonly />
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
-           
-    <div>
-        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-        </button>
-        <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
-            <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
-        </button>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.razao"
+                        for="field_razao">Razao</label>
+                    <input type="text" class="form-control" name="razao" id="field_razao" formControlName="razao" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.fantasia"
+                        for="field_fantasia">Fantasia</label>
+                    <input type="text" class="form-control" name="fantasia" id="field_fantasia"
+                        formControlName="fantasia" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.email"
+                        for="field_email">Email</label>
+                    <input type="text" class="form-control" name="email" id="field_email" formControlName="email" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.tipopessoa"
+                        for="field_juridica"></label>
+                    <select id="field_juridica" name="field_juridica" class="form-control custom-select"
+                        (change)="onChange()" formControlName="pessoafisica">
+                        <option [ngValue]="_false"><span jhiTranslate="mrcontadorFrontApp.contador.juridica"></span>
+                        </option>
+                        <option [ngValue]="_true"><span jhiTranslate="mrcontadorFrontApp.contador.fisica"></span>
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.cnpj"
+                        for="field_cnpj">Cnpj</label>
+                    <input type="text" [mask]="mask" [showMaskTyped]="true" class="form-control" name="cnpj"
+                        id="field_cnpj" formControlName="cnpj" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.crc"
+                        for="field_crc">CRC</label>
+                    <input type="text" mask="SS000000/S-0" [showMaskTyped]="true" class="form-control" name="crc"
+                        id="field_crc" formControlName="crc" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.cep"
+                        for="field_cep">Cep</label>
+                    <input type="text" class="form-control" (blur)="onCep()" mask="00.000-000" name="cep" id="field_cep"
+                        formControlName="cep" />
+                </div>
+                <div class="form-group col-md-9">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.logradouro"
+                        for="field_logra">Cep</label>
+                    <input type="text" class="form-control" name="cep" id="field_logra" formControlName="logradouro" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.cidade"
+                        for="field_cidade">Cidade</label>
+                    <input type="text" class="form-control" name="cidade" id="field_cidade" formControlName="cidade" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.estado"
+                        for="field_estado">Estado</label>
+                    <input type="text" class="form-control" name="estado" id="field_estado" formControlName="estado" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.sistema"
+                        for="field_sistema">Sistema</label>
+                    <select id="field_sistema" name="sistema" class="form-control" formControlName="sistema">
+                        <option [ngValue]="sistema" *ngFor="let sistema of sistemas">
+                            {{sistema}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.ddd"
+                        for="field_ddd">DDD</label>
+                    <input type="text" class="form-control" mask="00" maxlength="2" name="ddd" id="field_ddd"
+                        formControlName="ddd" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.contador.telefone"
+                        for="field_telefone">Telefone</label>
+                    <input type="number" class="form-control" name="telefone" id="field_telefone"
+                        formControlName="numero" />
+                </div>
+                <div class="form-group col-md-3 align-self-end">
+                    <button type="button" class="btn btn-primary" (click)="add()">
+                        <span jhiTranslate="mrcontadorFrontApp.contador.home.add">Save</span>
+                    </button>
+                </div>
+            </div>
+            <div class="form-row">
+            <div class="col-md-6">
+                <div class="alert alert-warning" *ngIf="telefoneDTOs.length === 0">
+                    <span jhiTranslate="mrcontadorFrontApp.contador.home.notAdd">No telefone add</span>
+                </div>
+                <div class="table-responsive" *ngIf="telefoneDTOs.length !== 0">
+                    <table class="table table-striped" aria-describedby="page-heading">
+                        <tbody *ngIf="telefoneDTOs.length > 0">
+                            <tr *ngFor="let telefoneDTO of telefoneDTOs">
+                                <td class="text-right">{{telefoneDTO.ddd}}</td>
+                                <td class="text-right">{{telefoneDTO.numero}}</td>
+                                <td class="text-right">
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary btn-sm" (click)="edit(telefoneDTO)">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                            <span class="d-none d-md-inline"
+                                                jhiTranslate="entity.action.edit">Edit</span>
+                                        </button>
+                                        <button class="btn btn-danger btn-sm" (click)="remove(telefoneDTO)">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                            <span class="d-none d-md-inline"
+                                                jhiTranslate="entity.action.delete">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving"
+                    class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
     </div>
-    </form>
-</div>
 </div>

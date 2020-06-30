@@ -30,6 +30,14 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           loadChildren: () => import('./entities/contador/contador.module').then(m => m.MrcontadorFrontContadorModule),
         },
         {
+          path: 'banco',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/banco/banco.module').then(m => m.MrcontadorFrontBancoModule),
+        },
+        {
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
         },
