@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="regra">
+            <h2><span jhiTranslate="mrcontadorFrontApp.regra.detail.title">Regra</span> {{ regra.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.regra.par_codigo">Par Codigo</span></dt>
+                <dd>
+                    <span>{{ regra.par_codigo }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.regra.reg_descricao">Reg Descricao</span></dt>
+                <dd>
+                    <span>{{ regra.reg_descricao }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.regra.reg_conta">Reg Conta</span></dt>
+                <dd>
+                    <span>{{ regra.reg_conta }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.regra.reg_historico">Reg Historico</span></dt>
+                <dd>
+                    <span>{{ regra.reg_historico }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.regra.reg_todos">Reg Todos</span></dt>
+                <dd>
+                    <span>{{ regra.reg_todos }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/regra', regra.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

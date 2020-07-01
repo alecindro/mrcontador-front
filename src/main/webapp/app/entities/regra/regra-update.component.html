@@ -1,0 +1,74 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-regra-heading" jhiTranslate="mrcontadorFrontApp.regra.home.createOrEditLabel">Create or edit a Regra</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.par_codigo" for="field_par_codigo">Par Codigo</label>
+                    <input type="number" class="form-control" name="par_codigo" id="field_par_codigo"
+                           formControlName="par_codigo"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_descricao" for="field_reg_descricao">Reg Descricao</label>
+                    <input type="text" class="form-control" name="reg_descricao" id="field_reg_descricao"
+                           formControlName="reg_descricao"/>
+                    <div *ngIf="editForm.get('reg_descricao')!.invalid && (editForm.get('reg_descricao')!.dirty || editForm.get('reg_descricao')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('reg_descricao')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 60 }">
+                        This field cannot be longer than 60 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta" for="field_reg_conta">Reg Conta</label>
+                    <input type="number" class="form-control" name="reg_conta" id="field_reg_conta"
+                           formControlName="reg_conta"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_historico" for="field_reg_historico">Reg Historico</label>
+                    <input type="text" class="form-control" name="reg_historico" id="field_reg_historico"
+                           formControlName="reg_historico"/>
+                    <div *ngIf="editForm.get('reg_historico')!.invalid && (editForm.get('reg_historico')!.dirty || editForm.get('reg_historico')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('reg_historico')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 60 }">
+                        This field cannot be longer than 60 characters.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_todos" for="field_reg_todos">Reg Todos</label>
+                    <input type="text" class="form-control" name="reg_todos" id="field_reg_todos"
+                           formControlName="reg_todos"/>
+                    <div *ngIf="editForm.get('reg_todos')!.invalid && (editForm.get('reg_todos')!.dirty || editForm.get('reg_todos')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('reg_todos')?.errors?.maxlength" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: 1 }">
+                        This field cannot be longer than 1 characters.
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

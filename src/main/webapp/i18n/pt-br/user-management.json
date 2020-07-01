@@ -3,7 +3,7 @@
     "home": {
       "title": "Usuários",
       "createLabel": "Adicionar",
-      "createOrEditLabel": "Criar ou editar usuário"
+      "createOrEditLabel": "Cadastro de Usuário"
     },
     "created": "Novo usuário foi criado com o identificador {{ param }}",
     "updated": "Usuário com o identificador {{ param }} foi atualizado ",

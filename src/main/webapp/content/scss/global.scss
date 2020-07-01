@@ -39,6 +39,19 @@ Generic styles
 ========================================================================== */
 
 /* other generic styles */
+/* Error highlight on input fields */
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid green;
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid red;
+}
+
+div .shadow {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.55) !important;
+}
 
 .jh-card {
   padding: 1.5%;

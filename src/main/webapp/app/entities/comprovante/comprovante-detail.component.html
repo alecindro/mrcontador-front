@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="comprovante">
+            <h2><span jhiTranslate="mrcontadorFrontApp.comprovante.detail.title">Comprovante</span> {{ comprovante.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.par_codigo">Par Codigo</span></dt>
+                <dd>
+                    <span>{{ comprovante.par_codigo }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.age_codigo">Age Codigo</span></dt>
+                <dd>
+                    <span>{{ comprovante.age_codigo }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_cnpj">Com Cnpj</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_cnpj }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_beneficiario">Com Beneficiario</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_beneficiario }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_documento">Com Documento</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_documento }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_datavencimento">Com Datavencimento</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_datavencimento }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_datapagamento">Com Datapagamento</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_datapagamento }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_valordocumento">Com Valordocumento</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_valordocumento }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_valorpagamento">Com Valorpagamento</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_valorpagamento }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.comprovante.com_observacao">Com Observacao</span></dt>
+                <dd>
+                    <span>{{ comprovante.com_observacao }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/comprovante', comprovante.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

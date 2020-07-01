@@ -1,6 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span jhiTranslate="mrcontadorFrontApp.contador.home.title">Contadors</span>
+        <span jhiTranslate="mrcontadorFrontApp.contador.home.title">Contadores</span>
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-contador" [routerLink]="['/contador/new']">
             <fa-icon icon="plus"></fa-icon>
@@ -22,11 +22,9 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="razao"><span jhiTranslate="mrcontadorFrontApp.contador.razao">Razao</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="fantasia"><span jhiTranslate="mrcontadorFrontApp.contador.fantasia">Fantasia</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="telefones"><span jhiTranslate="mrcontadorFrontApp.contador.telefones">Telefones</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="datasource"><span jhiTranslate="mrcontadorFrontApp.contador.datasource">Datasource</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cnpj"><span jhiTranslate="mrcontadorFrontApp.contador.cnpj">Cnpj</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cidade"><span jhiTranslate="mrcontadorFrontApp.contador.cidade">Cidade</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="estado"><span jhiTranslate="mrcontadorFrontApp.contador.estado">Estado</span> <fa-icon icon="sort"></fa-icon></th>
@@ -37,15 +35,12 @@
             </thead>
             <tbody>
                 <tr *ngFor="let contador of contadors ;trackBy: trackId">
-                    <td><a [routerLink]="['/contador', contador.id, 'view']">{{ contador.id }}</a></td>
                     <td>{{ contador.razao }}</td>
                     <td>{{ contador.fantasia }}</td>
-                    <td>{{ contador.telefones }}</td>
-                    <td>{{ contador.datasource }}</td>
+                    <td>{{ contador.telefones}}</td>
                     <td>{{ contador.cnpj }}</td>
                     <td>{{ contador.cidade }}</td>
                     <td>{{ contador.estado }}</td>
-                    <td>{{ contador.cep }}</td>
                     <td>{{ contador.email }}</td>
                     <td class="text-right">
                         <div class="btn-group">

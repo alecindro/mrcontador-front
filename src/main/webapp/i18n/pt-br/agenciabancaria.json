@@ -1,0 +1,28 @@
+{
+  "mrcontadorFrontApp": {
+    "agenciabancaria": {
+      "home": {
+        "title": "Agências bancárias",
+        "createLabel": "Cadastrar Agência Bancária",
+        "createOrEditLabel": "Cadastro de Agência Bancária",
+        "notFound": "Nenhuma agência bancária encontrada"
+      },
+      "created": "Agência bancária cadastrada com sucesso",
+      "updated": "Agência bancária atualizada com sucesso",
+      "deleted": "Agência bancária excluída com sucesso",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir?"
+      },
+      "detail": {
+        "title": "Agência bancária"
+      },
+      "age_numero": "Número",
+      "age_digito": "Dígito",
+      "age_agencia": "Agência",
+      "age_descricao": "Descrição",
+      "age_situacao": "Situação",
+      "banco": "Banco",
+      "parceiro": "Cliente"
+    }
+  }
+}

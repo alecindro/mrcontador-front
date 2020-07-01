@@ -1,0 +1,44 @@
+{
+  "mrcontadorFrontApp": {
+    "parceiro": {
+      "home": {
+        "title": "Clientes",
+        "createLabel": "Cadastrar clientes",
+        "createOrEditLabel": "Cadastro de Clientes",
+        "notFound": "Nenhum cliente encontrado"
+      },
+      "created": "O cliente {{ param }} foi criado",
+      "updated": "O cliente {{ param }} foi atualizado",
+      "deleted": "O cliente {{ param }} foi excluído",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir o cliente {{ id }}?"
+      },
+      "detail": {
+        "title": "Cliente"
+      },
+      "par_descricao": "Descrição",
+      "par_razaosocial": "Razão Social",
+      "par_tipopessoa": "Tipo de Pessoa",
+      "par_cnpjcpf": "CPF/CNPJ",
+      "par_rgie": "RG",
+      "par_obs": "Observação",
+      "par_datacadastro": "Data de Cadastro",
+      "spa_codigo": "Código SPA",
+      "logradouro": "Logradouro",
+      "cep": "Cep",
+      "cidade": "Cidade",
+      "estado": "Estado",
+      "area_atuacao": "Área de atuação",
+      "comercio": "Comércio (S/N)",
+      "nfc_e": "Nfc-E (S/N)",
+      "danfe": "Danfe (S/N)",
+      "servico": "Serviço (S/N)",
+      "nfs_e": "Nfs-E (S/N)",
+      "transportadora": "Transportadora (S/N)",
+      "conhec_transporte": "CTe (S/N)",
+      "industria": "Indústria (S/N)",
+      "ct": "CT (S/N)",
+      "outras": "Outras:"
+    }
+  }
+}

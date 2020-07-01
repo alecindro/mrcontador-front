@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div *ngIf="banco">
+            <div class="text-center">
+                <h5>{{ banco?.ban_descricao }}</h5>
+            </div>
+
+            <jhi-alert-error></jhi-alert-error>
+            <div class="container">
+                <div class="jumbotron bg-primary">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.banco.ban_descricao"></span>:
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ banco?.ban_descricao }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.banco.ban_codigobancario">Ban Codigobancario</span>:
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ banco?.ban_codigobancario }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.banco.ban_sigla">Ban Sigla</span>:
+                         </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ banco?.ban_sigla }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.banco.ban_ispb">Ban Ispb</span>:
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ banco?.ban_ispb }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="submit" (click)="previousState()" class="btn btn-info">
+                            <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span
+                                jhiTranslate="entity.action.back">Back</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

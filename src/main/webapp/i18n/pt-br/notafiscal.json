@@ -1,0 +1,32 @@
+{
+  "mrcontadorFrontApp": {
+    "notafiscal": {
+      "home": {
+        "title": "Notafiscals",
+        "createLabel": "Criar novo Notafiscal",
+        "createOrEditLabel": "Criar ou editar Notafiscal",
+        "notFound": "Nenhum Notafiscal encontrado"
+      },
+      "created": "Um novo Notafiscal foi criado com o identificador {{ param }}",
+      "updated": "Um Notafiscal foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Notafiscal foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Notafiscal {{ id }}?"
+      },
+      "detail": {
+        "title": "Notafiscal"
+      },
+      "not_numero": "Not Numero",
+      "not_descricao": "Not Descricao",
+      "not_cnpj": "Not Cnpj",
+      "not_empresa": "Not Empresa",
+      "not_datasaida": "Not Datasaida",
+      "not_valornota": "Not Valornota",
+      "not_dataparcela": "Not Dataparcela",
+      "not_valorparcela": "Not Valorparcela",
+      "tno_codigo": "Tno Codigo",
+      "not_parcela": "Not Parcela",
+      "parceiro": "Parceiro"
+    }
+  }
+}

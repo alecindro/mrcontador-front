@@ -1,5 +1,6 @@
 {
   "error": {
+    "viaceperror": "Cep não encontrado",
     "title": "Página de erro!",
     "http": {
       "400": "Requisição inválida.",

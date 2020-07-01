@@ -10,6 +10,7 @@ import { IContador } from 'app/shared/model/contador.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ContadorService } from './contador.service';
 import { ContadorDeleteDialogComponent } from './contador-delete-dialog.component';
+import { JsonUtil } from 'app/shared/util/json-util';
 
 @Component({
   selector: 'jhi-contador',
@@ -109,6 +110,9 @@ export class ContadorComponent implements OnInit, OnDestroy {
       });
     }
     this.contadors = data || [];
+    if (this.contadors) {
+      this.contadors.forEach(contador => (contador.telefones ? (contador.telefones = JsonUtil.telefonesToString(contador.telefones)) : ''));
+    }
     this.ngbPaginationPage = this.page;
   }
 

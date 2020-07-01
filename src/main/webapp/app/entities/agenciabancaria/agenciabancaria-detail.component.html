@@ -1,0 +1,85 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="agenciabancaria">
+            <div class="text-center">
+                <h5><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.detail.title">Agenciabancaria</span></h5>
+            </div>
+            <jhi-alert-error></jhi-alert-error>
+
+            <div class="container">
+                <div class="jumbotron bg-primary">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_numero"></span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ agenciabancaria.age_numero }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_digito">Age Digito</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ agenciabancaria.age_digito }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_agencia">Age
+                                Agencia</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ agenciabancaria.age_agencia }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_descricao">Age Descricao</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ agenciabancaria.age_descricao }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_situacao">Age Situacao</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <span>{{ agenciabancaria.age_situacao }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.banco">Banco</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <div *ngIf="agenciabancaria.banco">
+                                <a
+                                    [routerLink]="['/banco', agenciabancaria.banco.id, 'view']">{{ agenciabancaria.banco?.ban_descricao }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.parceiro">Parceiro</span>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <div *ngIf="agenciabancaria.parceiro">
+                                <a
+                                    [routerLink]="['/parceiro', agenciabancaria.parceiro.id, 'view']">{{ agenciabancaria.parceiro?.par_razaosocial }}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" (click)="previousState()" class="btn btn-info">
+                        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+                    </button>
+
+                    <button type="button" [routerLink]="['/agenciabancaria', agenciabancaria.id, 'edit']"
+                        class="btn btn-primary">
+                        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

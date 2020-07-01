@@ -2,21 +2,23 @@
   "mrcontadorFrontApp": {
     "contador": {
       "home": {
-        "title": "Contadors",
+        "title": "Contadores",
         "createLabel": "Criar novo Contador",
-        "createOrEditLabel": "Criar ou editar Contador",
-        "notFound": "Nenhum Contador encontrado"
+        "createOrEditLabel": "Cadastro de Contador",
+        "notFound": "Nenhum Contador encontrado",
+        "add": "Adicionar",
+        "notAdd": "Nenhum Telefone Cadastrado"
       },
-      "created": "Um novo Contador foi criado com o identificador {{ param }}",
-      "updated": "Um Contador foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Contador foi excluído com o identificador {{ param }}",
+      "created": "O contador {{ param }} foi criado",
+      "updated": "O contador {{ param }} foi atualizado",
+      "deleted": "O contador {{ param }} foi excluído",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Contador {{ id }}?"
+        "question": "Tem certeza de que deseja excluir o contador {{ razao }}?"
       },
       "detail": {
         "title": "Contador"
       },
-      "razao": "Razao",
+      "razao": "Razao Social",
       "fantasia": "Fantasia",
       "telefones": "Telefones",
       "datasource": "Datasource",
@@ -24,7 +26,15 @@
       "cidade": "Cidade",
       "estado": "Estado",
       "cep": "Cep",
-      "email": "Email"
+      "email": "Email",
+      "ddd": "DDD",
+      "telefone": "Telefone",
+      "crc": "CRC",
+      "sistema": "Sistema",
+      "tipopessoa": "Tipo de Pessoa",
+      "juridica": "Pessoa Jurídica",
+      "fisica": "Pessoa Física",
+      "logradouro": "Logradouro"
     }
   }
 }

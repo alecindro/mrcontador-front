@@ -30,9 +30,82 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           loadChildren: () => import('./entities/contador/contador.module').then(m => m.MrcontadorFrontContadorModule),
         },
         {
+          path: 'banco',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/banco/banco.module').then(m => m.MrcontadorFrontBancoModule),
+        },
+        {
+          path: 'parceiro',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/parceiro/parceiro.module').then(m => m.MrcontadorFrontParceiroModule),
+        },
+        {
+          path: 'comprovante',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/comprovante/comprovante.module').then(m => m.MrcontadorFrontComprovanteModule),
+        },
+        {
+          path: 'conta',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/conta/conta.module').then(m => m.MrcontadorFrontContaModule),
+        },
+        {
+          path: 'notafiscal',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/notafiscal/notafiscal.module').then(m => m.MrcontadorFrontNotafiscalModule),
+        },
+        {
+          path: 'agenciabancaria',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/agenciabancaria/agenciabancaria.module').then(m => m.MrcontadorFrontAgenciabancariaModule),
+        },
+        {
+          path: 'notaservico',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/notaservico/notaservico.module').then(m => m.MrcontadorFrontNotaservicoModule),
+        },
+        {
+          path: 'regra',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/regra/regra.module').then(m => m.MrcontadorFrontRegraModule),
+        },
+        {
+          path: 'extrato',
+          data: {
+            authorities: [Authority.ADMIN],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/extrato/extrato.module').then(m => m.MrcontadorFrontExtratoModule),
+        },
+        {
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
         },
+
         ...LAYOUT_ROUTES,
       ],
       { enableTracing: DEBUG_INFO_ENABLED }
