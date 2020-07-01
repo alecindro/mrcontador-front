@@ -14,17 +14,19 @@
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
                 <div class="form-row">
-                    <fieldset class="form-inline">
+                    
                         <div class="form-group col-md-6">
                             <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.agenciabancaria.banco"
                                 for="field_banco">Banco</label>
-                            <input id="field_banco" type="text" class="form-control mx-sm-3"
-                                [class.is-invalid]="searchFailed" formControlName="bancoId"
-                                [resultFormatter]="resultFormatBandListValue"
-                                [inputFormatter]="inputFormatBandListValue" [ngbTypeahead]="search"
+                            <input id="field_banco" type="text" class="form-control" formControlName="ban_descricao"
+                                [class.is-invalid]="searchFailedBanco" 
+                                [resultFormatter]="resultFormatBanco"
+                                [inputFormatter]="inputFormatBanco" 
+                                (selectItem)="selectedBanco($event)"
+                                [ngbTypeahead]="searchBanco"
                                 placeholder="Pesquisar o banco" [editable]='false'/>
-                            <small *ngIf="searching" class="form-text text-muted">pesquisando...</small>
-                            <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.
+                            <small *ngIf="searchingBanco" class="form-text text-muted">pesquisando...</small>
+                            <div class="invalid-feedback" *ngIf="searchFailedBanco">Sorry, suggestions could not be loaded.
                             </div>
 
                             <div
@@ -35,25 +37,28 @@
                                 </small>
                             </div>
                         </div>
-                    </fieldset>
-                    <div class="form-group col-md-6">
-                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.agenciabancaria.parceiro"
-                            for="field_parceiro">Parceiro</label>
-                        <select class="form-control" id="field_parceiro" name="parceiro" formControlName="parceiroId">
-                            <option *ngIf="!editForm.get('parceiroId')!.value" [ngValue]="null" selected></option>
-                            <option [ngValue]="parceiroOption.id"
-                                *ngFor="let parceiroOption of parceiros; trackBy: trackById">
-                                {{ parceiroOption.par_razaosocial }}</option>
-                        </select>
-
-                        <div
-                            *ngIf="editForm.get('parceiroId')!.invalid && (editForm.get('parceiroId')!.dirty || editForm.get('parceiroId')!.touched)">
-                            <small class="form-text text-danger" *ngIf="editForm.get('parceiroId')?.errors?.required"
-                                jhiTranslate="entity.validation.required">
-                                This field is required.
-                            </small>
-                        </div>
-                    </div>
+                                <div class="form-group col-md-6">
+                                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.agenciabancaria.parceiro"
+                                        for="field_parceiro"></label>
+                                    <input id="field_parceiro" type="text" class="form-control" formControlName="par_razaosocial"
+                                        [class.is-invalid]="searchFailedParceiro" 
+                                        [resultFormatter]="resultFormatParceiro"
+                                        [inputFormatter]="inputFormatParceiro" 
+                                        (selectItem)="selectedParceiro($event)"
+                                        [ngbTypeahead]="searchParceiro"
+                                        placeholder="Pesquisar o cliente" [editable]='false'/>
+                                    <small *ngIf="searchingParceiro" class="form-text text-muted">pesquisando...</small>
+                                    <div class="invalid-feedback" *ngIf="searchFailedParceiro">Sorry, suggestions could not be loaded.
+                                    </div>
+                                    <div
+                                    *ngIf="editForm.get('parceiroId')!.invalid && (editForm.get('parceiroId')!.dirty || editForm.get('parceiroId')!.touched)">
+                                    <small class="form-text text-danger" *ngIf="editForm.get('parceiroId')?.errors?.required"
+                                        jhiTranslate="entity.validation.required">
+                                        This field is required.
+                                    </small>
+                                </div>
+                                </div>
+                    
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-2">

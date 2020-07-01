@@ -5,7 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
-import { IAgenciabancaria, Agenciabancaria } from 'app/shared/model/agenciabancaria.model';
+import { IAgenciabancaria, Agenciabancaria, AgenciabancariaDTO } from 'app/shared/model/agenciabancaria.model';
 import { AgenciabancariaService } from './agenciabancaria.service';
 import { IBanco } from 'app/shared/model/banco.model';
 import { BancoService } from 'app/entities/banco/banco.service';
@@ -21,8 +21,10 @@ type SelectableEntity = IBanco | IParceiro;
 })
 export class AgenciabancariaUpdateComponent implements OnInit {
   isSaving = false;
-  searching = false;
-  searchFailed = false;
+  searchingBanco = false;
+  searchFailedBanco = false;
+  searchingParceiro = false;
+  searchFailedParceiro = false;
   bancos: IBanco[] = [];
   parceiros: IParceiro[] = [];
 
@@ -35,6 +37,11 @@ export class AgenciabancariaUpdateComponent implements OnInit {
     age_situacao: [],
     bancoId: [null, Validators.required],
     parceiroId: [null, Validators.required],
+    banco_id: [],
+    ban_descricao: [],
+    ban_codigobancario: [],
+    parceiro_id: [],
+    par_razaosocial: [],
   });
 
   constructor(
@@ -47,15 +54,14 @@ export class AgenciabancariaUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ agenciabancaria }) => {
+      if (!agenciabancaria.id) {
+        agenciabancaria.age_situacao = true;
+      }
       this.updateForm(agenciabancaria);
-
-      this.bancoService.query().subscribe((res: HttpResponse<IBanco[]>) => (this.bancos = res.body || []));
-
-      this.parceiroService.query().subscribe((res: HttpResponse<IParceiro[]>) => (this.parceiros = res.body || []));
     });
   }
 
-  updateForm(agenciabancaria: IAgenciabancaria): void {
+  updateForm(agenciabancaria: AgenciabancariaDTO): void {
     this.editForm.patchValue({
       id: agenciabancaria.id,
       age_numero: agenciabancaria.age_numero,
@@ -66,6 +72,21 @@ export class AgenciabancariaUpdateComponent implements OnInit {
       bancoId: agenciabancaria.bancoId,
       parceiroId: agenciabancaria.parceiroId,
     });
+    if (agenciabancaria.banco) {
+      this.editForm.patchValue({
+        bancoId: agenciabancaria.banco.id,
+        banco_id: agenciabancaria.banco.id,
+        ban_descricao: agenciabancaria.banco.ban_descricao,
+        ban_codigobancario: agenciabancaria.banco.ban_codigobancario,
+      });
+    }
+    if (agenciabancaria.parceiro) {
+      this.editForm.patchValue({
+        parceiroId: agenciabancaria.parceiro.id,
+        parceiro_id: agenciabancaria.parceiro.id,
+        par_razaosocial: agenciabancaria.parceiro.par_razaosocial,
+      });
+    }
   }
 
   previousState(): void {
@@ -116,33 +137,74 @@ export class AgenciabancariaUpdateComponent implements OnInit {
     return item.id;
   }
 
-  search = (text$: Observable<string>) =>
+  searchBanco = (text$: Observable<string>) =>
     text$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      tap(() => (this.searching = true)),
+      tap(() => (this.searchingBanco = true)),
       switchMap(term =>
         term.length < 3
-          ? []
+          ? ((this.searchingBanco = false), [])
           : this.bancoService
               .query({ 'ban_descricao.contains': term })
               .pipe(map((res: HttpResponse<IBanco[]>) => (this.bancos = res.body || [])))
               .pipe(
-                tap(() => (this.searchFailed = false)),
+                tap(() => (this.searchFailedBanco = false)),
                 catchError(() => {
-                  this.searchFailed = true;
+                  this.searchFailedBanco = true;
                   return of([]);
                 })
               )
       ),
-      tap(() => (this.searching = false))
+      tap(() => (this.searchingBanco = false))
     );
 
-  resultFormatBandListValue(value: IBanco): string {
+  resultFormatBanco(value: any): string {
     return value.ban_descricao || '';
   }
 
-  inputFormatBandListValue(value: IBanco): any {
-    return value.id;
+  inputFormatBanco(value: any): any {
+    if (value.ban_codigobancario) {
+      return value.ban_descricao;
+    }
+    return value;
+  }
+
+  selectedBanco(event: any): void {
+    this.editForm.patchValue({ bancoId: event.item.id });
+  }
+
+  searchParceiro = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => (this.searchingParceiro = true)),
+      switchMap(term =>
+        term.length < 3
+          ? ((this.searchingParceiro = false), [])
+          : this.parceiroService
+              .query({ 'par_razaosocial.contains': term, 'par_cnpjcpf.contains': term })
+              .pipe(map((res: HttpResponse<IParceiro[]>) => (this.parceiros = res.body || [])))
+              .pipe(
+                tap(() => (this.searchFailedParceiro = false)),
+                catchError(() => {
+                  this.searchFailedParceiro = true;
+                  return of([]);
+                })
+              )
+      ),
+      tap(() => (this.searchingParceiro = false))
+    );
+
+  resultFormatParceiro(value: any): string {
+    return value.par_razaosocial || '';
+  }
+
+  inputFormatParceiro(value: any): any {
+    return value.par_razaosocial ? value.par_razaosocial : value;
+  }
+
+  selectedParceiro(event: any): void {
+    this.editForm.patchValue({ parceiroId: event.item.id });
   }
 }
