@@ -1,15 +1,20 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="mrcontadorFrontApp.notafiscal.home.title">Notafiscals</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-notafiscal" [routerLink]="['/notafiscal/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="mrcontadorFrontApp.notafiscal.home.createLabel">
-            Create a new Notafiscal
-            </span>
-        </button>
-    </h2>
-
+<div class="col-12 justify-content-center">
+            <h5 id="page-heading">
+                <div class="text-center">
+                        <span jhiTranslate="mrcontadorFrontApp.notafiscal.home.title"></span>
+                </div>
+            </h5>
+            <div class="row">
+                <div class="col align-self-end">
+                        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-notafiscal" [routerLink]="['/notafiscal/new']">
+                            <fa-icon icon="plus"></fa-icon>
+                            <span  jhiTranslate="mrcontadorFrontApp.notafiscal.home.createLabel">
+                            Create a new Notafiscal
+                            </span>
+                        </button>
+                </div>       
+            </div>
+            <hr/>
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>

@@ -1,14 +1,19 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="mrcontadorFrontApp.extrato.home.title">Extratoes</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-extrato" [routerLink]="['/extrato/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="mrcontadorFrontApp.extrato.home.createLabel">
-            Create a new Extrato
-            </span>
-        </button>
-    </h2>
+<div class="col-12 justify-content-center">
+            <h5 id="page-heading">
+                <div class="text-center">
+                        <span jhiTranslate="mrcontadorFrontApp.extrato.home.title"></span>
+                </div>
+            </h5>
+            <div class="row">
+                <div class="col align-self-end">
+                        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-extrato" [routerLink]="['/extrato/new']">
+                            <fa-icon icon="plus"></fa-icon>
+                            <span  jhiTranslate="mrcontadorFrontApp.extrato.home.createLabel">
+                            </span>
+                        </button>
+                </div>       
+            </div>
+            <hr/>
 
     <jhi-alert-error></jhi-alert-error>
 

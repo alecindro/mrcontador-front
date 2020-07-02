@@ -1,15 +1,19 @@
 <div class="col-12 justify-content-center">
-        <div class="text-center">
-            <h5 id="page-heading">
-        <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.title"></span>
-    </h5>
-    </div>
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-agenciabancaria" [routerLink]="['/agenciabancaria/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.createLabel">
-            </span>
-        </button>
-    
+                <h5 id="page-heading">
+                    <div class="text-center">
+                            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.title"></span>
+                    </div>
+                </h5>
+                <div class="row">
+                    <div class="col align-self-end">
+                            <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-agenciabancaria" [routerLink]="['/agenciabancaria/new']">
+                                <fa-icon icon="plus"></fa-icon>
+                                <span  jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.createLabel">
+                                </span>
+                            </button>
+                    </div>       
+                </div>
+                <hr/>    
 
     <jhi-alert-error></jhi-alert-error>
 

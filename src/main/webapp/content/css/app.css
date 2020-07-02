@@ -16,6 +16,10 @@
   appearance: none;
 }
 
+.custom-input:disabled {
+  background-color: #adb5bd;
+}
+
 .btn-checkbox:focus {
   color: #fff;
   background-color: #0062cc;

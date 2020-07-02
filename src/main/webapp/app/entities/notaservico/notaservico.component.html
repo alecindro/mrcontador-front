@@ -1,14 +1,19 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="mrcontadorFrontApp.notaservico.home.title">Notaservicos</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-notaservico" [routerLink]="['/notaservico/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="mrcontadorFrontApp.notaservico.home.createLabel">
-            Create a new Notaservico
-            </span>
-        </button>
-    </h2>
+<div class="col-12 justify-content-center">
+            <h5 id="page-heading">
+                <div class="text-center">
+                        <span jhiTranslate="mrcontadorFrontApp.notaservico.home.title"></span>
+                </div>
+            </h5>
+            <div class="row">
+                <div class="col align-self-end">
+                        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-notaservico" [routerLink]="['/notaservico/new']">
+                            <fa-icon icon="plus"></fa-icon>
+                            <span  jhiTranslate="mrcontadorFrontApp.notaservico.home.createLabel">
+                            </span>
+                        </button>
+                </div>       
+            </div>
+            <hr/>
 
     <jhi-alert-error></jhi-alert-error>
 

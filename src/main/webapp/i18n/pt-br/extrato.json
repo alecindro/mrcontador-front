@@ -2,7 +2,7 @@
   "mrcontadorFrontApp": {
     "extrato": {
       "home": {
-        "title": "Extratoes",
+        "title": "Extratos",
         "createLabel": "Criar novo Extrato",
         "createOrEditLabel": "Criar ou editar Extrato",
         "notFound": "Nenhum Extrato encontrado"

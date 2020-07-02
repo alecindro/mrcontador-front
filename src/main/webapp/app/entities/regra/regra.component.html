@@ -1,14 +1,20 @@
-<div>
-    <h2 id="page-heading">
-        <span jhiTranslate="mrcontadorFrontApp.regra.home.title">Regras</span>
-
-        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-regra" [routerLink]="['/regra/new']">
-            <fa-icon icon="plus"></fa-icon>
-            <span  jhiTranslate="mrcontadorFrontApp.regra.home.createLabel">
-            Create a new Regra
-            </span>
-        </button>
-    </h2>
+<div class="col-12 justify-content-center">
+    <h5 id="page-heading">
+        <div class="text-center">
+            <span jhiTranslate="mrcontadorFrontApp.regra.home.title"></span>
+        </div>
+    </h5>
+    <div class="row">
+        <div class="col align-self-end">
+                <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-regra"
+                [routerLink]="['/regra/new']">
+                <fa-icon icon="plus"></fa-icon>
+                <span jhiTranslate="mrcontadorFrontApp.regra.home.createLabel">
+                </span>
+            </button>
+        </div>       
+    </div>
+    <hr/>
 
     <jhi-alert-error></jhi-alert-error>
 
@@ -22,12 +28,29 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="par_codigo"><span jhiTranslate="mrcontadorFrontApp.regra.par_codigo">Par Codigo</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="reg_descricao"><span jhiTranslate="mrcontadorFrontApp.regra.reg_descricao">Reg Descricao</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="reg_conta"><span jhiTranslate="mrcontadorFrontApp.regra.reg_conta">Reg Conta</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="reg_historico"><span jhiTranslate="mrcontadorFrontApp.regra.reg_historico">Reg Historico</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="reg_todos"><span jhiTranslate="mrcontadorFrontApp.regra.reg_todos">Reg Todos</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="par_codigo"><span jhiTranslate="mrcontadorFrontApp.regra.par_codigo">Par
+                            Codigo</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="reg_descricao"><span
+                            jhiTranslate="mrcontadorFrontApp.regra.reg_descricao">Reg Descricao</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="reg_conta"><span jhiTranslate="mrcontadorFrontApp.regra.reg_conta">Reg
+                            Conta</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="reg_historico"><span
+                            jhiTranslate="mrcontadorFrontApp.regra.reg_historico">Reg Historico</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="reg_todos"><span jhiTranslate="mrcontadorFrontApp.regra.reg_todos">Reg
+                            Todos</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -41,22 +64,19 @@
                     <td>{{ regra.reg_todos }}</td>
                     <td class="text-right">
                         <div class="btn-group">
-                            <button type="submit"
-                                    [routerLink]="['/regra', regra.id, 'view']"
-                                    class="btn btn-info btn-sm">
+                            <button type="submit" [routerLink]="['/regra', regra.id, 'view']"
+                                class="btn btn-info btn-sm">
                                 <fa-icon icon="eye"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                             </button>
 
-                            <button type="submit"
-                                    [routerLink]="['/regra', regra.id, 'edit']"
-                                    class="btn btn-primary btn-sm">
+                            <button type="submit" [routerLink]="['/regra', regra.id, 'edit']"
+                                class="btn btn-primary btn-sm">
                                 <fa-icon icon="pencil-alt"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
 
-                            <button type="submit" (click)="delete(regra)"
-                                    class="btn btn-danger btn-sm">
+                            <button type="submit" (click)="delete(regra)" class="btn btn-danger btn-sm">
                                 <fa-icon icon="times"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                             </button>
@@ -73,7 +93,8 @@
         </div>
 
         <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+                [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
         </div>
     </div>
 </div>

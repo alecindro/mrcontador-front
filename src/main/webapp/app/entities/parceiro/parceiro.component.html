@@ -1,25 +1,46 @@
-<div>
+<div class="col-12 justify-content-center">
     <h5 id="page-heading">
             <div class="text-center">
-        <span jhiTranslate="mrcontadorFrontApp.parceiro.home.title">Parceiros</span>
-</div>
-    </h5>
-    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-parceiro" [routerLink]="['/parceiro/new']">
-        <fa-icon icon="plus"></fa-icon>
-        <span  jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">
-        Create a new Parceiro
-        </span>
-    </button>
+                <span jhiTranslate="mrcontadorFrontApp.parceiro.home.title"></span>
+            </div>
+        </h5>
+        <hr/>
+   
 
     <jhi-alert-error></jhi-alert-error>
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="parceiros?.length === 0">
-        <span jhiTranslate="mrcontadorFrontApp.parceiro.home.notFound">No parceiros found</span>
-    </div>
+    <div class="bg-primary" style="border-radius: 0.3rem;padding: 1rem 1rem;">
+            <div class="text-right pb-3">
+                <div class="row align-items-end">
+                    <div class="col-8">
+                    </div>
+                    <div class="col-md-2">
+                        <input class="custom-input" [(ngModel)]="pesquisa" (search)="pesquisar()" placeholder="Pesquisar..."
+                            type="search" [disabled]="parceiros?.length === 0">
+                        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+                            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="custom-select" (change)="onChange()" [(ngModel)]="selected">
+                            <option value="par_razaosocial.contains"><span
+                                    jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"></span>
+                            </option>
+                            <option value="ban_codigobancario.contains"><span
+                                    jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
+                            </option>
+                            
+                            <option value="cidade.contains"><span
+                                    jhiTranslate="mrcontadorFrontApp.parceiro.cidade"></span>
+                                </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="table-responsive" id="entities" *ngIf="parceiros && parceiros.length > 0">
+    <div class="table-responsive" id="entities">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
@@ -32,11 +53,24 @@
                     <th scope="col"  jhiSortBy="cep"><span jhiTranslate="mrcontadorFrontApp.parceiro.cep">Cep</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cidade"><span jhiTranslate="mrcontadorFrontApp.parceiro.cidade">Cidade</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="estado"><span jhiTranslate="mrcontadorFrontApp.parceiro.estado">Estado</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"></th>
+                    <th scope="col">  <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-parceiro" [routerLink]="['/parceiro/new']">
+                        <fa-icon icon="plus"></fa-icon>
+                        <span  jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">       
+                        </span>
+                    </button></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let parceiro of parceiros ;trackBy: trackId">
+            <tbody *ngIf="parceiros?.length === 0">
+                    <tr  >
+                            <td colspan="10">
+                                    <div class="alert alert-warning" id="no-result" >
+                                            <span jhiTranslate="mrcontadorFrontApp.parceiro.home.notFound">No parceiros found</span>
+                                        </div>
+                            </td>
+                        </tr>
+            </tbody>
+            <tbody *ngIf="parceiros && parceiros.length > 0">
+                <tr *ngFor="let parceiro of parceiros ;trackBy: trackId" >
                     <td>{{ parceiro.par_razaosocial }}</td>
                     <td>{{ parceiro.par_tipopessoa }}</td>
                     <td>{{ parceiro.par_cnpjcpf }}</td>

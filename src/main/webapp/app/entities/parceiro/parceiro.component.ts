@@ -10,6 +10,7 @@ import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ParceiroService } from './parceiro.service';
 import { ParceiroDeleteDialogComponent } from './parceiro-delete-dialog.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'jhi-parceiro',
@@ -24,28 +25,34 @@ export class ParceiroComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  pesquisa?: any;
+  selected = 'par_razaosocial.contains';
 
   constructor(
     protected parceiroService: ParceiroService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    private spinner: NgxSpinnerService
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     const pageToLoad: number = page || this.page || 1;
 
-    this.parceiroService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-      })
-      .subscribe(
-        (res: HttpResponse<IParceiro[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-        () => this.onError()
-      );
+    const queryParam: any = {
+      page: pageToLoad - 1,
+      size: this.itemsPerPage,
+      sort: this.sort(),
+    };
+    if (this.pesquisa) {
+      queryParam[this.selected] = this.pesquisa;
+    }
+    this.spinner.show();
+    this.parceiroService.query(queryParam).subscribe(
+      (res: HttpResponse<IParceiro[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+      () => this.onError()
+    );
   }
 
   ngOnInit(): void {
@@ -108,11 +115,23 @@ export class ParceiroComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.spinner.hide();
     this.parceiros = data || [];
     this.ngbPaginationPage = this.page;
   }
 
   protected onError(): void {
+    this.spinner.hide();
     this.ngbPaginationPage = this.page ?? 1;
+  }
+
+  onChange(): void {
+    if (this.pesquisa) {
+      this.loadPage(1, true);
+    }
+  }
+
+  pesquisar(): void {
+    this.onChange();
   }
 }
