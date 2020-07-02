@@ -16,7 +16,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'admin',
           data: {
-            authorities: [Authority.ADMIN],
+            authorities: [Authority.ADMIN, Authority.MRCONTADOR_MASTER],
           },
           canActivate: [UserRouteAccessService],
           loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
@@ -24,7 +24,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: 'contador',
           data: {
-            authorities: [Authority.ADMIN],
+            authorities: [Authority.MRCONTADOR_MASTER],
           },
           canActivate: [UserRouteAccessService],
           loadChildren: () => import('./entities/contador/contador.module').then(m => m.MrcontadorFrontContadorModule),

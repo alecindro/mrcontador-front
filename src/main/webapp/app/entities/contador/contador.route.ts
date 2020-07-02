@@ -39,7 +39,7 @@ export const contadorRoute: Routes = [
     path: '',
     component: ContadorComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.MRCONTADOR_MASTER],
       defaultSort: 'id,asc',
       pageTitle: 'mrcontadorFrontApp.contador.home.title',
     },
@@ -52,7 +52,7 @@ export const contadorRoute: Routes = [
       contador: ContadorResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.MRCONTADOR_MASTER],
       pageTitle: 'mrcontadorFrontApp.contador.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const contadorRoute: Routes = [
       contador: ContadorResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.MRCONTADOR_MASTER],
       pageTitle: 'mrcontadorFrontApp.contador.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -76,7 +76,7 @@ export const contadorRoute: Routes = [
       contador: ContadorResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.MRCONTADOR_MASTER],
       pageTitle: 'mrcontadorFrontApp.contador.home.title',
     },
     canActivate: [UserRouteAccessService],

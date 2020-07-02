@@ -71,7 +71,8 @@ module.exports = (options) => ({
                 // If this URL is left empty (""), then it will be relative to the current context.
                 // If you use an API server, in `prod` mode, you will need to enable CORS
                 // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
-                SERVER_API_URL: `'http://ec2-34-224-6-165.compute-1.amazonaws.com:8180/'`
+                //SERVER_API_URL: `'http://ec2-34-224-6-165.compute-1.amazonaws.com:8180/'`
+                SERVER_API_URL: `''`
             }
         }),
         new CopyWebpackPlugin([
@@ -98,7 +99,7 @@ module.exports = (options) => ({
             chunksSortMode: 'manual',
             inject: 'body'
         }),
-        new BaseHrefWebpackPlugin({ baseHref: '/mrcontador-front/' }),
+        new BaseHrefWebpackPlugin({ baseHref: '/' }),
         new AngularCompilerPlugin({
             mainPath: utils.root('src/main/webapp/app/app.main.ts'),
             tsConfigPath: utils.root('tsconfig.app.json'),
