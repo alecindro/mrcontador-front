@@ -1,0 +1,35 @@
+.uploadimage-dragndrop {
+  min-height: 11.57895em;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding: 75px 20px 20px 20px;
+  text-align: center;
+  border: dashed 3px #c1c3c5;
+}
+
+.uploadimage-dragndrop:before {
+  position: absolute;
+  top: 12%;
+  left: 50%;
+  margin-left: -25px;
+  content: '';
+  width: 51px;
+  height: 33px;
+  background-image: url('../../../content/images/icn-upload.png');
+  background-size: 100%;
+}
+
+.uploadimage-text {
+  font-size: 1.31579em;
+  font-weight: 600;
+  color: #b1b3b7;
+  margin-bottom: 1.05263em;
+}
+
+.uploadimage-input {
+  margin: 20px 0;
+}
+
+#upload-input {
+  margin-left: 55px;
+}
