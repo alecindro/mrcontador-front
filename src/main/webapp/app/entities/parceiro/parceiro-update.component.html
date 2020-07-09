@@ -39,7 +39,7 @@
                 <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_par_cnpjcpf">Par Cnpjcpf</label>
-                    <input type="text" class="form-control" [mask]="mask" [showMaskTyped]="true" name="par_cnpjcpf" id="field_par_cnpjcpf"
+                    <input type="text" class="form-control" [mask]="mask" [showMaskTyped]="true" name="par_cnpjcpf" id="field_par_cnpjcpf" (blur)="onCnpj()" (keyup.enter)="onCnpj()"
                            formControlName="par_cnpjcpf"/>
                     <div *ngIf="editForm.get('par_cnpjcpf')!.invalid && (editForm.get('par_cnpjcpf')!.dirty || editForm.get('par_cnpjcpf')!.touched)">
                         <small class="form-text text-danger"

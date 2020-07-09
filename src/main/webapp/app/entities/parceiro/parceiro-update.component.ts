@@ -11,6 +11,8 @@ import { IParceiro, Parceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from './parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ViaCepService } from 'app/shared/services/viacepservice';
+import { CnpjService } from 'app/shared/services/cnpjservice';
+import { CnpjModel } from 'app/shared/services/cnpjmodel';
 
 @Component({
   selector: 'jhi-parceiro-update',
@@ -60,7 +62,8 @@ export class ParceiroUpdateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private viacepService: ViaCepService,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private cnpjService: CnpjService
   ) {}
 
   ngOnInit(): void {
@@ -193,6 +196,32 @@ export class ParceiroUpdateComponent implements OnInit {
             estado: response.body?.uf,
             logradouro: response.body?.logradouro,
           });
+          this.spinner.hide();
+        },
+        error => {
+          console.log(error);
+          this.spinner.hide();
+        }
+      );
+    }
+  }
+
+  onCnpj(): void {
+    if (!this.editForm.get(['pessoafisica'])!.value) {
+      this.spinner.show();
+      this.cnpjService.query(this.editForm.get(['par_cnpjcpf'])!.value).subscribe(
+        response => {
+          const cnpjModel: CnpjModel = response.body || {};
+          this.editForm.patchValue({
+            par_razaosocial: cnpjModel.nome,
+          });
+          if (cnpjModel.atividade_principal && cnpjModel.atividade_principal.length > 0) {
+            this.editForm.patchValue({
+              area_atuacao: cnpjModel.atividade_principal[0].text,
+              spa_codigo: cnpjModel.atividade_principal[0].code,
+            });
+          }
+
           this.spinner.hide();
         },
         error => {
