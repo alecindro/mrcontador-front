@@ -9,7 +9,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
   styleUrls: ['filecomponent.scss'],
 })
 export class FileComponent {
-  progressInfos: { value: number; fileName: string; file: any }[] = [];
+  progressInfos: { value: number; fileName: string; file: any; index: number }[] = [];
   message = '';
 
   error: any = {};
@@ -21,7 +21,7 @@ export class FileComponent {
     event.preventDefault();
     this.progressInfos = [];
     for (let i = 0; i < event.target.files.length; i++) {
-      this.progressInfos[i] = { value: 0, fileName: event.target.files[i].name, file: event.target.files[i] };
+      this.progressInfos[i] = { value: 0, fileName: event.target.files[i].name, file: event.target.files[i], index: i };
     }
   }
 
@@ -58,5 +58,9 @@ export class FileComponent {
     ev.preventDefault();
     ev.target.files = ev.dataTransfer.files;
     this.selectFiles(ev);
+  }
+
+  remove(progressInfo: any): void {
+    this.progressInfos = this.progressInfos.filter(t1 => t1.fileName !== progressInfo.fileName || t1.index !== progressInfo.index);
   }
 }

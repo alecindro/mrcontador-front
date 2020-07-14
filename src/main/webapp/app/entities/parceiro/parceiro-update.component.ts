@@ -5,14 +5,14 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
-import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
+import { DATE_TIME_FORMAT } from '../../shared/constants/input.constants';
 
-import { IParceiro, Parceiro } from 'app/shared/model/parceiro.model';
+import { IParceiro, Parceiro } from '../../shared/model/parceiro.model';
 import { ParceiroService } from './parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ViaCepService } from 'app/shared/services/viacepservice';
-import { CnpjService } from 'app/shared/services/cnpjservice';
-import { CnpjModel } from 'app/shared/services/cnpjmodel';
+import { ViaCepService } from '../../shared/services/viacepservice';
+import { CnpjService } from '../../shared/services/cnpjservice';
+import { CnpjModel } from '../../shared/services/cnpjmodel';
 
 @Component({
   selector: 'jhi-parceiro-update',
@@ -31,30 +31,37 @@ export class ParceiroUpdateComponent implements OnInit {
 
   editForm = this.fb.group({
     id: [],
-    par_descricao: [null, [Validators.maxLength(50)]],
-    par_razaosocial: [null, [Validators.maxLength(70), Validators.required]],
-    par_tipopessoa: [null, [Validators.maxLength(1)]],
-    par_cnpjcpf: [null, [Validators.maxLength(20), Validators.required]],
-    par_rgie: [null, [Validators.maxLength(20)]],
-    par_obs: [null, [Validators.maxLength(200)]],
-    par_datacadastro: [],
-    spa_codigo: [],
+    parDescricao: [null, [Validators.maxLength(50)]],
+    parRazaosocial: [null, [Validators.maxLength(70), Validators.required]],
+    parTipopessoa: [null, [Validators.maxLength(1)]],
+    parCnpjcpf: [null, [Validators.maxLength(20), Validators.required]],
+    parRgie: [null, [Validators.maxLength(20)]],
+    parObs: [null, [Validators.maxLength(200)]],
+    parDatacadastro: [],
+    spaCodigo: [],
     logradouro: [],
     pessoafisica: [],
     cep: [null, [Validators.maxLength(8)]],
     cidade: [],
     estado: [],
-    area_atuacao: [],
-    comercio: [null, [Validators.required]],
-    nfc_e: [],
-    danfe: [],
-    servico: [],
-    nfs_e: [],
-    transportadora: [],
-    conhec_transporte: [],
-    industria: [],
-    ct: [],
-    outras: [],
+    areAtuacao: [],
+    numero: [],
+    bairro: [],
+    porte: [],
+    abertura: [],
+    naturezaJuridica: [],
+    ultimaAtualizacao: [],
+    status: [],
+    tipo: [],
+    complemento: [],
+    email: [],
+    telefone: [],
+    dataSituacao: [],
+    efr: [],
+    motivoSituacao: [],
+    situacaoEspecial: [],
+    dataSituacaoEspecial: [],
+    capitalSocial: [],
   });
 
   constructor(
@@ -74,12 +81,12 @@ export class ParceiroUpdateComponent implements OnInit {
       }
       this.updateForm(parceiro);
       this.mask = this.maskJuridica;
-      this.editForm.controls['par_rgie'].disable();
+      this.editForm.controls['parRgie'].disable();
       this.editForm.patchValue({ pessoafisica: this._false });
-      this.editForm.patchValue({ par_tipopessoa: this.juridica });
-      if (parceiro.par_tipopessoa && parceiro.par_tipopessoa === this.fisica) {
+      this.editForm.patchValue({ parTipopessoa: this.juridica });
+      if (parceiro.parTipopessoa && parceiro.parTipopessoa === this.fisica) {
         this.mask = this.maskFisica;
-        this.editForm.controls['par_rgie'].enable();
+        this.editForm.controls['parRgie'].enable();
         this.editForm.patchValue({ par_tipopessoa: this.fisica });
       }
     });
@@ -88,29 +95,36 @@ export class ParceiroUpdateComponent implements OnInit {
   updateForm(parceiro: IParceiro): void {
     this.editForm.patchValue({
       id: parceiro.id,
-      par_descricao: parceiro.par_descricao,
-      par_razaosocial: parceiro.par_razaosocial,
-      par_tipopessoa: parceiro.par_tipopessoa,
-      par_cnpjcpf: parceiro.par_cnpjcpf,
-      par_rgie: parceiro.par_rgie,
-      par_obs: parceiro.par_obs,
-      par_datacadastro: parceiro.par_datacadastro ? parceiro.par_datacadastro.format(DATE_TIME_FORMAT) : null,
-      spa_codigo: parceiro.spa_codigo,
+      parDescricao: parceiro.parDescricao,
+      parRazaosocial: parceiro.parRazaosocial,
+      parTipopessoa: parceiro.parTipopessoa,
+      parCnpjcpf: parceiro.parCnpjcpf,
+      parRgie: parceiro.parRgie,
+      parObs: parceiro.parObs,
+      parDatacadastro: parceiro.parDatacadastro ? parceiro.parDatacadastro.format(DATE_TIME_FORMAT) : null,
+      spaCodigo: parceiro.spaCodigo,
       logradouro: parceiro.logradouro,
       cep: parceiro.cep,
       cidade: parceiro.cidade,
       estado: parceiro.estado,
-      area_atuacao: parceiro.area_atuacao,
-      comercio: parceiro.comercio,
-      nfc_e: parceiro.nfc_e,
-      danfe: parceiro.danfe,
-      servico: parceiro.servico,
-      nfs_e: parceiro.nfs_e,
-      transportadora: parceiro.transportadora,
-      conhec_transporte: parceiro.conhec_transporte,
-      industria: parceiro.industria,
-      ct: parceiro.ct,
-      outras: parceiro.outras,
+      areAtuacao: parceiro.areAtuacao,
+      numero: parceiro.numero,
+      bairro: parceiro.bairro,
+      porte: parceiro.porte,
+      abertura: parceiro.abertura,
+      naturezaJuridica: parceiro.naturezaJuridica,
+      ultimaAtualizacao: parceiro.ultimaAtualizacao,
+      status: parceiro.status,
+      tipo: parceiro.tipo,
+      complemento: parceiro.complemento,
+      email: parceiro.email,
+      telefone: parceiro.telefone,
+      dataSituacao: parceiro.dataSituacao,
+      efr: parceiro.efr,
+      motivoSituacao: parceiro.motivoSituacao,
+      situacaoEspecial: parceiro.situacaoEspecial,
+      dataSituacaoEspecial: parceiro.dataSituacaoEspecial,
+      capitalSocial: parceiro.capitalSocial,
     });
   }
 
@@ -132,31 +146,38 @@ export class ParceiroUpdateComponent implements OnInit {
     return {
       ...new Parceiro(),
       id: this.editForm.get(['id'])!.value,
-      par_descricao: this.editForm.get(['par_descricao'])!.value,
-      par_razaosocial: this.editForm.get(['par_razaosocial'])!.value,
-      par_tipopessoa: this.editForm.get(['pessoafisica'])!.value ? this.fisica : this.juridica,
-      par_cnpjcpf: this.editForm.get(['par_cnpjcpf'])!.value,
-      par_rgie: this.editForm.get(['par_rgie'])!.value,
-      par_obs: this.editForm.get(['par_obs'])!.value,
-      par_datacadastro: this.editForm.get(['par_datacadastro'])!.value
-        ? moment(this.editForm.get(['par_datacadastro'])!.value, DATE_TIME_FORMAT)
+      parDescricao: this.editForm.get(['parDescricao'])!.value,
+      parRazaosocial: this.editForm.get(['parRazaosocial'])!.value,
+      parTipopessoa: this.editForm.get(['pessoafisica'])!.value ? this.fisica : this.juridica,
+      parCnpjcpf: this.editForm.get(['parCnpjcpf'])!.value,
+      parRgie: this.editForm.get(['parRgie'])!.value,
+      parObs: this.editForm.get(['parObs'])!.value,
+      parDatacadastro: this.editForm.get(['parDatacadastro'])!.value
+        ? moment(this.editForm.get(['parDatacadastro'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      spa_codigo: this.editForm.get(['spa_codigo'])!.value,
+      spaCodigo: this.editForm.get(['spaCodigo'])!.value,
       logradouro: this.editForm.get(['logradouro'])!.value,
       cep: this.editForm.get(['cep'])!.value,
       cidade: this.editForm.get(['cidade'])!.value,
       estado: this.editForm.get(['estado'])!.value,
-      area_atuacao: this.editForm.get(['area_atuacao'])!.value,
-      comercio: this.editForm.get(['comercio'])!.value,
-      nfc_e: this.editForm.get(['nfc_e'])!.value,
-      danfe: this.editForm.get(['danfe'])!.value,
-      servico: this.editForm.get(['servico'])!.value,
-      nfs_e: this.editForm.get(['nfs_e'])!.value,
-      transportadora: this.editForm.get(['transportadora'])!.value,
-      conhec_transporte: this.editForm.get(['conhec_transporte'])!.value,
-      industria: this.editForm.get(['industria'])!.value,
-      ct: this.editForm.get(['ct'])!.value,
-      outras: this.editForm.get(['outras'])!.value,
+      areAtuacao: this.editForm.get(['areAtuacao'])!.value,
+      numero: this.editForm.get(['numero'])!.value,
+      bairro: this.editForm.get(['bairro'])!.value,
+      porte: this.editForm.get(['porte'])!.value,
+      abertura: this.editForm.get(['abertura'])!.value,
+      naturezaJuridica: this.editForm.get(['naturezaJuridica'])!.value,
+      ultimaAtualizacao: this.editForm.get(['ultimaAtualizacao'])!.value,
+      status: this.editForm.get(['status'])!.value,
+      tipo: this.editForm.get(['tipo'])!.value,
+      complemento: this.editForm.get(['complemento'])!.value,
+      email: this.editForm.get(['email'])!.value,
+      telefone: this.editForm.get(['telefone'])!.value,
+      dataSituacao: this.editForm.get(['dataSituacao'])!.value,
+      efr: this.editForm.get(['efr'])!.value,
+      motivoSituacao: this.editForm.get(['motivoSituacao'])!.value,
+      situacaoEspecial: this.editForm.get(['situacaoEspecial'])!.value,
+      dataSituacaoEspecial: this.editForm.get(['dataSituacaoEspecial'])!.value,
+      capitalSocial: this.editForm.get(['capitalSocial'])!.value,
     };
   }
 
@@ -179,10 +200,10 @@ export class ParceiroUpdateComponent implements OnInit {
   onChange(): void {
     if (this.editForm.get(['pessoafisica'])!.value) {
       this.mask = this.maskFisica;
-      this.editForm.controls['par_rgie'].enable();
+      this.editForm.controls['parRgie'].enable();
     } else {
       this.mask = this.maskJuridica;
-      this.editForm.controls['par_rgie'].disable();
+      this.editForm.controls['parRgie'].disable();
     }
   }
 
@@ -209,7 +230,7 @@ export class ParceiroUpdateComponent implements OnInit {
   onCnpj(): void {
     if (!this.editForm.get(['pessoafisica'])!.value) {
       this.spinner.show();
-      this.cnpjService.query(this.editForm.get(['par_cnpjcpf'])!.value).subscribe(
+      this.cnpjService.query(this.editForm.get(['parCnpjcpf'])!.value).subscribe(
         response => {
           const cnpjModel: CnpjModel = response.body || {};
           this.editForm.patchValue({

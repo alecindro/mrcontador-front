@@ -44,7 +44,7 @@
     },
     {
       "fieldName": "ext_debito",
-      "fieldType": "BigDecimal"
+      "fieldType": "BigDecimal",
     },
     {
       "fieldName": "ext_credito",
@@ -57,7 +57,7 @@
       "fieldValidateRulesMaxlength": "30"
     }
   ],
-  "changelogDate": "20200628225654",
+  "changelogDate": "20200627211731",
   "dto": "mapstruct",
   "searchEngine": false,
   "service": "serviceClass",

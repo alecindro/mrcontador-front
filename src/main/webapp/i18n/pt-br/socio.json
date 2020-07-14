@@ -1,0 +1,24 @@
+{
+  "mrcontadorFrontApp": {
+    "socio": {
+      "home": {
+        "title": "Socios",
+        "createLabel": "Criar novo Socio",
+        "createOrEditLabel": "Criar ou editar Socio",
+        "notFound": "Nenhum Socio encontrado"
+      },
+      "created": "Um novo Socio foi criado com o identificador {{ param }}",
+      "updated": "Um Socio foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Socio foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Socio {{ id }}?"
+      },
+      "detail": {
+        "title": "Socio"
+      },
+      "descricao": "Descricao",
+      "nome": "Nome",
+      "parceiro": "Parceiro"
+    }
+  }
+}

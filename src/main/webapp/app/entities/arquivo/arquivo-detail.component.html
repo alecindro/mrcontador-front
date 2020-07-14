@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="arquivo">
+            <h2><span jhiTranslate="mrcontadorFrontApp.arquivo.detail.title">Arquivo</span> {{ arquivo.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.nome">Nome</span></dt>
+                <dd>
+                    <span>{{ arquivo.nome }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.nomeOriginal">Nome Original</span></dt>
+                <dd>
+                    <span>{{ arquivo.nomeOriginal }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.dataCadastro">Data Cadastro</span></dt>
+                <dd>
+                    <span>{{ arquivo.dataCadastro }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.tipoArquivo">Tipo Arquivo</span></dt>
+                <dd>
+                    <span>{{ arquivo.tipoArquivo }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.tipoDoc">Tipo Doc</span></dt>
+                <dd>
+                    <span>{{ arquivo.tipoDoc }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.s3Url">S 3 Url</span></dt>
+                <dd>
+                    <span>{{ arquivo.s3Url }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.s3Dir">S 3 Dir</span></dt>
+                <dd>
+                    <span>{{ arquivo.s3Dir }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.tamanho">Tamanho</span></dt>
+                <dd>
+                    <span>{{ arquivo.tamanho }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.etag">Etag</span></dt>
+                <dd>
+                    <span>{{ arquivo.etag }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.usuario">Usuario</span></dt>
+                <dd>
+                    <span>{{ arquivo.usuario }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.arquivo.parceiro">Parceiro</span></dt>
+                <dd>
+                    <div *ngIf="arquivo.parceiro">
+                        <a [routerLink]="['/parceiro', arquivo.parceiro?.id, 'view']">{{ arquivo.parceiro?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/arquivo', arquivo.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

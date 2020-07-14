@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="socio">
+            <h2><span jhiTranslate="mrcontadorFrontApp.socio.detail.title">Socio</span> {{ socio.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="mrcontadorFrontApp.socio.descricao">Descricao</span></dt>
+                <dd>
+                    <span>{{ socio.descricao }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.socio.nome">Nome</span></dt>
+                <dd>
+                    <span>{{ socio.nome }}</span>
+                </dd>
+                <dt><span jhiTranslate="mrcontadorFrontApp.socio.parceiro">Parceiro</span></dt>
+                <dd>
+                    <div *ngIf="socio.parceiro">
+                        <a [routerLink]="['/parceiro', socio.parceiro?.id, 'view']">{{ socio.parceiro?.id }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/socio', socio.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

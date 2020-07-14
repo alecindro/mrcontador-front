@@ -17,6 +17,9 @@
         "notaservico": "Nota Servico",
         "regra": "Regra",
         "extrato": "Extrato",
+        "arquivo": "Arquivo",
+        "atividade": "Atividade",
+        "socio": "Socio",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

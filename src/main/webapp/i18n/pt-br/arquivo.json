@@ -1,0 +1,32 @@
+{
+  "mrcontadorFrontApp": {
+    "arquivo": {
+      "home": {
+        "title": "Arquivos",
+        "createLabel": "Criar novo Arquivo",
+        "createOrEditLabel": "Criar ou editar Arquivo",
+        "notFound": "Nenhum Arquivo encontrado"
+      },
+      "created": "Um novo Arquivo foi criado com o identificador {{ param }}",
+      "updated": "Um Arquivo foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Arquivo foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Arquivo {{ id }}?"
+      },
+      "detail": {
+        "title": "Arquivo"
+      },
+      "nome": "Nome",
+      "nomeOriginal": "Nome Original",
+      "dataCadastro": "Data Cadastro",
+      "tipoArquivo": "Tipo Arquivo",
+      "tipoDoc": "Tipo Doc",
+      "s3Url": "S 3 Url",
+      "s3Dir": "S 3 Dir",
+      "tamanho": "Tamanho",
+      "etag": "Etag",
+      "usuario": "Usuario",
+      "parceiro": "Parceiro"
+    }
+  }
+}

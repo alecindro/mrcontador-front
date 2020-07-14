@@ -2,66 +2,70 @@ import { Moment } from 'moment';
 
 export interface IParceiro {
   id?: number;
-  par_descricao?: string;
-  par_razaosocial?: string;
-  par_tipopessoa?: string;
-  par_cnpjcpf?: string;
-  par_rgie?: string;
-  par_obs?: string;
-  par_datacadastro?: Moment;
-  spa_codigo?: number;
+  parDescricao?: string;
+  parRazaosocial?: string;
+  parTipopessoa?: string;
+  parCnpjcpf?: string;
+  parRgie?: string;
+  parObs?: string;
+  parDatacadastro?: Moment;
+  spaCodigo?: number;
   logradouro?: string;
   cep?: string;
   cidade?: string;
   estado?: string;
-  area_atuacao?: string;
-  comercio?: boolean;
-  nfc_e?: boolean;
-  danfe?: boolean;
-  servico?: boolean;
-  nfs_e?: boolean;
-  transportadora?: boolean;
-  conhec_transporte?: boolean;
-  industria?: boolean;
-  ct?: boolean;
-  outras?: string;
+  areAtuacao?: string;
+  numero?: string;
+  bairro?: string;
+  porte?: string;
+  abertura?: string;
+  naturezaJuridica?: string;
+  ultimaAtualizacao?: string;
+  status?: string;
+  tipo?: string;
+  complemento?: string;
+  email?: string;
+  telefone?: string;
+  dataSituacao?: string;
+  efr?: string;
+  motivoSituacao?: string;
+  situacaoEspecial?: string;
+  dataSituacaoEspecial?: string;
+  capitalSocial?: string;
 }
 
 export class Parceiro implements IParceiro {
   constructor(
     public id?: number,
-    public par_descricao?: string,
-    public par_razaosocial?: string,
-    public par_tipopessoa?: string,
-    public par_cnpjcpf?: string,
-    public par_rgie?: string,
-    public par_obs?: string,
-    public par_datacadastro?: Moment,
-    public spa_codigo?: number,
+    public parDescricao?: string,
+    public parRazaosocial?: string,
+    public parTipopessoa?: string,
+    public parCnpjcpf?: string,
+    public parRgie?: string,
+    public parObs?: string,
+    public parDatacadastro?: Moment,
+    public spaCodigo?: number,
     public logradouro?: string,
     public cep?: string,
     public cidade?: string,
     public estado?: string,
-    public area_atuacao?: string,
-    public comercio?: boolean,
-    public nfc_e?: boolean,
-    public danfe?: boolean,
-    public servico?: boolean,
-    public nfs_e?: boolean,
-    public transportadora?: boolean,
-    public conhec_transporte?: boolean,
-    public industria?: boolean,
-    public ct?: boolean,
-    public outras?: string
-  ) {
-    this.comercio = this.comercio || false;
-    this.nfc_e = this.nfc_e || false;
-    this.danfe = this.danfe || false;
-    this.servico = this.servico || false;
-    this.nfs_e = this.nfs_e || false;
-    this.transportadora = this.transportadora || false;
-    this.conhec_transporte = this.conhec_transporte || false;
-    this.industria = this.industria || false;
-    this.ct = this.ct || false;
-  }
+    public areAtuacao?: string,
+    public numero?: string,
+    public bairro?: string,
+    public porte?: string,
+    public abertura?: string,
+    public naturezaJuridica?: string,
+    public ultimaAtualizacao?: string,
+    public status?: string,
+    public tipo?: string,
+    public complemento?: string,
+    public email?: string,
+    public telefone?: string,
+    public dataSituacao?: string,
+    public efr?: string,
+    public motivoSituacao?: string,
+    public situacaoEspecial?: string,
+    public dataSituacaoEspecial?: string,
+    public capitalSocial?: string
+  ) {}
 }

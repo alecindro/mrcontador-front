@@ -50,14 +50,14 @@ export class ParceiroService {
 
   protected convertDateFromClient(parceiro: IParceiro): IParceiro {
     const copy: IParceiro = Object.assign({}, parceiro, {
-      par_datacadastro: parceiro.par_datacadastro && parceiro.par_datacadastro.isValid() ? parceiro.par_datacadastro.toJSON() : undefined,
+      par_datacadastro: parceiro.parDatacadastro && parceiro.parDatacadastro.isValid() ? parceiro.parDatacadastro.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.par_datacadastro = res.body.par_datacadastro ? moment(res.body.par_datacadastro) : undefined;
+      res.body.parDatacadastro = res.body.parDatacadastro ? moment(res.body.parDatacadastro) : undefined;
     }
     return res;
   }
@@ -65,7 +65,7 @@ export class ParceiroService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((parceiro: IParceiro) => {
-        parceiro.par_datacadastro = parceiro.par_datacadastro ? moment(parceiro.par_datacadastro) : undefined;
+        parceiro.parDatacadastro = parceiro.parDatacadastro ? moment(parceiro.parDatacadastro) : undefined;
       });
     }
     return res;

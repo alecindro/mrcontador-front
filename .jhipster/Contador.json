@@ -40,13 +40,13 @@
       "fieldType": "String"
     }
   ],
-  "changelogDate": "20200623160629",
-  "dto": "no",
+  "changelogDate": "20200623154424",
+  "dto": "mapstruct",
   "searchEngine": false,
-  "service": "no",
+  "service": "serviceClass",
   "entityTableName": "contador",
   "databaseType": "sql",
   "readOnly": false,
-  "jpaMetamodelFiltering": false,
+  "jpaMetamodelFiltering": true,
   "pagination": "pagination"
 }

@@ -84,7 +84,7 @@ export class AgenciabancariaUpdateComponent implements OnInit {
       this.editForm.patchValue({
         parceiroId: agenciabancaria.parceiro.id,
         parceiro_id: agenciabancaria.parceiro.id,
-        par_razaosocial: agenciabancaria.parceiro.par_razaosocial,
+        par_razaosocial: agenciabancaria.parceiro.parRazaosocial,
       });
     }
   }

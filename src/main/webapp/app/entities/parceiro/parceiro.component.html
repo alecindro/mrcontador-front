@@ -24,10 +24,10 @@
                     </div>
                     <div class="col-md-2">
                         <select class="custom-select" (change)="onChange()" [(ngModel)]="selected">
-                            <option value="par_razaosocial.contains"><span
+                            <option value="parRazaosocial.contains"><span
                                     jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"></span>
                             </option>
-                            <option value="ban_codigobancario.contains"><span
+                            <option value="banCodigobancario.contains"><span
                                     jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
                             </option>
                             
@@ -44,12 +44,12 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="par_razaosocial"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial">Par Razaosocial</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="par_tipopessoa"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_tipopessoa">Par Tipopessoa</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="par_cnpjcpf"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf">Par Cnpjcpf</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="par_rgie"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_rgie">Par Rgie</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="par_datacadastro"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro">Par Datacadastro</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="spa_codigo"><span jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo">Spa Codigo</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="parRazaosocial"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial">Par Razaosocial</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="parTipopessoa"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_tipopessoa">Par Tipopessoa</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="parCnpjcpf"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf">Par Cnpjcpf</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="parRgie"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_rgie">Par Rgie</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="parDatacadastro"><span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro">Par Datacadastro</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="spaCodigo"><span jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo">Spa Codigo</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cep"><span jhiTranslate="mrcontadorFrontApp.parceiro.cep">Cep</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="cidade"><span jhiTranslate="mrcontadorFrontApp.parceiro.cidade">Cidade</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="estado"><span jhiTranslate="mrcontadorFrontApp.parceiro.estado">Estado</span> <fa-icon icon="sort"></fa-icon></th>
@@ -71,12 +71,12 @@
             </tbody>
             <tbody *ngIf="parceiros && parceiros.length > 0">
                 <tr *ngFor="let parceiro of parceiros ;trackBy: trackId" >
-                    <td>{{ parceiro.par_razaosocial }}</td>
-                    <td>{{ parceiro.par_tipopessoa }}</td>
-                    <td>{{ parceiro.par_cnpjcpf }}</td>
-                    <td>{{ parceiro.par_rgie }}</td>
-                    <td>{{ parceiro.par_datacadastro |  date: 'dd/MM/yyyy' }}</td>
-                    <td>{{ parceiro.spa_codigo }}</td>
+                    <td>{{ parceiro.parRazaosocial }}</td>
+                    <td>{{ parceiro.parTipopessoa }}</td>
+                    <td>{{ parceiro.parCnpjcpf }}</td>
+                    <td>{{ parceiro.parRgie }}</td>
+                    <td>{{ parceiro.parDatacadastro |  date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ parceiro.spaCodigo }}</td>
                     <td>{{ parceiro.cep }}</td>
                     <td>{{ parceiro.cidade }}</td>
                     <td>{{ parceiro.estado }}</td>
