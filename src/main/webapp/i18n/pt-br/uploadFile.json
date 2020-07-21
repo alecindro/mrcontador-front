@@ -1,0 +1,27 @@
+{
+  "mrcontadorFrontApp": {
+    "uploadFile": {
+      "home": {
+        "title": "Arquivos",
+        "createLabel": "Criar novo Arquivo",
+        "createOrEditLabel": "Criar ou editar Arquivo",
+        "notFound": "Nenhum Arquivo encontrado"
+      },
+      "created": "O arquivo foi {{ param }} foi processaod",
+      "detail": {
+        "title": "Arquivo"
+      },
+      "nome": "Nome",
+      "nomeOriginal": "Nome Original",
+      "dataCadastro": "Data Cadastro",
+      "tipoArquivo": "Tipo Arquivo",
+      "tipoDoc": "Tipo Doc",
+      "s3Url": "S3 Url",
+      "s3Dir": "S3 Dir",
+      "tamanho": "Tamanho",
+      "etag": "Etag",
+      "usuario": "Usuario",
+      "parceiro": "Parceiro"
+    }
+  }
+}

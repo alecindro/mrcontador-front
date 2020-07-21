@@ -20,7 +20,7 @@
      
     </div>
     <label class="btn btn-default">
-      <input type="file" multiple (change)="selectFiles($event)" [disabled]="progressInfos"/>
+      <input type="file" multiple (change)="selectFiles($event)" [disabled]="!progressInfos"/>
     </label>
     <button class="btn btn-success" [disabled]="!progressInfos" (click)="uploadFiles()">
       Upload

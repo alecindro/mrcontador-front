@@ -11,7 +11,11 @@
     },
     "concurrencyFailure": "Outro usuário modificou esses dados ao mesmo tempo que você. Suas modificações foram rejeitadas.",
     "validation": "Erro de validação no servidor.",
-    "file.no.implemented": "Tipo de arquivo desconhecido",
-    "file.process": "Erro ao processar arquivo"
+    "file.no.implemented.error": "Tipo de arquivo desconhecido {{ param }}",
+    "file.process.error": "Erro ao processar arquivo {{ param }}",
+    "pdf.parse.error": "Erro ao processar PDF {{ param }}",
+    "conta.exists.error": "Plano de Conta já existente para o CNPJ {{ param }}",
+    "planoconta.cnpj.error": "Não existe CNPJ no plano de conta",
+    "upload.aws.error": "Erro ao salvar o documento"
   }
 }
