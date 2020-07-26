@@ -1,0 +1,131 @@
+<div class="col-12 justify-content-center">
+    <div class="bg-primary" style="border-radius: 0.3rem;padding: 1rem 1rem 0rem 0rem;">
+        <div class="text-right pb-3">
+            <div class="row align-items-end">
+                <div class="col-6">
+                </div>
+                <div class="col-md-2">
+                    <input class="custom-input" [(ngModel)]="pesquisa" (search)="pesquisar()" placeholder="Pesquisar..."
+                        type="search">
+                    <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+                        style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+                </div>
+                <div class="col-md-2">
+                    <select class="custom-select" (change)="onChange()" [(ngModel)]="selected">
+                        <option value="par_razaosocial.contains"><span
+                                jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"></span>
+                        </option>
+                        <option value="par_cnpjcpf.contains"><span
+                                jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
+                        </option>
+
+                        <option value="cidade.contains"><span jhiTranslate="mrcontadorFrontApp.parceiro.cidade"></span>
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button id="jh-create-entity" class="btn btn-success float-right jh-create-entity create-parceiro"
+                        [routerLink]="['/parceiro/new']">
+                        <fa-icon icon="plus"></fa-icon>
+                        <span jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card-deck mb-3 text-center" *ngIf="!parceiros || parceiros.length === 0">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <div class="alert alert-danger" id="no-result">
+                        <span jhiTranslate="mrcontadorFrontApp.parceiro.home.notFound"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 mt-3" *ngIf="parceiros && parceiros.length > 0">
+            <div class="col mb-4" *ngFor="let parceiro of parceiros">
+                <div class="card shadow-sm h-100 bg-success">
+                    <div class="card-header text-center">
+                        <h5 class="my-0 font-weight-normal">{{ parceiro.parRazaosocial }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
+                                </div>
+                                <div class="col-md-7 text-left">
+                                    <span *ngIf="parceiro.parCnpjcpf">{{ parceiro.parCnpjcpf | mask: '00.000.000/0000-00'}}</span> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.email"></span>
+                                </div>
+                                <div class="col-md-7 text-left">
+                                    {{ parceiro.email }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.telefone"></span>
+                                </div>
+                                <div class="col-md-7 text-left">
+                                    {{ parceiro.telefone }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro"></span>
+                                </div>
+                                <div class="col-md-7 text-left">
+                                    {{ parceiro.parDatacadastro |  date: 'dd/MM/yyyy' }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.cidade"></span>
+                                </div>
+                                <div class="col-md-7 text-left">
+                                    {{ parceiro.cidade }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.estado"></span>
+                                </div>
+                                <div class="col-md-7 text-left">
+                                    {{ parceiro.estado }}
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="text-center bg-secondary rounded-sm"><span
+                            jhiTranslate="mrcontadorFrontApp.parceiro.home.lastPeriod"></span> 00/00/0000</h6>
+                        <button type="submit" [routerLink]="['/parceiro', parceiro.id, 'view']"
+                            class="btn btn-lg btn-block btn-primary mt-3">
+                            <fa-icon icon="eye"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="parceiros && parceiros.length > 0">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+                    [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>

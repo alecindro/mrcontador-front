@@ -14,6 +14,7 @@
     "file.no.implemented.error": "Tipo de arquivo desconhecido {{ param }}",
     "file.process.error": "Erro ao processar arquivo {{ param }}",
     "pdf.parse.error": "Erro ao processar PDF {{ param }}",
+    "planodeconta.parse.error": "Erro ao processar Plano de Conta {{ param }}",
     "conta.exists.error": "Plano de Conta já existente para o CNPJ {{ param }}",
     "planoconta.cnpj.error": "Não existe CNPJ no plano de conta",
     "upload.aws.error": "Erro ao salvar o documento"

@@ -8,9 +8,9 @@ import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { IParceiro, Parceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from './parceiro.service';
-import { ParceiroComponent } from './parceiro.component';
 import { ParceiroDetailComponent } from './parceiro-detail.component';
-import { ParceiroUpdateComponent } from './parceiro-update.component';
+import { ParceiroDashComponent } from './parceiro-dash.component';
+import { ParceiroCreateComponent } from './parceiro-create.component';
 
 @Injectable({ providedIn: 'root' })
 export class ParceiroResolve implements Resolve<IParceiro> {
@@ -37,7 +37,7 @@ export class ParceiroResolve implements Resolve<IParceiro> {
 export const parceiroRoute: Routes = [
   {
     path: '',
-    component: ParceiroComponent,
+    component: ParceiroDashComponent,
     data: {
       authorities: [Authority.USER],
       defaultSort: 'id,asc',
@@ -59,7 +59,7 @@ export const parceiroRoute: Routes = [
   },
   {
     path: 'new',
-    component: ParceiroUpdateComponent,
+    component: ParceiroCreateComponent,
     resolve: {
       parceiro: ParceiroResolve,
     },
@@ -71,7 +71,7 @@ export const parceiroRoute: Routes = [
   },
   {
     path: ':id/edit',
-    component: ParceiroUpdateComponent,
+    component: ParceiroCreateComponent,
     resolve: {
       parceiro: ParceiroResolve,
     },

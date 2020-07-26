@@ -31,6 +31,12 @@ export class ParceiroService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  createByCnpj(cnpj: string): Observable<EntityResponseType> {
+    return this.http
+      .get<IParceiro>(`${this.resourceUrl}/cnpj?cnpj=${cnpj}`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IParceiro>(`${this.resourceUrl}/${id}`, { observe: 'response' })

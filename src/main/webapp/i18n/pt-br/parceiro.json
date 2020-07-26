@@ -5,7 +5,8 @@
         "title": "Clientes",
         "createLabel": "Cadastrar clientes",
         "createOrEditLabel": "Cadastro de Clientes",
-        "notFound": "Nenhum cliente encontrado"
+        "notFound": "Nenhum cliente encontrado",
+        "lastPeriod": "Última exportação"
       },
       "created": "O cliente {{ param }} foi criado",
       "updated": "O cliente {{ param }} foi atualizado",
@@ -29,16 +30,23 @@
       "cidade": "Cidade",
       "estado": "Estado",
       "area_atuacao": "Área de atuação",
-      "comercio": "Comércio (S/N)",
-      "nfc_e": "Nfc-E (S/N)",
-      "danfe": "Danfe (S/N)",
-      "servico": "Serviço (S/N)",
-      "nfs_e": "Nfs-E (S/N)",
-      "transportadora": "Transportadora (S/N)",
-      "conhec_transporte": "CTe (S/N)",
-      "industria": "Indústria (S/N)",
-      "ct": "CT (S/N)",
-      "outras": "Outras:"
+      "bairro": "Bairro",
+      "numero": "Número",
+      "complemento": "Complemento",
+      "tipo": "Tipo",
+      "telefone": "Telefone",
+      "dataSituacao": "Data de Situação",
+      "efr": "EFR",
+      "motivoSituacao": "Motivo da Situação",
+      "situacaoEspecial": "Situação Especial",
+      "dataSituacaoEspecial": "Data da Situação Especial",
+      "Capital Social": "Capital Social",
+      "naturezaJuridica": "Natureza Juridica",
+      "ultimaAtualizacao": "Última Atualização",
+      "abertura": "Abertura",
+      "porte": "Porte",
+      "email": "Email",
+      "status": "Status"
     }
   }
 }

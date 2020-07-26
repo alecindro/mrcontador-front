@@ -1,6 +1,6 @@
 {
   "login": {
-    "title": "Autenticação",
+    "title": "MrContador",
     "form": {
       "password": "Senha",
       "password.placeholder": "Sua senha",

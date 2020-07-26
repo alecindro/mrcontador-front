@@ -9,12 +9,14 @@ type EntityResponseType = HttpResponse<any>;
   providedIn: 'root',
 })
 export class UploadService {
-  public resourceUrl = SERVER_API_URL + 'api/uploadFile';
+  public resourceUrl = SERVER_API_URL + 'api/upload/planoconta';
   constructor(private http: HttpClient) {}
 
-  public upload(data: any): any {
+  public upload(file: File): any {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
     return this.http
-      .post<any>(this.resourceUrl, data, {
+      .post<any>(this.resourceUrl, formData, {
         reportProgress: true,
         observe: 'events',
       })
@@ -37,7 +39,6 @@ export class UploadService {
 
   public uploadFiles(file: File): Observable<any> {
     const formData: FormData = new FormData();
-
     formData.append('file', file);
     return this.http.post<any>(this.resourceUrl, formData, {
       reportProgress: true,

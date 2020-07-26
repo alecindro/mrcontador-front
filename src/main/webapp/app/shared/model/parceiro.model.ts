@@ -1,4 +1,7 @@
 import { Moment } from 'moment';
+import { Agenciabancaria } from './agenciabancaria.model';
+import { Atividade } from './atividade.model';
+import { Socio } from './socio.model';
 
 export interface IParceiro {
   id?: number;
@@ -32,6 +35,10 @@ export interface IParceiro {
   situacaoEspecial?: string;
   dataSituacaoEspecial?: string;
   capitalSocial?: string;
+  enabled?: boolean;
+  agenciabancarias?: Agenciabancaria[];
+  atividades?: Atividade[];
+  socios?: Socio[];
 }
 
 export class Parceiro implements IParceiro {
@@ -66,6 +73,10 @@ export class Parceiro implements IParceiro {
     public motivoSituacao?: string,
     public situacaoEspecial?: string,
     public dataSituacaoEspecial?: string,
-    public capitalSocial?: string
+    public capitalSocial?: string,
+    public enabled?: boolean,
+    public agenciabancarias?: Agenciabancaria[],
+    public atividades?: Atividade[],
+    public socios?: Socio[]
   ) {}
 }
