@@ -14,7 +14,7 @@ type EntityArrayResponseType = HttpResponse<IParceiro[]>;
 @Injectable({ providedIn: 'root' })
 export class ParceiroService {
   public resourceUrl = SERVER_API_URL + 'api/parceiros';
-
+  private parceiroSelected!: IParceiro;
   constructor(protected http: HttpClient) {}
 
   create(parceiro: IParceiro): Observable<EntityResponseType> {
@@ -22,6 +22,13 @@ export class ParceiroService {
     return this.http
       .post<IParceiro>(this.resourceUrl, copy, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  getParceiroSelected(): IParceiro {
+    return this.parceiroSelected;
+  }
+  setParceiroSelected(parceiro: IParceiro): void {
+    this.parceiroSelected = parceiro;
   }
 
   update(parceiro: IParceiro): Observable<EntityResponseType> {

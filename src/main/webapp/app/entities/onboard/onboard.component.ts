@@ -40,6 +40,7 @@ export class OnboardComponent implements OnInit {
   }
   onChangeParceiro(parceiro: IParceiro): void {
     this.parceiro = parceiro;
+    this.parceiroService.setParceiroSelected(parceiro);
     this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
   }
   compareFn(val1: IParceiro, val2: IParceiro): boolean {

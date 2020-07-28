@@ -14,6 +14,7 @@ import { AgenciaDashComponent } from './agencia/agenciadash.component';
 import { NsDashComponent } from './notaservico/nsdash.component';
 import { CadDashComponent } from './cadastro/caddash.component';
 import { MrcontadorFrontParceiroModule } from '../parceiro/parceiro.module';
+import { MrcontadorFrontSharedModule } from 'app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MrcontadorFrontParceiroModule } from '../parceiro/parceiro.module';
     MrcontadorFrontNotafiscalModule,
     MrcontadorFrontNotaservicoModule,
     MrcontadorFrontParceiroModule,
+    MrcontadorFrontSharedModule,
   ],
 })
 export class OnboardModule {}
