@@ -12,5 +12,6 @@ import { notafiscalRoute } from './notafiscal.route';
   imports: [MrcontadorFrontSharedModule, RouterModule.forChild(notafiscalRoute)],
   declarations: [NotafiscalComponent, NotafiscalDetailComponent, NotafiscalUpdateComponent, NotafiscalDeleteDialogComponent],
   entryComponents: [NotafiscalDeleteDialogComponent],
+  exports: [NotafiscalComponent],
 })
 export class MrcontadorFrontNotafiscalModule {}

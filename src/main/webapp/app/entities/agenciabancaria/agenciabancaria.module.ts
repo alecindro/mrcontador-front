@@ -18,5 +18,6 @@ import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
     AgenciabancariaDeleteDialogComponent,
   ],
   entryComponents: [AgenciabancariaDeleteDialogComponent],
+  exports: [AgenciabancariaComponent],
 })
 export class MrcontadorFrontAgenciabancariaModule {}

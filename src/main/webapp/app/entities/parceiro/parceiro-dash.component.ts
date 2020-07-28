@@ -7,7 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { IParceiro } from 'app/shared/model/parceiro.model';
 
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import { ITEMS_DASH_PARCEIRO } from 'app/shared/constants/pagination.constants';
 import { ParceiroService } from './parceiro.service';
 import { ParceiroDeleteDialogComponent } from './parceiro-delete-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,10 +17,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './parceiro-dash.component.html',
 })
 export class ParceiroDashComponent implements OnInit, OnDestroy {
-  parceiros?: IParceiro[];
+  parceiros!: IParceiro[];
   eventSubscriber?: Subscription;
   totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
+  itemsPerPage = ITEMS_DASH_PARCEIRO;
   page!: number;
   predicate!: string;
   ascending!: boolean;

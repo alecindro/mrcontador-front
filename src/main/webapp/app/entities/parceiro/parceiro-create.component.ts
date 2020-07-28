@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse, HttpEventType } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -157,12 +156,15 @@ export class ParceiroCreateComponent implements OnInit {
     this.isSaving = true;
     const parceiro = this.createFromForm();
     parceiro.enabled = true;
+    this.spinner.show();
     this.subscribeToSaveResponse(this.parceiroService.create(parceiro));
   }
 
   saveClick(): void {
     if (this.editForm.dirty) {
       this.save();
+    } else {
+      this.previousState();
     }
   }
 
@@ -214,11 +216,14 @@ export class ParceiroCreateComponent implements OnInit {
   protected onSaveSuccess(): void {
     this.isSaving = false;
     this.editable = false;
+    this.spinner.hide();
+    this.previousState();
   }
 
   protected onSaveError(): void {
     this.isSaving = false;
     this.editable = true;
+    this.spinner.hide();
   }
 
   onCnpj(): void {

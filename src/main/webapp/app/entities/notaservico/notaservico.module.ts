@@ -12,5 +12,6 @@ import { notaservicoRoute } from './notaservico.route';
   imports: [MrcontadorFrontSharedModule, RouterModule.forChild(notaservicoRoute)],
   declarations: [NotaservicoComponent, NotaservicoDetailComponent, NotaservicoUpdateComponent, NotaservicoDeleteDialogComponent],
   entryComponents: [NotaservicoDeleteDialogComponent],
+  exports: [NotaservicoComponent],
 })
 export class MrcontadorFrontNotaservicoModule {}

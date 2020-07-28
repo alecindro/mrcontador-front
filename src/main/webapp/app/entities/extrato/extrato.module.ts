@@ -12,5 +12,6 @@ import { extratoRoute } from './extrato.route';
   imports: [MrcontadorFrontSharedModule, RouterModule.forChild(extratoRoute)],
   declarations: [ExtratoComponent, ExtratoDetailComponent, ExtratoUpdateComponent, ExtratoDeleteDialogComponent],
   entryComponents: [ExtratoDeleteDialogComponent],
+  exports: [ExtratoComponent],
 })
 export class MrcontadorFrontExtratoModule {}

@@ -12,5 +12,6 @@ import { contaRoute } from './conta.route';
   imports: [MrcontadorFrontSharedModule, RouterModule.forChild(contaRoute)],
   declarations: [ContaComponent, ContaDetailComponent, ContaUpdateComponent, ContaDeleteDialogComponent],
   entryComponents: [ContaDeleteDialogComponent],
+  exports: [ContaComponent],
 })
 export class MrcontadorFrontContaModule {}

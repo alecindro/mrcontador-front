@@ -105,6 +105,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
         },
+        {
+          path: 'onboard',
+          loadChildren: () => import('./entities/onboard/onboard.module').then(m => m.OnboardModule),
+        },
 
         ...LAYOUT_ROUTES,
       ],

@@ -18,6 +18,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/pt';
+import { OnboardComponent } from './entities/onboard/onboard.component';
 
 const maskConfig: Partial<IConfig> = {
   validation: true,
@@ -38,7 +39,15 @@ registerLocaleData(localeBr, 'pt');
     MrcontadorFrontAppRoutingModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
+  declarations: [
+    MainComponent,
+    NavbarComponent,
+    ErrorComponent,
+    PageRibbonComponent,
+    ActiveMenuDirective,
+    FooterComponent,
+    OnboardComponent,
+  ],
   bootstrap: [MainComponent],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }],
 })
