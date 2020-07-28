@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, combineLatest } from 'rxjs';
 import { Parceiro, IParceiro } from 'app/shared/model/parceiro.model';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
@@ -9,7 +9,7 @@ import { IConta } from 'app/shared/model/conta.model';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap, Data } from '@angular/router';
 
 @Component({
   selector: 'jhi-dash-conta',
@@ -34,11 +34,11 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     private parceiroService: ParceiroService,
     private contaService: ContaService,
     public spinner: NgxSpinnerService,
-    protected router: Router
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute
   ) {
     this.parceiroListener = eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<Parceiro>) => {
       this.parceiro = response.content;
-      this.loadPage();
     });
     this.mesAnoListener = eventManager.subscribe('mesAnoSelected', (response: JhiEventWithContent<MesAnoDTO>) => {
       this.mesAno = response.content;
@@ -47,7 +47,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
-    this.loadPage();
+    this.handleNavigation();
   }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
@@ -67,19 +67,38 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     );
   }
 
+  protected handleNavigation(): void {
+    combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
+      const page = params.get('page');
+      const pageNumber = page !== null ? +page : 1;
+      const sort = (params.get('sort') ?? data['defaultSort']).split(',');
+      const predicate = sort[0];
+      const ascending = sort[1] === 'asc';
+      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
+        this.predicate = predicate;
+        this.ascending = ascending;
+        this.loadPage(pageNumber, true);
+      }
+    }).subscribe();
+  }
+
   sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== ' con_conta') {
-      result.push(' con_conta');
+    if (this.predicate !== 'id') {
+      result.push('id');
     }
     return result;
+  }
+
+  trackId(index: number, item: IConta): number {
+    return item.id!;
   }
 
   protected onSuccess(data: IConta[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/conta'], {
+      this.router.navigate([`/onboard/${this.parceiro.id}/conta`], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,

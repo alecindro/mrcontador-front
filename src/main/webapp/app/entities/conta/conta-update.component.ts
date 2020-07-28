@@ -47,12 +47,12 @@ export class ContaUpdateComponent implements OnInit {
   updateForm(conta: IConta): void {
     this.editForm.patchValue({
       id: conta.id,
-      con_conta: conta.con_conta,
-      con_classificacao: conta.con_classificacao,
-      con_tipo: conta.con_tipo,
-      con_descricao: conta.con_descricao,
-      con_cnpj: conta.con_cnpj,
-      con_grau: conta.con_grau,
+      con_conta: conta.conConta,
+      con_classificacao: conta.conClassificacao,
+      con_tipo: conta.conTipo,
+      con_descricao: conta.conDescricao,
+      con_cnpj: conta.conCnpj,
+      con_grau: conta.conGrau,
       parceiroId: conta.parceiroId,
     });
   }
@@ -75,12 +75,12 @@ export class ContaUpdateComponent implements OnInit {
     return {
       ...new Conta(),
       id: this.editForm.get(['id'])!.value,
-      con_conta: this.editForm.get(['con_conta'])!.value,
-      con_classificacao: this.editForm.get(['con_classificacao'])!.value,
-      con_tipo: this.editForm.get(['con_tipo'])!.value,
-      con_descricao: this.editForm.get(['con_descricao'])!.value,
-      con_cnpj: this.editForm.get(['con_cnpj'])!.value,
-      con_grau: this.editForm.get(['con_grau'])!.value,
+      conConta: this.editForm.get(['con_conta'])!.value,
+      conClassificacao: this.editForm.get(['con_classificacao'])!.value,
+      conTipo: this.editForm.get(['con_tipo'])!.value,
+      conDescricao: this.editForm.get(['con_descricao'])!.value,
+      conCnpj: this.editForm.get(['con_cnpj'])!.value,
+      conGrau: this.editForm.get(['con_grau'])!.value,
       parceiroId: this.editForm.get(['parceiroId'])!.value,
     };
   }

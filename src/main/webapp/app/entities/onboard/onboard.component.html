@@ -1,59 +1,62 @@
 <div class="col-12">
     <div class="row">
-        <div class="col-12">
-            <div class="bg-primary" style="border-radius: 0.3rem;padding: 1rem 1rem 0rem 0rem;">
-                <div class="text-right pb-3">
-                    <div class="row align-items-end">
-                        <div class="col-md-6">
-                            <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial" for="field_par_razaosocial"></label>:
-                            <select [compareWith]="compareFn" [(ngModel)] = "parceiro" class="custom-select" id="field_par_razaosocial" (ngModelChange)="onChangeParceiro($event)">
+        <div class="col-12 bg-primary" style="border-radius: 0.3rem;padding: 1rem 1rem 0rem 0rem;">
+                    <div class="float-sm-right row">
+                        <div class="col-4 mb-2">
+                            <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"
+                                for="field_par_razaosocial"></label>:
+                            <select [compareWith]="compareFn" [(ngModel)]="parceiro" class="custom-select"
+                                id="field_par_razaosocial" (ngModelChange)="onChangeParceiro($event)">
                                 <option *ngFor="let _parceiro of parceiros" [ngValue]="_parceiro">
                                     {{ _parceiro.parRazaosocial }}
-                                  </option>  
+                                </option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-4 mb-2">
                             <label jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_cnpjcpf"></label>:
-                            <span id="field_cnpjcpf" class="badge badge-light font-weight-bold" style="font-size: 100%;">{{parceiro.parCnpjcpf}}</span>
+                            <input id="field_cnpjcpf" class="form-control"
+                                style="font-size: 100%;" disabled [(ngModel)]="parceiro.parCnpjcpf"/>
                         </div>
-                            <div class="col-md-2">
+
+                        <div class="col-2 mb-2">
                             <label for="field_mes">Mês</label>:
-                            <select id="field_mes" [(ngModel)] = "mesSelected" class="custom-select" (change)="onChangeMes()">
+                            <select id="field_mes" [(ngModel)]="mesSelected" class="custom-select"
+                                (change)="onChangeMes()">
                                 <option *ngFor="let id of meses" [ngValue]="id">
                                     {{ mesLabels[id] }}
-                                  </option>  
+                                </option>
                             </select>
                         </div>
-                        <div class="col-md-2">
+
+                        <div class="col-2 mb-2">
                             <label for="field_ano">Ano</label>:
-                            <select id="field_ano" [(ngModel)] = "anoSelected" class="custom-select" (change)="onChangeAno()">
+                            <select id="field_ano" [(ngModel)]="anoSelected" class="custom-select"
+                                (change)="onChangeAno()">
                                 <option *ngFor="let ano of anos" [ngValue]="ano">
                                     {{ ano }}
-                                  </option>  
+                                </option>
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-2 shadow-lg bg-secondary rounded pt-3 pb-3">
+        <div class="col-1 shadow-lg bg-secondary rounded pt-1 pb-3">
             <div class="btn-group-vertical">
-                <button type="button" class="btn btn-info btn-lg text-left" [routerLink]="'consolida'"
+                <button type="button" class="btn btn-info text-left" [routerLink]="'consolida'"
                     routerLinkActive="active">Consolidação</button>
-                <button type="button" class="btn btn-info btn-lg text-left" [routerLink]="'conta'">Plano de
+                <button type="button" class="btn btn-info btn text-left" [routerLink]="'conta'">Plano de
                     Contas</button>
-                <button type="button" class="btn btn-info btn-lg text-left" [routerLink]="'extrato'">Extrato</button>
-                <button type="button" class="btn btn-info btn-lg text-left" [routerLink]="'nfe'">Nota Fiscal</button>
-                <button type="button" class="btn btn-info btn-lg text-left" [routerLink]="'ns'">Nota Serviço</button>
-                <button type="button" class="btn btn-info btn-lg text-left" [routerLink]="'agencia'">Agência
+                <button type="button" class="btn btn-info text-left" [routerLink]="'extrato'">Extrato</button>
+                <button type="button" class="btn btn-info text-left" [routerLink]="'nfe'">Nota Fiscal</button>
+                <button type="button" class="btn btn-info text-left" [routerLink]="'ns'">Nota Serviço</button>
+                <button type="button" class="btn btn-info text-left" [routerLink]="'agencia'">Agência
                     Bancária</button>
-                <button type="button" class="btn btn-info btn-lg text-left" [routerLink]="'cadastro'">Dados
+                <button type="button" class="btn btn-info text-left" [routerLink]="'cadastro'">Dados
                     Cadastrais</button>
             </div>
         </div>
-        <div class="col-10">
+        <div class="col-11">
             <router-outlet></router-outlet>
         </div>
     </div>

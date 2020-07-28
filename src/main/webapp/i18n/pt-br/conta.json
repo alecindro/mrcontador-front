@@ -2,7 +2,7 @@
   "mrcontadorFrontApp": {
     "conta": {
       "home": {
-        "title": "Contas",
+        "title": "Plano de Contas",
         "createLabel": "Criar novo Conta",
         "createOrEditLabel": "Criar ou editar Conta",
         "notFound": "Nenhum Conta encontrado"
@@ -16,12 +16,12 @@
       "detail": {
         "title": "Conta"
       },
-      "con_conta": "Con Conta",
-      "con_classificacao": "Con Classificacao",
-      "con_tipo": "Con Tipo",
-      "con_descricao": "Con Descricao",
-      "con_cnpj": "Con Cnpj",
-      "con_grau": "Con Grau",
+      "con_conta": "Conta",
+      "con_classificacao": "Classificação",
+      "con_tipo": "Tipo",
+      "con_descricao": "Descrição",
+      "con_cnpj": "Cnpj",
+      "con_grau": "Grau",
       "parceiro": "Parceiro"
     }
   }

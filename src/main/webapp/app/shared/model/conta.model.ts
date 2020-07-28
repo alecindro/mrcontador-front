@@ -1,23 +1,23 @@
 export interface IConta {
   id?: number;
-  con_conta?: number;
-  con_classificacao?: string;
-  con_tipo?: string;
-  con_descricao?: string;
-  con_cnpj?: string;
-  con_grau?: number;
+  conConta?: number;
+  conClassificacao?: string;
+  conTipo?: string;
+  conDescricao?: string;
+  conCnpj?: string;
+  conGrau?: number;
   parceiroId?: number;
 }
 
 export class Conta implements IConta {
   constructor(
     public id?: number,
-    public con_conta?: number,
-    public con_classificacao?: string,
-    public con_tipo?: string,
-    public con_descricao?: string,
-    public con_cnpj?: string,
-    public con_grau?: number,
+    public conConta?: number,
+    public conClassificacao?: string,
+    public conTipo?: string,
+    public conDescricao?: string,
+    public conCnpj?: string,
+    public conGrau?: number,
     public parceiroId?: number
   ) {}
 }

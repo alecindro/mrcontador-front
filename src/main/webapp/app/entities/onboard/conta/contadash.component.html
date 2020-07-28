@@ -1,60 +1,95 @@
-
-
-<div class="table-responsive" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                <th scope="col" jhiSortBy="con_conta"><span jhiTranslate="mrcontadorFrontApp.conta.con_conta">Con
-                        Conta</span>
-                    <fa-icon icon="sort"></fa-icon>
-                </th>
-                <th  scope="col" jhiSortBy="con_classificacao"><span
-                        jhiTranslate="mrcontadorFrontApp.conta.con_classificacao">Con Classificacao</span>
-                    <fa-icon icon="sort"></fa-icon>
-                </th>
-                <th  scope="col" jhiSortBy="con_tipo"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo">Con
-                        Tipo</span>
-                    <fa-icon icon="sort"></fa-icon>
-                </th>
-                <th  scope="col" jhiSortBy="con_descricao"><span
-                        jhiTranslate="mrcontadorFrontApp.conta.con_descricao">Con Descricao</span>
-                    <fa-icon icon="sort"></fa-icon>
-                </th>
-                <th scope="col" jhiSortBy="con_cnpj"><span jhiTranslate="mrcontadorFrontApp.conta.con_cnpj">Con
-                        Cnpj</span>
-                    <fa-icon icon="sort"></fa-icon>
-                </th>
-                <th  scope="col" jhiSortBy="con_grau"><span jhiTranslate="mrcontadorFrontApp.conta.con_grau">Con
-                        Grau</span>
-                    <fa-icon icon="sort"></fa-icon>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="alert alert-warning" *ngIf="contas?.length === 0">
-                <td colspan="6">
-                    <span jhiTranslate="mrcontadorFrontApp.conta.home.notFound"></span>
-                </td>
-            </tr>
-            <tr *ngFor="let conta of contas">
-                <td>{{ conta.con_conta }}</td>
-                <td>{{ conta.con_classificacao }}</td>
-                <td>{{ conta.con_tipo }}</td>
-                <td>{{ conta.con_descricao }}</td>
-                <td>{{ conta.con_cnpj }}</td>
-                <td>{{ conta.con_grau }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div *ngIf="contas && contas.length > 0">
-    <div class="row justify-content-center">
-        <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-    </div>
-
-    <div class="row justify-content-center">
-        <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
-            [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+<div class="row">
+    <div class="col-12 bg-info rounded">
+        <div class="row">
+                <div class="col-md-8"></div>
+                <div class="col-md-2 mt-1">
+                        <input class="custom-input"  placeholder="Pesquisar..."
+                            type="search">
+                        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+                            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+                    </div>
+                    <div class="col-md-2 mt-1">
+                        <select class="custom-select">
+                            <option value="conConta.equals"><span
+                                    jhiTranslate="mrcontadorFrontApp.conta.con_conta"></span>
+                            </option>
+                            <option value="conClassificacao.contains"><span
+                                    jhiTranslate="mrcontadorFrontApp.conta.con_classificacao"></span>
+                            </option>
+                            <option value="conTipo.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo"></span>
+                            </option>    
+                            <option value="conDescricao.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_descricao"></span>
+                            </option>
+                            <option value="conCnpj.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.conta.con_cnpj"></span>
+                        </option>
+                            <option value="conGrau.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
+                        </option>
+                        </select>
+                    </div>
+        </div>
     </div>
 </div>
+<div class="row">
+    <div class="table-responsive" id="entities">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col" jhiSortBy="conConta"><span jhiTranslate="mrcontadorFrontApp.conta.con_conta">Con
+                            Conta</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="conClassificacao"><span
+                            jhiTranslate="mrcontadorFrontApp.conta.con_classificacao">Con Classificacao</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="conTipo"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo">Con
+                            Tipo</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="conDescricao"><span
+                            jhiTranslate="mrcontadorFrontApp.conta.con_descricao">Con Descricao</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="conCnpj"><span jhiTranslate="mrcontadorFrontApp.conta.con_cnpj">Con
+                            Cnpj</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th scope="col" jhiSortBy="conGrau"><span jhiTranslate="mrcontadorFrontApp.conta.con_grau">Con
+                            Grau</span>
+                        <fa-icon icon="sort"></fa-icon>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="contas?.length === 0">
+                    <th colspan="6">
+                        <div class="alert alert-warning" id="no-result">
+                            <span jhiTranslate="mrcontadorFrontApp.conta.home.notFound">No contas found</span>
+                        </div>
+                    </th>
+                </tr>
+                <tr *ngFor="let conta of contas ;trackBy: trackId">
+                    <td>{{ conta.conConta }}</td>
+                    <td>{{ conta.conClassificacao }}</td>
+                    <td>{{ conta.conTipo }}</td>
+                    <td>{{ conta.conDescricao }}</td>
+                    <td>{{ conta.conCnpj }}</td>
+                    <td>{{ conta.conGrau }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
+    <div *ngIf="contas && contas.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+                [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -65,12 +65,12 @@
             <tbody>
                 <tr *ngFor="let conta of contas ;trackBy: trackId">
                     <td><a [routerLink]="['/conta', conta.id, 'view']">{{ conta.id }}</a></td>
-                    <td>{{ conta.con_conta }}</td>
-                    <td>{{ conta.con_classificacao }}</td>
-                    <td>{{ conta.con_tipo }}</td>
-                    <td>{{ conta.con_descricao }}</td>
-                    <td>{{ conta.con_cnpj }}</td>
-                    <td>{{ conta.con_grau }}</td>
+                    <td>{{ conta.conConta }}</td>
+                    <td>{{ conta.conClassificacao }}</td>
+                    <td>{{ conta.conTipo }}</td>
+                    <td>{{ conta.conDescricao }}</td>
+                    <td>{{ conta.conCnpj }}</td>
+                    <td>{{ conta.conGrau }}</td>
                     <td>
                         <div *ngIf="conta.parceiroId">
                             <a [routerLink]="['/parceiro', conta.parceiroId , 'view']">{{ conta.parceiroId }}</a>
