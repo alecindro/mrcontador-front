@@ -11,6 +11,7 @@ import { NsDashComponent } from './notaservico/nsdash.component';
 import { AgenciaDashComponent } from './agencia/agenciadash.component';
 import { CadDashComponent } from './cadastro/caddash.component';
 import { ParceiroResolve } from '../parceiro/parceiro.route';
+import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.component';
 
 const routes: Routes = [
   {
@@ -78,6 +79,16 @@ const routes: Routes = [
       {
         path: 'agencia',
         component: AgenciaDashComponent,
+        data: {
+          authorities: [Authority.USER],
+          defaultSort: 'id,asc',
+          pageTitle: 'mrcontadorFrontApp.agencia.home.title',
+        },
+        canActivate: [UserRouteAccessService],
+      },
+      {
+        path: 'agenciaNew',
+        component: AgenciaDashUpdateComponent,
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',

@@ -5,16 +5,16 @@ import { ContaDashComponent } from './conta/contadash.component';
 import { ExtratoDashComponent } from './extrato/extratodash.component';
 import { NfeComponent } from './nfe/nfe.component';
 import { ConsolidaComponent } from './consolida/consolida.component';
-import { MrcontadorFrontContaModule } from '../conta/conta.module';
 import { MrcontadorFrontExtratoModule } from '../extrato/extrato.module';
-import { MrcontadorFrontAgenciabancariaModule } from '../agenciabancaria/agenciabancaria.module';
 import { MrcontadorFrontNotafiscalModule } from '../notafiscal/notafiscal.module';
 import { MrcontadorFrontNotaservicoModule } from '../notaservico/notaservico.module';
 import { AgenciaDashComponent } from './agencia/agenciadash.component';
 import { NsDashComponent } from './notaservico/nsdash.component';
 import { CadDashComponent } from './cadastro/caddash.component';
-import { MrcontadorFrontParceiroModule } from '../parceiro/parceiro.module';
 import { MrcontadorFrontSharedModule } from 'app/shared/shared.module';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.component';
 
 @NgModule({
   declarations: [
@@ -23,19 +23,19 @@ import { MrcontadorFrontSharedModule } from 'app/shared/shared.module';
     NfeComponent,
     ConsolidaComponent,
     AgenciaDashComponent,
+    AgenciaDashUpdateComponent,
     NsDashComponent,
     CadDashComponent,
   ],
   imports: [
     CommonModule,
     OnboardRoutingModule,
-    MrcontadorFrontContaModule,
     MrcontadorFrontExtratoModule,
-    MrcontadorFrontAgenciabancariaModule,
     MrcontadorFrontNotafiscalModule,
     MrcontadorFrontNotaservicoModule,
-    MrcontadorFrontParceiroModule,
     MrcontadorFrontSharedModule,
+    NgxMaskModule.forChild(),
+    NgbTypeaheadModule,
   ],
 })
 export class OnboardModule {}

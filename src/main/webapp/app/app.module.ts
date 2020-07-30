@@ -19,6 +19,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { registerLocaleData } from '@angular/common';
 import localeBr from '@angular/common/locales/pt';
 import { OnboardComponent } from './entities/onboard/onboard.component';
+import { DisableFormDirective } from './disable-form.directive';
 
 const maskConfig: Partial<IConfig> = {
   validation: true,
@@ -47,6 +48,7 @@ registerLocaleData(localeBr, 'pt');
     ActiveMenuDirective,
     FooterComponent,
     OnboardComponent,
+    DisableFormDirective,
   ],
   bootstrap: [MainComponent],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }],

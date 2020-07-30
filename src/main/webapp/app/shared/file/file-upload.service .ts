@@ -3,6 +3,7 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { createRequestOption } from 'app/shared/util/request-util';
 
 type EntityResponseType = HttpResponse<any>;
 @Injectable({
@@ -37,12 +38,10 @@ export class UploadService {
       );
   }
 
-  public uploadFiles(file: File): Observable<any> {
+  public uploadFiles(file: File, req?: any): Observable<any> {
+    const options = createRequestOption(req);
     const formData: FormData = new FormData();
     formData.append('file', file);
-    return this.http.post<any>(this.resourceUrl, formData, {
-      reportProgress: true,
-      observe: 'events',
-    });
+    return this.http.post<any>(this.resourceUrl, formData, { params: options, reportProgress: true, observe: 'events' });
   }
 }

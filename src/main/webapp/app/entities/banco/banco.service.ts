@@ -32,6 +32,10 @@ export class BancoService {
     return this.http.get<IBanco[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  get(): Observable<EntityArrayResponseType> {
+    return this.http.get<IBanco[]>(`${this.resourceUrl}/all`, { observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

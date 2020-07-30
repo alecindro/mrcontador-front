@@ -10,14 +10,10 @@ import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
   styleUrls: ['./consolida.component.scss'],
 })
 export class ConsolidaComponent implements OnInit, OnDestroy {
-  parceiroListener!: Subscription;
   mesAnoListener!: Subscription;
   parceiro!: Parceiro;
   mesAno!: MesAnoDTO;
   constructor(private eventManager: JhiEventManager) {
-    this.parceiroListener = eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<Parceiro>) => {
-      this.parceiro = response.content;
-    });
     this.mesAnoListener = eventManager.subscribe('mesAnoSelected', (response: JhiEventWithContent<MesAnoDTO>) => {
       this.mesAno = response.content;
     });
@@ -26,9 +22,6 @@ export class ConsolidaComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    if (this.parceiroListener) {
-      this.eventManager.destroy(this.parceiroListener);
-    }
     if (this.mesAnoListener) {
       this.eventManager.destroy(this.mesAnoListener);
     }

@@ -6,10 +6,11 @@ import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 import { ContaService } from 'app/entities/conta/conta.service';
 import { IConta } from 'app/shared/model/conta.model';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpResponse, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { Router, ActivatedRoute, ParamMap, Data } from '@angular/router';
+import { UploadService } from 'app/shared/file/file-upload.service ';
 
 @Component({
   selector: 'jhi-dash-conta',
@@ -17,8 +18,8 @@ import { Router, ActivatedRoute, ParamMap, Data } from '@angular/router';
   styleUrls: ['./contadash.component.scss'],
 })
 export class ContaDashComponent implements OnInit, OnDestroy {
-  parceiroListener!: Subscription;
-  mesAnoListener!: Subscription;
+  progressInfo: any = {};
+  message = '';
   mesAno!: MesAnoDTO;
   contas?: IConta[];
   totalItems = 0;
@@ -35,15 +36,9 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     private contaService: ContaService,
     public spinner: NgxSpinnerService,
     protected router: Router,
-    protected activatedRoute: ActivatedRoute
-  ) {
-    this.parceiroListener = eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<Parceiro>) => {
-      this.parceiro = response.content;
-    });
-    this.mesAnoListener = eventManager.subscribe('mesAnoSelected', (response: JhiEventWithContent<MesAnoDTO>) => {
-      this.mesAno = response.content;
-    });
-  }
+    protected activatedRoute: ActivatedRoute,
+    protected uploadService: UploadService
+  ) {}
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
@@ -98,7 +93,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate([`/onboard/${this.parceiro.id}/conta`], {
+      this.router.navigate([`/onboard/${this.parceiro?.id}/conta`], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
@@ -115,12 +110,51 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     this.spinner.hide();
   }
 
-  ngOnDestroy(): void {
-    if (this.parceiroListener) {
-      this.eventManager.destroy(this.parceiroListener);
-    }
-    if (this.mesAnoListener) {
-      this.eventManager.destroy(this.mesAnoListener);
+  ngOnDestroy(): void {}
+
+  removeFile(): void {
+    this.progressInfo.file = undefined;
+    this.progressInfo = {};
+  }
+
+  allowDrop(ev: any): void {
+    ev.preventDefault();
+  }
+
+  drop(ev: any): void {
+    ev.preventDefault();
+    ev.target.files = ev.dataTransfer.files;
+    this.selectFile(ev);
+  }
+
+  selectFile(event: any): void {
+    event.preventDefault();
+    this.progressInfo = { value: 0, fileName: event.target.files[0].name, file: event.target.files[0] };
+  }
+
+  upload(): void {
+    this.message = '';
+    if (this.progressInfo.file) {
+      this.spinner.show();
+      const queryParam: any = {
+        parceiroCNPJ: this.parceiro?.parCnpjcpf,
+      };
+      this.uploadService.uploadFiles(this.progressInfo.file, queryParam).subscribe(
+        event => {
+          if (event && event.type === HttpEventType.UploadProgress) {
+            this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
+            this.progressInfo.file = undefined;
+          } else if (event instanceof HttpResponse) {
+            this.message = event.status.toString();
+            this.spinner.hide();
+          }
+        },
+        err => {
+          this.message = 'Não foi possivel carregar o arquivo: ' + err;
+          this.progressInfo.value = 0;
+          this.spinner.hide();
+        }
+      );
     }
   }
 }

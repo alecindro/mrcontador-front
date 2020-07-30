@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ParceiroService } from '../parceiro/parceiro.service';
 import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MESLABELS, MESES } from 'app/shared/constants/input.constants';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
@@ -24,15 +24,18 @@ export class OnboardComponent implements OnInit {
     public parceiroService: ParceiroService,
     public activatedRoute: ActivatedRoute,
     public spinner: NgxSpinnerService,
-    public eventManager: JhiEventManager
+    public eventManager: JhiEventManager,
+    protected router: Router
   ) {}
 
   ngOnInit(): void {
     this.initDate();
     this.spinner.show();
     this.activatedRoute.data.subscribe(({ parceiro }) => {
-      this.onChangeParceiro(parceiro);
-      this.parceiroService.query().subscribe(response => {
+      this.parceiro = parceiro;
+      this.parceiroService.setParceiroSelected(parceiro);
+      this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
+      this.parceiroService.get().subscribe(response => {
         this.parceiros = response.body || [parceiro];
         this.spinner.hide();
       });
@@ -42,6 +45,7 @@ export class OnboardComponent implements OnInit {
     this.parceiro = parceiro;
     this.parceiroService.setParceiroSelected(parceiro);
     this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
+    this.router.navigate([`/onboard/${this.parceiro.id}`]);
   }
   compareFn(val1: IParceiro, val2: IParceiro): boolean {
     return val1 && val2 ? val1.id === val2.id : val1 === val2;

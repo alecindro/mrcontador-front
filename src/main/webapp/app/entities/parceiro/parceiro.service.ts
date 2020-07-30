@@ -3,7 +3,6 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
-
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IParceiro } from 'app/shared/model/parceiro.model';
@@ -54,6 +53,12 @@ export class ParceiroService {
     const options = createRequestOption(req);
     return this.http
       .get<IParceiro[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  get(): Observable<EntityArrayResponseType> {
+    return this.http
+      .get<IParceiro[]>(`${this.resourceUrl}/all`, { observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

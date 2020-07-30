@@ -56,7 +56,8 @@
       "confirmpassword.label": "Confirmação de nova senha",
       "confirmpassword.placeholder": "Confirme a nova senha",
       "email.label": "E-mail",
-      "email.placeholder": "Seu e-mail"
+      "email.placeholder": "Seu e-mail",
+      "cadastro.parceiro": "Cadastro de Parceiro"
     },
     "messages": {
       "info": {
@@ -150,7 +151,8 @@
     "contador.save": "Ocorreu um erro ao salvar o contador. Erro {{entityName}}",
     "file": {
       "could.not.extract": "Não foi possível extrair  arquivo",
-      "not.image": "O arquivo esperado era uma imagem mas retornou \"{{ fileType }}\""
+      "not.image": "O arquivo esperado era uma imagem mas retornou \"{{ fileType }}\"",
+      "notparceiro": "O arquivo não é do CNPJ: {{params}}"
     }
   },
   "footer": "Este é o rodapé da página"

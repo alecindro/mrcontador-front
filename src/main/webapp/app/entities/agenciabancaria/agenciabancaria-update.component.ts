@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
-import { IAgenciabancaria, Agenciabancaria, AgenciabancariaDTO } from 'app/shared/model/agenciabancaria.model';
+import { IAgenciabancaria, Agenciabancaria } from 'app/shared/model/agenciabancaria.model';
 import { AgenciabancariaService } from './agenciabancaria.service';
 import { IBanco } from 'app/shared/model/banco.model';
 import { BancoService } from 'app/entities/banco/banco.service';
@@ -61,23 +60,23 @@ export class AgenciabancariaUpdateComponent implements OnInit {
     });
   }
 
-  updateForm(agenciabancaria: AgenciabancariaDTO): void {
+  updateForm(agenciabancaria: IAgenciabancaria): void {
     this.editForm.patchValue({
       id: agenciabancaria.id,
-      age_numero: agenciabancaria.age_numero,
-      age_digito: agenciabancaria.age_digito,
-      age_agencia: agenciabancaria.age_agencia,
-      age_descricao: agenciabancaria.age_descricao,
-      age_situacao: agenciabancaria.age_situacao,
-      bancoId: agenciabancaria.bancoId,
-      parceiroId: agenciabancaria.parceiroId,
+      age_numero: agenciabancaria.ageNumero,
+      age_digito: agenciabancaria.ageDigito,
+      age_agencia: agenciabancaria.ageAgencia,
+      age_descricao: agenciabancaria.ageDescricao,
+      age_situacao: agenciabancaria.ageSituacao,
+      bancoId: agenciabancaria.banco,
+      parceiroId: agenciabancaria.parceiro,
     });
     if (agenciabancaria.banco) {
       this.editForm.patchValue({
         bancoId: agenciabancaria.banco.id,
         banco_id: agenciabancaria.banco.id,
-        ban_descricao: agenciabancaria.banco.ban_descricao,
-        ban_codigobancario: agenciabancaria.banco.ban_codigobancario,
+        ban_descricao: agenciabancaria.banco.banDescricao,
+        ban_codigobancario: agenciabancaria.banco.banCodigobancario,
       });
     }
     if (agenciabancaria.parceiro) {
@@ -107,13 +106,13 @@ export class AgenciabancariaUpdateComponent implements OnInit {
     return {
       ...new Agenciabancaria(),
       id: this.editForm.get(['id'])!.value,
-      age_numero: this.editForm.get(['age_numero'])!.value,
-      age_digito: this.editForm.get(['age_digito'])!.value,
-      age_agencia: this.editForm.get(['age_agencia'])!.value,
-      age_descricao: this.editForm.get(['age_descricao'])!.value,
-      age_situacao: this.editForm.get(['age_situacao'])!.value,
-      bancoId: this.editForm.get(['bancoId'])!.value,
-      parceiroId: this.editForm.get(['parceiroId'])!.value,
+      ageNumero: this.editForm.get(['age_numero'])!.value,
+      ageDigito: this.editForm.get(['age_digito'])!.value,
+      ageAgencia: this.editForm.get(['age_agencia'])!.value,
+      ageDescricao: this.editForm.get(['age_descricao'])!.value,
+      ageSituacao: this.editForm.get(['age_situacao'])!.value,
+      banco: this.editForm.get(['bancoId'])!.value,
+      parceiro: this.editForm.get(['parceiroId'])!.value,
     };
   }
 
