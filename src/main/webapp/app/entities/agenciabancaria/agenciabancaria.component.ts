@@ -5,7 +5,7 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { AgenciabancariaDTO } from 'app/shared/model/agenciabancaria.model';
+import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { AgenciabancariaService } from './agenciabancaria.service';
@@ -16,7 +16,7 @@ import { AgenciabancariaDeleteDialogComponent } from './agenciabancaria-delete-d
   templateUrl: './agenciabancaria.component.html',
 })
 export class AgenciabancariaComponent implements OnInit, OnDestroy {
-  agenciabancarias?: AgenciabancariaDTO[];
+  agenciabancarias?: IAgenciabancaria[];
   eventSubscriber?: Subscription;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -43,7 +43,7 @@ export class AgenciabancariaComponent implements OnInit, OnDestroy {
         sort: this.sort(),
       })
       .subscribe(
-        (res: HttpResponse<AgenciabancariaDTO[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+        (res: HttpResponse<IAgenciabancaria[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
         () => this.onError()
       );
   }
@@ -74,7 +74,7 @@ export class AgenciabancariaComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: AgenciabancariaDTO): number {
+  trackId(index: number, item: IAgenciabancaria): number {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return item.id!;
   }
@@ -83,7 +83,7 @@ export class AgenciabancariaComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('agenciabancariaListModification', () => this.loadPage());
   }
 
-  delete(agenciabancaria: AgenciabancariaDTO): void {
+  delete(agenciabancaria: IAgenciabancaria): void {
     const modalRef = this.modalService.open(AgenciabancariaDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.agenciabancaria = agenciabancaria;
   }
@@ -96,7 +96,7 @@ export class AgenciabancariaComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected onSuccess(data: AgenciabancariaDTO[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+  protected onSuccess(data: IAgenciabancaria[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
