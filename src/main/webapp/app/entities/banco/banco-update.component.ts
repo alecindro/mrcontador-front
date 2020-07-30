@@ -34,10 +34,10 @@ export class BancoUpdateComponent implements OnInit {
   updateForm(banco: IBanco): void {
     this.editForm.patchValue({
       id: banco.id,
-      ban_descricao: banco.ban_descricao,
-      ban_codigobancario: banco.ban_codigobancario,
-      ban_sigla: banco.ban_sigla,
-      ban_ispb: banco.ban_ispb,
+      ban_descricao: banco.banDescricao,
+      ban_codigobancario: banco.banCodigobancario,
+      ban_sigla: banco.banSigla,
+      ban_ispb: banco.banIspb,
     });
   }
 
@@ -59,10 +59,10 @@ export class BancoUpdateComponent implements OnInit {
     return {
       ...new Banco(),
       id: this.editForm.get(['id'])!.value,
-      ban_descricao: this.editForm.get(['ban_descricao'])!.value,
-      ban_codigobancario: this.editForm.get(['ban_codigobancario'])!.value,
-      ban_sigla: this.editForm.get(['ban_sigla'])!.value,
-      ban_ispb: this.editForm.get(['ban_ispb'])!.value,
+      banDescricao: this.editForm.get(['ban_descricao'])!.value,
+      banCodigobancario: this.editForm.get(['ban_codigobancario'])!.value,
+      banSigla: this.editForm.get(['ban_sigla'])!.value,
+      banIspb: this.editForm.get(['ban_ispb'])!.value,
     };
   }
 

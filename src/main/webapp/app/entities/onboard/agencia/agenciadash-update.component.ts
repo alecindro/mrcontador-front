@@ -86,6 +86,8 @@ export class AgenciaDashUpdateComponent implements OnInit {
     const _banco = this.bancos.find((banco, index) => {
       if (banco.id === this.editForm.get(['bancoId'])!.value) {
         return true;
+      } else {
+        return false;
       }
     });
     return {
