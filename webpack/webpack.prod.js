@@ -15,7 +15,7 @@ const commonConfig = require('./webpack.common.js');
 const ENV = 'production';
 const sass = require('sass');
 
-module.exports = webpackMerge(commonConfig({ env: ENV }), {
+module.exports  = (options) => webpackMerge(commonConfig({ env: ENV }), {
     // Enable source maps. Please note that this will slow down the build.
     // You have to enable it in Terser config below and in tsconfig.json as well
     // devtool: 'source-map',
@@ -147,10 +147,10 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
         }),
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: `'${options.env}'`,
+                NODE_ENV: 'production',
                 BUILD_TIMESTAMP: `'${new Date().getTime()}'`,
                 VERSION: `'${packageJson.version}'`,
-                DEBUG_INFO_ENABLED: options.env === 'development',
+                DEBUG_INFO_ENABLED: false,
                 // The root URL for API calls, ending with a '/' - for example: `"https://www.jhipster.tech:8081/myservice/"`.
                 // If this URL is left empty (""), then it will be relative to the current context.
                 // If you use an API server, in `prod` mode, you will need to enable CORS
