@@ -1,33 +1,34 @@
 import { Moment } from 'moment';
+import { IParceiro } from './parceiro.model';
 
 export interface INotaservico {
   id?: number;
-  nse_numero?: number;
-  nse_descricao?: string;
-  nse_cnpj?: string;
-  nse_empresa?: string;
-  nse_datasaida?: Moment;
-  nse_valornota?: number;
-  nse_dataparcela?: Moment;
-  nse_valorparcela?: number;
-  tno_codigo?: number;
-  nse_parcela?: string;
-  parceiroId?: number;
+  nseNumero?: number;
+  nseDescricao?: string;
+  nseCnpj?: string;
+  nseEmpresa?: string;
+  nseDatasaida?: Moment;
+  nseValornota?: number;
+  nseDataparcela?: Moment;
+  nseValorparcela?: number;
+  tnoCodigo?: number;
+  nseParcela?: string;
+  parceiro?: IParceiro;
 }
 
 export class Notaservico implements INotaservico {
   constructor(
     public id?: number,
-    public nse_numero?: number,
-    public nse_descricao?: string,
-    public nse_cnpj?: string,
-    public nse_empresa?: string,
-    public nse_datasaida?: Moment,
-    public nse_valornota?: number,
-    public nse_dataparcela?: Moment,
-    public nse_valorparcela?: number,
-    public tno_codigo?: number,
-    public nse_parcela?: string,
-    public parceiroId?: number
+    public nseNumero?: number,
+    public nseDescricao?: string,
+    public nseCnpj?: string,
+    public nseEmpresa?: string,
+    public nseDatasaida?: Moment,
+    public nseValornota?: number,
+    public nseDataparcela?: Moment,
+    public nseValorparcela?: number,
+    public tnoCodigo?: number,
+    public nseParcela?: string,
+    public parceiro?: IParceiro
   ) {}
 }

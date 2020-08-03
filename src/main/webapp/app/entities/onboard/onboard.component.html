@@ -1,62 +1,45 @@
 <div class="col-12">
     <div class="row">
         <div class="col-12 bg-primary pt-0 pr-3 pl-0 rounded">
-                    <div class="float-sm-right row">
-                        <div class="col-4 mb-2">
-                            <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"
-                                for="field_par_razaosocial"></label>:
-                            <select [compareWith]="compareFn" [(ngModel)]="parceiro" class="custom-select"
-                                id="field_par_razaosocial" (ngModelChange)="onChangeParceiro($event)">
-                                <option *ngFor="let _parceiro of parceiros" [ngValue]="_parceiro">
-                                    {{ _parceiro.parRazaosocial }}
-                                </option>
-                            </select>
-                        </div>
-                        <div class="col-4 mb-2">
-                            <label jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_cnpjcpf"></label>:
-                            <input id="field_cnpjcpf" class="form-control"
-                                style="font-size: 100%;" disabled [(ngModel)]="parceiro.parCnpjcpf"/>
-                        </div>
-
-                        <div class="col-2 mb-2">
-                            <label for="field_mes">Mês</label>:
-                            <select id="field_mes" [(ngModel)]="mesSelected" class="custom-select"
-                                (change)="onChangeMes()">
-                                <option *ngFor="let id of meses" [ngValue]="id">
-                                    {{ mesLabels[id] }}
-                                </option>
-                            </select>
-                        </div>
-
-                        <div class="col-2 mb-2">
-                            <label for="field_ano">Ano</label>:
-                            <select id="field_ano" [(ngModel)]="anoSelected" class="custom-select"
-                                (change)="onChangeAno()">
-                                <option *ngFor="let ano of anos" [ngValue]="ano">
-                                    {{ ano }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
+            <div class="float-sm-right row">
+                <div class="col-4 mb-2">
+                    <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"
+                        for="field_par_razaosocial"></label>:
+                    <select [compareWith]="compareFn" [(ngModel)]="parceiro" class="custom-select"
+                        id="field_par_razaosocial" (ngModelChange)="onChangeParceiro($event)">
+                        <option *ngFor="let _parceiro of parceiros" [ngValue]="_parceiro">
+                            {{ _parceiro.parRazaosocial }}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-4 mb-2">
+                    <label jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_cnpjcpf"></label>:
+                    <input id="field_cnpjcpf" class="form-control" style="font-size: 100%;" disabled
+                        [(ngModel)]="parceiro.parCnpjcpf" />
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-2 shadow-lg bg-secondary rounded pt-1 pb-3 pl-0">
+        <div class="col-2 shadow-lg rounded pt-1 pb-3 pl-0">
             <div class="btn-group-vertical btn-block">
                 <button type="button" class="btn btn-info text-left" [routerLink]="'consolida'"
-                    routerLinkActive="active">Consolidação</button>
-                <button type="button" class="btn btn-info btn text-left" [routerLink]="'conta'">Plano de
-                    Contas</button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'extrato'">Extrato</button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'nfe'">Nota Fiscal</button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'ns'">Nota Serviço</button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'agencia'">Agência
-                    Bancária</button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'cadastro'">Dados
-                    Cadastrais</button>
+                    routerLinkActive="active"> <span jhiTranslate="mrcontadorFrontApp.onboard.consolidacao"></span></button>
+                <button type="button" class="btn btn-info btn text-left" [routerLink]="'conta'">
+                    <span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span>
+                </button>
+                <button type="button" class="btn btn-info btn text-left" [routerLink]="'comprovante'" [disabled]="parceiro?.agenciabancarias?.length === 0"> <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></button>
+                <button type="button" class="btn btn-info text-left" [routerLink]="'extrato'" [disabled]="parceiro?.agenciabancarias?.length === 0"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></button>
+                <button type="button" class="btn btn-info text-left" [routerLink]="'nfe'"><span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></button>
+                <button type="button" class="btn btn-info text-left" [routerLink]="'ns'" ><span jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></button>
+                <button type="button" [ngClass]="{'btn': true,'text-left':true, 'btn-info': parceiro?.agenciabancarias?.length != 0, 'btn-warning': parceiro?.agenciabancarias?.length == 0}" [routerLink]="'agencia'">
+                    <fa-icon icon="exclamation-circle" *ngIf="parceiro?.agenciabancarias?.length === 0">
+                    </fa-icon>
+                    <span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span></button>
+                <button type="button" class="btn btn-info text-left" [routerLink]="'cadastro'"> <span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></button>
             </div>
         </div>
-        <div class="col-10">
+        <div class="col-10 pt-1">
             <router-outlet></router-outlet>
         </div>
     </div>

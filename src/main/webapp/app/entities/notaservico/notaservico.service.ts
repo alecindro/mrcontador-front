@@ -50,17 +50,16 @@ export class NotaservicoService {
 
   protected convertDateFromClient(notaservico: INotaservico): INotaservico {
     const copy: INotaservico = Object.assign({}, notaservico, {
-      nse_datasaida: notaservico.nse_datasaida && notaservico.nse_datasaida.isValid() ? notaservico.nse_datasaida.toJSON() : undefined,
-      nse_dataparcela:
-        notaservico.nse_dataparcela && notaservico.nse_dataparcela.isValid() ? notaservico.nse_dataparcela.toJSON() : undefined,
+      nse_datasaida: notaservico.nseDatasaida && notaservico.nseDatasaida.isValid() ? notaservico.nseDatasaida.toJSON() : undefined,
+      nse_dataparcela: notaservico.nseDataparcela && notaservico.nseDataparcela.isValid() ? notaservico.nseDataparcela.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.nse_datasaida = res.body.nse_datasaida ? moment(res.body.nse_datasaida) : undefined;
-      res.body.nse_dataparcela = res.body.nse_dataparcela ? moment(res.body.nse_dataparcela) : undefined;
+      res.body.nseDatasaida = res.body.nseDatasaida ? moment(res.body.nseDatasaida) : undefined;
+      res.body.nseDataparcela = res.body.nseDataparcela ? moment(res.body.nseDataparcela) : undefined;
     }
     return res;
   }
@@ -68,8 +67,8 @@ export class NotaservicoService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((notaservico: INotaservico) => {
-        notaservico.nse_datasaida = notaservico.nse_datasaida ? moment(notaservico.nse_datasaida) : undefined;
-        notaservico.nse_dataparcela = notaservico.nse_dataparcela ? moment(notaservico.nse_dataparcela) : undefined;
+        notaservico.nseDatasaida = notaservico.nseDatasaida ? moment(notaservico.nseDatasaida) : undefined;
+        notaservico.nseDataparcela = notaservico.nseDataparcela ? moment(notaservico.nseDataparcela) : undefined;
       });
     }
     return res;

@@ -14,18 +14,19 @@
         "question": "Tem certeza de que deseja excluir Comprovante {{ id }}?"
       },
       "detail": {
-        "title": "Comprovante"
+        "title": "Comprovante",
+        "modalTitle": "Comprovante Bancário"
       },
-      "par_codigo": "Par Codigo",
-      "age_codigo": "Age Codigo",
-      "com_cnpj": "Com Cnpj",
-      "com_beneficiario": "Com Beneficiario",
-      "com_documento": "Com Documento",
-      "com_datavencimento": "Com Datavencimento",
-      "com_datapagamento": "Com Datapagamento",
-      "com_valordocumento": "Com Valordocumento",
-      "com_valorpagamento": "Com Valorpagamento",
-      "com_observacao": "Com Observacao"
+      "par_codigo": "Código",
+      "age_codigo": "Agência",
+      "com_cnpj": "CNPJ",
+      "com_beneficiario": "Beneficiário",
+      "com_documento": "Documento",
+      "com_datavencimento": "Dt Vencto",
+      "com_datapagamento": "Dt Pagto",
+      "com_valordocumento": "Valor Doc",
+      "com_valorpagamento": "Valor Pag",
+      "com_observacao": "Obs"
     }
   }
 }

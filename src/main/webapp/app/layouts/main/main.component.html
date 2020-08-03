@@ -3,12 +3,16 @@
 <div class="container-fluid">
     <router-outlet name="navbar"></router-outlet>
     <jhi-alert-error></jhi-alert-error>
+    <jhi-alert></jhi-alert>
 </div>
 
 <div class="container-fluid">
-    <div class="card">
+    <div class="card" style="background-color: transparent;">
         <router-outlet></router-outlet>
+        
     </div>
-    <jhi-footer></jhi-footer>
+ 
     <ngx-spinner></ngx-spinner>
+   
 </div>
+<jhi-footer></jhi-footer>

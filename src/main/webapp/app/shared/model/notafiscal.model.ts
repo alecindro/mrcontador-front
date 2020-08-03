@@ -1,33 +1,34 @@
 import { Moment } from 'moment';
+import { IParceiro } from './parceiro.model';
 
 export interface INotafiscal {
   id?: number;
-  not_numero?: number;
-  not_descricao?: string;
-  not_cnpj?: string;
-  not_empresa?: string;
-  not_datasaida?: Moment;
-  not_valornota?: number;
-  not_dataparcela?: Moment;
-  not_valorparcela?: number;
-  tno_codigo?: number;
-  not_parcela?: string;
-  parceiroId?: number;
+  notNumero?: number;
+  notDescricao?: string;
+  notCnpj?: string;
+  notEmpresa?: string;
+  notDatasaida?: Moment;
+  notValornota?: number;
+  notDataparcela?: Moment;
+  notValorparcela?: number;
+  tnoCodigo?: number;
+  notParcela?: string;
+  parceiro?: IParceiro;
 }
 
 export class Notafiscal implements INotafiscal {
   constructor(
     public id?: number,
-    public not_numero?: number,
-    public not_descricao?: string,
-    public not_cnpj?: string,
-    public not_empresa?: string,
-    public not_datasaida?: Moment,
-    public not_valornota?: number,
-    public not_dataparcela?: Moment,
-    public not_valorparcela?: number,
-    public tno_codigo?: number,
-    public not_parcela?: string,
-    public parceiroId?: number
+    public notNumero?: number,
+    public notDescricao?: string,
+    public notCnpj?: string,
+    public notEmpresa?: string,
+    public notDatasaida?: Moment,
+    public notValornota?: number,
+    public notDataparcela?: Moment,
+    public notValorparcela?: number,
+    public tnoCodigo?: number,
+    public notParcela?: string,
+    public parceiro?: IParceiro
   ) {}
 }

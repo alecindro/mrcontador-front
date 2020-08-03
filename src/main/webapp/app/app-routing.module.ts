@@ -38,7 +38,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           loadChildren: () => import('./entities/banco/banco.module').then(m => m.MrcontadorFrontBancoModule),
         },
         {
-          path: 'parceiro',
+          path: '',
           data: {
             authorities: [Authority.ADMIN],
           },

@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Parceiro } from 'app/shared/model/parceiro.model';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
+import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 
 @Component({
   selector: 'jhi-consolida',
@@ -13,13 +14,15 @@ export class ConsolidaComponent implements OnInit, OnDestroy {
   mesAnoListener!: Subscription;
   parceiro!: Parceiro;
   mesAno!: MesAnoDTO;
-  constructor(private eventManager: JhiEventManager) {
+  constructor(private eventManager: JhiEventManager, private parceiroService: ParceiroService) {
     this.mesAnoListener = eventManager.subscribe('mesAnoSelected', (response: JhiEventWithContent<MesAnoDTO>) => {
       this.mesAno = response.content;
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.parceiro = this.parceiroService.getParceiroSelected();
+  }
 
   ngOnDestroy(): void {
     if (this.mesAnoListener) {

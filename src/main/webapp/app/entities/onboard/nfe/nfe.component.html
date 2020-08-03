@@ -1,1 +1,90 @@
-<jhi-notafiscal></jhi-notafiscal>
+<div class="row">
+    <div class="col-12 bg-info rounded">
+        <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-2 mt-1">
+                        <input class="custom-input"  placeholder="Pesquisar..." 
+                            type="search">
+                        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+                            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+                    </div>
+                    <div class="col-md-2 mt-1">
+                        <select class="custom-select">
+                            <option value="conConta.equals"><span
+                                    jhiTranslate="mrcontadorFrontApp.conta.con_conta"></span>
+                            </option>
+                            <option value="conClassificacao.contains"><span
+                                    jhiTranslate="mrcontadorFrontApp.conta.con_classificacao"></span>
+                            </option>
+                            <option value="conTipo.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo"></span>
+                            </option>    
+                            <option value="conDescricao.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_descricao"></span>
+                            </option>
+                            <option value="conCnpj.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.conta.con_cnpj"></span>
+                        </option>
+                            <option value="conGrau.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
+                        </option>
+                        </select>
+                    </div>
+                    <div  class="col-md-2 mt-1">
+                        <button class="btn btn-info btn-sm" (click)="upload()">
+                            <fa-icon icon="cloud-upload-alt"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
+                        </button>
+                    </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+<div class="table-responsive" id="entities">
+    <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                <th scope="col"  jhiSortBy="not_numero"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not Numero</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_descricao"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_descricao">Not Descricao</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_cnpj"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_cnpj">Not Cnpj</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_empresa"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not Empresa</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_datasaida"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_datasaida">Not Datasaida</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_valornota"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valornota</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_dataparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_valorparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valorparcela">Not Valorparcela</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="tno_codigo"><span jhiTranslate="mrcontadorFrontApp.notafiscal.tno_codigo">Tno Codigo</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="not_parcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not Parcela</span> <fa-icon icon="sort"></fa-icon></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th colspan="13">
+                    <div class="alert alert-warning" id="no-result" *ngIf="notafiscals?.length === 0">
+                        <span jhiTranslate="mrcontadorFrontApp.notafiscal.home.notFound">No notafiscals found</span>
+                    </div>
+                </th>
+            </tr>
+            <tr *ngFor="let notafiscal of notafiscals ;trackBy: trackId">
+                <td width="5%">{{ notafiscal.notNumero }}</td>
+                <td width="30%"><span>{{ notafiscal.notDescricao }}</span></td>
+                <td width="5%">{{ notafiscal.notCnpj }}</td>
+                <td width="30%"><span>{{ notafiscal.notEmpresa }}</span></td>
+                <td width="5%">{{ notafiscal.notDatasaida | date:'dd/MM/yyyy' }}</td>
+                <td width="5%">{{ notafiscal.notValornota | currency:"BRL" }}</td>
+                <td width="5%">{{ notafiscal.notDataparcela | date:'dd/MM/yyyy' }}</td>
+                <td width="5%">{{ notafiscal.notValorparcela | currency:"BRL" }}</td>
+                <td width="5%">{{ notafiscal.tnoCodigo }}</td>
+                <td width="5%">{{ notafiscal.notParcela }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="notafiscals && notafiscals.length > 0">
+    <div class="row justify-content-center">
+        <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+    </div>
+</div>
+</div>

@@ -50,15 +50,14 @@ export class ExtratoService {
 
   protected convertDateFromClient(extrato: IExtrato): IExtrato {
     const copy: IExtrato = Object.assign({}, extrato, {
-      ext_datalancamento:
-        extrato.ext_datalancamento && extrato.ext_datalancamento.isValid() ? extrato.ext_datalancamento.toJSON() : undefined,
+      ext_datalancamento: extrato.extDatalancamento && extrato.extDatalancamento.isValid() ? extrato.extDatalancamento.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.ext_datalancamento = res.body.ext_datalancamento ? moment(res.body.ext_datalancamento) : undefined;
+      res.body.extDatalancamento = res.body.extDatalancamento ? moment(res.body.extDatalancamento) : undefined;
     }
     return res;
   }
@@ -66,7 +65,7 @@ export class ExtratoService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((extrato: IExtrato) => {
-        extrato.ext_datalancamento = extrato.ext_datalancamento ? moment(extrato.ext_datalancamento) : undefined;
+        extrato.extDatalancamento = extrato.extDatalancamento ? moment(extrato.extDatalancamento) : undefined;
       });
     }
     return res;

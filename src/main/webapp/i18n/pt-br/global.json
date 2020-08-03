@@ -1,6 +1,6 @@
 {
   "global": {
-    "title": "Mrcontador_front",
+    "title": "Mr. Contador",
     "browsehappy": "Você está usando um navegador <strong>desatualizado</strong>. Favor <a href=\"http://browsehappy.com/?locale=pt_BR\">atualize o seu navegador</a> para ter uma experiência melhor.",
     "menu": {
       "home": "Início",
@@ -112,7 +112,8 @@
       "edit": "Editar",
       "open": "Abrir",
       "save": "Salvar",
-      "view": "Visualizar"
+      "view": "Visualizar",
+      "upload": "Carregar"
     },
     "detail": {
       "field": "Campo",
@@ -149,6 +150,7 @@
     "parceiroexists": "Parceiro já cadastrado",
     "cpnjcrcexists": "Parceiro já cadastrado",
     "contador.save": "Ocorreu um erro ao salvar o contador. Erro {{entityName}}",
+    "nfe.imported": "Nota fiscal já importada",
     "file": {
       "could.not.extract": "Não foi possível extrair  arquivo",
       "not.image": "O arquivo esperado era uma imagem mas retornou \"{{ fileType }}\"",

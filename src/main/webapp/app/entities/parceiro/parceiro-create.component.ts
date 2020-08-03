@@ -257,7 +257,7 @@ export class ParceiroCreateComponent implements OnInit {
     this.message = '';
     if (this.progressInfo.file) {
       this.spinner.show();
-      this.uploadService.uploadFiles(this.progressInfo.file).subscribe(
+      this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl).subscribe(
         event => {
           if (event && event.type === HttpEventType.UploadProgress) {
             this.progressInfo.value = Math.round((100 * event.loaded) / event.total);

@@ -43,23 +43,13 @@
             <tbody>
                 <tr *ngFor="let extrato of extratoes ;trackBy: trackId">
                     <td><a [routerLink]="['/extrato', extrato.id, 'view']">{{ extrato.id }}</a></td>
-                    <td>{{ extrato.ext_datalancamento | date:'medium' }}</td>
-                    <td>{{ extrato.ext_historico }}</td>
-                    <td>{{ extrato.ext_numerodocumento }}</td>
-                    <td>{{ extrato.ext_numerocontrole }}</td>
-                    <td>{{ extrato.ext_debito }}</td>
-                    <td>{{ extrato.ext_credito }}</td>
-                    <td>{{ extrato.ext_descricao }}</td>
-                    <td>
-                        <div *ngIf="extrato.parceiroId">
-                            <a [routerLink]="['/parceiro', extrato.parceiroId , 'view']" >{{ extrato.parceiroId }}</a>
-                        </div>
-                    </td>
-                    <td>
-                        <div *ngIf="extrato.agenciabancariaId">
-                            <a [routerLink]="['/agenciabancaria', extrato.agenciabancariaId , 'view']" >{{ extrato.agenciabancariaId }}</a>
-                        </div>
-                    </td>
+                    <td>{{ extrato.extDatalancamento | date:'medium' }}</td>
+                    <td>{{ extrato.extHistorico }}</td>
+                    <td>{{ extrato.extNumerodocumento }}</td>
+                    <td>{{ extrato.extNumerocontrole }}</td>
+                    <td>{{ extrato.extDebito }}</td>
+                    <td>{{ extrato.extCredito }}</td>
+                    <td>{{ extrato.extDescricao }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

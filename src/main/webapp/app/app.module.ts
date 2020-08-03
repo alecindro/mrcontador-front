@@ -36,8 +36,8 @@ registerLocaleData(localeBr, 'pt');
     NgxMaskModule.forRoot(maskConfig),
     NgxSpinnerModule,
     BrowserAnimationsModule,
-    // jhipster-needle-angular-add-module JHipster will add new module here
     MrcontadorFrontAppRoutingModule,
+    // jhipster-needle-angular-add-module JHipster will add new module here
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [

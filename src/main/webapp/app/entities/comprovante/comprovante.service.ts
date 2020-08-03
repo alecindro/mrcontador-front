@@ -51,17 +51,17 @@ export class ComprovanteService {
   protected convertDateFromClient(comprovante: IComprovante): IComprovante {
     const copy: IComprovante = Object.assign({}, comprovante, {
       com_datavencimento:
-        comprovante.com_datavencimento && comprovante.com_datavencimento.isValid() ? comprovante.com_datavencimento.toJSON() : undefined,
+        comprovante.comDatavencimento && comprovante.comDatavencimento.isValid() ? comprovante.comDatavencimento.toJSON() : undefined,
       com_datapagamento:
-        comprovante.com_datapagamento && comprovante.com_datapagamento.isValid() ? comprovante.com_datapagamento.toJSON() : undefined,
+        comprovante.comDatapagamento && comprovante.comDatapagamento.isValid() ? comprovante.comDatapagamento.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.com_datavencimento = res.body.com_datavencimento ? moment(res.body.com_datavencimento) : undefined;
-      res.body.com_datapagamento = res.body.com_datapagamento ? moment(res.body.com_datapagamento) : undefined;
+      res.body.comDatavencimento = res.body.comDatavencimento ? moment(res.body.comDatavencimento) : undefined;
+      res.body.comDatapagamento = res.body.comDatapagamento ? moment(res.body.comDatapagamento) : undefined;
     }
     return res;
   }
@@ -69,8 +69,8 @@ export class ComprovanteService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((comprovante: IComprovante) => {
-        comprovante.com_datavencimento = comprovante.com_datavencimento ? moment(comprovante.com_datavencimento) : undefined;
-        comprovante.com_datapagamento = comprovante.com_datapagamento ? moment(comprovante.com_datapagamento) : undefined;
+        comprovante.comDatavencimento = comprovante.comDatavencimento ? moment(comprovante.comDatavencimento) : undefined;
+        comprovante.comDatapagamento = comprovante.comDatapagamento ? moment(comprovante.comDatapagamento) : undefined;
       });
     }
     return res;

@@ -10,50 +10,46 @@
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not Numero</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_numero }}</span>
+                    <span>{{ notafiscal.notNumero }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_descricao">Not Descricao</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_descricao }}</span>
+                    <span>{{ notafiscal.notDescricao }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_cnpj">Not Cnpj</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_cnpj }}</span>
+                    <span>{{ notafiscal.notCnpj }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not Empresa</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_empresa }}</span>
+                    <span>{{ notafiscal.notEmpresa }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_datasaida">Not Datasaida</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_datasaida }}</span>
+                    <span>{{ notafiscal.notDatasaida }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valornota</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_valornota }}</span>
+                    <span>{{ notafiscal.notValornota }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_dataparcela }}</span>
+                    <span>{{ notafiscal.notDataparcela }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valorparcela">Not Valorparcela</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_valorparcela }}</span>
+                    <span>{{ notafiscal.notValorparcela }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.tno_codigo">Tno Codigo</span></dt>
                 <dd>
-                    <span>{{ notafiscal.tno_codigo }}</span>
+                    <span>{{ notafiscal.tnoCodigo }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not Parcela</span></dt>
                 <dd>
-                    <span>{{ notafiscal.not_parcela }}</span>
+                    <span>{{ notafiscal.notParcela }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notafiscal.parceiro">Parceiro</span></dt>
-                <dd>
-                    <div *ngIf="notafiscal.parceiroId">
-                        <a [routerLink]="['/parceiro', notafiscal.parceiroId, 'view']">{{ notafiscal.parceiroId }}</a>
-                    </div>
-                </dd>
+              
             </dl>
 
             <button type="submit"

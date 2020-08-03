@@ -17,6 +17,10 @@
     "planodeconta.parse.error": "Erro ao processar Plano de Conta {{ param }}",
     "conta.exists.error": "Plano de Conta já existente para o CNPJ {{ param }}",
     "planoconta.cnpj.error": "Não existe CNPJ no plano de conta",
-    "upload.aws.error": "Erro ao salvar o documento"
+    "upload.aws.error": "Erro ao salvar o documento",
+    "nfe.imported": "Nota fiscal já importada",
+    "agencia.notequals": "Agencia bancária não corresponde a informada",
+    "parceiro.notfound": "Parceiro não encontrado",
+    "agencia.notfound": "Agência bancária não encontrada"
   }
 }

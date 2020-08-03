@@ -45,21 +45,17 @@
             <tbody>
                 <tr *ngFor="let notafiscal of notafiscals ;trackBy: trackId">
                     <td><a [routerLink]="['/notafiscal', notafiscal.id, 'view']">{{ notafiscal.id }}</a></td>
-                    <td>{{ notafiscal.not_numero }}</td>
-                    <td>{{ notafiscal.not_descricao }}</td>
-                    <td>{{ notafiscal.not_cnpj }}</td>
-                    <td>{{ notafiscal.not_empresa }}</td>
-                    <td>{{ notafiscal.not_datasaida | date:'medium' }}</td>
-                    <td>{{ notafiscal.not_valornota }}</td>
-                    <td>{{ notafiscal.not_dataparcela | date:'medium' }}</td>
-                    <td>{{ notafiscal.not_valorparcela }}</td>
-                    <td>{{ notafiscal.tno_codigo }}</td>
-                    <td>{{ notafiscal.not_parcela }}</td>
-                    <td>
-                        <div *ngIf="notafiscal.parceiroId">
-                            <a [routerLink]="['/parceiro', notafiscal.parceiroId , 'view']" >{{ notafiscal.parceiroId }}</a>
-                        </div>
-                    </td>
+                    <td>{{ notafiscal.notNumero }}</td>
+                    <td>{{ notafiscal.notDescricao }}</td>
+                    <td>{{ notafiscal.notCnpj }}</td>
+                    <td>{{ notafiscal.notEmpresa }}</td>
+                    <td>{{ notafiscal.notDatasaida | date:'medium' }}</td>
+                    <td>{{ notafiscal.notValornota }}</td>
+                    <td>{{ notafiscal.notDataparcela | date:'medium' }}</td>
+                    <td>{{ notafiscal.notValorparcela }}</td>
+                    <td>{{ notafiscal.tnoCodigo }}</td>
+                    <td>{{ notafiscal.notParcela }}</td>
+               
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

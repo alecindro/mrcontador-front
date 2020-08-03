@@ -1,1 +1,88 @@
-<jhi-extrato></jhi-extrato>
+<div class="row">
+    <div class="col-12 bg-info rounded">
+        <div class="row">
+                <div class="col-md-6"></div>
+                <div class="col-md-2 mt-1">
+                        <input class="custom-input"  placeholder="Pesquisar..."  
+                            type="search">
+                        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+                            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+                    </div>
+                    <div class="col-md-2 mt-1">
+                        <select class="custom-select" >
+                            <option value="extNumerodocumento.contains"><span
+                                    jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento"></span>
+                            </option>
+                            <option value="conClassificacao.contains"><span
+                                    jhiTranslate="mrcontadorFrontApp.conta.con_classificacao"></span>
+                            </option>
+                            <option value="conTipo.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo"></span>
+                            </option>    
+                            <option value="conDescricao.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_descricao"></span>
+                            </option>
+                            <option value="conCnpj.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.conta.con_cnpj"></span>
+                        </option>
+                            <option value="conGrau.equals"><span
+                                jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
+                        </option>
+                        </select>
+                    </div>
+                    <div  class="col-md-2 mt-1">
+                        <button class="btn btn-info btn-sm" (click)="upload()">
+                            <fa-icon icon="cloud-upload-alt"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
+                        </button>
+                    </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+<div class="table-responsive" id="entities">
+    <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                <th scope="col"  jhiSortBy="ext_datalancamento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento">Ext Datalancamento</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="ext_historico"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico">Ext Historico</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="ext_numerodocumento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento">Ext Numerodocumento</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="ext_numerocontrole"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerocontrole">Ext Numerocontrole</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="ext_debito"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito">Ext Debito</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="ext_credito"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito">Ext Credito</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="agenciabancariaId"><span jhiTranslate="mrcontadorFrontApp.extrato.agenciabancaria">Agenciabancaria</span> <fa-icon icon="sort"></fa-icon></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngIf="extratoes?.length === 0">
+                <th colspan="9">
+                    <div class="alert alert-warning" id="no-result">
+                        <span jhiTranslate="mrcontadorFrontApp.extrato.home.notFound">No extratoes found</span>
+                    </div>
+                </th>
+            </tr>
+            <tr *ngFor="let extrato of extratoes ;trackBy: trackId">
+                <td width="5%">{{ extrato.extDatalancamento | date:'dd/MM/yyyy' }}</td>
+                <td>{{ extrato.extHistorico }}</td>
+                <td width="5%">{{ extrato.extNumerodocumento }}</td>
+                <td width="5%">{{ extrato.extNumerocontrole }}</td>
+                <td><span class="text-danger">{{ extrato.extDebito | currency:"BRL" }} </span></td>
+                <td><span class="text-info">{{ extrato.extCredito  | currency:"BRL"}}</span></td>
+                <td width="5%">
+                    <div *ngIf="extrato.agenciabancaria">
+                        {{ extrato.agenciabancaria.ageDescricao }}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div *ngIf="extratoes && extratoes.length > 0">
+    <div class="row justify-content-center">
+        <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+    </div>
+</div>
+</div>

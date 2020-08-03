@@ -52,6 +52,17 @@ input[type='checkbox'][readonly] {
   background-image: url('../../../content/images/icn-upload.png');
   background-size: 100%;
 }
+#dragndropimagemodal:before {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  margin-left: -25px;
+  content: '';
+  width: 51px;
+  height: 33px;
+  background-image: url('../../../content/images/icn-upload.png');
+  background-size: 100%;
+}
 
 .uploadimage-text {
   font-size: 1.31579em;

@@ -10,44 +10,36 @@
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento">Ext Datalancamento</span></dt>
                 <dd>
-                    <span>{{ extrato.ext_datalancamento }}</span>
+                    <span>{{ extrato.extDatalancamento }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico">Ext Historico</span></dt>
                 <dd>
-                    <span>{{ extrato.ext_historico }}</span>
+                    <span>{{ extrato.extHistorico }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento">Ext Numerodocumento</span></dt>
                 <dd>
-                    <span>{{ extrato.ext_numerodocumento }}</span>
+                    <span>{{ extrato.extNumerodocumento }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerocontrole">Ext Numerocontrole</span></dt>
                 <dd>
-                    <span>{{ extrato.ext_numerocontrole }}</span>
+                    <span>{{ extrato.extNumerocontrole }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito">Ext Debito</span></dt>
                 <dd>
-                    <span>{{ extrato.ext_debito }}</span>
+                    <span>{{ extrato.extDebito }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito">Ext Credito</span></dt>
                 <dd>
-                    <span>{{ extrato.ext_credito }}</span>
+                    <span>{{ extrato.extCredito }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.ext_descricao">Ext Descricao</span></dt>
                 <dd>
-                    <span>{{ extrato.ext_descricao }}</span>
+                    <span>{{ extrato.extDescricao }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.parceiro">Parceiro</span></dt>
-                <dd>
-                    <div *ngIf="extrato.parceiroId">
-                        <a [routerLink]="['/parceiro', extrato.parceiroId, 'view']">{{ extrato.parceiroId }}</a>
-                    </div>
-                </dd>
+          
                 <dt><span jhiTranslate="mrcontadorFrontApp.extrato.agenciabancaria">Agenciabancaria</span></dt>
-                <dd>
-                    <div *ngIf="extrato.agenciabancariaId">
-                        <a [routerLink]="['/agenciabancaria', extrato.agenciabancariaId, 'view']">{{ extrato.agenciabancariaId }}</a>
-                    </div>
-                </dd>
+                
             </dl>
 
             <button type="submit"

@@ -33,7 +33,7 @@ export class FileComponent {
   }
   upload(idx: number, progressInfo: any): void {
     if (progressInfo.file) {
-      this.uploadService.uploadFiles(progressInfo.file).subscribe(
+      this.uploadService.uploadFiles(progressInfo.file, this.uploadService.planocontasUrl).subscribe(
         event => {
           if (event && event.type === HttpEventType.UploadProgress) {
             this.progressInfos[idx].value = Math.round((100 * event.loaded) / event.total);

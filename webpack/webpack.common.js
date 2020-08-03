@@ -61,20 +61,6 @@ module.exports = (options) => ({
         ]
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: `'${options.env}'`,
-                BUILD_TIMESTAMP: `'${new Date().getTime()}'`,
-                VERSION: `'${packageJson.version}'`,
-                DEBUG_INFO_ENABLED: options.env === 'development',
-                // The root URL for API calls, ending with a '/' - for example: `"https://www.jhipster.tech:8081/myservice/"`.
-                // If this URL is left empty (""), then it will be relative to the current context.
-                // If you use an API server, in `prod` mode, you will need to enable CORS
-                // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
-                SERVER_API_URL: `'http://ec2-34-224-6-165.compute-1.amazonaws.com:8180/'`
-                //SERVER_API_URL: `''`
-            }
-        }),
         new CopyWebpackPlugin([
             { from: './node_modules/swagger-ui-dist/*.{js,css,html,png}', to: 'swagger-ui', flatten: true, ignore: ['index.html'] },
             { from: './node_modules/axios/dist/axios.min.js', to: 'swagger-ui' },

@@ -50,16 +50,16 @@ export class NotafiscalService {
 
   protected convertDateFromClient(notafiscal: INotafiscal): INotafiscal {
     const copy: INotafiscal = Object.assign({}, notafiscal, {
-      not_datasaida: notafiscal.not_datasaida && notafiscal.not_datasaida.isValid() ? notafiscal.not_datasaida.toJSON() : undefined,
-      not_dataparcela: notafiscal.not_dataparcela && notafiscal.not_dataparcela.isValid() ? notafiscal.not_dataparcela.toJSON() : undefined,
+      not_datasaida: notafiscal.notDatasaida && notafiscal.notDatasaida.isValid() ? notafiscal.notDatasaida.toJSON() : undefined,
+      not_dataparcela: notafiscal.notDataparcela && notafiscal.notDataparcela.isValid() ? notafiscal.notDataparcela.toJSON() : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.not_datasaida = res.body.not_datasaida ? moment(res.body.not_datasaida) : undefined;
-      res.body.not_dataparcela = res.body.not_dataparcela ? moment(res.body.not_dataparcela) : undefined;
+      res.body.notDatasaida = res.body.notDatasaida ? moment(res.body.notDatasaida) : undefined;
+      res.body.notDataparcela = res.body.notDataparcela ? moment(res.body.notDataparcela) : undefined;
     }
     return res;
   }
@@ -67,8 +67,8 @@ export class NotafiscalService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((notafiscal: INotafiscal) => {
-        notafiscal.not_datasaida = notafiscal.not_datasaida ? moment(notafiscal.not_datasaida) : undefined;
-        notafiscal.not_dataparcela = notafiscal.not_dataparcela ? moment(notafiscal.not_dataparcela) : undefined;
+        notafiscal.notDatasaida = notafiscal.notDatasaida ? moment(notafiscal.notDatasaida) : undefined;
+        notafiscal.notDataparcela = notafiscal.notDataparcela ? moment(notafiscal.notDataparcela) : undefined;
       });
     }
     return res;

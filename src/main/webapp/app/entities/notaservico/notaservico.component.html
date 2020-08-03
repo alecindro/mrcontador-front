@@ -45,21 +45,17 @@
             <tbody>
                 <tr *ngFor="let notaservico of notaservicos ;trackBy: trackId">
                     <td><a [routerLink]="['/notaservico', notaservico.id, 'view']">{{ notaservico.id }}</a></td>
-                    <td>{{ notaservico.nse_numero }}</td>
-                    <td>{{ notaservico.nse_descricao }}</td>
-                    <td>{{ notaservico.nse_cnpj }}</td>
-                    <td>{{ notaservico.nse_empresa }}</td>
-                    <td>{{ notaservico.nse_datasaida | date:'medium' }}</td>
-                    <td>{{ notaservico.nse_valornota }}</td>
-                    <td>{{ notaservico.nse_dataparcela | date:'medium' }}</td>
-                    <td>{{ notaservico.nse_valorparcela }}</td>
-                    <td>{{ notaservico.tno_codigo }}</td>
-                    <td>{{ notaservico.nse_parcela }}</td>
-                    <td>
-                        <div *ngIf="notaservico.parceiroId">
-                            <a [routerLink]="['/parceiro', notaservico.parceiroId , 'view']" >{{ notaservico.parceiroId }}</a>
-                        </div>
-                    </td>
+                    <td>{{ notaservico.nseNumero }}</td>
+                    <td>{{ notaservico.nseDescricao }}</td>
+                    <td>{{ notaservico.nseCnpj }}</td>
+                    <td>{{ notaservico.nseEmpresa }}</td>
+                    <td>{{ notaservico.nseDatasaida | date:'medium' }}</td>
+                    <td>{{ notaservico.nseValornota }}</td>
+                    <td>{{ notaservico.nseDataparcela | date:'medium' }}</td>
+                    <td>{{ notaservico.nseValorparcela }}</td>
+                    <td>{{ notaservico.tnoCodigo }}</td>
+                    <td>{{ notaservico.nseParcela }}</td>
+             
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

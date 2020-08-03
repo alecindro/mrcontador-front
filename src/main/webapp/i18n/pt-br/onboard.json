@@ -1,0 +1,14 @@
+{
+  "mrcontadorFrontApp": {
+    "onboard": {
+      "consolidacao": "Consolidação",
+      "planoconta": "Plano de Conta",
+      "comprovante": "Comprovante",
+      "extrato": "Extrato",
+      "nfe": "Nota Fiscal",
+      "ns": "Nota Serviço",
+      "agencia": "Agência Bancária",
+      "dados": "Dados Cadastrais"
+    }
+  }
+}

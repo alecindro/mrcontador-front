@@ -7,7 +7,7 @@
         "createOrEditLabel": "Criar ou editar Arquivo",
         "notFound": "Nenhum Arquivo encontrado"
       },
-      "created": "O arquivo foi {{ param }} foi processaod",
+      "created": "O arquivo foi {{ param }} foi processado",
       "detail": {
         "title": "Arquivo"
       },

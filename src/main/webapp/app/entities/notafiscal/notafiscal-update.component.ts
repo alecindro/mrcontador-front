@@ -32,7 +32,6 @@ export class NotafiscalUpdateComponent implements OnInit {
     not_valorparcela: [],
     tno_codigo: [],
     not_parcela: [null, [Validators.maxLength(10)]],
-    parceiroId: [null, Validators.required],
   });
 
   constructor(
@@ -59,17 +58,16 @@ export class NotafiscalUpdateComponent implements OnInit {
   updateForm(notafiscal: INotafiscal): void {
     this.editForm.patchValue({
       id: notafiscal.id,
-      not_numero: notafiscal.not_numero,
-      not_descricao: notafiscal.not_descricao,
-      not_cnpj: notafiscal.not_cnpj,
-      not_empresa: notafiscal.not_empresa,
-      not_datasaida: notafiscal.not_datasaida ? notafiscal.not_datasaida.format(DATE_TIME_FORMAT) : null,
-      not_valornota: notafiscal.not_valornota,
-      not_dataparcela: notafiscal.not_dataparcela ? notafiscal.not_dataparcela.format(DATE_TIME_FORMAT) : null,
-      not_valorparcela: notafiscal.not_valorparcela,
-      tno_codigo: notafiscal.tno_codigo,
-      not_parcela: notafiscal.not_parcela,
-      parceiroId: notafiscal.parceiroId,
+      not_numero: notafiscal.notNumero,
+      not_descricao: notafiscal.notDescricao,
+      not_cnpj: notafiscal.notCnpj,
+      not_empresa: notafiscal.notEmpresa,
+      not_datasaida: notafiscal.notDatasaida ? notafiscal.notDatasaida.format(DATE_TIME_FORMAT) : null,
+      not_valornota: notafiscal.notValornota,
+      not_dataparcela: notafiscal.notDataparcela ? notafiscal.notDataparcela.format(DATE_TIME_FORMAT) : null,
+      not_valorparcela: notafiscal.notValorparcela,
+      tno_codigo: notafiscal.tnoCodigo,
+      not_parcela: notafiscal.notParcela,
     });
   }
 
@@ -91,21 +89,20 @@ export class NotafiscalUpdateComponent implements OnInit {
     return {
       ...new Notafiscal(),
       id: this.editForm.get(['id'])!.value,
-      not_numero: this.editForm.get(['not_numero'])!.value,
-      not_descricao: this.editForm.get(['not_descricao'])!.value,
-      not_cnpj: this.editForm.get(['not_cnpj'])!.value,
-      not_empresa: this.editForm.get(['not_empresa'])!.value,
-      not_datasaida: this.editForm.get(['not_datasaida'])!.value
+      notNumero: this.editForm.get(['not_numero'])!.value,
+      notDescricao: this.editForm.get(['not_descricao'])!.value,
+      notCnpj: this.editForm.get(['not_cnpj'])!.value,
+      notEmpresa: this.editForm.get(['not_empresa'])!.value,
+      notDatasaida: this.editForm.get(['not_datasaida'])!.value
         ? moment(this.editForm.get(['not_datasaida'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      not_valornota: this.editForm.get(['not_valornota'])!.value,
-      not_dataparcela: this.editForm.get(['not_dataparcela'])!.value
+      notValornota: this.editForm.get(['not_valornota'])!.value,
+      notDataparcela: this.editForm.get(['not_dataparcela'])!.value
         ? moment(this.editForm.get(['not_dataparcela'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      not_valorparcela: this.editForm.get(['not_valorparcela'])!.value,
-      tno_codigo: this.editForm.get(['tno_codigo'])!.value,
-      not_parcela: this.editForm.get(['not_parcela'])!.value,
-      parceiroId: this.editForm.get(['parceiroId'])!.value,
+      notValorparcela: this.editForm.get(['not_valorparcela'])!.value,
+      tnoCodigo: this.editForm.get(['tno_codigo'])!.value,
+      notParcela: this.editForm.get(['not_parcela'])!.value,
     };
   }
 

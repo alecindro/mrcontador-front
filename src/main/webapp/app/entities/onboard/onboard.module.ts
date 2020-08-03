@@ -15,6 +15,11 @@ import { MrcontadorFrontSharedModule } from 'app/shared/shared.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.component';
+import { NfeUploadComponent } from './nfe/nfe-upload.component';
+import { ExtratoUploadComponent } from './extrato/extrato-upload.component';
+import { NsUploadComponent } from './notaservico/ns-upload.component';
+import { ComprovanteComponent } from './comprovante/comprovante.component';
+import { ComprovanteUploadComponent } from './comprovante/comprovante-upload.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,11 @@ import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.compone
     AgenciaDashUpdateComponent,
     NsDashComponent,
     CadDashComponent,
+    NfeUploadComponent,
+    ExtratoUploadComponent,
+    NsUploadComponent,
+    ComprovanteComponent,
+    ComprovanteUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -37,5 +47,6 @@ import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.compone
     NgxMaskModule.forChild(),
     NgbTypeaheadModule,
   ],
+  entryComponents: [NfeUploadComponent, ExtratoUploadComponent, NsUploadComponent, ComprovanteUploadComponent],
 })
 export class OnboardModule {}

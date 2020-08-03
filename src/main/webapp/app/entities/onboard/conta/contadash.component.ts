@@ -29,6 +29,8 @@ export class ContaDashComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   parceiro?: IParceiro;
+  pesquisa?: any;
+  selected = 'conClassificacao.contains';
 
   constructor(
     private eventManager: JhiEventManager,
@@ -55,6 +57,9 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     };
     if (this.parceiro) {
       queryParam['parceiroId.equals'] = this.parceiro.id;
+    }
+    if (this.pesquisa) {
+      queryParam[this.selected] = this.pesquisa;
     }
     this.contaService.query(queryParam).subscribe(
       (res: HttpResponse<IConta[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -104,6 +109,14 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     this.spinner.hide();
     this.contas = data || [];
     this.ngbPaginationPage = this.page;
+  }
+
+  onChange(): void {
+    this.loadPage(1, true);
+  }
+
+  pesquisar(): void {
+    this.onChange();
   }
 
   onError(): void {

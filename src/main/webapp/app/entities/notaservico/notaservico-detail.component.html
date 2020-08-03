@@ -10,50 +10,45 @@
             <dl class="row-md jh-entity-details">
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_numero">Nse Numero</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_numero }}</span>
+                    <span>{{ notaservico.nseNumero }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_descricao">Nse Descricao</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_descricao }}</span>
+                    <span>{{ notaservico.nseDescricao }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_cnpj">Nse Cnpj</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_cnpj }}</span>
+                    <span>{{ notaservico.nseCnpj }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_empresa">Nse Empresa</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_empresa }}</span>
+                    <span>{{ notaservico.nseEmpresa }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_datasaida">Nse Datasaida</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_datasaida }}</span>
+                    <span>{{ notaservico.nseDatasaida }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_valornota">Nse Valornota</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_valornota }}</span>
+                    <span>{{ notaservico.nseValornota }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_dataparcela">Nse Dataparcela</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_dataparcela }}</span>
+                    <span>{{ notaservico.nseDataparcela }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_valorparcela">Nse Valorparcela</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_valorparcela }}</span>
+                    <span>{{ notaservico.nseValorparcela }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.tno_codigo">Tno Codigo</span></dt>
                 <dd>
-                    <span>{{ notaservico.tno_codigo }}</span>
+                    <span>{{ notaservico.tnoCodigo }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.nse_parcela">Nse Parcela</span></dt>
                 <dd>
-                    <span>{{ notaservico.nse_parcela }}</span>
+                    <span>{{ notaservico.nseParcela }}</span>
                 </dd>
                 <dt><span jhiTranslate="mrcontadorFrontApp.notaservico.parceiro">Parceiro</span></dt>
-                <dd>
-                    <div *ngIf="notaservico.parceiroId">
-                        <a [routerLink]="['/parceiro', notaservico.parceiroId, 'view']">{{ notaservico.parceiroId }}</a>
-                    </div>
-                </dd>
             </dl>
 
             <button type="submit"

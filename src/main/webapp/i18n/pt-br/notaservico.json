@@ -5,7 +5,7 @@
         "title": "Notaservicos",
         "createLabel": "Criar novo Notaservico",
         "createOrEditLabel": "Criar ou editar Notaservico",
-        "notFound": "Nenhum Notaservico encontrado"
+        "notFound": "Nenhuma Nota de Serviço cadastrada"
       },
       "created": "Um novo Notaservico foi criado com o identificador {{ param }}",
       "updated": "Um Notaservico foi atualizado com o identificador {{ param }}",
@@ -14,18 +14,19 @@
         "question": "Tem certeza de que deseja excluir Notaservico {{ id }}?"
       },
       "detail": {
-        "title": "Notaservico"
+        "title": "Notaservico",
+        "modalTitle": "Nota Fiscal de Serviço"
       },
-      "nse_numero": "Nse Numero",
-      "nse_descricao": "Nse Descricao",
-      "nse_cnpj": "Nse Cnpj",
-      "nse_empresa": "Nse Empresa",
-      "nse_datasaida": "Nse Datasaida",
-      "nse_valornota": "Nse Valornota",
-      "nse_dataparcela": "Nse Dataparcela",
-      "nse_valorparcela": "Nse Valorparcela",
-      "tno_codigo": "Tno Codigo",
-      "nse_parcela": "Nse Parcela",
+      "nse_numero": "Número",
+      "nse_descricao": "Descrição",
+      "nse_cnpj": "Cnpj",
+      "nse_empresa": "Empresa",
+      "nse_datasaida": "Dt Saída",
+      "nse_valornota": "Valor Nota",
+      "nse_dataparcela": "Dt Parcela",
+      "nse_valorparcela": "Valor Parcela",
+      "tno_codigo": "Código",
+      "nse_parcela": "Parcela",
       "parceiro": "Parceiro"
     }
   }

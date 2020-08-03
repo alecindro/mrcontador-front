@@ -13,7 +13,7 @@
                             <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_numero"></span>
                         </div>
                         <div class="col-md-9 text-left">
-                            <span>{{ agenciabancaria.age_numero }}</span>
+                            <span>{{ agenciabancaria.ageNumero }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -21,7 +21,7 @@
                             <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_digito">Age Digito</span>
                         </div>
                         <div class="col-md-9 text-left">
-                            <span>{{ agenciabancaria.age_digito }}</span>
+                            <span>{{ agenciabancaria.ageDigito }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -29,7 +29,7 @@
                                 Agencia</span>
                         </div>
                         <div class="col-md-9 text-left">
-                            <span>{{ agenciabancaria.age_agencia }}</span>
+                            <span>{{ agenciabancaria.ageAgencia }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -37,7 +37,7 @@
                             <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_descricao">Age Descricao</span>
                         </div>
                         <div class="col-md-9 text-left">
-                            <span>{{ agenciabancaria.age_descricao }}</span>
+                            <span>{{ agenciabancaria.ageDescricao }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -45,7 +45,7 @@
                             <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_situacao">Age Situacao</span>
                         </div>
                         <div class="col-md-9 text-left">
-                            <span>{{ agenciabancaria.age_situacao }}</span>
+                            <span>{{ agenciabancaria.ageSituacao }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -55,7 +55,7 @@
                         <div class="col-md-9 text-left">
                             <div *ngIf="agenciabancaria.banco">
                                 <a
-                                    [routerLink]="['/banco', agenciabancaria.banco.id, 'view']">{{ agenciabancaria.banco?.ban_descricao }}</a>
+                                    [routerLink]="['/banco', agenciabancaria.banco.id, 'view']">{{ agenciabancaria.banco?.banDescricao }}</a>
                             </div>
                         </div>
                     </div>

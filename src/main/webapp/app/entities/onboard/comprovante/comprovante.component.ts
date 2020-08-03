@@ -1,24 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { INotafiscal } from 'app/shared/model/notafiscal.model';
+import { ComprovanteUploadComponent } from './comprovante-upload.component';
+import { IComprovante } from 'app/shared/model/comprovante.model';
+import { ComprovanteService } from 'app/entities/comprovante/comprovante.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { NotafiscalService } from 'app/entities/notafiscal/notafiscal.service';
+import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
-import { NfeUploadComponent } from './nfe-upload.component';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpResponse, HttpHeaders } from '@angular/common/http';
 
 @Component({
-  selector: 'jhi-nfe',
-  templateUrl: './nfe.component.html',
-  styleUrls: ['./nfe.component.scss'],
+  selector: 'jhi-comprovante',
+  templateUrl: './comprovante.component.html',
+  styleUrls: ['./comprovante.component.scss'],
 })
-export class NfeComponent implements OnInit, OnDestroy {
-  notafiscals?: INotafiscal[];
+export class ComprovanteComponent implements OnInit, OnDestroy {
+  comprovantes?: IComprovante[];
   eventSubscriber?: Subscription;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -26,30 +25,28 @@ export class NfeComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  parceiro!: IParceiro;
+  parceiro?: IParceiro;
 
   constructor(
-    protected notafiscalService: NotafiscalService,
+    protected comprovanteService: ComprovanteService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    private parceiroService: ParceiroService,
-    public spinner: NgxSpinnerService
+    protected parceiroService: ParceiroService
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     const pageToLoad: number = page || this.page || 1;
-    this.spinner.show();
-    this.notafiscalService
+
+    this.comprovanteService
       .query({
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
-        'parceiroId.equals': this.parceiro.id,
       })
       .subscribe(
-        (res: HttpResponse<INotafiscal[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+        (res: HttpResponse<IComprovante[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
         () => this.onError()
       );
   }
@@ -57,7 +54,7 @@ export class NfeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
     this.handleNavigation();
-    this.registerChangeInNotafiscals();
+    this.registerChangeInComprovantes();
   }
 
   protected handleNavigation(): void {
@@ -81,17 +78,12 @@ export class NfeComponent implements OnInit, OnDestroy {
     }
   }
 
-  trackId(index: number, item: INotafiscal): number {
+  trackId(index: number, item: IComprovante): number {
     return item.id!;
   }
 
-  registerChangeInNotafiscals(): void {
-    this.eventSubscriber = this.eventManager.subscribe('nfeUpload', () => this.loadPage());
-  }
-
-  upload(): void {
-    const modalRef = this.modalService.open(NfeUploadComponent, { size: 'xl', backdrop: 'static' });
-    modalRef.componentInstance.parceiro = this.parceiro;
+  registerChangeInComprovantes(): void {
+    this.eventSubscriber = this.eventManager.subscribe('comprovateUpload', () => this.loadPage());
   }
 
   sort(): string[] {
@@ -102,11 +94,11 @@ export class NfeComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected onSuccess(data: INotafiscal[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+  protected onSuccess(data: IComprovante[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate([`/onboard/${this.parceiro.id}/nfe`], {
+      this.router.navigate(['/comprovante'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
@@ -114,13 +106,16 @@ export class NfeComponent implements OnInit, OnDestroy {
         },
       });
     }
-    this.notafiscals = data || [];
+    this.comprovantes = data || [];
     this.ngbPaginationPage = this.page;
-    this.spinner.hide();
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
-    this.spinner.hide();
+  }
+
+  upload(): void {
+    const modalRef = this.modalService.open(ComprovanteUploadComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.parceiro = this.parceiro;
   }
 }

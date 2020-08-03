@@ -45,16 +45,16 @@
             <tbody>
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
                     <td><a [routerLink]="['/comprovante', comprovante.id, 'view']">{{ comprovante.id }}</a></td>
-                    <td>{{ comprovante.par_codigo }}</td>
-                    <td>{{ comprovante.age_codigo }}</td>
-                    <td>{{ comprovante.com_cnpj }}</td>
-                    <td>{{ comprovante.com_beneficiario }}</td>
-                    <td>{{ comprovante.com_documento }}</td>
-                    <td>{{ comprovante.com_datavencimento | date:'medium' }}</td>
-                    <td>{{ comprovante.com_datapagamento | date:'medium' }}</td>
-                    <td>{{ comprovante.com_valordocumento }}</td>
-                    <td>{{ comprovante.com_valorpagamento }}</td>
-                    <td>{{ comprovante.com_observacao }}</td>
+                    <td>{{ comprovante.parCodigo }}</td>
+                    <td>{{ comprovante.ageCodigo }}</td>
+                    <td>{{ comprovante.comCnpj }}</td>
+                    <td>{{ comprovante.comBeneficiario }}</td>
+                    <td>{{ comprovante.comDocumento }}</td>
+                    <td>{{ comprovante.comDatavencimento | date:'medium' }}</td>
+                    <td>{{ comprovante.comDatapagamento | date:'medium' }}</td>
+                    <td>{{ comprovante.comValordocumento }}</td>
+                    <td>{{ comprovante.comValorpagamento }}</td>
+                    <td>{{ comprovante.comObservacao }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

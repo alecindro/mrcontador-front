@@ -59,17 +59,17 @@ export class NotaservicoUpdateComponent implements OnInit {
   updateForm(notaservico: INotaservico): void {
     this.editForm.patchValue({
       id: notaservico.id,
-      nse_numero: notaservico.nse_numero,
-      nse_descricao: notaservico.nse_descricao,
-      nse_cnpj: notaservico.nse_cnpj,
-      nse_empresa: notaservico.nse_empresa,
-      nse_datasaida: notaservico.nse_datasaida ? notaservico.nse_datasaida.format(DATE_TIME_FORMAT) : null,
-      nse_valornota: notaservico.nse_valornota,
-      nse_dataparcela: notaservico.nse_dataparcela ? notaservico.nse_dataparcela.format(DATE_TIME_FORMAT) : null,
-      nse_valorparcela: notaservico.nse_valorparcela,
-      tno_codigo: notaservico.tno_codigo,
-      nse_parcela: notaservico.nse_parcela,
-      parceiroId: notaservico.parceiroId,
+      nse_numero: notaservico.nseNumero,
+      nse_descricao: notaservico.nseDescricao,
+      nse_cnpj: notaservico.nseCnpj,
+      nse_empresa: notaservico.nseEmpresa,
+      nse_datasaida: notaservico.nseDatasaida ? notaservico.nseDatasaida.format(DATE_TIME_FORMAT) : null,
+      nse_valornota: notaservico.nseValornota,
+      nse_dataparcela: notaservico.nseDataparcela ? notaservico.nseDataparcela.format(DATE_TIME_FORMAT) : null,
+      nse_valorparcela: notaservico.nseValorparcela,
+      tno_codigo: notaservico.tnoCodigo,
+      nse_parcela: notaservico.nseParcela,
+      parceiroId: notaservico.parceiro,
     });
   }
 
@@ -91,21 +91,21 @@ export class NotaservicoUpdateComponent implements OnInit {
     return {
       ...new Notaservico(),
       id: this.editForm.get(['id'])!.value,
-      nse_numero: this.editForm.get(['nse_numero'])!.value,
-      nse_descricao: this.editForm.get(['nse_descricao'])!.value,
-      nse_cnpj: this.editForm.get(['nse_cnpj'])!.value,
-      nse_empresa: this.editForm.get(['nse_empresa'])!.value,
-      nse_datasaida: this.editForm.get(['nse_datasaida'])!.value
+      nseNumero: this.editForm.get(['nse_numero'])!.value,
+      nseDescricao: this.editForm.get(['nse_descricao'])!.value,
+      nseCnpj: this.editForm.get(['nse_cnpj'])!.value,
+      nseEmpresa: this.editForm.get(['nse_empresa'])!.value,
+      nseDatasaida: this.editForm.get(['nse_datasaida'])!.value
         ? moment(this.editForm.get(['nse_datasaida'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      nse_valornota: this.editForm.get(['nse_valornota'])!.value,
-      nse_dataparcela: this.editForm.get(['nse_dataparcela'])!.value
+      nseValornota: this.editForm.get(['nse_valornota'])!.value,
+      nseDataparcela: this.editForm.get(['nse_dataparcela'])!.value
         ? moment(this.editForm.get(['nse_dataparcela'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      nse_valorparcela: this.editForm.get(['nse_valorparcela'])!.value,
-      tno_codigo: this.editForm.get(['tno_codigo'])!.value,
-      nse_parcela: this.editForm.get(['nse_parcela'])!.value,
-      parceiroId: this.editForm.get(['parceiroId'])!.value,
+      nseValorparcela: this.editForm.get(['nse_valorparcela'])!.value,
+      tnoCodigo: this.editForm.get(['tno_codigo'])!.value,
+      nseParcela: this.editForm.get(['nse_parcela'])!.value,
+      parceiro: this.editForm.get(['parceiroId'])!.value,
     };
   }
 

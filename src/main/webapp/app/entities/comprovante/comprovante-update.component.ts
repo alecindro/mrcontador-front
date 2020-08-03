@@ -48,16 +48,16 @@ export class ComprovanteUpdateComponent implements OnInit {
   updateForm(comprovante: IComprovante): void {
     this.editForm.patchValue({
       id: comprovante.id,
-      par_codigo: comprovante.par_codigo,
-      age_codigo: comprovante.age_codigo,
-      com_cnpj: comprovante.com_cnpj,
-      com_beneficiario: comprovante.com_beneficiario,
-      com_documento: comprovante.com_documento,
-      com_datavencimento: comprovante.com_datavencimento ? comprovante.com_datavencimento.format(DATE_TIME_FORMAT) : null,
-      com_datapagamento: comprovante.com_datapagamento ? comprovante.com_datapagamento.format(DATE_TIME_FORMAT) : null,
-      com_valordocumento: comprovante.com_valordocumento,
-      com_valorpagamento: comprovante.com_valorpagamento,
-      com_observacao: comprovante.com_observacao,
+      par_codigo: comprovante.parCodigo,
+      age_codigo: comprovante.ageCodigo,
+      com_cnpj: comprovante.comCnpj,
+      com_beneficiario: comprovante.comBeneficiario,
+      com_documento: comprovante.comDocumento,
+      com_datavencimento: comprovante.comDatavencimento ? comprovante.comDatavencimento.format(DATE_TIME_FORMAT) : null,
+      com_datapagamento: comprovante.comDatapagamento ? comprovante.comDatapagamento.format(DATE_TIME_FORMAT) : null,
+      com_valordocumento: comprovante.comValordocumento,
+      com_valorpagamento: comprovante.comValorpagamento,
+      com_observacao: comprovante.comObservacao,
     });
   }
 
@@ -79,20 +79,20 @@ export class ComprovanteUpdateComponent implements OnInit {
     return {
       ...new Comprovante(),
       id: this.editForm.get(['id'])!.value,
-      par_codigo: this.editForm.get(['par_codigo'])!.value,
-      age_codigo: this.editForm.get(['age_codigo'])!.value,
-      com_cnpj: this.editForm.get(['com_cnpj'])!.value,
-      com_beneficiario: this.editForm.get(['com_beneficiario'])!.value,
-      com_documento: this.editForm.get(['com_documento'])!.value,
-      com_datavencimento: this.editForm.get(['com_datavencimento'])!.value
+      parCodigo: this.editForm.get(['par_codigo'])!.value,
+      ageCodigo: this.editForm.get(['age_codigo'])!.value,
+      comCnpj: this.editForm.get(['com_cnpj'])!.value,
+      comBeneficiario: this.editForm.get(['com_beneficiario'])!.value,
+      comDocumento: this.editForm.get(['com_documento'])!.value,
+      comDatavencimento: this.editForm.get(['com_datavencimento'])!.value
         ? moment(this.editForm.get(['com_datavencimento'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      com_datapagamento: this.editForm.get(['com_datapagamento'])!.value
+      comDatapagamento: this.editForm.get(['com_datapagamento'])!.value
         ? moment(this.editForm.get(['com_datapagamento'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      com_valordocumento: this.editForm.get(['com_valordocumento'])!.value,
-      com_valorpagamento: this.editForm.get(['com_valorpagamento'])!.value,
-      com_observacao: this.editForm.get(['com_observacao'])!.value,
+      comValordocumento: this.editForm.get(['com_valordocumento'])!.value,
+      comValorpagamento: this.editForm.get(['com_valorpagamento'])!.value,
+      comObservacao: this.editForm.get(['com_observacao'])!.value,
     };
   }
 

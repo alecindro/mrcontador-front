@@ -5,7 +5,7 @@
         "title": "Extratos",
         "createLabel": "Criar novo Extrato",
         "createOrEditLabel": "Criar ou editar Extrato",
-        "notFound": "Nenhum Extrato encontrado"
+        "notFound": "Nenhum Extrato cadastrado"
       },
       "created": "Um novo Extrato foi criado com o identificador {{ param }}",
       "updated": "Um Extrato foi atualizado com o identificador {{ param }}",
@@ -14,17 +14,18 @@
         "question": "Tem certeza de que deseja excluir Extrato {{ id }}?"
       },
       "detail": {
-        "title": "Extrato"
+        "title": "Extrato",
+        "modalTitle": "Extrato"
       },
-      "ext_datalancamento": "Ext Datalancamento",
-      "ext_historico": "Ext Historico",
-      "ext_numerodocumento": "Ext Numerodocumento",
-      "ext_numerocontrole": "Ext Numerocontrole",
-      "ext_debito": "Ext Debito",
-      "ext_credito": "Ext Credito",
-      "ext_descricao": "Ext Descricao",
+      "ext_datalancamento": "Lançamento",
+      "ext_historico": "Histórico",
+      "ext_numerodocumento": "Num Doc",
+      "ext_numerocontrole": "Num Controle",
+      "ext_debito": "Débito",
+      "ext_credito": "Crédito",
+      "ext_descricao": "Descrição",
       "parceiro": "Parceiro",
-      "agenciabancaria": "Agenciabancaria"
+      "agenciabancaria": "Banco"
     }
   }
 }

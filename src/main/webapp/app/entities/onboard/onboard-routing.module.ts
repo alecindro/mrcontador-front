@@ -12,6 +12,7 @@ import { AgenciaDashComponent } from './agencia/agenciadash.component';
 import { CadDashComponent } from './cadastro/caddash.component';
 import { ParceiroResolve } from '../parceiro/parceiro.route';
 import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.component';
+import { ComprovanteComponent } from './comprovante/comprovante.component';
 
 const routes: Routes = [
   {
@@ -62,7 +63,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.nota.home.title',
+          pageTitle: 'mrcontadorFrontApp.notafiscal.home.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -82,7 +83,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.agencia.home.title',
+          pageTitle: 'mrcontadorFrontApp.agenciabancaria.home.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -92,7 +93,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.agencia.home.title',
+          pageTitle: 'mrcontadorFrontApp.agenciabancaria.home.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -102,7 +103,17 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.cadparceiro.home.title',
+          pageTitle: 'mrcontadorFrontApp.parceiro.home.createOrEditLabel',
+        },
+        canActivate: [UserRouteAccessService],
+      },
+      {
+        path: 'comprovante',
+        component: ComprovanteComponent,
+        data: {
+          authorities: [Authority.USER],
+          defaultSort: 'id,asc',
+          pageTitle: 'mrcontadorFrontApp.comprovante.home.title',
         },
         canActivate: [UserRouteAccessService],
       },

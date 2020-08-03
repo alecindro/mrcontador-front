@@ -70,10 +70,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let banco of bancos ;trackBy: trackId">
-                    <td>{{ banco.ban_descricao }}</td>
-                    <td>{{ banco.ban_codigobancario }}</td>
-                    <td>{{ banco.ban_sigla }}</td>
-                    <td>{{ banco.ban_ispb }}</td>
+                    <td>{{ banco.banDescricao }}</td>
+                    <td>{{ banco.banCodigobancario }}</td>
+                    <td>{{ banco.banSigla }}</td>
+                    <td>{{ banco.banIspb }}</td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit" [routerLink]="['/banco', banco.id, 'view']"

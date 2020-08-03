@@ -39,14 +39,14 @@
             </thead>
             <tbody>
                 <tr *ngFor="let agenciabancaria of agenciabancarias ;trackBy: trackId">
-                    <td>{{ agenciabancaria.age_numero }}</td>
-                    <td>{{ agenciabancaria.age_digito }}</td>
-                    <td>{{ agenciabancaria.age_agencia }}</td>
-                    <td>{{ agenciabancaria.age_descricao }}</td>
-                    <td><input type="checkbox" [(ngModel)]="agenciabancaria.age_situacao" readonly></td>
+                    <td>{{ agenciabancaria.ageNumero }}</td>
+                    <td>{{ agenciabancaria.ageDigito }}</td>
+                    <td>{{ agenciabancaria.ageAgencia }}</td>
+                    <td>{{ agenciabancaria.ageDescricao }}</td>
+                    <td><input type="checkbox" [(ngModel)]="agenciabancaria.ageSituacao" readonly></td>
                     <td>
                         <div *ngIf="agenciabancaria.banco">
-                            <a [routerLink]="['/banco', agenciabancaria.banco.id , 'view']" >{{ agenciabancaria.banco?.ban_descricao }}</a>
+                            <a [routerLink]="['/banco', agenciabancaria.banco.id , 'view']" >{{ agenciabancaria.banco?.banDescricao }}</a>
                         </div>
                     </td>
                     <td>

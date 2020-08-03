@@ -5,7 +5,7 @@ import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 
 export const HOME_ROUTE: Route = {
-  path: '',
+  path: 'home',
   component: HomeComponent,
   data: {
     authorities: [Authority.USER, Authority.ADMIN, Authority.MRCONTADOR_MASTER],

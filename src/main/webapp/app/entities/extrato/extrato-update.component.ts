@@ -34,7 +34,6 @@ export class ExtratoUpdateComponent implements OnInit {
     ext_debito: [],
     ext_credito: [],
     ext_descricao: [null, [Validators.maxLength(30)]],
-    parceiroId: [null, Validators.required],
     agenciabancariaId: [null, Validators.required],
   });
 
@@ -64,15 +63,14 @@ export class ExtratoUpdateComponent implements OnInit {
   updateForm(extrato: IExtrato): void {
     this.editForm.patchValue({
       id: extrato.id,
-      ext_datalancamento: extrato.ext_datalancamento ? extrato.ext_datalancamento.format(DATE_TIME_FORMAT) : null,
-      ext_historico: extrato.ext_historico,
-      ext_numerodocumento: extrato.ext_numerodocumento,
-      ext_numerocontrole: extrato.ext_numerocontrole,
-      ext_debito: extrato.ext_debito,
-      ext_credito: extrato.ext_credito,
-      ext_descricao: extrato.ext_descricao,
-      parceiroId: extrato.parceiroId,
-      agenciabancariaId: extrato.agenciabancariaId,
+      ext_datalancamento: extrato.extDatalancamento ? extrato.extDatalancamento.format(DATE_TIME_FORMAT) : null,
+      ext_historico: extrato.extHistorico,
+      ext_numerodocumento: extrato.extNumerodocumento,
+      ext_numerocontrole: extrato.extNumerocontrole,
+      ext_debito: extrato.extDebito,
+      ext_credito: extrato.extCredito,
+      ext_descricao: extrato.extDescricao,
+      agenciabancariaId: extrato.agenciabancaria,
     });
   }
 
@@ -94,17 +92,16 @@ export class ExtratoUpdateComponent implements OnInit {
     return {
       ...new Extrato(),
       id: this.editForm.get(['id'])!.value,
-      ext_datalancamento: this.editForm.get(['ext_datalancamento'])!.value
+      extDatalancamento: this.editForm.get(['ext_datalancamento'])!.value
         ? moment(this.editForm.get(['ext_datalancamento'])!.value, DATE_TIME_FORMAT)
         : undefined,
-      ext_historico: this.editForm.get(['ext_historico'])!.value,
-      ext_numerodocumento: this.editForm.get(['ext_numerodocumento'])!.value,
-      ext_numerocontrole: this.editForm.get(['ext_numerocontrole'])!.value,
-      ext_debito: this.editForm.get(['ext_debito'])!.value,
-      ext_credito: this.editForm.get(['ext_credito'])!.value,
-      ext_descricao: this.editForm.get(['ext_descricao'])!.value,
-      parceiroId: this.editForm.get(['parceiroId'])!.value,
-      agenciabancariaId: this.editForm.get(['agenciabancariaId'])!.value,
+      extHistorico: this.editForm.get(['ext_historico'])!.value,
+      extNumerodocumento: this.editForm.get(['ext_numerodocumento'])!.value,
+      extNumerocontrole: this.editForm.get(['ext_numerocontrole'])!.value,
+      extDebito: this.editForm.get(['ext_debito'])!.value,
+      extCredito: this.editForm.get(['ext_credito'])!.value,
+      extDescricao: this.editForm.get(['ext_descricao'])!.value,
+      agenciabancaria: this.editForm.get(['agenciabancariaId'])!.value,
     };
   }
 
