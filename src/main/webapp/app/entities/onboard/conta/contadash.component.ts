@@ -152,7 +152,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
       const queryParam: any = {
         parceiroCNPJ: this.parceiro?.parCnpjcpf,
       };
-      this.uploadService.uploadFiles(this.progressInfo.file, queryParam).subscribe(
+      this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl, queryParam).subscribe(
         event => {
           if (event && event.type === HttpEventType.UploadProgress) {
             this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
