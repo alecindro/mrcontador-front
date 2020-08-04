@@ -26,7 +26,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  parceiro?: IParceiro;
+  parceiro!: IParceiro;
 
   constructor(
     protected extratoService: ExtratoService,
@@ -46,6 +46,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
+        'parceiroId.equals': this.parceiro.id,
       })
       .subscribe(
         (res: HttpResponse<IExtrato[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -100,7 +101,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate([`onboard/${this.parceiro?.id}/extrato`], {
+      this.router.navigate([`onboard/${this.parceiro.id}/extrato`], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
