@@ -9,6 +9,7 @@ import { IBanco } from 'app/shared/model/banco.model';
 import { BancoService } from 'app/entities/banco/banco.service';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { JhiEventManager } from 'ng-jhipster';
 
 type SelectableEntity = IBanco | IParceiro;
 
@@ -41,13 +42,16 @@ export class AgenciaDashUpdateComponent implements OnInit {
     protected bancoService: BancoService,
     protected parceiroService: ParceiroService,
     protected activatedRoute: ActivatedRoute,
+    protected eventManager: JhiEventManager,
     private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
     const agenciabancaria = this.agenciabancariaService.getAgenciaSelected();
-    agenciabancaria.ageSituacao = true;
+    if (!agenciabancaria.id) {
+      agenciabancaria.ageSituacao = true;
+    }
     this.updateForm(agenciabancaria);
     this.loadBancos();
   }
@@ -111,6 +115,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(): void {
+    this.eventManager.broadcast('agenciasaved');
     this.isSaving = false;
     this.previousState();
   }

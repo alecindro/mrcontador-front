@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ParceiroService } from '../parceiro/parceiro.service';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,13 +6,14 @@ import { MESLABELS, MESES } from 'app/shared/constants/input.constants';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'jhi-onboard',
   templateUrl: './onboard.component.html',
   styleUrls: ['./onboard.component.scss'],
 })
-export class OnboardComponent implements OnInit {
+export class OnboardComponent implements OnInit, OnDestroy {
   readonly meses = MESES;
   readonly mesLabels = MESLABELS;
   anos: number[] = [];
@@ -20,31 +21,53 @@ export class OnboardComponent implements OnInit {
   mesSelected?: number;
   parceiro!: IParceiro;
   parceiros!: IParceiro[];
+  agenciaListener!: Subscription;
+  hasAgencia = false;
   constructor(
     public parceiroService: ParceiroService,
     public activatedRoute: ActivatedRoute,
     public spinner: NgxSpinnerService,
     public eventManager: JhiEventManager,
     protected router: Router
-  ) {}
+  ) {
+    this.agenciaListener = eventManager.subscribe('agenciasaved', () => {
+      parceiroService.find(parceiroService.getParceiroSelected().id || 0).subscribe(response => {
+        this.loadParceiro(response.body || this.parceiro);
+      });
+    });
+  }
 
   ngOnInit(): void {
     this.initDate();
     this.spinner.show();
     this.activatedRoute.data.subscribe(({ parceiro }) => {
-      this.parceiro = parceiro;
-      this.parceiroService.setParceiroSelected(parceiro);
-      this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
+      this.loadParceiro(parceiro);
       this.parceiroService.get().subscribe(response => {
         this.parceiros = response.body || [parceiro];
         this.spinner.hide();
       });
     });
   }
-  onChangeParceiro(parceiro: IParceiro): void {
+
+  private loadParceiro(parceiro: IParceiro): void {
     this.parceiro = parceiro;
+    if (this.parceiro.agenciabancarias) {
+      const value = this.parceiro.agenciabancarias.find(agencia => {
+        return agencia.ageSituacao === true;
+      });
+      this.hasAgencia = value?.ageSituacao || false;
+    } else {
+      this.hasAgencia = false;
+    }
     this.parceiroService.setParceiroSelected(parceiro);
     this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
+  }
+
+  ngOnDestroy(): void {
+    this.eventManager.destroy(this.agenciaListener);
+  }
+  onChangeParceiro(parceiro: IParceiro): void {
+    this.loadParceiro(parceiro);
     this.router.navigate([`/onboard/${this.parceiro.id}`]);
   }
   compareFn(val1: IParceiro, val2: IParceiro): boolean {

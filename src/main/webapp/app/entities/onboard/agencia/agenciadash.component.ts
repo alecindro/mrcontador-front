@@ -53,7 +53,6 @@ export class AgenciaDashComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
     this.handleNavigation();
-    this.registerChangeInAgenciabancarias();
   }
 
   protected handleNavigation(): void {
@@ -78,12 +77,7 @@ export class AgenciaDashComponent implements OnInit, OnDestroy {
   }
 
   trackId(index: number, item: IAgenciabancaria): number {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return item.id!;
-  }
-
-  registerChangeInAgenciabancarias(): void {
-    this.eventSubscriber = this.eventManager.subscribe('agenciabancariaListModification', () => this.loadPage());
   }
 
   delete(agenciabancaria: IAgenciabancaria): void {

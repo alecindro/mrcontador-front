@@ -107,7 +107,7 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/parceiro'], {
+      this.router.navigate(['/'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,

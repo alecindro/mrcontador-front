@@ -160,6 +160,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
           } else if (event instanceof HttpResponse) {
             this.message = event.status.toString();
             this.spinner.hide();
+            this.loadPage();
           }
         },
         err => {
