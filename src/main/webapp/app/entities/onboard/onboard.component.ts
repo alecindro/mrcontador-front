@@ -7,6 +7,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { Subscription } from 'rxjs';
+import { AgenciabancariaService } from '../agenciabancaria/agenciabancaria.service';
+import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-onboard',
@@ -28,12 +31,11 @@ export class OnboardComponent implements OnInit, OnDestroy {
     public activatedRoute: ActivatedRoute,
     public spinner: NgxSpinnerService,
     public eventManager: JhiEventManager,
-    protected router: Router
+    protected router: Router,
+    protected agenciabancariaService: AgenciabancariaService
   ) {
     this.agenciaListener = eventManager.subscribe('agenciasaved', () => {
-      parceiroService.find(parceiroService.getParceiroSelected().id || 0).subscribe(response => {
-        this.loadParceiro(response.body || this.parceiro);
-      });
+      this.loadAgencias(this.parceiro);
     });
   }
 
@@ -41,7 +43,7 @@ export class OnboardComponent implements OnInit, OnDestroy {
     this.initDate();
     this.spinner.show();
     this.activatedRoute.data.subscribe(({ parceiro }) => {
-      this.loadParceiro(parceiro);
+      this.loadAgencias(parceiro);
       this.parceiroService.get().subscribe(response => {
         this.parceiros = response.body || [parceiro];
         this.spinner.hide();
@@ -90,5 +92,15 @@ export class OnboardComponent implements OnInit, OnDestroy {
     this.anoSelected = this.anos[0];
     this.mesSelected = this.meses[data.getMonth()];
     this.onChangeMes();
+  }
+
+  private loadAgencias(parceiro: IParceiro): void {
+    const queryParam = {
+      'parceiroId.equals': parceiro.id,
+    };
+    this.agenciabancariaService.query(queryParam).subscribe((res: HttpResponse<IAgenciabancaria[]>) => {
+      parceiro.agenciabancarias = res.body || [];
+      this.loadParceiro(parceiro);
+    });
   }
 }
