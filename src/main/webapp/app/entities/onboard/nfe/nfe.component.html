@@ -29,7 +29,7 @@
                         </select>
                     </div>
                     <div  class="col-md-2 mt-1">
-                        <button class="btn btn-info btn-sm" (click)="upload()">
+                        <button class="btn btn-primary" (click)="upload()">
                             <fa-icon icon="cloud-upload-alt"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
                         </button>
@@ -42,16 +42,16 @@
     <table class="table table-striped" aria-describedby="page-heading">
         <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                <th scope="col"  jhiSortBy="not_numero"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not Numero</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_descricao"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_descricao">Not Descricao</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_cnpj"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_cnpj">Not Cnpj</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_empresa"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not Empresa</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_datasaida"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_datasaida">Not Datasaida</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_valornota"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valornota</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_dataparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_valorparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valorparcela">Not Valorparcela</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="tno_codigo"><span jhiTranslate="mrcontadorFrontApp.notafiscal.tno_codigo">Tno Codigo</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="not_parcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not Parcela</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notNumero"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not Numero</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notDescricao"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_descricao">Not Descricao</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notCnpj"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_cnpj">Not Cnpj</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notEmpresa"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not Empresa</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notDatasaida"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_datasaida">Not Datasaida</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notValornota"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valornota</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notDataparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notValorparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valorparcela">Not Valorparcela</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="tnoCodigo"><span jhiTranslate="mrcontadorFrontApp.notafiscal.tno_codigo">Tno Codigo</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"  jhiSortBy="notParcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not Parcela</span> <fa-icon icon="sort"></fa-icon></th>
             </tr>
         </thead>
         <tbody>

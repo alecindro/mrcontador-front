@@ -1,4 +1,6 @@
 import { Moment } from 'moment';
+import { IAgenciabancaria } from './agenciabancaria.model';
+import { IArquivo } from './arquivo.model';
 
 export interface IComprovante {
   id?: number;
@@ -12,6 +14,8 @@ export interface IComprovante {
   comValordocumento?: number;
   comValorpagamento?: number;
   comObservacao?: string;
+  agenciabancaria?: IAgenciabancaria;
+  arquivo?: IArquivo;
 }
 
 export class Comprovante implements IComprovante {
@@ -26,6 +30,8 @@ export class Comprovante implements IComprovante {
     public comDatapagamento?: Moment,
     public comValordocumento?: number,
     public comValorpagamento?: number,
-    public comObservacao?: string
+    public comObservacao?: string,
+    public agenciabancaria?: IAgenciabancaria,
+    public arquivo?: IArquivo
   ) {}
 }

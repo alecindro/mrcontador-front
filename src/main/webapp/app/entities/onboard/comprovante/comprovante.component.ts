@@ -25,7 +25,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
-  parceiro?: IParceiro;
+  parceiro!: IParceiro;
 
   constructor(
     protected comprovanteService: ComprovanteService,
@@ -44,6 +44,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),
+        'parceiroId.equals': this.parceiro.id,
       })
       .subscribe(
         (res: HttpResponse<IComprovante[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -98,7 +99,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/comprovante'], {
+      this.router.navigate([`/onboard/${this.parceiro.id}/comprovante`], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,

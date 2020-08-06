@@ -42,7 +42,7 @@ const routes: Routes = [
         component: ExtratoDashComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'id,asc',
+          defaultSort: 'extDatalancamento,desc',
           pageTitle: 'mrcontadorFrontApp.extrato.home.title',
         },
         canActivate: [UserRouteAccessService],
@@ -62,7 +62,7 @@ const routes: Routes = [
         component: NfeComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'id,asc',
+          defaultSort: 'notDatasaida,desc',
           pageTitle: 'mrcontadorFrontApp.notafiscal.home.title',
         },
         canActivate: [UserRouteAccessService],
@@ -112,7 +112,7 @@ const routes: Routes = [
         component: ComprovanteComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'id,asc',
+          defaultSort: 'comDatapagamento,desc',
           pageTitle: 'mrcontadorFrontApp.comprovante.home.title',
         },
         canActivate: [UserRouteAccessService],

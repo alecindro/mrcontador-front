@@ -106,6 +106,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
           page: this.page,
           size: this.itemsPerPage,
           sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
+          'parceiroId.equals': this.parceiro.id,
         },
       });
     }

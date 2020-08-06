@@ -5,6 +5,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'jhi-login-page',
@@ -24,12 +25,14 @@ export class LoginPageComponent {
     private loginService: LoginService,
     private stateStorageService: StateStorageService,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public spinner: NgxSpinnerService
   ) {
     this.authenticationError = false;
   }
 
   login(): void {
+    this.spinner.show();
     this.loginService
       .login({
         username: this.loginForm.get('username')!.value,
@@ -38,6 +41,7 @@ export class LoginPageComponent {
       })
       .subscribe(
         () => {
+          this.spinner.hide();
           this.authenticationError = false;
           if (
             this.router.url === '/account/register' ||
@@ -62,7 +66,10 @@ export class LoginPageComponent {
             this.router.navigate(['']);
           }
         },
-        () => (this.authenticationError = true)
+        () => {
+          this.spinner.hide();
+          this.authenticationError = true;
+        }
       );
   }
 

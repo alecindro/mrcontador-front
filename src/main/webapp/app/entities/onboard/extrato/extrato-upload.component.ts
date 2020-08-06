@@ -31,7 +31,9 @@ export class ExtratoUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
-    this.agencias = this.parceiro.agenciabancarias;
+    this.agencias = this.parceiro.agenciabancarias?.filter(agencia => {
+      return agencia.ageSituacao === true;
+    });
     if (this.agencias && this.agencias.length > 0) {
       this.agenciaSelected = this.agencias[0];
     }
@@ -80,7 +82,6 @@ export class ExtratoUploadComponent implements OnInit {
           }
         },
         err => {
-          this.progressInfos = [];
           this.message = 'Não foi possivel carregar o arquivo:' + err;
           this.spinner.hide();
         }

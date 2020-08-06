@@ -31,7 +31,9 @@ export class ComprovanteUploadComponent implements OnInit {
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
-    this.agencias = this.parceiro.agenciabancarias;
+    this.agencias = this.parceiro.agenciabancarias?.filter(agencia => {
+      return agencia.ageSituacao === true;
+    });
     if (this.agencias && this.agencias.length > 0) {
       this.agenciaSelected = this.agencias[0];
     }
@@ -70,19 +72,19 @@ export class ComprovanteUploadComponent implements OnInit {
         event => {
           if (event && event.type === HttpEventType.UploadProgress) {
             this.progressInfos[idx].value = Math.round((100 * event.loaded) / event.total);
+          } else if (event instanceof HttpResponse) {
             this.progressInfos.splice(idx, 1);
+            this.message = event.status.toString();
             if (this.progressInfos.length === 0) {
               this.spinner.hide();
               this.activeModal.close();
               this.eventManager.broadcast('comprovateUpload');
             }
-          } else if (event instanceof HttpResponse) {
-            this.message = event.status.toString();
           }
         },
         err => {
-          this.progressInfos[idx].value = 0;
           this.message = 'Não foi possivel carregar o arquivo:' + err;
+          this.spinner.hide();
         }
       );
     }

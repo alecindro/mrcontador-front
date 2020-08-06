@@ -43,6 +43,8 @@ export class OnboardComponent implements OnInit, OnDestroy {
     this.initDate();
     this.spinner.show();
     this.activatedRoute.data.subscribe(({ parceiro }) => {
+      this.parceiro = parceiro;
+      this.parceiroService.setParceiroSelected(parceiro);
       this.loadAgencias(parceiro);
       this.parceiroService.get().subscribe(response => {
         this.parceiros = response.body || [parceiro];
