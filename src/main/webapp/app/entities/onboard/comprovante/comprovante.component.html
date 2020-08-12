@@ -23,10 +23,6 @@
                             jhiTranslate="mrcontadorFrontApp.comprovante.age_codigo">Age Codigo</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
-                    <th scope="col" jhiSortBy="comCnpj"><span jhiTranslate="mrcontadorFrontApp.comprovante.com_cnpj">Com
-                            Cnpj</span>
-                        <fa-icon icon="sort"></fa-icon>
-                    </th>
                     <th scope="col" jhiSortBy="comBeneficiario"><span
                             jhiTranslate="mrcontadorFrontApp.comprovante.com_beneficiario">Com Beneficiario</span>
                         <fa-icon icon="sort"></fa-icon>
@@ -68,13 +64,12 @@
                 </tr>
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
                     <td>{{ comprovante?.agenciabancaria?.ageDescricao}}</td>
-                    <td>{{ comprovante.comCnpj }}</td>
                     <td>{{ comprovante.comBeneficiario }}</td>
                     <td>{{ comprovante.comDocumento }}</td>
                     <td>{{ comprovante.comDatavencimento | date:'dd/MM/yyyy' }}</td>
                     <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ comprovante.comValordocumento }}</td>
-                    <td>{{ comprovante.comValorpagamento }}</td>
+                    <td><span class="text-info">{{ comprovante.comValordocumento | currency:"BRL"}}</span></td>
+                    <td><span class="text-info">{{ comprovante.comValorpagamento| currency:"BRL" }}</span></td>
                     <td>{{ comprovante.comObservacao }}</td>
                 </tr>
             </tbody>
