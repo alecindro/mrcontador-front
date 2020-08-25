@@ -101,12 +101,12 @@ export class AlertErrorComponent implements OnDestroy {
 
   addErrorAlert(message: string, key?: string, data?: any): void {
     message = key && key !== null ? key : message;
-
+    data ? (data = { params: data }) : data;
     const newAlert: JhiAlert = {
       type: 'danger',
       msg: message,
       params: data,
-      timeout: 5000,
+      timeout: 10000,
       toast: this.alertService.isToast(),
       scoped: true,
     };
