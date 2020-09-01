@@ -7,11 +7,13 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
-import { NgbModal, NgbDate, NgbCalendar, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
 import * as moment from 'moment';
+import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
+import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
 
 @Component({
   selector: 'jhi-comprovante',
@@ -29,9 +31,12 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   ngbPaginationPage = 1;
   parceiro!: IParceiro;
   agenciaSelected?: IAgenciabancaria;
-  hoveredDate: NgbDate | null = null;
-  fromDate!: NgbDate | null;
-  toDate!: NgbDate | null;
+  mesAno!: MesAnoDTO;
+  readonly meses = MESES;
+  readonly mesLabels = MESLABELS;
+  anos: number[] = [];
+  anoSelected?: number;
+  mesSelected?: number;
 
   constructor(
     protected comprovanteService: ComprovanteService,
@@ -39,13 +44,8 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parceiroService: ParceiroService,
-    private calendar: NgbCalendar,
-    public formatter: NgbDateParserFormatter
-  ) {
-    this.toDate = calendar.getToday();
-    this.fromDate = new NgbDate(this.toDate.year, this.toDate.month, 1);
-  }
+    protected parceiroService: ParceiroService
+  ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     const pageToLoad: number = page || this.page || 1;
@@ -58,11 +58,25 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     if (this.agenciaSelected) {
       queryParam['agenciabancariaId.equals'] = this.agenciaSelected?.id;
     }
-    if (this.fromDate) {
-      queryParam['comDatapagamento.greaterThan'] = this.formatter.format(this.fromDate);
+    const _begin = moment();
+    const _end = moment();
+    if (this.anoSelected) {
+      _begin.set('year', this.anoSelected).format();
+      _begin.set('month', 0).format();
+      _begin.set('date', 1).format();
+      _end.set('year', this.anoSelected).format();
+      _end.set('month', 11).format();
+      _end.set('date', 31).format();
     }
-    if (this.toDate) {
-      queryParam['comDatapagamento.lessThanOrEqual'] = this.formatter.format(this.toDate);
+    if (this.mesSelected) {
+      _begin.set('month', this.mesSelected - 1).format();
+      _end.set('month', this.mesSelected).format();
+      _end.set('date', 1).format();
+      _end.add(-1, 'days').format();
+    }
+    if (this.anoSelected || this.mesSelected) {
+      queryParam['comDatapagamento.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
+      queryParam['comDatapagamento.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
     }
     this.comprovanteService.query(queryParam).subscribe(
       (res: HttpResponse<IComprovante[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -71,6 +85,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initDate();
     this.parceiro = this.parceiroService.getParceiroSelected();
     if (this.parceiro?.agenciabancarias) {
       this.agenciaSelected = this.parceiro?.agenciabancarias[0];
@@ -144,32 +159,17 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     this.loadPage(this.page, true);
   }
 
-  onDateSelection(date: NgbDate): void {
-    if (!this.fromDate && !this.toDate) {
-      this.fromDate = date;
-    } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
-      this.toDate = date;
-    } else {
-      this.toDate = null;
-      this.fromDate = date;
-    }
+  onChangeMes(): void {
+    this.loadPage(this.page, true);
+  }
+  onChangeAno(): void {
     this.loadPage(this.page, true);
   }
 
-  isHovered(date: NgbDate): boolean | null | undefined {
-    return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
-  }
-
-  isInside(date: NgbDate): boolean | null | undefined {
-    return this.toDate && date.after(this.fromDate) && date.before(this.toDate);
-  }
-
-  isRange(date: NgbDate): boolean | null | undefined {
-    return date.equals(this.fromDate) || (this.toDate && date.equals(this.toDate)) || this.isInside(date) || this.isHovered(date);
-  }
-
-  validateInput(currentValue: NgbDate | null, input: string): NgbDate | null {
-    const parsed = this.formatter.parse(input);
-    return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
+  private initDate(): void {
+    const data = new Date();
+    for (let i = 0; i < 5; i++) {
+      this.anos.push(data.getFullYear() - i);
+    }
   }
 }
