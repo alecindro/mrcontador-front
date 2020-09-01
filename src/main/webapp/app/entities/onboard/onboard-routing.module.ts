@@ -5,7 +5,6 @@ import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
 import { ContaDashComponent } from './conta/contadash.component';
 import { NfeComponent } from './nfe/nfe.component';
-import { ConsolidaComponent } from './consolida/consolida.component';
 import { OnboardComponent } from './onboard.component';
 import { NsDashComponent } from './notaservico/nsdash.component';
 import { AgenciaDashComponent } from './agencia/agenciadash.component';
@@ -13,6 +12,7 @@ import { CadDashComponent } from './cadastro/caddash.component';
 import { ParceiroResolve } from '../parceiro/parceiro.route';
 import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.component';
 import { ComprovanteComponent } from './comprovante/comprovante.component';
+import { InteligentComponent } from './inteligent/inteligent.component';
 
 const routes: Routes = [
   {
@@ -29,11 +29,11 @@ const routes: Routes = [
       },
       {
         path: 'consolida',
-        component: ConsolidaComponent,
+        component: InteligentComponent,
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.extrato.home.title',
+          pageTitle: 'mrcontadorFrontApp.inteligent.home.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -112,7 +112,7 @@ const routes: Routes = [
         component: ComprovanteComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'comDatapagamento,desc',
+          defaultSort: 'comDatapagamento,asc',
           pageTitle: 'mrcontadorFrontApp.comprovante.home.title',
         },
         canActivate: [UserRouteAccessService],

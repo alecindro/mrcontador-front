@@ -1,0 +1,107 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="mrcontadorFrontApp.inteligent.home.title">Inteligents</span>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="inteligents?.length === 0">
+        <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">No inteligents found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="inteligents && inteligents.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="historico"><span jhiTranslate="mrcontadorFrontApp.inteligent.historico">Historico</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="historicofinal"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal">Historicofinal</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="datalancamento"><span jhiTranslate="mrcontadorFrontApp.inteligent.datalancamento">Datalancamento</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="associado"><span jhiTranslate="mrcontadorFrontApp.inteligent.associado">Associado</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="periodo"><span jhiTranslate="mrcontadorFrontApp.inteligent.periodo">Periodo</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="debito"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito">Debito</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="credito"><span jhiTranslate="mrcontadorFrontApp.inteligent.credito">Credito</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="datainicio"><span jhiTranslate="mrcontadorFrontApp.inteligent.datainicio">Datainicio</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="datafim"><span jhiTranslate="mrcontadorFrontApp.inteligent.datafim">Datafim</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="cnpj"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj">Cnpj</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="beneficiario"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario">Beneficiario</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="comprovante.id"><span jhiTranslate="mrcontadorFrontApp.inteligent.comprovante">Comprovante</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="parceiro.id"><span jhiTranslate="mrcontadorFrontApp.inteligent.parceiro">Parceiro</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="notafiscal.id"><span jhiTranslate="mrcontadorFrontApp.inteligent.notafiscal">Notafiscal</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="notaservico.id"><span jhiTranslate="mrcontadorFrontApp.inteligent.notaservico">Notaservico</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="parceiro.id"><span jhiTranslate="mrcontadorFrontApp.inteligent.parceiro">Parceiro</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="agenciabancaria.id"><span jhiTranslate="mrcontadorFrontApp.inteligent.agenciabancaria">Agenciabancaria</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let inteligent of inteligents ;trackBy: trackId">
+                    <td><a [routerLink]="['/inteligent', inteligent.id, 'view']">{{ inteligent.id }}</a></td>
+                    <td>{{ inteligent.historico }}</td>
+                    <td>{{ inteligent.historicofinal }}</td>
+                    <td>{{ inteligent.datalancamento | date:'medium' }}</td>
+                    <td>{{ inteligent.associado }}</td>
+                    <td>{{ inteligent.periodo }}</td>
+                    <td>{{ inteligent.debito }}</td>
+                    <td>{{ inteligent.credito }}</td>
+                    <td>{{ inteligent.datainicio | date:'medium' }}</td>
+                    <td>{{ inteligent.datafim | date:'medium' }}</td>
+                    <td>{{ inteligent.cnpj }}</td>
+                    <td>{{ inteligent.beneficiario }}</td>
+                    <td>
+                        <div *ngIf="inteligent.comprovante">
+                            <a [routerLink]="['/comprovante', inteligent.comprovante?.id, 'view']" >{{ inteligent.comprovante?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="inteligent.parceiro">
+                            <a [routerLink]="['/parceiro', inteligent.parceiro?.id, 'view']" >{{ inteligent.parceiro?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="inteligent.notafiscal">
+                            <a [routerLink]="['/notafiscal', inteligent.notafiscal?.id, 'view']" >{{ inteligent.notafiscal?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="inteligent.notaservico">
+                            <a [routerLink]="['/notaservico', inteligent.notaservico?.id, 'view']" >{{ inteligent.notaservico?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="inteligent.parceiro">
+                            <a [routerLink]="['/parceiro', inteligent.parceiro?.id, 'view']" >{{ inteligent.parceiro?.id }}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="inteligent.agenciabancaria">
+                            <a [routerLink]="['/agenciabancaria', inteligent.agenciabancaria?.id, 'view']" >{{ inteligent.agenciabancaria?.id }}</a>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/inteligent', inteligent.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="inteligents && inteligents.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,7 @@ export interface IAgenciabancaria {
   ageDescricao?: string;
   ageSituacao?: boolean;
   banCodigobancario?: string;
+  conConta?: string;
   banco?: IBanco;
   parceiro?: IParceiro;
 }
@@ -22,6 +23,7 @@ export class Agenciabancaria implements IAgenciabancaria {
     public ageDescricao?: string,
     public ageSituacao?: boolean,
     public banCodigobancario?: string,
+    public conConta?: string,
     public banco?: IBanco,
     public parceiro?: IParceiro
   ) {

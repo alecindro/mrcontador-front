@@ -4,7 +4,6 @@ import { OnboardRoutingModule } from './onboard-routing.module';
 import { ContaDashComponent } from './conta/contadash.component';
 import { ExtratoDashComponent } from './extrato/extratodash.component';
 import { NfeComponent } from './nfe/nfe.component';
-import { ConsolidaComponent } from './consolida/consolida.component';
 import { MrcontadorFrontExtratoModule } from '../extrato/extrato.module';
 import { MrcontadorFrontNotafiscalModule } from '../notafiscal/notafiscal.module';
 import { MrcontadorFrontNotaservicoModule } from '../notaservico/notaservico.module';
@@ -20,13 +19,14 @@ import { ExtratoUploadComponent } from './extrato/extrato-upload.component';
 import { NsUploadComponent } from './notaservico/ns-upload.component';
 import { ComprovanteComponent } from './comprovante/comprovante.component';
 import { ComprovanteUploadComponent } from './comprovante/comprovante-upload.component';
+import { InteligentComponent } from './inteligent/inteligent.component';
 
 @NgModule({
   declarations: [
     ContaDashComponent,
     ExtratoDashComponent,
     NfeComponent,
-    ConsolidaComponent,
+    InteligentComponent,
     AgenciaDashComponent,
     AgenciaDashUpdateComponent,
     NsDashComponent,

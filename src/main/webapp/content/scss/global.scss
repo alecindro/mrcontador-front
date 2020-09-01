@@ -1,6 +1,6 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
-@import '~bootswatch/dist/darkly/variables';
+@import '~bootswatch/dist/flatly/variables';
 @import '~bootstrap/scss/variables';
 
 /* ==============================================================
@@ -180,6 +180,20 @@ ui bootstrap tweaks
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.page-item.active .page-link {
+  background-color: theme-color('primary');
+}
+.page-link {
+  background-color: theme-color('secondary');
+}
+
+.page-item.disabled .page-link {
+  background-color: theme-color('light');
+}
+.page-link:hover {
+  background-color: theme-color('info');
 }
 
 /* jhipster-needle-scss-add-main JHipster will add new css style */

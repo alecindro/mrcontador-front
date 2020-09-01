@@ -19,13 +19,14 @@
 <div class="table-responsive" id="entities">
 <table class="table table-striped" aria-describedby="page-heading">
 <thead>
-    <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-        <th scope="col"  jhiSortBy="age_numero"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_numero"></span> <fa-icon icon="sort"></fa-icon></th>
-        <th scope="col"  jhiSortBy="age_digito"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_digito"></span> <fa-icon icon="sort"></fa-icon></th>
-        <th scope="col"  jhiSortBy="age_agencia"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_agencia"></span> <fa-icon icon="sort"></fa-icon></th>
-        <th scope="col"  jhiSortBy="age_descricao"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_descricao"></span> <fa-icon icon="sort"></fa-icon></th>
-        <th scope="col"  jhiSortBy="age_situacao"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_situacao"></span> <fa-icon icon="sort"></fa-icon></th>
-        <th scope="col"  jhiSortBy="bancoId"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.banco"></span> <fa-icon icon="sort"></fa-icon></th>
+    <tr>
+        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_numero"></span> </th>
+        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_digito"></span> </th>
+        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_agencia"></span> </th>
+        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_descricao"></span> </th>
+        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.conconta"></span> </th>
+        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_situacao"></span> </th>
+        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.banco"></span></th>
         <th scope="col">  <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-agenciabancaria" (click)="newAgencia()">
             <fa-icon icon="plus"></fa-icon>
             <span  jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.createLabel">
@@ -47,6 +48,7 @@
         <td>{{ agenciabancaria.ageDigito }}</td>
         <td>{{ agenciabancaria.ageAgencia }}</td>
         <td>{{ agenciabancaria.ageDescricao }}</td>
+        <td>{{ agenciabancaria.conConta }}</td>
         <td><input type="checkbox" [(ngModel)]="agenciabancaria.ageSituacao" readonly></td>
         <td>{{ agenciabancaria.banco?.banDescricao }}</td>
         <td class="text-right">

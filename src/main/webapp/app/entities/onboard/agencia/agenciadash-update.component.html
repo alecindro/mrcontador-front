@@ -26,6 +26,18 @@
                             </small>
                         </div>
                     </div>
+                    <div class="form-group col-md-4">
+                        <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.agenciabancaria.conconta"
+                        for="field_conConta"></label>
+                    <input type="text" class="form-control" name="conConta" id="field_conConta"
+                        formControlName="conConta" />
+                    <div
+                        *ngIf="editForm.get('conConta')!.invalid && (editForm.get('conConta')!.dirty || editForm.get('conConta')!.touched)">
+                        <small class="form-text text-danger" *ngIf="editForm.get('conConta')?.errors?.required"
+                        jhiTranslate="entity.validation.required">
+                    </small>
+                    </div>
+                        </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-2">

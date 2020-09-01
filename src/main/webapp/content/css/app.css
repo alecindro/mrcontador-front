@@ -1,3 +1,8 @@
+@import '~bootswatch/dist/flatly/variables';
+
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/flatly/bootswatch';
+
 .custom-input {
   display: inline-block;
   width: 100%;
@@ -33,7 +38,8 @@ input[type='checkbox'][readonly] {
 .uploadimage-dragndrop {
   min-height: 11.57895em;
   text-align: center;
-  border: dashed 3px #c1c3c5;
+  border: dashed 3px;
+  border-color: theme-color('secondary');
 }
 
 .uploadimage-pos {
@@ -67,7 +73,7 @@ input[type='checkbox'][readonly] {
 .uploadimage-text {
   font-size: 1.31579em;
   font-weight: 600;
-  color: #b1b3b7;
+  color: theme-color('secondary');
   margin-bottom: 1.05263em;
 }
 

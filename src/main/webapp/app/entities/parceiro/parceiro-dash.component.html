@@ -1,36 +1,28 @@
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-end">
+        <form class="form-inline" action="">
+            <input class="form-control mr-sm-2" [(ngModel)]="pesquisa" (search)="pesquisar()"  placeholder="Pesquisar..." name="pesquisar"
+            type="search">
+        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+            <select class="form-control mr-sm-2" (change)="onChange()" [(ngModel)]="selected" name="select">
+                <option value="par_razaosocial.contains"><span
+                        jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"></span>
+                </option>
+                <option value="par_cnpjcpf.contains"><span
+                        jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
+                </option>
+            </select>
+            <button id="jh-create-entity" class="btn btn-secondary form-control mr-sm-2" type="button"
+            [routerLink]="['/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">
+            </span>
+        </button>
+        </form>
+    </nav>
+
 <div class="col-12 justify-content-center">
-    <div class="bg-primary" style="border-radius: 0.3rem;padding: 1rem 1rem 0rem 0rem;">
-        <div class="text-right pb-3">
-            <div class="row align-items-end">
-                <div class="col-6">
-                </div>
-                <div class="col-md-2">
-                    <input class="custom-input" [(ngModel)]="pesquisa" (search)="pesquisar()" placeholder="Pesquisar..."
-                        type="search">
-                    <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
-                        style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
-                </div>
-                <div class="col-md-2">
-                    <select class="custom-select" (change)="onChange()" [(ngModel)]="selected">
-                        <option value="par_razaosocial.contains"><span
-                                jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"></span>
-                        </option>
-                        <option value="par_cnpjcpf.contains"><span
-                                jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
-                        </option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <button id="jh-create-entity" class="btn btn-success float-right jh-create-entity create-parceiro"
-                        [routerLink]="['/new']">
-                        <fa-icon icon="plus"></fa-icon>
-                        <span jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="container">
         <div class="card-deck mb-3 text-center" *ngIf="!parceiros || parceiros.length === 0">
             <div class="card mb-4 shadow-sm">
@@ -43,9 +35,9 @@
         </div>
         <div class="row row-cols-1 row-cols-md-3 mt-3" *ngIf="parceiros && parceiros.length > 0">
             <div class="col mb-4" *ngFor="let parceiro of parceiros">
-                <div class="card shadow-sm h-100 bg-success">
-                    <div class="card-header text-center">
-                        <h5 class="my-0 font-weight-normal">{{ parceiro.parRazaosocial }}</h5>
+                <div class="card shadow-sm h-100">
+                    <div class="card-header text-center bg-secondary">
+                        <h6 class="my-0 font-weight-normal text-truncate" placement="top" ngbTooltip="{{parceiro.parRazaosocial}}">{{ parceiro.parRazaosocial }}</h6>
                     </div>
                     <div class="card-body">
                         <div class="container">
@@ -100,11 +92,13 @@
                         </div>
                         <h6 class="text-center bg-secondary rounded-sm"><span
                             jhiTranslate="mrcontadorFrontApp.parceiro.home.lastPeriod"></span> 00/00/0000</h6>
+                    </div>
+                    <div class="card-footer p-0">
                         <button type="submit" [routerLink]="['/onboard',parceiro.id]"
-                            class="btn btn-lg btn-block btn-primary mt-3">
-                            <fa-icon icon="eye"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
+                        class="btn btn-block btn-primary">
+                        <fa-icon icon="eye"></fa-icon>
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                    </button>
                     </div>
                 </div>
             </div>

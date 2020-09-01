@@ -1,0 +1,15 @@
+@import '~bootswatch/dist/flatly/variables';
+
+// Import Bootstrap source files from node_modules
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/flatly/bootswatch';
+
+.nav-link.active {
+  background-color: theme-color('primary') !important;
+  color: #ffffff !important;
+}
+
+.nav-link {
+  background-color: theme-color('light');
+  color: #2c3e50;
+}

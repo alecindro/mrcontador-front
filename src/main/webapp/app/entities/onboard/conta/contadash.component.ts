@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, combineLatest } from 'rxjs';
-import { Parceiro, IParceiro } from 'app/shared/model/parceiro.model';
+import { combineLatest } from 'rxjs';
+import { IParceiro } from 'app/shared/model/parceiro.model';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 import { ContaService } from 'app/entities/conta/conta.service';
 import { IConta } from 'app/shared/model/conta.model';
@@ -33,7 +32,6 @@ export class ContaDashComponent implements OnInit, OnDestroy {
   selected = 'conClassificacao.contains';
 
   constructor(
-    private eventManager: JhiEventManager,
     private parceiroService: ParceiroService,
     private contaService: ContaService,
     public spinner: NgxSpinnerService,

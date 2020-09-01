@@ -35,6 +35,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
     age_descricao: [null, [Validators.maxLength(30)]],
     age_situacao: [],
     bancoId: [null, Validators.required],
+    conConta: [null, Validators.required],
   });
 
   constructor(
@@ -64,6 +65,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
       age_agencia: agenciabancaria.ageAgencia,
       age_descricao: agenciabancaria.ageDescricao,
       age_situacao: agenciabancaria.ageSituacao,
+      conConta: agenciabancaria.conConta,
     });
     if (agenciabancaria.banco) {
       this.editForm.patchValue({
@@ -102,8 +104,10 @@ export class AgenciaDashUpdateComponent implements OnInit {
       ageAgencia: this.editForm.get(['age_agencia'])!.value,
       ageDescricao: this.editForm.get(['age_descricao'])!.value,
       ageSituacao: this.editForm.get(['age_situacao'])!.value,
+      conConta: this.editForm.get(['conConta'])!.value,
       banco: _banco,
       parceiro: this.parceiro,
+      banCodigobancario: _banco?.banCodigobancario,
     };
   }
 

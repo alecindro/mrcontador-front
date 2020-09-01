@@ -1,0 +1,43 @@
+{
+  "mrcontadorFrontApp": {
+    "inteligent": {
+      "home": {
+        "title": "Consolidação",
+        "createLabel": "Criar novo Inteligent",
+        "createOrEditLabel": "Criar ou editar Inteligent",
+        "notFound": "Nenhuma informação encontrada"
+      },
+      "function.process": "A consolidação foi processada",
+      "created": "Um novo Inteligent foi criado com o identificador {{ param }}",
+      "updated": "Um Inteligent foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Inteligent foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Inteligent {{ id }}?"
+      },
+      "detail": {
+        "title": "Inteligent"
+      },
+      "historico": "Histórico",
+      "historicofinal": "Hist. Contábil",
+      "datalancamento": "Data Lançamento",
+      "associado": "Associado",
+      "periodo": "Período",
+      "debito": "Débito",
+      "credito": "Crédito",
+      "datainicio": "Data Início",
+      "datafim": "Data Fim",
+      "cnpj": "Cnpj",
+      "beneficiario": "Beneficiário",
+      "comprovante": "Comprovante",
+      "parceiro": "Parceiro",
+      "notafiscal": "Notafiscal",
+      "notaservico": "Notaservico",
+      "numdocumento": "No. Documento",
+      "agenciabancaria": "Agenciabancaria",
+      "conta": "Conta",
+      "lancamento_divergencia": "Lançamento(s) com Divergência",
+      "lancamento_conciliado": "Lançamento(s) com Conciliado",
+      "conciliar": "Conciliar"
+    }
+  }
+}

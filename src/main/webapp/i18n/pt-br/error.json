@@ -30,6 +30,8 @@
     "notafiscal.notparsed": "Tivemos um problema ao processar a nota fiscal. Reporte o erro: {{ params }}",
     "nota.parceiro.notfromnota": "A nota fiscal não corresponde ao parceiro selecionado.",
     "parsecomprovante.error": "Tivemos um problema ao processar o comprovante. Reporte o erro: {{ params }}",
-    "parsercomprovante.notfound": "O comprovante selecionado corresponde a um banco não autorizado."
+    "parsercomprovante.notfound": "O comprovante selecionado corresponde a um banco não autorizado.",
+    "codigobanco.notfound": "Banco não cadastrado",
+    "inteligent.fail": "Não foi possível processar a conciliação"
   }
 }

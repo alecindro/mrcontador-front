@@ -1,20 +1,66 @@
-<div class="row">
-    <div class="col-12 bg-info rounded">
-        <div class="row">
-            <div class="col-md-6"></div>
-            <div class="col-md-2 mt-1">
+<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary">
+    <form class="form-inline" action="">
+        <div class="form-group hidden">
+            <div class="input-group">
+              <input name="datepicker"
+                     class="form-control"
+                     ngbDatepicker
+                     #datepicker="ngbDatepicker"
+                     (dateSelect)="onDateSelection($event)"
+                     [autoClose]="'outside'"
+                     [displayMonths]="2"
+                     [dayTemplate]="t"
+                     outsideDays="hidden"
+                     [startDate]="fromDate!">
+              <ng-template #t let-date let-focused="focused">
+                <span class="custom-day"
+                      [class.focused]="focused"
+                      [class.range]="isRange(date)"
+                      [class.faded]="isHovered(date) || isInside(date)"
+                      (mouseenter)="hoveredDate = date"
+                      (mouseleave)="hoveredDate = null">
+                  {{ date.day }}
+                </span>
+              </ng-template>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <input #dpFromDate
+                     class="form-control" placeholder="dd-mm-yyyy"
+                     name="dpFromDate"                    
+                     [value]="formatter.format(fromDate)"
+                     (input)="fromDate = validateInput(fromDate, dpFromDate.value)">              
+            </div>
+          </div>
+          <div class="form-group ml-2">
+            <div class="input-group">
+              <input #dpToDate
+                     class="form-control" placeholder="dd-mm-yyyy"
+                     name="dpToDate"
+                     [value]="formatter.format(toDate)"
+                     (input)="toDate = validateInput(toDate, dpToDate.value)">
+              <div class="input-group-append">
+                <button class="btn btn-primary form-control mr-sm-2 calendar" (click)="datepicker.toggle()" type="button"></button>
+              </div>
+            </div>
+          </div>
+        
+        <label for="field_agencia" >Agência bancária</label>:
+        <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
+            (change)="onChangeAgencia()">
+            <option *ngFor="let agencia of parceiro?.agenciabancarias" [ngValue]="agencia">
+                {{ agencia.ageNumero + ' - ' + agencia.ageAgencia }}
+            </option>
+        </select>
+        <button class="btn btn-primary form-control mr-sm-2" (click)="upload()" > 
+            <fa-icon icon="cloud-upload-alt"></fa-icon>
+            <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
+        </button>
+    </form>
+</nav>
 
-            </div>
-            <div class="col-md-2 mt-1">
-                <button class="btn btn-primary" (click)="upload()">
-                    <fa-icon icon="cloud-upload-alt"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
+
     <div class="table-responsive" id="entities">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
@@ -65,7 +111,7 @@
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
                     <td>{{ comprovante?.agenciabancaria?.ageDescricao}}</td>
                     <td>{{ comprovante.comBeneficiario }}</td>
-                    <td>{{ comprovante.comDocumento }}</td>
+                    <td><a [href]="comprovante?.arquivo?.s3Url" target="_blank">{{ comprovante.comDocumento }}</a></td>
                     <td>{{ comprovante.comDatavencimento | date:'dd/MM/yyyy' }}</td>
                     <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="text-info">{{ comprovante.comValordocumento | currency:"BRL"}}</span></td>
@@ -86,4 +132,3 @@
                 [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
         </div>
     </div>
-</div>

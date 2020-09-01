@@ -23,20 +23,20 @@
     <div class="row">
         <div class="col-2 shadow-lg rounded pt-1 pb-3 pl-0">
             <div class="btn-group-vertical btn-block">
-                <button type="button" class="btn btn-info text-left" [routerLink]="'consolida'"
+                <button type="button" class="btn btn-primary text-left" [routerLink]="'consolida'"
                     routerLinkActive="active"> <span jhiTranslate="mrcontadorFrontApp.onboard.consolidacao"></span></button>
-                <button type="button" class="btn btn-info btn text-left" [routerLink]="'conta'">
+                <button type="button" class="btn btn-primary text-left" [routerLink]="'conta'">
                     <span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span>
                 </button>
-                <button type="button" class="btn btn-info btn text-left" [routerLink]="'comprovante'" [disabled]="!hasAgencia"> <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'extrato'" [disabled]="!hasAgencia"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'nfe'"><span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'ns'" ><span jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></button>
-                <button type="button" [ngClass]="{'btn': true,'text-left':true, 'btn-info': hasAgencia, 'btn-warning': !hasAgencia}" [routerLink]="'agencia'">
+                <button type="button" class="btn btn-primary text-left" [routerLink]="'comprovante'" [disabled]="!hasAgencia"> <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></button>
+                <button type="button" class="btn btn-primary text-left" [routerLink]="'extrato'" [disabled]="!hasAgencia"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></button>
+                <button type="button" class="btn btn-primary text-left" [routerLink]="'nfe'"><span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></button>
+                <button type="button" class="btn btn-primary text-left" [routerLink]="'ns'" ><span jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></button>
+                <button type="button" [ngClass]="{'btn': true,'text-left':true, 'btn-primary': hasAgencia, 'btn-warning': !hasAgencia}" [routerLink]="'agencia'">
                     <fa-icon icon="exclamation-circle" *ngIf="!hasAgencia">
                     </fa-icon>
                     <span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span></button>
-                <button type="button" class="btn btn-info text-left" [routerLink]="'cadastro'"> <span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></button>
+                <button type="button" class="btn btn-primary text-left" [routerLink]="'cadastro'"> <span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></button>
             </div>
         </div>
         <div class="col-10 pt-1">

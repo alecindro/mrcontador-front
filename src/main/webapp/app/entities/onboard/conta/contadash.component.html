@@ -1,37 +1,30 @@
-<div class="row">
-    <div class="col-12 bg-info rounded">
-        <div class="row">
-                <div class="col-md-8"></div>
-                <div class="col-md-2 mt-1">
-                        <input class="custom-input"  placeholder="Pesquisar..."  [(ngModel)]="pesquisa" (search)="pesquisar()" 
-                            type="search">
-                        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
-                            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
-                    </div>
-                    <div class="col-md-2 mt-1">
-                        <select class="custom-select" (change)="onChange()" [(ngModel)]="selected">
-                            <option value="conConta.equals"><span
-                                    jhiTranslate="mrcontadorFrontApp.conta.con_conta"></span>
-                            </option>
-                            <option value="conClassificacao.contains"><span
-                                    jhiTranslate="mrcontadorFrontApp.conta.con_classificacao"></span>
-                            </option>
-                            <option value="conTipo.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo"></span>
-                            </option>    
-                            <option value="conDescricao.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_descricao"></span>
-                            </option>
-                            <option value="conCnpj.equals"><span
-                                jhiTranslate="mrcontadorFrontApp.conta.con_cnpj"></span>
-                        </option>
-                            <option value="conGrau.equals"><span
-                                jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
-                        </option>
-                        </select>
-                    </div>
+<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary">
+    <form class="form-inline" action="">
+        <input class="form-control mr-sm-2" placeholder="Pesquisar..." [(ngModel)]="pesquisa" (search)="pesquisar()" name="pesquisa"
+            type="search">
+        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
+            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
+        <div class="col-md-2 mt-1">
+            <select class="form-control mr-sm-2" (change)="onChange()" [(ngModel)]="selected" name="select"> 
+                <option value="conConta.equals"><span jhiTranslate="mrcontadorFrontApp.conta.con_conta"></span>
+                </option>
+                <option value="conClassificacao.contains"><span
+                        jhiTranslate="mrcontadorFrontApp.conta.con_classificacao"></span>
+                </option>
+                <option value="conTipo.equals"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo"></span>
+                </option>
+                <option value="conDescricao.contains"><span
+                        jhiTranslate="mrcontadorFrontApp.conta.con_descricao"></span>
+                </option>
+                <option value="conCnpj.equals"><span jhiTranslate="mrcontadorFrontApp.conta.con_cnpj"></span>
+                </option>
+                <option value="conGrau.equals"><span jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
+                </option>
+            </select>
         </div>
-    </div>
-</div>
-<div class="row">
+    </form>
+</nav>
+
     <div class="table-responsive" id="entities">
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
@@ -74,8 +67,9 @@
                                         <fa-icon [icon]="'times'" class="text-danger"></fa-icon>
                                     </button>
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
-                                            attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                                        <div class="progress-bar progress-bar-info progress-bar-striped"
+                                            role="progressbar" attr.aria-valuenow="{{ progressInfo.value }}"
+                                            aria-valuemin="0" aria-valuemax="100"
                                             [ngStyle]="{ width: progressInfo.value + '%' }">
                                             {{ progressInfo.value }}%
                                         </div>
@@ -83,7 +77,8 @@
                                 </div>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" (change)="selectFile($event)"
-                                        [disabled]="progressInfo.file" lang="pt" id="customFileLang" accept="application/pdf" />
+                                        [disabled]="progressInfo.file" lang="pt" id="customFileLang"
+                                        accept="application/pdf" />
                                     <label class="custom-file-label" for="customFileLang">Selecionar Arquivo</label>
                                 </div>
                                 <button class="btn btn-success" [disabled]="!progressInfo.file" (click)="upload()">
@@ -115,4 +110,3 @@
                 [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
         </div>
     </div>
-</div>
