@@ -1,6 +1,7 @@
 import { Moment } from 'moment';
 import { IParceiro } from './parceiro.model';
 import { IAgenciabancaria } from './agenciabancaria.model';
+import { IArquivo } from './arquivo.model';
 
 export interface IExtrato {
   id?: number;
@@ -13,6 +14,7 @@ export interface IExtrato {
   extDescricao?: string;
   parceiro?: IParceiro;
   agenciabancaria?: IAgenciabancaria;
+  arquivo?: IArquivo;
 }
 
 export class Extrato implements IExtrato {
@@ -26,6 +28,7 @@ export class Extrato implements IExtrato {
     public extCredito?: number,
     public extDescricao?: string,
     public parceiro?: IParceiro,
-    public agenciabancaria?: IAgenciabancaria
+    public agenciabancaria?: IAgenciabancaria,
+    public arquivo?: IArquivo
   ) {}
 }

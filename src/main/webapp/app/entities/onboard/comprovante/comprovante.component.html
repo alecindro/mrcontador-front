@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary">
+<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
     <form class="form-inline" action="">
-        <label for="field_mes" >Mês</label>:
+        <label class="mr-sm-2"  for="field_mes" >Mês</label>
         <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
             (change)="onChangeMes()">
             <option> </option>
@@ -8,7 +8,7 @@
                 {{ mesLabels[id] }}
             </option>
         </select>
-        <label for="field_ano" >Ano</label>:
+        <label class="mr-sm-2"  for="field_ano" >Ano</label>
         <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
             (change)="onChangeAno()">
             <option>  </option>
@@ -17,7 +17,7 @@
             </option>
         </select>
         
-        <label for="field_agencia" >Agência bancária</label>:
+        <label for="field_agencia" class="mr-sm-2" >Agência bancária</label>
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
             <option *ngFor="let agencia of parceiro?.agenciabancarias" [ngValue]="agencia">
@@ -33,20 +33,16 @@
 
 
     <div class="table-responsive" id="entities">
-        <table class="table table-striped" aria-describedby="page-heading">
+        <table class="table table-sm table-striped" aria-describedby="page-heading">         
             <thead>
+                <tr><th colspan="7" class="text-center text-light bg-primary"><span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></th></tr>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col" jhiSortBy="ageCodigo"><span
-                            jhiTranslate="mrcontadorFrontApp.comprovante.age_codigo">Age Codigo</span>
-                        <fa-icon icon="sort"></fa-icon>
-                    </th>
                     <th scope="col" jhiSortBy="comBeneficiario"><span
                             jhiTranslate="mrcontadorFrontApp.comprovante.com_beneficiario">Com Beneficiario</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
-                    <th scope="col" jhiSortBy="comDocumento"><span
+                    <th scope="col"><span
                             jhiTranslate="mrcontadorFrontApp.comprovante.com_documento">Com Documento</span>
-                        <fa-icon icon="sort"></fa-icon>
                     </th>
                     <th scope="col" jhiSortBy="comDatavencimento"><span
                             jhiTranslate="mrcontadorFrontApp.comprovante.com_datavencimento">Com Datavencimento</span>
@@ -80,14 +76,13 @@
                     </th>
                 </tr>
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
-                    <td>{{ comprovante?.agenciabancaria?.ageDescricao}}</td>
-                    <td>{{ comprovante.comBeneficiario }}</td>
-                    <td><a [href]="comprovante?.arquivo?.s3Url" target="_blank">{{ comprovante.comDocumento }}</a></td>
+                    <td><span class="font-weight-normal text-truncate">{{ comprovante.comBeneficiario }}</span></td>
+                    <td><a [href]="comprovante?.arquivo?.s3Url" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate" >{{ comprovante.comDocumento }}</span></a></td>
                     <td>{{ comprovante.comDatavencimento | date:'dd/MM/yyyy' }}</td>
                     <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="text-info">{{ comprovante.comValordocumento | currency:"BRL"}}</span></td>
                     <td><span class="text-info">{{ comprovante.comValorpagamento| currency:"BRL" }}</span></td>
-                    <td>{{ comprovante.comObservacao }}</td>
+                    <td><span class="font-weight-normal text-truncate" placement="left" ngbTooltip="{{comprovante.comObservacao}}">{{ comprovante.comObservacao }}</span></td>
                 </tr>
             </tbody>
         </table>

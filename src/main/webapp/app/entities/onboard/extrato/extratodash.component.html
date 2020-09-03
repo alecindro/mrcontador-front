@@ -1,54 +1,47 @@
-<div class="row">
-    <div class="col-12 bg-info rounded">
-        <div class="row">
-                <div class="col-md-6"></div>
-                <div class="col-md-2 mt-1">
-                        <input class="custom-input"  placeholder="Pesquisar..."  
-                            type="search">
-                        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
-                            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
-                    </div>
-                    <div class="col-md-2 mt-1">
-                        <select class="custom-select" >
-                            <option value="extNumerodocumento.contains"><span
-                                    jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento"></span>
-                            </option>
-                            <option value="conClassificacao.contains"><span
-                                    jhiTranslate="mrcontadorFrontApp.conta.con_classificacao"></span>
-                            </option>
-                            <option value="conTipo.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo"></span>
-                            </option>    
-                            <option value="conDescricao.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_descricao"></span>
-                            </option>
-                            <option value="conCnpj.equals"><span
-                                jhiTranslate="mrcontadorFrontApp.conta.con_cnpj"></span>
-                        </option>
-                            <option value="conGrau.equals"><span
-                                jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
-                        </option>
-                        </select>
-                    </div>
-                    <div  class="col-md-2 mt-1">
-                        <button class="btn btn-primary" (click)="upload()">
+<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
+    <form class="form-inline" action="">
+        <label class="mr-sm-2"  for="field_mes" >Mês</label>
+        <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
+            (change)="onChangeMes()">
+            <option> </option>
+            <option *ngFor="let id of meses" [ngValue]="id">
+                {{ mesLabels[id] }}
+            </option>
+        </select>
+        <label class="mr-sm-2"  for="field_ano" >Ano</label>
+        <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
+            (change)="onChangeAno()">
+            <option>  </option>
+            <option *ngFor="let ano of anos" [ngValue]="ano">
+                {{ ano }}
+            </option>
+        </select>
+        
+        <label for="field_agencia" class="mr-sm-2" >Agência bancária</label>
+        <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
+            (change)="onChangeAgencia()">
+            <option *ngFor="let agencia of parceiro?.agenciabancarias" [ngValue]="agencia">
+                {{ agencia.ageNumero + ' - ' + agencia.ageAgencia }}
+            </option>
+        </select>
+                        <button class="btn btn-primary form-control mr-sm-2" (click)="upload()" >
                             <fa-icon icon="cloud-upload-alt"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
                         </button>
-                    </div>
-        </div>
-    </div>
-</div>
-<div class="row">
+</form>
+</nav>
+
 <div class="table-responsive" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-sm table-striped table-hover" aria-describedby="page-heading">
         <thead>
+            <tr><th colspan="6" class="text-center text-light bg-primary"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></th></tr>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                <th scope="col"  jhiSortBy="extDatalancamento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento">Ext Datalancamento</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="extHistorico"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico">Ext Historico</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="extNumerodocumento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento">Ext Numerodocumento</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="extNumerocontrole"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerocontrole">Ext Numerocontrole</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="extDebito"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito">Ext Debito</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="extCredito"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito">Ext Credito</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="agenciabancariaId"><span jhiTranslate="mrcontadorFrontApp.extrato.agenciabancaria">Agenciabancaria</span> <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col" jhiSortBy="extDatalancamento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento">Ext Datalancamento</span>  <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico">Ext Historico</span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento">Ext Numerodocumento</span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerocontrole">Ext Numerocontrole</span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito">Ext Debito</span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito">Ext Credito</span></th>
             </tr>
         </thead>
         <tbody>
@@ -60,17 +53,12 @@
                 </th>
             </tr>
             <tr *ngFor="let extrato of extratoes ;trackBy: trackId">
-                <td width="5%">{{ extrato.extDatalancamento | date:'dd/MM/yyyy' }}</td>
-                <td>{{ extrato.extHistorico }}</td>
-                <td width="5%">{{ extrato.extNumerodocumento }}</td>
-                <td width="5%">{{ extrato.extNumerocontrole }}</td>
+                <td>{{ extrato.extDatalancamento | date:'dd/MM/yyyy' }}</td>
+                <td><span class="font-weight-normal text-truncate">{{ extrato.extHistorico }}</span></td>
+                <td><a [href]="extrato?.arquivo?.s3Url" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento">{{ extrato.extNumerodocumento }}</a></td>
+                <td>{{ extrato.extNumerocontrole }}</td>
                 <td><span class="text-danger">{{ extrato.extDebito | currency:"BRL" }} </span></td>
                 <td><span class="text-info">{{ extrato.extCredito  | currency:"BRL"}}</span></td>
-                <td width="5%">
-                    <div *ngIf="extrato.agenciabancaria">
-                        {{ extrato.agenciabancaria.ageDescricao }}
-                    </div>
-                </td>
             </tr>
         </tbody>
     </table>
@@ -85,4 +73,4 @@
         <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
     </div>
 </div>
-</div>
+

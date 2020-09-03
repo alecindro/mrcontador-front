@@ -13,6 +13,7 @@ import { ParceiroResolve } from '../parceiro/parceiro.route';
 import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.component';
 import { ComprovanteComponent } from './comprovante/comprovante.component';
 import { InteligentComponent } from './inteligent/inteligent.component';
+import { RegraComponent } from './regra/regra.component';
 
 const routes: Routes = [
   {
@@ -114,6 +115,16 @@ const routes: Routes = [
           authorities: [Authority.USER],
           defaultSort: 'comDatapagamento,asc',
           pageTitle: 'mrcontadorFrontApp.comprovante.home.title',
+        },
+        canActivate: [UserRouteAccessService],
+      },
+      {
+        path: 'regra',
+        component: RegraComponent,
+        data: {
+          authorities: [Authority.USER],
+          defaultSort: 'par_codigo,asc',
+          pageTitle: 'mrcontadorFrontApp.regra.home.title',
         },
         canActivate: [UserRouteAccessService],
       },

@@ -6,7 +6,7 @@ import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
@@ -14,6 +14,7 @@ import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
 import * as moment from 'moment';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'jhi-comprovante',
@@ -21,6 +22,7 @@ import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
   styleUrls: ['./comprovante.component.scss'],
 })
 export class ComprovanteComponent implements OnInit, OnDestroy {
+  parceiroListener!: Subscription;
   comprovantes?: IComprovante[];
   eventSubscriber?: Subscription;
   totalItems = 0;
@@ -44,10 +46,14 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
-    protected parceiroService: ParceiroService
-  ) {}
+    protected parceiroService: ParceiroService,
+    public spinner: NgxSpinnerService
+  ) {
+    this.registerParceiroListener();
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
+    this.spinner.show();
     const pageToLoad: number = page || this.page || 1;
     const queryParam: any = {
       page: pageToLoad - 1,
@@ -113,6 +119,9 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     if (this.eventSubscriber) {
       this.eventManager.destroy(this.eventSubscriber);
     }
+    if (this.parceiroListener) {
+      this.eventManager.destroy(this.parceiroListener);
+    }
   }
 
   trackId(index: number, item: IComprovante): number {
@@ -132,6 +141,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   protected onSuccess(data: IComprovante[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+    this.spinner.hide();
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
@@ -148,6 +158,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   protected onError(): void {
+    this.spinner.hide();
     this.ngbPaginationPage = this.page ?? 1;
   }
 
@@ -171,5 +182,16 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     for (let i = 0; i < 5; i++) {
       this.anos.push(data.getFullYear() - i);
     }
+  }
+
+  private registerParceiroListener(): void {
+    this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
+      this.parceiro = response.content;
+      this.initDate();
+      if (this.parceiro?.agenciabancarias) {
+        this.agenciaSelected = this.parceiro?.agenciabancarias[0];
+        this.onChangeAgencia();
+      }
+    });
   }
 }

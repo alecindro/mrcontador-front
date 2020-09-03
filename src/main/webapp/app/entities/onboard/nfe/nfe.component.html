@@ -1,57 +1,66 @@
-<div class="row">
-    <div class="col-12 bg-info rounded">
-        <div class="row">
-                <div class="col-md-6"></div>
-                <div class="col-md-2 mt-1">
-                        <input class="custom-input"  placeholder="Pesquisar..." 
-                            type="search">
-                        <a class="glyphicon glyphicon-remove-sign form-control-feedback form-control-clear"
-                            style="pointer-events: auto; text-decoration: none;cursor: pointer;"></a>
-                    </div>
-                    <div class="col-md-2 mt-1">
-                        <select class="custom-select">
-                            <option value="conConta.equals"><span
-                                    jhiTranslate="mrcontadorFrontApp.conta.con_conta"></span>
-                            </option>
-                            <option value="conClassificacao.contains"><span
-                                    jhiTranslate="mrcontadorFrontApp.conta.con_classificacao"></span>
-                            </option>
-                            <option value="conTipo.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_tipo"></span>
-                            </option>    
-                            <option value="conDescricao.contains"><span jhiTranslate="mrcontadorFrontApp.conta.con_descricao"></span>
-                            </option>
-                            <option value="conCnpj.equals"><span
-                                jhiTranslate="mrcontadorFrontApp.conta.con_cnpj"></span>
-                        </option>
-                            <option value="conGrau.equals"><span
-                                jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
-                        </option>
-                        </select>
-                    </div>
-                    <div  class="col-md-2 mt-1">
-                        <button class="btn btn-primary" (click)="upload()">
-                            <fa-icon icon="cloud-upload-alt"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
-                        </button>
-                    </div>
-        </div>
-    </div>
-</div>
-<div class="row">
+<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
+    <form class="form-inline" action="">
+        <label class="mr-sm-2" for="field_mes">Mês</label>
+        <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
+            (change)="onChangeMes()">
+            <option> </option>
+            <option *ngFor="let id of meses" [ngValue]="id">
+                {{ mesLabels[id] }}
+            </option>
+        </select>
+        <label class="mr-sm-2" for="field_ano">Ano</label>
+        <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
+            (change)="onChangeAno()">
+            <option> </option>
+            <option *ngFor="let ano of anos" [ngValue]="ano">
+                {{ ano }}
+            </option>
+        </select>
+        <button class="btn btn-primary" (click)="upload()">
+            <fa-icon icon="cloud-upload-alt"></fa-icon>
+            <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
+        </button>
+    </form>
+</nav>
+
 <div class="table-responsive" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-sm table-striped" aria-describedby="page-heading">
         <thead>
+            <tr>
+                <th colspan="9" class="text-center text-light bg-primary"><span
+                        jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></th>
+            </tr>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                <th scope="col"  jhiSortBy="notNumero"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not Numero</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notDescricao"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_descricao">Not Descricao</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notCnpj"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_cnpj">Not Cnpj</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notEmpresa"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not Empresa</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notDatasaida"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_datasaida">Not Datasaida</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notValornota"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valornota</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notDataparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notValorparcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valorparcela">Not Valorparcela</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="tnoCodigo"><span jhiTranslate="mrcontadorFrontApp.notafiscal.tno_codigo">Tno Codigo</span> <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"  jhiSortBy="notParcela"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not Parcela</span> <fa-icon icon="sort"></fa-icon></th>
+          
+            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not
+                    Numero</span>
+              
+            </th>
+            <th scope="col"><span
+                    jhiTranslate="mrcontadorFrontApp.notafiscal.not_descricao">Not Descricao</span>
+            </th>
+            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_cnpj">Not
+                    Cnpj</span>
+            </th>
+            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not
+                    Empresa</span>
+            </th>
+            <th scope="col" jhiSortBy="notDatasaida"><span
+                    jhiTranslate="mrcontadorFrontApp.notafiscal.not_datasaida">Not Datasaida</span>
+                <fa-icon icon="sort"></fa-icon>
+            </th>
+            <th scope="col"><span
+                    jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valornota</span>
+            </th>
+            <th scope="col"><span
+                    jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span>
+            </th>
+            <th scope="col"><span
+                    jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valorparcela</span>
+            </th>
+            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not
+                    Parcela</span>
+            </th>
             </tr>
         </thead>
         <tbody>
@@ -63,16 +72,15 @@
                 </th>
             </tr>
             <tr *ngFor="let notafiscal of notafiscals ;trackBy: trackId">
-                <td width="5%">{{ notafiscal.notNumero }}</td>
-                <td width="30%"><span>{{ notafiscal.notDescricao }}</span></td>
-                <td width="5%">{{ notafiscal.notCnpj }}</td>
-                <td width="30%"><span>{{ notafiscal.notEmpresa }}</span></td>
-                <td width="5%">{{ notafiscal.notDatasaida | date:'dd/MM/yyyy' }}</td>
-                <td width="5%">{{ notafiscal.notValornota | currency:"BRL" }}</td>
-                <td width="5%">{{ notafiscal.notDataparcela | date:'dd/MM/yyyy' }}</td>
-                <td width="5%">{{ notafiscal.notValorparcela | currency:"BRL" }}</td>
-                <td width="5%">{{ notafiscal.tnoCodigo }}</td>
-                <td width="5%">{{ notafiscal.notParcela }}</td>
+                <td>{{ notafiscal.notNumero }}</td>
+                <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notDescricao }}</span></td>
+                <td>{{ notafiscal.notCnpj }}</td>
+                <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notEmpresa }}</span></td>
+                <td>{{ notafiscal.notDatasaida | date:'dd/MM/yyyy' }}</td>
+                <td >{{ notafiscal.notValornota | currency:"BRL" }}</td>
+                <td >{{ notafiscal.notDataparcela | date:'dd/MM/yyyy' }}</td>
+                <td >{{ notafiscal.notValorparcela | currency:"BRL" }}</td>
+                <td >{{ notafiscal.notParcela }}</td>
             </tr>
         </tbody>
     </table>
@@ -84,7 +92,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+            [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
     </div>
-</div>
 </div>

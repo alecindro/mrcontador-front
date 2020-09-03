@@ -1,6 +1,10 @@
 <div class="table-responsive" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
+    <table class="table table-striped table-sm" aria-describedby="page-heading">
         <thead>
+            <tr>
+                <th colspan="9" class="text-center text-light bg-primary"><span
+                        jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></th>
+            </tr>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                 <th scope="col" jhiSortBy="nseNumero"><span
                         jhiTranslate="mrcontadorFrontApp.notaservico.nse_numero">Nse Numero</span>
@@ -34,19 +38,9 @@
                         jhiTranslate="mrcontadorFrontApp.notaservico.nse_valorparcela">Nse Valorparcela</span>
                     <fa-icon icon="sort"></fa-icon>
                 </th>
-                <th scope="col" jhiSortBy="tnoCodigo"><span
-                        jhiTranslate="mrcontadorFrontApp.notaservico.tno_codigo">Tno Codigo</span>
-                    <fa-icon icon="sort"></fa-icon>
-                </th>
                 <th scope="col" jhiSortBy="nseParcela"><span
                         jhiTranslate="mrcontadorFrontApp.notaservico.nse_parcela">Nse Parcela</span>
                     <fa-icon icon="sort"></fa-icon>
-                </th>
-                <th scope="col">
-                    <button class="btn btn-info btn-sm" (click)="upload()">
-                        <fa-icon icon="cloud-upload-alt"></fa-icon>
-                        <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
-                    </button>
                 </th>
             </tr>
         </thead>
@@ -67,17 +61,7 @@
                 <td>{{ notaservico.nseValornota }}</td>
                 <td>{{ notaservico.nseDataparcela | date:'medium' }}</td>
                 <td>{{ notaservico.nseValorparcela }}</td>
-                <td>{{ notaservico.tnoCodigo }}</td>
                 <td>{{ notaservico.nseParcela }}</td>
-                <td class="text-right">
-                    <div class="btn-group">
-                        <button type="submit" [routerLink]="['/notaservico', notaservico.id, 'view']"
-                            class="btn btn-info btn-sm">
-                            <fa-icon icon="eye"></fa-icon>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button>
-                    </div>
-                </td>
             </tr>
         </tbody>
     </table>

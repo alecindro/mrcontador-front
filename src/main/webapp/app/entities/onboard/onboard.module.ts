@@ -20,6 +20,7 @@ import { NsUploadComponent } from './notaservico/ns-upload.component';
 import { ComprovanteComponent } from './comprovante/comprovante.component';
 import { ComprovanteUploadComponent } from './comprovante/comprovante-upload.component';
 import { InteligentComponent } from './inteligent/inteligent.component';
+import { RegraComponent } from './regra/regra.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { InteligentComponent } from './inteligent/inteligent.component';
     NsUploadComponent,
     ComprovanteComponent,
     ComprovanteUploadComponent,
+    RegraComponent,
   ],
   imports: [
     CommonModule,

@@ -1,13 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ParceiroService } from '../parceiro/parceiro.service';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, Observable, merge } from 'rxjs';
 import { AgenciabancariaService } from '../agenciabancaria/agenciabancaria.service';
 import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
 import { HttpResponse } from '@angular/common/http';
+import { NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-onboard',
@@ -15,6 +17,10 @@ import { HttpResponse } from '@angular/common/http';
   styleUrls: ['./onboard.component.scss'],
 })
 export class OnboardComponent implements OnInit, OnDestroy {
+  @ViewChild('instance', { static: true }) instance!: NgbTypeahead;
+  focus$ = new Subject<string>();
+  click$ = new Subject<string>();
+
   parceiro!: IParceiro;
   parceiros!: IParceiro[];
   agenciaListener!: Subscription;
@@ -63,13 +69,9 @@ export class OnboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.eventManager.destroy(this.agenciaListener);
   }
-  onChangeParceiro(parceiro: IParceiro): void {
-    this.loadParceiro(parceiro);
-
+  onChangeParceiro(event: NgbTypeaheadSelectItemEvent): void {
+    this.loadParceiro(event.item);
     this.router.navigate([`/onboard/${this.parceiro.id}`]);
-  }
-  compareFn(val1: IParceiro, val2: IParceiro): boolean {
-    return val1 && val2 ? val1.id === val2.id : val1 === val2;
   }
 
   private loadAgencias(parceiro: IParceiro): void {
@@ -81,4 +83,24 @@ export class OnboardComponent implements OnInit, OnDestroy {
       this.loadParceiro(parceiro);
     });
   }
+
+  search = (text$: Observable<string>) => {
+    const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
+    const inputFocus$ = this.focus$;
+
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      map(term =>
+        term.trim() === ''
+          ? this.parceiros
+          : this.parceiros
+              .filter(v => (v.parRazaosocial ? v.parRazaosocial.toLowerCase().indexOf(term.toLowerCase()) > -1 : ''))
+              .slice(0, 10)
+      )
+    );
+  };
+
+  formatter = (x: { parRazaosocial: string }) => x.parRazaosocial;
+
+  resultFormatter = (x: { parRazaosocial: string }) => x.parRazaosocial;
 }

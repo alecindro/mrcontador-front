@@ -4,13 +4,16 @@ import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { NotafiscalService } from 'app/entities/notafiscal/notafiscal.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 import { NfeUploadComponent } from './nfe-upload.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
+import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-nfe',
@@ -18,6 +21,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./nfe.component.scss'],
 })
 export class NfeComponent implements OnInit, OnDestroy {
+  parceiroListener!: Subscription;
   notafiscals?: INotafiscal[];
   eventSubscriber?: Subscription;
   totalItems = 0;
@@ -27,6 +31,12 @@ export class NfeComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   parceiro!: IParceiro;
+  mesAno!: MesAnoDTO;
+  readonly meses = MESES;
+  readonly mesLabels = MESLABELS;
+  anos: number[] = [];
+  anoSelected?: number;
+  mesSelected?: number;
 
   constructor(
     protected notafiscalService: NotafiscalService,
@@ -36,28 +46,50 @@ export class NfeComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     private parceiroService: ParceiroService,
     public spinner: NgxSpinnerService
-  ) {}
+  ) {
+    this.registerParceiroListener();
+    this.registerChangeInNotafiscals();
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     const pageToLoad: number = page || this.page || 1;
     this.spinner.show();
-    this.notafiscalService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort(),
-        'parceiroId.equals': this.parceiro.id,
-      })
-      .subscribe(
-        (res: HttpResponse<INotafiscal[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
-        () => this.onError()
-      );
+    const queryParam = {
+      page: pageToLoad - 1,
+      size: this.itemsPerPage,
+      sort: this.sort(),
+      'parceiroId.equals': this.parceiro.id,
+    };
+    const _begin = moment();
+    const _end = moment();
+    if (this.anoSelected) {
+      _begin.set('year', this.anoSelected).format();
+      _begin.set('month', 0).format();
+      _begin.set('date', 1).format();
+      _end.set('year', this.anoSelected).format();
+      _end.set('month', 11).format();
+      _end.set('date', 31).format();
+    }
+    if (this.mesSelected) {
+      _begin.set('month', this.mesSelected - 1).format();
+      _end.set('month', this.mesSelected).format();
+      _end.set('date', 1).format();
+      _end.add(-1, 'days').format();
+    }
+    if (this.anoSelected || this.mesSelected) {
+      queryParam['notDatasaida.lessThanOrEqual'] = _end.toJSON();
+      queryParam['notDatasaida.greaterThanOrEqual'] = _begin.toJSON();
+    }
+    this.notafiscalService.query(queryParam).subscribe(
+      (res: HttpResponse<INotafiscal[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+      () => this.onError()
+    );
   }
 
   ngOnInit(): void {
+    this.initDate();
     this.parceiro = this.parceiroService.getParceiroSelected();
     this.handleNavigation();
-    this.registerChangeInNotafiscals();
   }
 
   protected handleNavigation(): void {
@@ -78,6 +110,9 @@ export class NfeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.eventSubscriber) {
       this.eventManager.destroy(this.eventSubscriber);
+    }
+    if (this.parceiroListener) {
+      this.eventManager.destroy(this.parceiroListener);
     }
   }
 
@@ -122,5 +157,32 @@ export class NfeComponent implements OnInit, OnDestroy {
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
     this.spinner.hide();
+  }
+  onChangeAgencia(): void {
+    this.loadPage(this.page, true);
+  }
+
+  onChangeMes(): void {
+    this.loadPage(this.page, true);
+  }
+  onChangeAno(): void {
+    this.loadPage(this.page, true);
+  }
+
+  private initDate(): void {
+    const data = new Date();
+    for (let i = 0; i < 5; i++) {
+      this.anos.push(data.getFullYear() - i);
+    }
+  }
+
+  private registerParceiroListener(): void {
+    this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
+      this.parceiro = response.content;
+      this.initDate();
+      if (this.parceiro?.agenciabancarias) {
+        this.onChangeAgencia();
+      }
+    });
   }
 }

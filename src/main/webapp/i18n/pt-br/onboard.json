@@ -8,7 +8,8 @@
       "nfe": "Nota Fiscal",
       "ns": "Nota Serviço",
       "agencia": "Agência Bancária",
-      "dados": "Dados Cadastrais"
+      "dados": "Dados Cadastrais",
+      "regra": "Regras"
     }
   }
 }

@@ -110,11 +110,13 @@ export class ContaDashComponent implements OnInit, OnDestroy {
   }
 
   onChange(): void {
-    this.loadPage(1, true);
+    if (this.pesquisa) {
+      this.loadPage(1, true);
+    }
   }
 
   pesquisar(): void {
-    this.onChange();
+    this.loadPage(1, true);
   }
 
   onError(): void {

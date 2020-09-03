@@ -1,46 +1,56 @@
-<div class="col-12">
-    <div class="row">
-        <div class="col-12 bg-primary pt-0 pr-3 pl-0 rounded">
-            <div class="float-sm-right row">
-                <div class="col-4 mb-2">
-                    <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"
-                        for="field_par_razaosocial"></label>:
-                    <select [compareWith]="compareFn" [(ngModel)]="parceiro" class="custom-select"
-                        id="field_par_razaosocial" (ngModelChange)="onChangeParceiro($event)">
-                        <option *ngFor="let _parceiro of parceiros" [ngValue]="_parceiro">
-                            {{ _parceiro.parRazaosocial }}
-                        </option>
-                    </select>
-                </div>
-                <div class="col-4 mb-2">
-                    <label jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_cnpjcpf"></label>:
-                    <input id="field_cnpjcpf" class="form-control" style="font-size: 100%;" disabled
-                        [(ngModel)]="parceiro.parCnpjcpf" />
-                </div>
-            </div>
+<nav class="navbar navbar-expand-lg bg-light justify-content-end border border-secondary p-1">
+    <form class="form-inline" action="">
+        <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial" for="field_par_razaosocial" class="mr-sm-2"></label>
+        <input style="width: 20rem;"
+  id="typeahead-focus" name="par_razaosocial"
+  type="text"
+  class="form-control mr-sm-2"
+  [(ngModel)]="parceiro"
+  [inputFormatter]="formatter"
+  [ngbTypeahead]="search"
+  [resultFormatter]="resultFormatter"
+  (focus)="focus$.next($any($event).target.value)"
+  (click)="click$.next($any($event).target.value)"
+  #instance="ngbTypeahead"
+  (selectItem)="onChangeParceiro($event)"
+/>
+
+
+        <label jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_cnpjcpf" class="mr-sm-2"></label>
+        <input id="field_cnpjcpf" class="form-control mr-sm-2" style="font-size: 100%;" disabled name="parCnpjcpf"
+            [(ngModel)]="parceiro.parCnpjcpf" />
+    </form>
+</nav>
+<div class="row">
+    <div class="col-2 shadow-lg rounded pt-1 pb-3 pr-1">
+        <div class="btn-group-vertical btn-block">
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'consolida'" [disabled]="!hasAgencia"
+                routerLinkActive="active"> <span jhiTranslate="mrcontadorFrontApp.onboard.consolidacao"></span></button>
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'conta'">
+                <span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span>
+            </button>
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'comprovante'"
+                [disabled]="!hasAgencia"> <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></button>
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'extrato'"
+                [disabled]="!hasAgencia"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></button>
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'nfe'"><span
+                    jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></button>
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'ns'"><span
+                    jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></button>
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'regra'" disabled><span
+                        jhiTranslate="mrcontadorFrontApp.onboard.regra"></span></button>
+            <button type="button"
+                [ngClass]="{'btn': true,'text-left':true, 'btn-primary': hasAgencia, 'btn-warning': !hasAgencia}"
+                [routerLink]="'agencia'">
+                <fa-icon icon="exclamation-circle" *ngIf="!hasAgencia">
+                </fa-icon>
+                <span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span>
+            </button>
+            <button type="button" class="btn btn-primary text-left" [routerLink]="'cadastro'"> <span
+                    jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></button>
         </div>
     </div>
-    <div class="row">
-        <div class="col-2 shadow-lg rounded pt-1 pb-3 pl-0">
-            <div class="btn-group-vertical btn-block">
-                <button type="button" class="btn btn-primary text-left" [routerLink]="'consolida'"
-                    routerLinkActive="active"> <span jhiTranslate="mrcontadorFrontApp.onboard.consolidacao"></span></button>
-                <button type="button" class="btn btn-primary text-left" [routerLink]="'conta'">
-                    <span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span>
-                </button>
-                <button type="button" class="btn btn-primary text-left" [routerLink]="'comprovante'" [disabled]="!hasAgencia"> <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></button>
-                <button type="button" class="btn btn-primary text-left" [routerLink]="'extrato'" [disabled]="!hasAgencia"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></button>
-                <button type="button" class="btn btn-primary text-left" [routerLink]="'nfe'"><span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></button>
-                <button type="button" class="btn btn-primary text-left" [routerLink]="'ns'" ><span jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></button>
-                <button type="button" [ngClass]="{'btn': true,'text-left':true, 'btn-primary': hasAgencia, 'btn-warning': !hasAgencia}" [routerLink]="'agencia'">
-                    <fa-icon icon="exclamation-circle" *ngIf="!hasAgencia">
-                    </fa-icon>
-                    <span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span></button>
-                <button type="button" class="btn btn-primary text-left" [routerLink]="'cadastro'"> <span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></button>
-            </div>
-        </div>
-        <div class="col-10 pt-1">
-            <router-outlet></router-outlet>
-        </div>
+    <div class="col-10 pt-1 pl-0">
+        <router-outlet></router-outlet>
     </div>
 </div>

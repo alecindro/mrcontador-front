@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary">
+<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
     <form class="form-inline" action="">
         <input class="form-control mr-sm-2" placeholder="Pesquisar..." [(ngModel)]="pesquisa" (search)="pesquisar()" name="pesquisa"
             type="search">
@@ -26,8 +26,9 @@
 </nav>
 
     <div class="table-responsive" id="entities">
-        <table class="table table-striped" aria-describedby="page-heading">
+        <table class="table table-sm table-striped" aria-describedby="page-heading">
             <thead>
+                <tr><th colspan="7" class="text-center text-light bg-primary"><span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span></th></tr>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                     <th scope="col" jhiSortBy="conConta"><span jhiTranslate="mrcontadorFrontApp.conta.con_conta">Con
                             Conta</span>

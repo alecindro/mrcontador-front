@@ -1,24 +1,12 @@
-<div class="col-12 justify-content-center">
-    <h5 id="page-heading">
-        <div class="text-center">
-                <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.title"></span>
-        </div>
-    </h5>
-    <div class="row">
-        <div class="col align-self-end">
-              
-        </div>       
-    </div>
-    <hr/>    
-
 <jhi-alert-error></jhi-alert-error>
-
 <jhi-alert></jhi-alert>
-
-
 <div class="table-responsive" id="entities">
-<table class="table table-striped" aria-describedby="page-heading">
+<table class="table table-striped table-sm" aria-describedby="page-heading">
 <thead>
+    <tr>
+        <th colspan="9" class="text-center text-light bg-primary"><span
+                jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.title"></span></th>
+    </tr>
     <tr>
         <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_numero"></span> </th>
         <th scope="col"><span jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_digito"></span> </th>
@@ -37,7 +25,6 @@
 <tbody>
     <tr>
 <td colspan="8">
-
 <div class="alert alert-warning" id="no-result" *ngIf="agenciabancarias?.length === 0">
     <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.notFound">No agenciabancarias found</span>
     </div>
@@ -80,4 +67,4 @@
 <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
 </div>
 </div>
-</div>
+
