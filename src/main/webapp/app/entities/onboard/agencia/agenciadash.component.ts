@@ -7,7 +7,7 @@ import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { AgenciabancariaDeleteDialogComponent } from 'app/entities/agenciabancaria/agenciabancaria-delete-dialog.component';
+import { AgenciabancariaDeleteDialogComponent } from 'app/entities/onboard/agencia/agenciabancaria-delete-dialog.component';
 import { IParceiro } from 'app/shared/model/parceiro.model';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 

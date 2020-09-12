@@ -72,7 +72,7 @@
                 </th>
             </tr>
             <tr *ngFor="let notafiscal of notafiscals ;trackBy: trackId">
-                <td>{{ notafiscal.notNumero }}</td>
+                <td><a  (click)="download(notafiscal)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ notafiscal.notNumero }}</u></span></a></td>
                 <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notDescricao }}</span></td>
                 <td>{{ notafiscal.notCnpj }}</td>
                 <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notEmpresa }}</span></td>

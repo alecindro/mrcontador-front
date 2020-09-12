@@ -11,6 +11,7 @@ import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
 import { HttpResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
+import { IRegra, Regra } from 'app/shared/model/regra.model';
 
 @Component({
   selector: 'jhi-inteligent',
@@ -21,6 +22,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   parceiroListener!: Subscription;
   divergencias?: IInteligent[] = [];
   conciliados?: IInteligent[] = [];
+  regra?: IRegra;
   mesAno!: MesAnoDTO;
   readonly meses = MESES;
   readonly mesLabels = MESLABELS;
@@ -152,5 +154,11 @@ export class InteligentComponent implements OnInit, OnDestroy {
         this.loadDivergencias();
       }
     });
+  }
+
+  selectInteligent(inteligent: IInteligent): void {
+    this.regra = new Regra();
+    this.regra.regDescricao = inteligent.historico;
+    this.regra.regHistorico = '';
   }
 }

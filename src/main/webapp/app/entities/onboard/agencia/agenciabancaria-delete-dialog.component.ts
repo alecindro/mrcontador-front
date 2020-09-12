@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
-import { AgenciabancariaService } from './agenciabancaria.service';
+import { AgenciabancariaService } from 'app/entities/agenciabancaria/agenciabancaria.service';
 
 @Component({
   templateUrl: './agenciabancaria-delete-dialog.component.html',

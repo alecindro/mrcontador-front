@@ -24,6 +24,37 @@
 <button class="form-control mr-sm-2 btn btn-primary" name="consolida" type="button" (click)="processConsolidacao()" [disabled]="parceiro?.agenciabancarias?.length === 0"><span jhiTranslate="mrcontadorFrontApp.inteligent.conciliar"></span></button>
     </form>
 </nav>
+
+<ng-template #popContent> 
+    <form>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_descricao" for="field_reg_descricao">Reg Descricao</label>
+            <input type="text" class="form-control" name="reg_descricao" id="field_reg_descricao"
+                   readonly [value]="regra?.regDescricao">
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta" for="field_reg_conta">Reg Conta</label>
+            <input type="number" class="form-control" name="reg_conta" id="field_reg_conta"
+                   [value]="regra?.regConta"/>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_historico" for="field_reg_historico">Reg Historico</label>
+            <input type="text" class="form-control" name="reg_historico" id="field_reg_historico"
+                   [value]="regra?.regHistorico"/>
+        </div>
+        <div>
+            <button type="button" id="cancel-save" class="btn btn-secondary">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+
+            <button type="submit" id="save-entity" class="btn btn-primary">
+                <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+        </div>
+</form>
+
+</ng-template>
+<ng-template #popTitle><b>Associar regra</b></ng-template>
 <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs">
     <li [ngbNavItem]="1">
         <a ngbNavLink>
@@ -57,7 +88,7 @@
                         </tr>
                         <tr *ngFor="let inteligent of divergencias">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
-                            <td>{{ inteligent.historico }}</td>
+                            <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" (click)="selectInteligent(inteligent)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
                             <td>{{ inteligent.numerodocumento }}</td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
@@ -100,7 +131,7 @@
                         </tr>
                         <tr *ngFor="let inteligent of conciliados">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
-                            <td>{{ inteligent.historico }}</td>
+                            <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" (click)="selectInteligent(inteligent)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
                             <td>{{ inteligent.numerodocumento }}</td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>

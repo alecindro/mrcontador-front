@@ -14,6 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
 import * as moment from 'moment';
+import { UploadService } from 'app/shared/file/file-upload.service ';
+import { SERVER_API_URL } from 'app/app.constants';
 
 @Component({
   selector: 'jhi-nfe',
@@ -37,6 +39,7 @@ export class NfeComponent implements OnInit, OnDestroy {
   anos: number[] = [];
   anoSelected?: number;
   mesSelected?: number;
+  resourceUrl = SERVER_API_URL + 'api/downloadFile/notafiscal/';
 
   constructor(
     protected notafiscalService: NotafiscalService,
@@ -45,7 +48,8 @@ export class NfeComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     private parceiroService: ParceiroService,
-    public spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService,
+    public fileService: UploadService
   ) {
     this.registerParceiroListener();
     this.registerChangeInNotafiscals();
@@ -184,5 +188,17 @@ export class NfeComponent implements OnInit, OnDestroy {
         this.onChangeAgencia();
       }
     });
+  }
+
+  public download(nfe: INotafiscal): void {
+    this.fileService.downloadFile(this.resourceUrl + nfe.id).subscribe(
+      response => {
+        const blob: any = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      },
+      error => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully')
+    );
   }
 }

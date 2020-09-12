@@ -51,4 +51,8 @@ export class UploadService {
     formData.append('file', file);
     return this.http.post<any>(url, formData, { params: options, reportProgress: true, observe: 'events' });
   }
+
+  public downloadFile(url: any): Observable<any> {
+    return this.http.get(url, { responseType: 'blob' });
+  }
 }

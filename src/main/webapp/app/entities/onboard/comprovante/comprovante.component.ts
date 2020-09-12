@@ -15,6 +15,8 @@ import * as moment from 'moment';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SERVER_API_URL } from 'app/app.constants';
+import { UploadService } from 'app/shared/file/file-upload.service ';
 
 @Component({
   selector: 'jhi-comprovante',
@@ -22,6 +24,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./comprovante.component.scss'],
 })
 export class ComprovanteComponent implements OnInit, OnDestroy {
+  resourceUrl = SERVER_API_URL + 'api/downloadFile/comprovante/';
   parceiroListener!: Subscription;
   comprovantes?: IComprovante[];
   eventSubscriber?: Subscription;
@@ -47,7 +50,8 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected parceiroService: ParceiroService,
-    public spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService,
+    public fileService: UploadService
   ) {
     this.registerParceiroListener();
   }
@@ -193,5 +197,17 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
         this.onChangeAgencia();
       }
     });
+  }
+
+  public downloadComprovante(comprovante: IComprovante): void {
+    this.fileService.downloadFile(this.resourceUrl + comprovante.id).subscribe(
+      response => {
+        const blob: any = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      },
+      error => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully')
+    );
   }
 }

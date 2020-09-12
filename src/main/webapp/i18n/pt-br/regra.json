@@ -7,8 +7,8 @@
         "createOrEditLabel": "Cadastro de Regra",
         "notFound": "Nenhuma regra encontrada"
       },
-      "created": "Uma nova regra foi criada. Código: {{ param }}",
-      "updated": "A regra de código {{ param }} foi atualizada ",
+      "created": "Uma nova regra foi criada.",
+      "updated": "A regra atualizada ",
       "deleted": "A Regra foi excluída. Código {{ param }}",
       "delete": {
         "question": "Tem certeza de que deseja excluir a Regra {{ id }}?"
@@ -20,7 +20,8 @@
       "reg_descricao": "Descrição",
       "reg_conta": "Conta",
       "reg_historico": "Histórico",
-      "reg_todos": "Todos"
+      "reg_todos": "Todos",
+      "dataCadastro": "Data de Cadastro"
     }
   }
 }

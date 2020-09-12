@@ -77,7 +77,7 @@
                 </tr>
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
                     <td><span class="font-weight-normal text-truncate">{{ comprovante.comBeneficiario }}</span></td>
-                    <td><a [href]="comprovante?.arquivo?.s3Url" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate" >{{ comprovante.comDocumento }}</span></a></td>
+                    <td><a (click)="downloadComprovante(comprovante)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ comprovante.comDocumento }}</u></span></a></td>
                     <td>{{ comprovante.comDatavencimento | date:'dd/MM/yyyy' }}</td>
                     <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="text-info">{{ comprovante.comValordocumento | currency:"BRL"}}</span></td>

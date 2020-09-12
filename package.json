@@ -32,6 +32,8 @@
     "ngx-mask": "^9.1.2",
     "ngx-spinner": "^9.0.2",
     "ngx-webstorage": "5.0.0",
+    "primeicons": "^4.0.0",
+    "primeng": "^10.0.0",
     "rxjs": "6.5.5",
     "sonar-scanner": "3.1.0",
     "swagger-ui-dist": "3.25.1",
@@ -101,6 +103,7 @@
     "node": ">=12.16.1"
   },
   "scripts": {
+    "postinstall": "ngcc",
     "prettier:format": "prettier --write \"{,src/**/}*.{md,json,ts,css,scss,yml}\"",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "npm run lint -- --fix",

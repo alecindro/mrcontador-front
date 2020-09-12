@@ -2,11 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IRegra } from 'app/shared/model/regra.model';
+import { IRegra, Regra } from 'app/shared/model/regra.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { RegraService } from 'app/entities/regra/regra.service';
+import { RegraUpdateComponent } from './regra-update.component';
+import { IParceiro } from 'app/shared/model/parceiro.model';
+import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 
 @Component({
   selector: 'jhi-regra',
@@ -21,14 +24,21 @@ export class RegraComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  parceiro!: IParceiro;
+  parceiroListener!: Subscription;
+  regraListener!: Subscription;
 
   constructor(
     protected regraService: RegraService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
-  ) {}
+    protected modalService: NgbModal,
+    protected parceiroService: ParceiroService
+  ) {
+    this.registerParceiroListener();
+    this.registerChangeInRegras();
+  }
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     const pageToLoad: number = page || this.page || 1;
@@ -46,8 +56,8 @@ export class RegraComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.parceiro = this.parceiroService.getParceiroSelected();
     this.handleNavigation();
-    this.registerChangeInRegras();
   }
 
   protected handleNavigation(): void {
@@ -69,6 +79,9 @@ export class RegraComponent implements OnInit, OnDestroy {
     if (this.eventSubscriber) {
       this.eventManager.destroy(this.eventSubscriber);
     }
+    if (this.parceiroListener) {
+      this.eventManager.destroy(this.parceiroListener);
+    }
   }
 
   trackId(index: number, item: IRegra): number {
@@ -77,7 +90,7 @@ export class RegraComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInRegras(): void {
-    this.eventSubscriber = this.eventManager.subscribe('regraListModification', () => this.loadPage());
+    this.eventSubscriber = this.eventManager.subscribe('regraUpdate', () => this.loadPage());
   }
 
   sort(): string[] {
@@ -92,7 +105,7 @@ export class RegraComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate(['/regra'], {
+      this.router.navigate([`onboard/${this.parceiro.id}/regra`], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
@@ -106,5 +119,20 @@ export class RegraComponent implements OnInit, OnDestroy {
 
   protected onError(): void {
     this.ngbPaginationPage = this.page ?? 1;
+  }
+
+  private registerParceiroListener(): void {
+    this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
+      this.parceiro = response.content;
+    });
+  }
+
+  edit(regra: IRegra): void {
+    const modalRef = this.modalService.open(RegraUpdateComponent, { size: 'xl', backdrop: 'static' });
+    modalRef.componentInstance.parceiro = this.parceiro;
+    modalRef.componentInstance.regra = regra;
+  }
+  new(): void {
+    this.edit(new Regra());
   }
 }

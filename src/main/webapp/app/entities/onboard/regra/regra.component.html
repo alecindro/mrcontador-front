@@ -2,51 +2,58 @@
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="regras?.length === 0">
-        <span jhiTranslate="mrcontadorFrontApp.regra.home.notFound">No regras found</span>
-    </div>
 
-    <div class="table-responsive" id="entities" *ngIf="regras && regras.length > 0">
+
+    <div class="table-responsive" id="entities">
         <table class="table table-striped table-sm" aria-describedby="page-heading">
             <thead>
                 <tr>
-                    <th colspan="9" class="text-center text-light bg-primary"><span
+                    <th colspan="6" class="text-center text-light bg-primary"><span
                             jhiTranslate="mrcontadorFrontApp.onboard.regra"></span></th>
                 </tr>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col" jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span>
-                        <fa-icon icon="sort"></fa-icon>
-                    </th>
-                    <th scope="col" jhiSortBy="par_codigo"><span jhiTranslate="mrcontadorFrontApp.regra.par_codigo">Par
-                            Codigo</span>
-                        <fa-icon icon="sort"></fa-icon>
-                    </th>
-                    <th scope="col" jhiSortBy="reg_descricao"><span
+                    <th scope="col" jhiSortBy="dataCadastro"><span
+                        jhiTranslate="mrcontadorFrontApp.regra.dataCadastro">Reg Descricao</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                    <th scope="col" jhiSortBy="regDescricao"><span
                             jhiTranslate="mrcontadorFrontApp.regra.reg_descricao">Reg Descricao</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
-                    <th scope="col" jhiSortBy="reg_conta"><span jhiTranslate="mrcontadorFrontApp.regra.reg_conta">Reg
+                    <th scope="col" jhiSortBy="regConta"><span jhiTranslate="mrcontadorFrontApp.regra.reg_conta">Reg
                             Conta</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
-                    <th scope="col" jhiSortBy="reg_historico"><span
+                    <th scope="col" jhiSortBy="regHistorico"><span
                             jhiTranslate="mrcontadorFrontApp.regra.reg_historico">Reg Historico</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
-                    <th scope="col" jhiSortBy="reg_todos"><span jhiTranslate="mrcontadorFrontApp.regra.reg_todos">Reg
+                    <th scope="col" jhiSortBy="regTodos"><span jhiTranslate="mrcontadorFrontApp.regra.reg_todos">Reg
                             Todos</span>
                         <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th>
+                        <button class="btn btn-primary btn-sm" (click)="new()">
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.new"></span>
+                        </button>
                     </th>
                 </tr>
             </thead>
             <tbody>
+                <tr  id="no-result" *ngIf="regras?.length === 0">
+                    <td colspan="6" class="alert alert-warning text-center">
+                    <span  jhiTranslate="mrcontadorFrontApp.regra.home.notFound">No regras found</span>
+                </td>
+                </tr>
                 <tr *ngFor="let regra of regras ;trackBy: trackId">
-                    <td><a [routerLink]="['/regra', regra.id, 'view']">{{ regra.id }}</a></td>
-                    <td>{{ regra.par_codigo }}</td>
-                    <td>{{ regra.reg_descricao }}</td>
-                    <td>{{ regra.reg_conta }}</td>
-                    <td>{{ regra.reg_historico }}</td>
-                    <td>{{ regra.reg_todos }}</td>
+                    <td>{{ regra.dataCadastro | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ regra.regDescricao }}</td>
+                    <td>{{ regra.regConta }}</td>
+                    <td>{{ regra.regHistorico }}</td>
+                    <td>{{ regra.regTodos }}</td>
+                    <td>                        <button class="btn btn-primary btn-sm" (click)="edit(regra)">
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.edit"></span>
+                    </button></td>
                 </tr>
             </tbody>
         </table>

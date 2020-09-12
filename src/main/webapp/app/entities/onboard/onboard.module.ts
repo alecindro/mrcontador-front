@@ -21,6 +21,9 @@ import { ComprovanteComponent } from './comprovante/comprovante.component';
 import { ComprovanteUploadComponent } from './comprovante/comprovante-upload.component';
 import { InteligentComponent } from './inteligent/inteligent.component';
 import { RegraComponent } from './regra/regra.component';
+import { RegraUpdateComponent } from './regra/regra-update.component';
+import { AgenciabancariaDeleteDialogComponent } from './agencia/agenciabancaria-delete-dialog.component';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,8 @@ import { RegraComponent } from './regra/regra.component';
     ComprovanteComponent,
     ComprovanteUploadComponent,
     RegraComponent,
+    RegraUpdateComponent,
+    AgenciabancariaDeleteDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -48,7 +53,15 @@ import { RegraComponent } from './regra/regra.component';
     MrcontadorFrontSharedModule,
     NgxMaskModule.forChild(),
     NgbTypeaheadModule,
+    FileUploadModule,
   ],
-  entryComponents: [NfeUploadComponent, ExtratoUploadComponent, NsUploadComponent, ComprovanteUploadComponent],
+  entryComponents: [
+    NfeUploadComponent,
+    ExtratoUploadComponent,
+    NsUploadComponent,
+    ComprovanteUploadComponent,
+    RegraUpdateComponent,
+    AgenciabancariaDeleteDialogComponent,
+  ],
 })
 export class OnboardModule {}

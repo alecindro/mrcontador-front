@@ -37,6 +37,7 @@ registerLocaleData(localeBr, 'pt');
     NgxSpinnerModule,
     BrowserAnimationsModule,
     MrcontadorFrontAppRoutingModule,
+
     // jhipster-needle-angular-add-module JHipster will add new module here
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

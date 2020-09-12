@@ -6,17 +6,10 @@
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                <div class="form-group" hidden="true">
                     <label for="id" jhiTranslate="global.field.id">ID</label>
                     <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.par_codigo" for="field_par_codigo">Par Codigo</label>
-                    <input type="number" class="form-control" name="par_codigo" id="field_par_codigo"
-                           formControlName="par_codigo"/>
-                </div>
-
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_descricao" for="field_reg_descricao">Reg Descricao</label>
                     <input type="text" class="form-control" name="reg_descricao" id="field_reg_descricao"
@@ -65,7 +58,7 @@
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid" class="btn btn-primary">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

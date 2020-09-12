@@ -123,7 +123,7 @@ const routes: Routes = [
         component: RegraComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'par_codigo,asc',
+          defaultSort: 'dataCadastro,desc',
           pageTitle: 'mrcontadorFrontApp.regra.home.title',
         },
         canActivate: [UserRouteAccessService],

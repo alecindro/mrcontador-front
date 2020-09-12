@@ -39,54 +39,7 @@
                             <span jhiTranslate="global.menu.entities.banco">Banco</span>
                         </a>
                     </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="parceiro" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.parceiro">Parceiro</span>
-                        </a>
-                    </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="comprovante" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.comprovante">Comprovante</span>
-                        </a>
-                    </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="conta" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.conta">Conta</span>
-                        </a>
-                    </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="notafiscal" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.notafiscal">Notafiscal</span>
-                        </a>
-                    </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="agenciabancaria" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.agenciabancaria">Agenciabancaria</span>
-                        </a>
-                    </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="notaservico" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.notaservico">Notaservico</span>
-                        </a>
-                    </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="regra" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.regra">Regra</span>
-                        </a>
-                    </li>
-                    <li *jhiHasAnyAuthority="['ROLE_USER','ROLE_ADMIN']">
-                        <a class="dropdown-item" routerLink="extrato" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.extrato">Extrato</span>
-                        </a>
-                    </li>
+                  
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>

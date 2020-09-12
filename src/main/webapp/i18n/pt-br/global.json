@@ -113,7 +113,8 @@
       "open": "Abrir",
       "save": "Salvar",
       "view": "Visualizar",
-      "upload": "Carregar"
+      "upload": "Carregar",
+      "new": "Cadastrar"
     },
     "detail": {
       "field": "Campo",
