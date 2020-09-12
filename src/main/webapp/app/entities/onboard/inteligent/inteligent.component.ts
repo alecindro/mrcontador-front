@@ -12,6 +12,10 @@ import { HttpResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { IRegra, Regra } from 'app/shared/model/regra.model';
+import { SERVER_API_URL } from 'app/app.constants';
+import { UploadService } from 'app/shared/file/file-upload.service ';
+import { IComprovante } from 'app/shared/model/comprovante.model';
+import { INotafiscal } from 'app/shared/model/notafiscal.model';
 
 @Component({
   selector: 'jhi-inteligent',
@@ -31,13 +35,16 @@ export class InteligentComponent implements OnInit, OnDestroy {
   mesSelected?: number;
   parceiro?: IParceiro;
   agenciaSelected?: IAgenciabancaria;
+  resourceUrl = SERVER_API_URL + 'api/downloadFile/comprovante/';
+  resourceUrlNfe = SERVER_API_URL + 'api/downloadFile/notafiscal/';
 
   constructor(
     private eventManager: JhiEventManager,
     protected inteligentService: InteligentService,
     protected parceiroService: ParceiroService,
     public spinner: NgxSpinnerService,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    public fileService: UploadService
   ) {
     this.registerParceiroListener();
   }
@@ -160,5 +167,28 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.regra = new Regra();
     this.regra.regDescricao = inteligent.historico;
     this.regra.regHistorico = '';
+  }
+  public downloadComprovante(comprovante: IComprovante): void {
+    this.fileService.downloadFile(this.resourceUrl + comprovante.id).subscribe(
+      response => {
+        const blob: any = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      },
+      error => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully')
+    );
+  }
+
+  public downloadNfe(nfe: INotafiscal): void {
+    this.fileService.downloadFile(this.resourceUrlNfe + nfe.id).subscribe(
+      response => {
+        const blob: any = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      },
+      error => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully')
+    );
   }
 }
