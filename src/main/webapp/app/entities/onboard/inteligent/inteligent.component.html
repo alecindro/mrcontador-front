@@ -89,11 +89,11 @@
                         <tr *ngFor="let inteligent of divergencias">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
                             <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" (click)="selectInteligent(inteligent)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
-                            <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante)" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
+                            <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
-                            <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal)" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
+                            <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
                             <td>{{ inteligent.historicofinal }}</td>
                         </tr>
@@ -132,11 +132,11 @@
                         <tr *ngFor="let inteligent of conciliados">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
                             <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" (click)="selectInteligent(inteligent)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
-                            <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent.comprovante)" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
+                            <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
-                            <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal)" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
+                            <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
                             <td>{{ inteligent.historicofinal }}</td>
                         </tr>

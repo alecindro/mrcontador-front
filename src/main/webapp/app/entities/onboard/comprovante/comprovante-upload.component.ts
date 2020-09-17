@@ -7,6 +7,7 @@ import { UploadService } from 'app/shared/file/file-upload.service ';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './comprovante-dialog.component.html',
@@ -15,8 +16,8 @@ export class ComprovanteUploadComponent implements OnInit {
   agenciaSelected?: IAgenciabancaria;
   agencias?: IAgenciabancaria[];
   parceiro?: IParceiro;
-  progressInfos: { value: number; fileName: string; file: any; index: number; _event: any }[] = [];
-  message = '';
+  progressInfos: { value: number; fileName: string; file: any; index: number; _event: any; message?: string; error?: boolean }[] = [];
+  totalUpload = 0;
 
   error: any = {};
   uploadResponse = { status: '', message: '', percent: 0, filePath: '' };
@@ -26,7 +27,8 @@ export class ComprovanteUploadComponent implements OnInit {
     protected eventManager: JhiEventManager,
     private uploadService: UploadService,
     private parceiroService: ParceiroService,
-    public spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -55,40 +57,51 @@ export class ComprovanteUploadComponent implements OnInit {
   }
 
   uploadFiles(): void {
-    this.message = '';
     this.spinner.show();
     for (let i = 0; i < this.progressInfos.length; i++) {
       this.upload(i, this.progressInfos[i]);
     }
   }
+
   upload(idx: number, progressInfo: any): void {
     if (progressInfo.file) {
       const queryParam: any = {
         idParceiro: this.parceiro?.id,
         idAgenciabancaria: this.agenciaSelected?.id,
       };
-
+      const size = this.progressInfos.length;
       this.uploadService.uploadFiles(progressInfo.file, this.uploadService.comprovanteUrl, queryParam).subscribe(
         event => {
           if (event && event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round((100 * event.loaded) / event.total);
+            progressInfo.value = Math.round((100 * event.loaded) / event.total);
           } else if (event instanceof HttpResponse) {
-            this.progressInfos.splice(idx, 1);
-            this.message = event.status.toString();
-            if (this.progressInfos.length === 0) {
+            const index = this.progressInfos.indexOf(progressInfo);
+            this.progressInfos.splice(index, 1);
+            this.totalUpload = this.totalUpload + 1;
+            if (size === this.totalUpload) {
               this.spinner.hide();
-              this.activeModal.close();
+              this.totalUpload = 0;
               this.eventManager.broadcast('comprovateUpload');
+              if (this.progressInfos.length === 0) {
+                this.activeModal.close();
+              }
             }
           }
         },
         err => {
-          this.message = 'Não foi possivel carregar o arquivo:' + err;
-          this.spinner.hide();
+          this.totalUpload = this.totalUpload + 1;
+          progressInfo.message = this.translate.instant(err.error.message);
+          progressInfo.error = true;
+          if (size === this.totalUpload) {
+            this.spinner.hide();
+            this.totalUpload = 0;
+            this.eventManager.broadcast('comprovateUpload');
+          }
         }
       );
     }
   }
+
   remove(progressInfo: any): void {
     this.progressInfos = this.progressInfos.filter(t1 => {
       if (t1.index === progressInfo.index) {

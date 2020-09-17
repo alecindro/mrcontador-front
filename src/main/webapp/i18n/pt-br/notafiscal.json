@@ -7,6 +7,7 @@
         "createOrEditLabel": "Criar ou editar Notafiscal",
         "notFound": "Nenhuma Notafiscal cadastrada"
       },
+      "uploaded": "Nota fiscal importada com sucesso",
       "created": "Um novo Notafiscal foi criado com o identificador {{ param }}",
       "updated": "Um Notafiscal foi atualizado com o identificador {{ param }}",
       "deleted": "Um Notafiscal foi excluído com o identificador {{ param }}",

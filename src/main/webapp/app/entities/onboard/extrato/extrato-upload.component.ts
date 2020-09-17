@@ -15,8 +15,8 @@ export class ExtratoUploadComponent implements OnInit {
   agenciaSelected?: IAgenciabancaria;
   agencias?: IAgenciabancaria[];
   parceiro?: IParceiro;
-  progressInfos: { value: number; fileName: string; file: any; index: number; _event: any }[] = [];
-  message = '';
+  progressInfos: { value: number; fileName: string; file: any; index: number; _event: any; message?: string }[] = [];
+  totalUpload = 0;
 
   error: any = {};
   uploadResponse = { status: '', message: '', percent: 0, filePath: '' };
@@ -55,7 +55,6 @@ export class ExtratoUploadComponent implements OnInit {
   }
 
   uploadFiles(): void {
-    this.message = '';
     for (let i = 0; i < this.progressInfos.length; i++) {
       this.upload(i, this.progressInfos[i]);
     }
@@ -72,18 +71,24 @@ export class ExtratoUploadComponent implements OnInit {
           if (event && event.type === HttpEventType.UploadProgress) {
             this.progressInfos[idx].value = Math.round((100 * event.loaded) / event.total);
           } else if (event instanceof HttpResponse) {
-            this.progressInfos.splice(idx, 1);
-            this.message = event.status.toString();
-            if (this.progressInfos.length === 0) {
+            this.totalUpload = this.totalUpload + 1;
+            this.progressInfos[idx].message = event.status.toString();
+            if (this.progressInfos.length === this.totalUpload) {
               this.spinner.hide();
-              this.activeModal.close();
+              this.totalUpload = 0;
               this.eventManager.broadcast('extratoUpload');
             }
           }
         },
+
         err => {
-          this.message = 'Não foi possivel carregar o arquivo:' + err;
-          this.spinner.hide();
+          this.totalUpload = this.totalUpload + 1;
+          this.progressInfos[idx].message = 'Não foi possivel carregar o arquivo:' + err;
+          if (this.progressInfos.length === this.totalUpload) {
+            this.spinner.hide();
+            this.totalUpload = 0;
+            this.eventManager.broadcast('extratoUpload');
+          }
         }
       );
     }

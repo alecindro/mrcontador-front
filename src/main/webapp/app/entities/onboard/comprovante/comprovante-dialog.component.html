@@ -5,7 +5,6 @@
 
 </div>
 <div class="modal-body">
-  <jhi-alert-error></jhi-alert-error>
   <div class="d-flex justify-content-center">
     <div>
       <label for="field_agencia" jhiTranslate="mrcontadorFrontApp.agenciabancaria.age_agencia"
@@ -28,12 +27,13 @@
           <fa-icon [icon]="'times'" class="text-danger"></fa-icon>
         </button>
         <div class="progress">
-          <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+          <div [ngClass]="{'progress-bar bg-danger progress-bar-striped' : progressInfo.error, 'progress-bar bg-info progress-bar-striped' : !progressInfo.error}" role="progressbar"
             attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
             [ngStyle]="{ width: progressInfo.value + '%' }">
             {{ progressInfo.value }}%
           </div>
         </div>
+        <span>{{progressInfo.message}}</span>
       </div>
     </div>
   </div>
@@ -41,12 +41,12 @@
 <div class="modal-footer justify-content-center">
   <div class="d-flex">
     <div class="custom-file">
-      <input type="file" class="custom-file-input" [disabled]="progressInfos.length > 0" lang="pt" id="customFileLang" (change)="selectFiles($event)"
-        accept="application/pdf" />
+      <input type="file" class="custom-file-input bg-info" [disabled]="progressInfos.length > 0" lang="pt" id="customFileLang" (change)="selectFiles($event)"
+         />
       <label class="custom-file-label" for="customFileLang">Selecionar Arquivo</label>
     </div>
     <div class="pl-3">
-      <button class="btn btn-success" [disabled]="progressInfos.length === 0" (click)="uploadFiles()">
+      <button class="btn btn-info" *ngIf="progressInfos.length > 0" (click)="uploadFiles()">
         Upload
       </button>
     </div>
