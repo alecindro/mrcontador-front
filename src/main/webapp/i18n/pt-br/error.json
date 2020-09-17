@@ -32,6 +32,6 @@
     "parsecomprovante.error": "Tivemos um problema ao processar o comprovante. Reporte o erro: {{ params }}",
     "parsercomprovante.notfound": "O comprovante selecionado corresponde a um banco não autorizado.",
     "codigobanco.notfound": "Banco não cadastrado",
-    "inteligent.fail": "Não foi possível processar a conciliação"
+    "inteligent.fail": "Não foi possível processar a conciliação: {{ params }}"
   }
 }
