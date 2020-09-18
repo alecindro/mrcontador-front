@@ -36,6 +36,7 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
         }],
         stats: options.stats,
         watchOptions: {
+            poll: 1000,
             ignored: /node_modules/
         },
         https: options.tls,
