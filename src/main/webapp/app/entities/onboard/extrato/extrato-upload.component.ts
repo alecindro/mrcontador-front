@@ -7,6 +7,7 @@ import { UploadService } from 'app/shared/file/file-upload.service ';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: './extrato-dialog.component.html',
@@ -15,7 +16,7 @@ export class ExtratoUploadComponent implements OnInit {
   agenciaSelected?: IAgenciabancaria;
   agencias?: IAgenciabancaria[];
   parceiro?: IParceiro;
-  progressInfos: { value: number; fileName: string; file: any; index: number; _event: any; message?: string }[] = [];
+  progressInfos: { value: number; fileName: string; file: any; index: number; _event: any; message?: string; error?: boolean }[] = [];
   totalUpload = 0;
 
   error: any = {};
@@ -26,7 +27,8 @@ export class ExtratoUploadComponent implements OnInit {
     protected eventManager: JhiEventManager,
     private uploadService: UploadService,
     private parceiroService: ParceiroService,
-    public spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +45,6 @@ export class ExtratoUploadComponent implements OnInit {
     this.activeModal.dismiss();
   }
 
-  uploadTest(): void {
-    console.log(this.agenciaSelected);
-  }
   selectFiles(event: any): void {
     event.preventDefault();
     this.progressInfos = [];
@@ -55,6 +54,7 @@ export class ExtratoUploadComponent implements OnInit {
   }
 
   uploadFiles(): void {
+    this.spinner.show();
     for (let i = 0; i < this.progressInfos.length; i++) {
       this.upload(i, this.progressInfos[i]);
     }
@@ -65,26 +65,31 @@ export class ExtratoUploadComponent implements OnInit {
       idAgenciabancaria: this.agenciaSelected?.id,
     };
     if (progressInfo.file) {
+      const size = this.progressInfos.length;
       this.spinner.show();
       this.uploadService.uploadFiles(progressInfo.file, this.uploadService.extratoUrl, queryParam).subscribe(
         event => {
           if (event && event.type === HttpEventType.UploadProgress) {
-            this.progressInfos[idx].value = Math.round((100 * event.loaded) / event.total);
+            progressInfo.value = Math.round((100 * event.loaded) / event.total);
           } else if (event instanceof HttpResponse) {
+            const index = this.progressInfos.indexOf(progressInfo);
+            this.progressInfos.splice(index, 1);
             this.totalUpload = this.totalUpload + 1;
-            this.progressInfos[idx].message = event.status.toString();
-            if (this.progressInfos.length === this.totalUpload) {
+            if (size === this.totalUpload) {
               this.spinner.hide();
               this.totalUpload = 0;
               this.eventManager.broadcast('extratoUpload');
+              if (this.progressInfos.length === 0) {
+                this.activeModal.close();
+              }
             }
           }
         },
-
         err => {
           this.totalUpload = this.totalUpload + 1;
-          this.progressInfos[idx].message = 'Não foi possivel carregar o arquivo:' + err;
-          if (this.progressInfos.length === this.totalUpload) {
+          progressInfo.message = this.translate.instant(err.error.message);
+          progressInfo.error = true;
+          if (size === this.totalUpload) {
             this.spinner.hide();
             this.totalUpload = 0;
             this.eventManager.broadcast('extratoUpload');

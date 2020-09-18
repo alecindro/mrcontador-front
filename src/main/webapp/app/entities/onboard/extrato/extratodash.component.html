@@ -55,7 +55,7 @@
             <tr *ngFor="let extrato of extratoes ;trackBy: trackId">
                 <td>{{ extrato.extDatalancamento | date:'dd/MM/yyyy' }}</td>
                 <td><span class="font-weight-normal text-truncate">{{ extrato.extHistorico }}</span></td>
-                <td><a [href]="extrato?.arquivo?.s3Url" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento">{{ extrato.extNumerodocumento }}</a></td>
+                <td><a  (click)="download(extrato)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ extrato.extNumerodocumento }}</u></span></a></td>
                 <td>{{ extrato.extNumerocontrole }}</td>
                 <td><span class="text-danger">{{ extrato.extDebito | currency:"BRL" }} </span></td>
                 <td><span class="text-info">{{ extrato.extCredito  | currency:"BRL"}}</span></td>

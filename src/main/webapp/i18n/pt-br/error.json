@@ -19,6 +19,8 @@
     "planoconta.cnpj.error": "Não existe CNPJ no plano de conta",
     "upload.aws.error": "Erro ao salvar o documento",
     "nfe.imported": "Nota fiscal já importada",
+    "extrato.imported": "Extrato já importado",
+    "comprovante.imported": "Comprovante já importado",
     "agencia.notequals": "Agencia bancária não corresponde a informada",
     "parceiro.notfound": "Parceiro não encontrado",
     "agencia.notfound": "Verifique a agência bancária. Arquivo não corresponde a agência selecionada.",

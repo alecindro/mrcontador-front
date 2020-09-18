@@ -15,6 +15,8 @@ import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
 import * as moment from 'moment';
+import { UploadService } from 'app/shared/file/file-upload.service ';
+import { SERVER_API_URL } from 'app/app.constants';
 
 @Component({
   selector: 'jhi-dash-extrato',
@@ -39,6 +41,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   anos: number[] = [];
   anoSelected?: number;
   mesSelected?: number;
+  resourceUrl = SERVER_API_URL + 'api/downloadFile/extrato/';
 
   constructor(
     protected extratoService: ExtratoService,
@@ -47,7 +50,8 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected parceiroService: ParceiroService,
-    public spinner: NgxSpinnerService
+    public spinner: NgxSpinnerService,
+    public fileService: UploadService
   ) {
     this.registerParceiroListener();
     this.registerChangeInExtratoes();
@@ -195,5 +199,17 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   upload(): void {
     const modalRef = this.modalService.open(ExtratoUploadComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.parceiro = this.parceiro;
+  }
+
+  public download(extrato: IExtrato): void {
+    this.fileService.downloadFile(this.resourceUrl + extrato.id).subscribe(
+      response => {
+        const blob: any = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      },
+      error => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully')
+    );
   }
 }
