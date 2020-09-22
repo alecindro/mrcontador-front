@@ -4,8 +4,6 @@ import { IArquivo } from './arquivo.model';
 
 export interface IComprovante {
   id?: number;
-  parCodigo?: number;
-  ageCodigo?: number;
   comCnpj?: string;
   comBeneficiario?: string;
   comDocumento?: string;
@@ -13,7 +11,11 @@ export interface IComprovante {
   comDatapagamento?: Moment;
   comValordocumento?: number;
   comValorpagamento?: number;
+  juros?: number;
+  desconto?: number;
   comObservacao?: string;
+  competencia?: string;
+  codigoRecolhimento?: string;
   agenciabancaria?: IAgenciabancaria;
   arquivo?: IArquivo;
 }
@@ -21,8 +23,6 @@ export interface IComprovante {
 export class Comprovante implements IComprovante {
   constructor(
     public id?: number,
-    public parCodigo?: number,
-    public ageCodigo?: number,
     public comCnpj?: string,
     public comBeneficiario?: string,
     public comDocumento?: string,
@@ -30,7 +30,11 @@ export class Comprovante implements IComprovante {
     public comDatapagamento?: Moment,
     public comValordocumento?: number,
     public comValorpagamento?: number,
+    public juros?: number,
+    public desconto?: number,
     public comObservacao?: string,
+    public competencia?: string,
+    public codigoRecolhimento?: string,
     public agenciabancaria?: IAgenciabancaria,
     public arquivo?: IArquivo
   ) {}

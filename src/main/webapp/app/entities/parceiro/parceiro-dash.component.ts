@@ -9,8 +9,8 @@ import { IParceiro } from 'app/shared/model/parceiro.model';
 
 import { ITEMS_DASH_PARCEIRO } from 'app/shared/constants/pagination.constants';
 import { ParceiroService } from './parceiro.service';
-import { ParceiroDeleteDialogComponent } from './parceiro-delete-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ParceiroCreateComponent } from './parceiro-create.component';
 
 @Component({
   selector: 'jhi-parceiro-dash',
@@ -90,9 +90,8 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('parceiroListModification', () => this.loadPage());
   }
 
-  delete(parceiro: IParceiro): void {
-    const modalRef = this.modalService.open(ParceiroDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.parceiro = parceiro;
+  newParceiro(): void {
+    const modalRef = this.modalService.open(ParceiroCreateComponent, { size: 'lg', backdrop: 'static' });
   }
 
   sort(): string[] {

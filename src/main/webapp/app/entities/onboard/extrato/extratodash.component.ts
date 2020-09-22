@@ -202,17 +202,17 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   }
 
   public download(extrato: IExtrato): void {
-    if(extrato.arquivo){
+    if (extrato.arquivo) {
       const contentType = extrato.arquivo.tipoArquivo;
-    this.fileService.downloadFile(this.resourceUrl + extrato.id).subscribe(
-      response => {
-        const blob: any = new Blob([response], { type: contentType });
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-      },
-      error => console.log('Error downloading the file'),
-      () => console.info('File downloaded successfully')
-    );
+      this.fileService.downloadFile(this.resourceUrl + extrato.id).subscribe(
+        response => {
+          const blob: any = new Blob([response], { type: contentType });
+          const url = window.URL.createObjectURL(blob);
+          window.open(url);
+        },
+        error => console.log('Error downloading the file', error),
+        () => console.info('File downloaded successfully')
+      );
+    }
   }
-}
 }

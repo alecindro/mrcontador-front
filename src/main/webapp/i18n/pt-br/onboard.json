@@ -2,14 +2,22 @@
   "mrcontadorFrontApp": {
     "onboard": {
       "consolidacao": "Consolidação",
-      "planoconta": "Plano de Conta",
-      "comprovante": "Comprovante",
-      "extrato": "Extrato",
-      "nfe": "Nota Fiscal",
-      "ns": "Nota Serviço",
-      "agencia": "Agência Bancária",
-      "dados": "Dados Cadastrais",
-      "regra": "Regras"
+      "planoconta": "Plano de Contas",
+      "comprovante": "Comprovante de Pagto",
+      "extrato": "Extrato Bancário",
+      "nfe": "Nfe Compra/Venda",
+      "ns": "Nfe Serviço",
+      "cte": "Cte - Conhecimento de Transporte",
+      "nfce": "NFCe - Consumidor Final",
+      "agencia": "Conta Bancária",
+      "sintegra": "Arquivo Sintegra",
+      "cobranca": "Arquivo de Cobrança",
+      "cartao": "Cartão de Crédito/Débito",
+      "dados": "Empresa",
+      "regra": "Parâmetros",
+      "cadastro": "Cadastro",
+      "importacao": "Importações",
+      "processamento": "Processamento"
     }
   }
 }

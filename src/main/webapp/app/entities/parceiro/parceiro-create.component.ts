@@ -7,6 +7,9 @@ import { IParceiro, Parceiro } from '../../shared/model/parceiro.model';
 import { ParceiroService } from './parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UploadService } from 'app/shared/file/file-upload.service ';
+import { JhiEventManager } from 'ng-jhipster';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'jhi-parceiro-create',
@@ -14,8 +17,7 @@ import { UploadService } from 'app/shared/file/file-upload.service ';
   styleUrls: ['filecomponent.scss'],
 })
 export class ParceiroCreateComponent implements OnInit {
-  progressInfo: any = {};
-  message = '';
+  progressInfo: { value?: number; fileName?: string; file?: any; index?: number; _event?: any; message?: string; error?: boolean } = {};
   error: any = {};
   uploadResponse = { status: '', message: '', percent: 0, filePath: '' };
   cnpj: any;
@@ -73,7 +75,10 @@ export class ParceiroCreateComponent implements OnInit {
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    protected eventManager: JhiEventManager,
+    public activeModal: NgbActiveModal,
+    public translate: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -148,9 +153,6 @@ export class ParceiroCreateComponent implements OnInit {
   get atividades(): FormArray {
     return this.editForm.get('atividades') as FormArray;
   }
-  previousState(): void {
-    window.history.back();
-  }
 
   save(): void {
     this.isSaving = true;
@@ -164,8 +166,12 @@ export class ParceiroCreateComponent implements OnInit {
     if (this.editForm.dirty) {
       this.save();
     } else {
-      this.previousState();
+      this.closeModal();
     }
+  }
+
+  closeModal(): void {
+    this.activeModal.close();
   }
 
   private createFromForm(): IParceiro {
@@ -217,7 +223,8 @@ export class ParceiroCreateComponent implements OnInit {
     this.isSaving = false;
     this.editable = false;
     this.spinner.hide();
-    this.previousState();
+    this.eventManager.broadcast('parceiroListModification');
+    this.closeModal();
   }
 
   protected onSaveError(): void {
@@ -254,7 +261,6 @@ export class ParceiroCreateComponent implements OnInit {
   }
 
   upload(): void {
-    this.message = '';
     if (this.progressInfo.file) {
       this.spinner.show();
       this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl).subscribe(
@@ -263,10 +269,10 @@ export class ParceiroCreateComponent implements OnInit {
             this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
             this.progressInfo.file = undefined;
           } else if (event instanceof HttpResponse) {
-            this.message = event.status.toString();
             this.updateForm(event.body);
             this.isSaving = false;
             this.editable = false;
+            this.eventManager.broadcast('parceiroListModification');
             this.spinner.hide();
           }
         },
@@ -274,7 +280,8 @@ export class ParceiroCreateComponent implements OnInit {
           this.progressInfo.value = 0;
           this.isSaving = false;
           this.editable = true;
-          this.message = 'Não foi possivel carregar o arquivo:' + err;
+          this.progressInfo.message = this.translate.instant(err.error.message);
+          this.progressInfo.error = true;
           this.spinner.hide();
         }
       );

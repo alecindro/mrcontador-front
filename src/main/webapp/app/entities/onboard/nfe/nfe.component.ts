@@ -197,7 +197,7 @@ export class NfeComponent implements OnInit, OnDestroy {
         const url = window.URL.createObjectURL(blob);
         window.open(url);
       },
-      error => console.log('Error downloading the file'),
+      error => console.log('Error downloading the file', error),
       () => console.info('File downloaded successfully')
     );
   }

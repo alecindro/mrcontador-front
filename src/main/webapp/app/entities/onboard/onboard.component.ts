@@ -20,6 +20,9 @@ export class OnboardComponent implements OnInit, OnDestroy {
   @ViewChild('instance', { static: true }) instance!: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
+  isCadastro = true;
+  isImportacao = true;
+  isMenu = false;
 
   parceiro!: IParceiro;
   parceiros!: IParceiro[];

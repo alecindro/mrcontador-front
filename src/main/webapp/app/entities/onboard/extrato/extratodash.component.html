@@ -36,12 +36,11 @@
         <thead>
             <tr><th colspan="6" class="text-center text-light bg-primary"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></th></tr>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                <th scope="col" jhiSortBy="extDatalancamento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento">Ext Datalancamento</span>  <fa-icon icon="sort"></fa-icon></th>
-                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico">Ext Historico</span></th>
-                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento">Ext Numerodocumento</span></th>
-                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerocontrole">Ext Numerocontrole</span></th>
-                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito">Ext Debito</span></th>
-                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito">Ext Credito</span></th>
+                <th scope="col" jhiSortBy="extDatalancamento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento"></span>  <fa-icon icon="sort"></fa-icon></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito"></span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito"></span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento"></span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico"></span></th>
             </tr>
         </thead>
         <tbody>
@@ -54,11 +53,11 @@
             </tr>
             <tr *ngFor="let extrato of extratoes ;trackBy: trackId">
                 <td>{{ extrato.extDatalancamento | date:'dd/MM/yyyy' }}</td>
-                <td><span class="font-weight-normal text-truncate">{{ extrato.extHistorico }}</span></td>
-                <td><a  (click)="download(extrato)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ extrato.extNumerodocumento }}</u></span></a></td>
-                <td>{{ extrato.extNumerocontrole }}</td>
                 <td><span class="text-danger">{{ extrato.extDebito | currency:"BRL" }} </span></td>
                 <td><span class="text-info">{{ extrato.extCredito  | currency:"BRL"}}</span></td>
+                <td><a  (click)="download(extrato)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ extrato.extNumerodocumento }}</u></span></a></td>
+                <td><span class="font-weight-normal text-truncate">{{ extrato.extHistorico }}</span></td>
+                
             </tr>
         </tbody>
     </table>

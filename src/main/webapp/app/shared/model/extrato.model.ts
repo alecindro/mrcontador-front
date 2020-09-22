@@ -12,6 +12,7 @@ export interface IExtrato {
   extDebito?: number;
   extCredito?: number;
   extDescricao?: string;
+  infoAdicional?: string;
   parceiro?: IParceiro;
   agenciabancaria?: IAgenciabancaria;
   arquivo?: IArquivo;
@@ -27,6 +28,7 @@ export class Extrato implements IExtrato {
     public extDebito?: number,
     public extCredito?: number,
     public extDescricao?: string,
+    public infoAdicional?: string,
     public parceiro?: IParceiro,
     public agenciabancaria?: IAgenciabancaria,
     public arquivo?: IArquivo

@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  min-height: 100vh;
+}
+a.btn {
+  border-radius: unset;
+}
+.sidebar-header {
+  min-height: 100vh;
+  display: table;
+}
+.sidemenu {
+  min-width: 250px;
+}
+
+.sidebar-subheader {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#content {
+  width: 100%;
+  min-height: 100vh;
+  transition: all 0.3s;
+}

@@ -15,6 +15,6 @@ import { ParceiroCreateComponent } from './parceiro-create.component';
   imports: [MrcontadorFrontSharedModule, RouterModule.forChild(parceiroRoute), NgxMaskModule.forChild(), NgbButtonsModule],
   declarations: [ParceiroComponent, ParceiroDetailComponent, ParceiroCreateComponent, ParceiroDeleteDialogComponent, ParceiroDashComponent],
   exports: [ParceiroDetailComponent],
-  entryComponents: [ParceiroDeleteDialogComponent],
+  entryComponents: [ParceiroDeleteDialogComponent, ParceiroCreateComponent],
 })
 export class MrcontadorFrontParceiroModule {}

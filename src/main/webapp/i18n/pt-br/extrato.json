@@ -17,12 +17,12 @@
         "title": "Extrato",
         "modalTitle": "Extrato"
       },
-      "ext_datalancamento": "Lançamento",
-      "ext_historico": "Histórico",
-      "ext_numerodocumento": "Num Doc",
+      "ext_datalancamento": "Data Pagamento",
+      "ext_historico": "Histórico Bancário",
+      "ext_numerodocumento": "Num. do Documento",
       "ext_numerocontrole": "Num Controle",
-      "ext_debito": "Débito",
-      "ext_credito": "Crédito",
+      "ext_debito": "Valor Saída",
+      "ext_credito": "Valor Entrada",
       "ext_descricao": "Descrição",
       "parceiro": "Parceiro",
       "agenciabancaria": "Banco"
