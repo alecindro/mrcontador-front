@@ -25,3 +25,15 @@ a.btn {
   min-height: 100vh;
   transition: all 0.3s;
 }
+
+.btn:active,
+.btn.active {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+}
+
+.btn:hover,
+.btn.hover {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+}

@@ -8,7 +8,7 @@
         <table class="table table-striped table-sm" aria-describedby="page-heading">
             <thead>
                 <tr>
-                    <th colspan="6" class="text-center text-light bg-primary"><span
+                    <th colspan="7" class="text-center text-light bg-primary"><span
                             jhiTranslate="mrcontadorFrontApp.onboard.regra"></span></th>
                 </tr>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
@@ -32,6 +32,9 @@
                             Todos</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
+                    <th scope="col" jhiSortBy="regTodos"><span jhiTranslate="mrcontadorFrontApp.regra.aplicacao"></span>
+                  
+                </th>
                     <th>
                         <button class="btn btn-primary btn-sm" (click)="new()">
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.new"></span>
@@ -41,7 +44,7 @@
             </thead>
             <tbody>
                 <tr  id="no-result" *ngIf="regras?.length === 0">
-                    <td colspan="6" class="alert alert-warning text-center">
+                    <td colspan="7" class="alert alert-warning text-center">
                     <span  jhiTranslate="mrcontadorFrontApp.regra.home.notFound">No regras found</span>
                 </td>
                 </tr>
@@ -51,6 +54,7 @@
                     <td>{{ regra.regConta }}</td>
                     <td>{{ regra.regHistorico }}</td>
                     <td>{{ regra.regTodos }}</td>
+                    <td><input type="checkbox" [checked]="regra.aplicacao" readonly></td>
                     <td>                        <button class="btn btn-primary btn-sm" (click)="edit(regra)">
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.edit"></span>
                     </button></td>

@@ -23,6 +23,7 @@ export class RegraUpdateComponent implements OnInit {
     reg_conta: [],
     reg_historico: [null, [Validators.maxLength(60)]],
     reg_todos: [null, [Validators.maxLength(1)]],
+    aplicacao: [null, [Validators.required]],
   });
   @Input() public parceiro!: IParceiro;
   @Input() public regra!: IRegra;
@@ -46,6 +47,7 @@ export class RegraUpdateComponent implements OnInit {
       reg_conta: regra.regConta,
       reg_historico: regra.regHistorico,
       reg_todos: regra.regTodos,
+      aplicacao: regra.aplicacao,
     });
   }
 
@@ -73,6 +75,7 @@ export class RegraUpdateComponent implements OnInit {
       regConta: this.editForm.get(['reg_conta'])!.value,
       regHistorico: this.editForm.get(['reg_historico'])!.value,
       regTodos: this.editForm.get(['reg_todos'])!.value,
+      aplicacao: this.editForm.get(['aplicacao'])!.value,
     };
   }
 

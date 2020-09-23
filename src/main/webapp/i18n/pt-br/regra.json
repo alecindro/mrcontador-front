@@ -21,7 +21,8 @@
       "reg_conta": "Conta",
       "reg_historico": "Histórico",
       "reg_todos": "Todos",
-      "dataCadastro": "Data de Cadastro"
+      "dataCadastro": "Data de Cadastro",
+      "aplicacao": "Aplicação Automática"
     }
   }
 }

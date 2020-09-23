@@ -23,67 +23,67 @@
     <nav id="sidebar" class="pr-1">       
         <ul class="list-unstyled components sidemenu" id="menu"  *ngIf="!isMenu">           
             <li class="active">
-                <a (click)="isCadastro = !isCadastro" [attr.aria-expanded]="!isCadastro" aria-controls="homeSubmenu"  class="btn btn-primary active w-100" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.cadastro"></span></a>
+                <a (click)="isCadastro = !isCadastro" [attr.aria-expanded]="!isCadastro" aria-controls="homeSubmenu"  class="btn btn-primary active w-100" role="button" ><span jhiTranslate="mrcontadorFrontApp.onboard.cadastro"></span></a>
                 <ul  class="list-unstyled"  id="homeSubmenu"  [ngbCollapse]="isCadastro">
                     <li>
-                        <a  [routerLink]="'cadastro'" class="btn btn-secondary active w-100 text-left" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></a>
+                        <a  [routerLink]="'cadastro'" class="btn btn-outline w-100 text-left border-bottom" role="button" ><span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></a>
                     </li>
                     <li>
-                        <a  [routerLink]="'agencia'" class="btn btn-secondary active w-100 text-left" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span></a>
+                        <a  [routerLink]="'agencia'" class="btn btn-outline w-100 text-left border-bottom" role="button" ><span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span></a>
                     </li>
                     <li>
-                        <a  [routerLink]="'conta'" class="btn btn-secondary active w-100 text-left" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span></a>
+                        <a  [routerLink]="'conta'" class="btn btn-outline w-100 text-left border-bottom" role="button" ><span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span></a>
                     </li>
                     <li>
-                        <a  [routerLink]="'regra'" class="btn btn-secondary active w-100 text-left" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.regra"></span></a>
+                        <a  [routerLink]="'regra'" class="btn btn-outline w-100 text-left border-bottom" role="button" ><span jhiTranslate="mrcontadorFrontApp.onboard.regra"></span></a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a (click)="isImportacao = !isImportacao" [attr.aria-expanded]="!isImportacao" aria-controls="pageSubmenu"  class="btn btn-primary active w-100" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.importacao"></span></a>
+                <a (click)="isImportacao = !isImportacao" [attr.aria-expanded]="!isImportacao" aria-controls="pageSubmenu"  class="btn btn-primary active w-100" role="button" ><span jhiTranslate="mrcontadorFrontApp.onboard.importacao"></span></a>
                 <ul class="list-unstyled" id="pageSubmenu" [ngbCollapse]="isImportacao">
                     <li>
-                        <a  [routerLink]="'extrato'"  class="btn btn-secondary active w-100 text-left" [ngClass]="{'disabled': !hasAgencia}">
+                        <a  [routerLink]="'extrato'"  class="btn btn-outline w-100 text-left border-bottom" [ngClass]="{'disabled': !hasAgencia}">
                             <fa-icon icon="exclamation-circle" *ngIf="!hasAgencia">
                             </fa-icon><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></a>
                     </li>
                     <li>
-                        <a   [routerLink]="'comprovante'"  class="btn btn-secondary active w-100 text-left" [ngClass]="{'disabled': !hasAgencia}">
+                        <a   [routerLink]="'comprovante'"  class="btn btn-outline w-100 text-left border-bottom" [ngClass]="{'disabled': !hasAgencia}">
                             <fa-icon icon="exclamation-circle" *ngIf="!hasAgencia">
                             </fa-icon><span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></a>
                     </li>
                     <li>
-                        <a  [routerLink]="'nfe'" class="btn btn-secondary active w-100 text-left" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></a>
+                        <a  [routerLink]="'nfe'" class="btn btn-outline w-100 text-left border-bottom" role="button" ><span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></a>
                     </li>
                     <li>
-                        <a  class="disabled btn btn-secondary active w-100 text-left" role="button" aria-pressed="true"><span jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></a>
+                        <a  class="disabled btn btn-outline w-100 text-left border-bottom" role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></a>
                     </li>
                     <li>
-                        <a  class="disabled btn btn-secondary active w-100 text-left" ><span jhiTranslate="mrcontadorFrontApp.onboard.cte"></span></a>
+                        <a  class="disabled btn btn-outline w-100 text-left border-bottom" ><span jhiTranslate="mrcontadorFrontApp.onboard.cte"></span></a>
                     </li>
                     <li>
-                        <a  class="disabled btn btn-secondary active w-100 text-left"><span jhiTranslate="mrcontadorFrontApp.onboard.nfce"></span></a>
+                        <a  class="disabled btn btn-outline w-100 text-left border-bottom"><span jhiTranslate="mrcontadorFrontApp.onboard.nfce"></span></a>
                     </li>
                     <li>
-                        <a  class="disabled btn btn-secondary active w-100 text-left"><span jhiTranslate="mrcontadorFrontApp.onboard.sintegra"></span></a>
+                        <a  class="disabled btn btn-outline w-100 text-left border-bottom"><span jhiTranslate="mrcontadorFrontApp.onboard.sintegra"></span></a>
                     </li>
                     <li>
-                        <a  class="disabled btn btn-secondary active w-100 text-left"><span jhiTranslate="mrcontadorFrontApp.onboard.cobranca"></span></a>
+                        <a  class="disabled btn btn-outline w-100 text-left border-bottom"><span jhiTranslate="mrcontadorFrontApp.onboard.cobranca"></span></a>
                     </li>
                     <li>
-                        <a  class="disabled btn btn-secondary active w-100 text-left"><span jhiTranslate="mrcontadorFrontApp.onboard.cartao"></span></a>
+                        <a  class="disabled btn btn-outline w-100 text-left border-bottom"><span jhiTranslate="mrcontadorFrontApp.onboard.cartao"></span></a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a  [routerLink]="'consolida'" [ngClass]="{'disabled': !hasAgencia}"  class="btn btn-primary active w-100" role="button" aria-pressed="true">
+                <a  [routerLink]="'consolida'" [ngClass]="{'disabled': !hasAgencia}"  class="btn btn-primary active w-100" role="button">
                     <fa-icon icon="exclamation-circle" *ngIf="!hasAgencia">
                     </fa-icon>
                     <span jhiTranslate="mrcontadorFrontApp.onboard.processamento"></span>
                 </a>
             </li>
             <li>
-                <a (click)="isMenu = !isMenu" class="btn btn-primary active w-100" role="button" aria-pressed="true"> <fa-icon icon="arrow-right" *ngIf="isMenu"></fa-icon><fa-icon icon="arrow-left" *ngIf="!isMenu"></fa-icon></a> 
+                <a (click)="isMenu = !isMenu" class="btn btn-primary active w-100" role="button" > <fa-icon icon="arrow-right" *ngIf="isMenu"></fa-icon><fa-icon icon="arrow-left" *ngIf="!isMenu"></fa-icon></a> 
             </li>
         </ul>
         <div class="sidebar-header bg-primary" (click)="isMenu = !isMenu">
