@@ -41,6 +41,7 @@
                 <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_credito"></span></th>
                 <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_numerodocumento"></span></th>
                 <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_historico"></span></th>
+                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.infoAdicional"></span></th>
             </tr>
         </thead>
         <tbody>
@@ -57,6 +58,7 @@
                 <td><span class="text-info">{{ extrato.extCredito  | currency:"BRL"}}</span></td>
                 <td><a  (click)="download(extrato)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ extrato.extNumerodocumento }}</u></span></a></td>
                 <td><span class="font-weight-normal text-truncate">{{ extrato.extHistorico }}</span></td>
+                <td><span class="font-weight-normal text-truncate">{{ extrato.infoAdicional }}</span></td>
                 
             </tr>
         </tbody>

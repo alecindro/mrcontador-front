@@ -73,15 +73,17 @@
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.credito"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.conta"></span></th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.infoAdicional"></span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngIf="divergencias?.length === 0">
-                            <td colspan="9">
+                            <td colspan="11">
                                 <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">No inteligents
                                     found</span>
                             </td>
@@ -92,10 +94,12 @@
                             <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
+                            <td>{{ inteligent.conta?.conConta}}</td>
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
                             <td>{{ inteligent.historicofinal }}</td>
+                            <td>{{ inteligent.extrato?.infoAdicional }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -107,7 +111,7 @@
             <span class="badge badge-pill badge-light ml-2">{{conciliados?.length}}</span></a>
         <ng-template ngbNavContent>
             <div class="table-responsive" id="conciliados">
-                <table class="table table-striped" aria-describedby="page-heading">
+                <table class="table table-sm table-striped" aria-describedby="page-heading">
                     <thead>
                         <tr>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.datalancamento"></span>
@@ -117,15 +121,17 @@
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.credito"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.conta"></span></th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.infoAdicional"></span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngIf="conciliados?.length === 0">
-                            <td colspan="9">
+                            <td colspan="11">
                                 <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">teste</span>
                             </td>
                         </tr>
@@ -135,10 +141,12 @@
                             <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
+                            <td>{{ inteligent.conta?.conConta}}</td>
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
                             <td>{{ inteligent.historicofinal }}</td>
+                            <td>{{ inteligent.extrato?.infoAdicional }}</td>
                         </tr>
                     </tbody>
                 </table>

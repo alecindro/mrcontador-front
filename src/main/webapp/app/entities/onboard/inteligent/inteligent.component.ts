@@ -79,6 +79,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.inteligentService.queryFuntion(queryParam).subscribe(
       res => {
         this.spinner.hide();
+        this.loadDivergencias();
         console.log(res);
       },
       err => {
@@ -166,6 +167,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
   selectInteligent(inteligent: IInteligent): void {
     this.regra = new Regra();
     this.regra.regDescricao = inteligent.historico;
+    if (inteligent.extrato?.infoAdicional) {
+      this.regra.regDescricao = inteligent.extrato?.infoAdicional;
+    }
     this.regra.regHistorico = '';
   }
   public downloadComprovante(comprovante: IComprovante): void {

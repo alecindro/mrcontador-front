@@ -25,7 +25,8 @@
       "ext_credito": "Valor Entrada",
       "ext_descricao": "Descrição",
       "parceiro": "Parceiro",
-      "agenciabancaria": "Banco"
+      "agenciabancaria": "Banco",
+      "infoAdicional": "Informação"
     }
   }
 }

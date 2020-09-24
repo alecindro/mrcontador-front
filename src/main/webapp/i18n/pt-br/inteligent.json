@@ -37,7 +37,9 @@
       "conta": "Conta",
       "lancamento_divergencia": "Lançamento(s) com Divergência",
       "lancamento_conciliado": "Lançamento(s) com Conciliado",
-      "conciliar": "Conciliar"
+      "conciliar": "Conciliar",
+      "infoAdicional": "Informação",
+      "classificacao": "Classificação"
     }
   }
 }
