@@ -27,9 +27,9 @@ export class ContaService {
     return this.http.get<IConta>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
-  query(req?: any): Observable<EntityArrayResponseType> {
+  query(req?: any): Observable<any> {
     const options = createRequestOption(req);
-    return this.http.get<IConta[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<any>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

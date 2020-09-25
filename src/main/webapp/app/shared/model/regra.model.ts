@@ -10,6 +10,7 @@ export interface IRegra {
   dataCadastro?: Moment;
   parceiro?: IParceiro;
   aplicacao?: boolean;
+  tipoRegra?: string;
 }
 
 export class Regra implements IRegra {
@@ -21,6 +22,7 @@ export class Regra implements IRegra {
     public regTodos?: string,
     public dataCadastro?: Moment,
     public parceiro?: IParceiro,
-    public aplicacao?: boolean
+    public aplicacao?: boolean,
+    public tipoRegra?: string
   ) {}
 }

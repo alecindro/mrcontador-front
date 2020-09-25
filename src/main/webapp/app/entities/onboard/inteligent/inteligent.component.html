@@ -29,30 +29,34 @@
     <form>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_descricao" for="field_reg_descricao">Reg Descricao</label>
-            <input type="text" class="form-control" name="reg_descricao" id="field_reg_descricao"
-                   readonly [value]="regra?.regDescricao">
+                   <select id="field_reg_descricao" [(ngModel)]="tipoRegraSelected" class="form-control" name="field_reg_descricao">
+                    <option *ngFor="let tipoRegra of tipoRegras" [ngValue]="tipoRegra">
+                      {{ tipoRegra?.regDescricao }} 
+                    </option>
+                  </select>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta" for="field_reg_conta">Reg Conta</label>
-            <input type="number" class="form-control" name="reg_conta" id="field_reg_conta"
-                   [value]="regra?.regConta"/>
+            <input id="field_reg_conta" type="text" class="form-control" [(ngModel)]="contaSelected" [ngbTypeahead]="search" placeholder="Digite a Conta"  name="field_reg_conta"
+            [inputFormatter]="contaFormatter"
+            [resultFormatter]="contaFormatter"
+            [editable]='false'/>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_historico" for="field_reg_historico">Reg Historico</label>
             <input type="text" class="form-control" name="reg_historico" id="field_reg_historico"
-                   [value]="regra?.regHistorico"/>
+            [(ngModel)]="regra.regHistorico"/>
         </div>
         <div>
-            <button type="button" id="cancel-save" class="btn btn-secondary">
+            <button type="button" id="cancel-save" class="btn btn-secondary" (click)="cancelRegra()">
                 <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
 
-            <button type="submit" id="save-entity" class="btn btn-primary">
+            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveRegra()">
                 <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>
         </div>
 </form>
-
 </ng-template>
 <ng-template #popTitle><b>Associar regra</b></ng-template>
 <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs">
@@ -76,21 +80,20 @@
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
                                 <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.infoAdicional"></span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngIf="divergencias?.length === 0">
-                            <td colspan="11">
+                            <td colspan="10">
                                 <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">No inteligents
                                     found</span>
                             </td>
                         </tr>
                         <tr *ngFor="let inteligent of divergencias">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
-                            <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" (click)="selectInteligent(inteligent)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
+                            <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #popOver="ngbPopover" triggers="manual" (click)="selectInteligent(inteligent,popOver)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
                             <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
@@ -98,7 +101,6 @@
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
-                            <td>{{ inteligent.historicofinal }}</td>
                             <td>{{ inteligent.extrato?.infoAdicional }}</td>
                         </tr>
                     </tbody>
@@ -125,19 +127,18 @@
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.infoAdicional"></span>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngIf="conciliados?.length === 0">
-                            <td colspan="11">
+                            <td colspan="10">
                                 <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">teste</span>
                             </td>
                         </tr>
                         <tr *ngFor="let inteligent of conciliados">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
-                            <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" (click)="selectInteligent(inteligent)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
+                            <td><a class="text-info"><u>{{ inteligent.historico }}</u></a></td>
                             <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
@@ -146,7 +147,7 @@
                             <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
                             <td>{{ inteligent.historicofinal }}</td>
-                            <td>{{ inteligent.extrato?.infoAdicional }}</td>
+                         
                         </tr>
                     </tbody>
                 </table>

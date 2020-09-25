@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Subscription, Observable, of } from 'rxjs';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { IInteligent } from 'app/shared/model/inteligent.model';
@@ -16,6 +16,14 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { UploadService } from 'app/shared/file/file-upload.service ';
 import { IComprovante } from 'app/shared/model/comprovante.model';
 import { INotafiscal } from 'app/shared/model/notafiscal.model';
+import { ContaService } from 'app/entities/conta/conta.service';
+import { IConta, Conta } from 'app/shared/model/conta.model';
+import { TipoRegra } from 'app/shared/constants/TipoRegra.constants';
+import { debounceTime, distinctUntilChanged, tap, switchMap, catchError, map } from 'rxjs/operators';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { RegraService } from 'app/entities/regra/regra.service';
+
+type EntityArrayResponseType = HttpResponse<IConta[]>;
 
 @Component({
   selector: 'jhi-inteligent',
@@ -26,7 +34,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   parceiroListener!: Subscription;
   divergencias?: IInteligent[] = [];
   conciliados?: IInteligent[] = [];
-  regra?: IRegra;
+  regra: IRegra = {};
   mesAno!: MesAnoDTO;
   readonly meses = MESES;
   readonly mesLabels = MESLABELS;
@@ -37,6 +45,10 @@ export class InteligentComponent implements OnInit, OnDestroy {
   agenciaSelected?: IAgenciabancaria;
   resourceUrl = SERVER_API_URL + 'api/downloadFile/comprovante/';
   resourceUrlNfe = SERVER_API_URL + 'api/downloadFile/notafiscal/';
+  tipoRegras: { tipoRegra?: TipoRegra; regDescricao?: string }[] = [];
+  tipoRegraSelected: { tipoRegra?: TipoRegra; regDescricao?: string } = {};
+  contaSelected: any;
+  popover?: NgbPopover;
 
   constructor(
     private eventManager: JhiEventManager,
@@ -44,7 +56,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
     protected parceiroService: ParceiroService,
     public spinner: NgxSpinnerService,
     public activatedRoute: ActivatedRoute,
-    public fileService: UploadService
+    public fileService: UploadService,
+    public contaService: ContaService,
+    public regraService: RegraService
   ) {
     this.registerParceiroListener();
   }
@@ -58,7 +72,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
       this.initDate();
       if (this.parceiro?.agenciabancarias) {
         this.agenciaSelected = this.parceiro?.agenciabancarias[0];
-        this.loadDivergencias();
+        this.loadData();
       }
     });
   }
@@ -79,7 +93,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.inteligentService.queryFuntion(queryParam).subscribe(
       res => {
         this.spinner.hide();
-        this.loadDivergencias();
+        this.loadData();
         console.log(res);
       },
       err => {
@@ -87,6 +101,11 @@ export class InteligentComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       }
     );
+  }
+
+  private loadData(): void {
+    this.loadDivergencias();
+    this.loadConciliados();
   }
 
   private loadDivergencias(): void {
@@ -103,13 +122,29 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.inteligentService.query(queryParam).subscribe(
       (res: HttpResponse<IInteligent[]>) => {
         this.divergencias = res.body || [];
-        this.loadConciliados();
       },
       (err: any) => {
         console.log(err);
         this.spinner.hide();
       }
     );
+  }
+
+  saveRegra(): void {
+    this.regra.tipoRegra = this.tipoRegraSelected.tipoRegra?.toString();
+    this.regra.regDescricao = this.tipoRegraSelected.regDescricao;
+    this.regra.parceiro = this.parceiro;
+    this.regra.regConta = this.contaSelected.conConta;
+    this.regraService.create(this.regra).subscribe(response => {
+      console.log(response);
+      this.cancelRegra();
+      this.loadData();
+    });
+  }
+  cancelRegra(): void {
+    if (this.popover) {
+      this.popover.close();
+    }
   }
 
   private loadConciliados(): void {
@@ -135,14 +170,14 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   onChangeAgencia(): void {
-    this.loadDivergencias();
+    this.loadData();
   }
 
   onChangeMes(): void {
-    this.loadDivergencias();
+    this.loadData();
   }
   onChangeAno(): void {
-    this.loadDivergencias();
+    this.loadData();
   }
   private initDate(): void {
     const data = new Date();
@@ -159,18 +194,25 @@ export class InteligentComponent implements OnInit, OnDestroy {
       this.initDate();
       if (this.parceiro?.agenciabancarias) {
         this.agenciaSelected = this.parceiro?.agenciabancarias[0];
-        this.loadDivergencias();
+        this.loadData();
       }
     });
   }
 
-  selectInteligent(inteligent: IInteligent): void {
+  selectInteligent(inteligent: IInteligent, popover: NgbPopover): void {
     this.regra = new Regra();
-    this.regra.regDescricao = inteligent.historico;
-    if (inteligent.extrato?.infoAdicional) {
-      this.regra.regDescricao = inteligent.extrato?.infoAdicional;
-    }
     this.regra.regHistorico = '';
+    this.tipoRegras = [];
+    if (inteligent.extrato?.infoAdicional) {
+      this.tipoRegras.push({ tipoRegra: TipoRegra.INFORMACAO_ADICIONAL, regDescricao: inteligent.extrato?.infoAdicional });
+    }
+    this.tipoRegras.push({ tipoRegra: TipoRegra.HISTORICO, regDescricao: inteligent?.historico });
+    if (popover.isOpen()) {
+      popover.close();
+    } else {
+      popover.open({ popover });
+    }
+    this.popover = popover;
   }
   public downloadComprovante(comprovante: IComprovante): void {
     this.fileService.downloadFile(this.resourceUrl + comprovante.id).subscribe(
@@ -195,4 +237,29 @@ export class InteligentComponent implements OnInit, OnDestroy {
       () => console.info('File downloaded successfully')
     );
   }
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      tap(() => this.spinner.show()),
+      switchMap(term => {
+        if (term) {
+          return this.contaService
+            .query({ 'conConta.greaterThanOrEqual': term, sort: ['conConta,asc'], page: 0, size: 10 })
+            .pipe(map(response => response.body || of([])))
+            .pipe(
+              tap(() => this.spinner.hide()),
+              catchError(() => {
+                this.spinner.hide();
+                return of([]);
+              })
+            );
+        }
+        return of('');
+      }),
+      tap(() => this.spinner.hide())
+    );
+
+  contaFormatter = (conta: IConta) => conta?.conConta + ' -  ' + conta?.conDescricao || '';
 }
