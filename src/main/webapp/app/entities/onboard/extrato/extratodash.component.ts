@@ -168,13 +168,16 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   }
 
   onChangeAgencia(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
 
   onChangeMes(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
   onChangeAno(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
 

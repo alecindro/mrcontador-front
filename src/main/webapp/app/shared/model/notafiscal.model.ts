@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { IParceiro } from './parceiro.model';
+import { IArquivo } from './arquivo.model';
 
 export interface INotafiscal {
   id?: number;
@@ -14,6 +15,8 @@ export interface INotafiscal {
   tnoCodigo?: number;
   notParcela?: string;
   parceiro?: IParceiro;
+  arquivo?: IArquivo;
+  arquivoPDF?: IArquivo;
 }
 
 export class Notafiscal implements INotafiscal {
@@ -29,6 +32,8 @@ export class Notafiscal implements INotafiscal {
     public notValorparcela?: number,
     public tnoCodigo?: number,
     public notParcela?: string,
-    public parceiro?: IParceiro
+    public parceiro?: IParceiro,
+    public arquivo?: IArquivo,
+    public arquivoPDF?: IArquivo
   ) {}
 }

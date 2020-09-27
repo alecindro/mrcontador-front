@@ -22,6 +22,18 @@
       "etag": "Etag",
       "usuario": "Usuario",
       "parceiro": "Parceiro"
+    },
+    "uploadExtrato": {
+      "created": "Extrado cadastrado com sucesso"
+    },
+    "uploadPlanoConta": {
+      "created": "Plano de conta cadastrado com sucesso"
+    },
+    "uploadComprovante": {
+      "created": "Comprovante cadastrado com sucesso"
+    },
+    "uploadNF": {
+      "created": "Nota Fiscal cadastrado com sucesso"
     }
   }
 }

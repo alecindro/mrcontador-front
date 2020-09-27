@@ -163,13 +163,16 @@ export class NfeComponent implements OnInit, OnDestroy {
     this.spinner.hide();
   }
   onChangeAgencia(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
 
   onChangeMes(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
   onChangeAno(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
 

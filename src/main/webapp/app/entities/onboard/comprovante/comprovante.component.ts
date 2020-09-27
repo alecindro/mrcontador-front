@@ -171,13 +171,16 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     modalRef.componentInstance.parceiro = this.parceiro;
   }
   onChangeAgencia(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
 
   onChangeMes(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
   onChangeAno(): void {
+    this.page = 0;
     this.loadPage(this.page, true);
   }
 

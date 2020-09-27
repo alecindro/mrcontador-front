@@ -261,5 +261,5 @@ export class InteligentComponent implements OnInit, OnDestroy {
       tap(() => this.spinner.hide())
     );
 
-  contaFormatter = (conta: IConta) => conta?.conConta + ' -  ' + conta?.conDescricao || '';
+  contaFormatter = (conta: IConta) => conta?.conConta + ' -  ' + conta?.conClassificacao + ' -  ' + conta?.conDescricao || '';
 }
