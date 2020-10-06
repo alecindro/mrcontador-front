@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IAtividade } from 'app/shared/model/atividade.model';
-import { AtividadeService } from './atividade.service';
+import { IAtividade } from 'app/model/atividade.model';
+import { AtividadeService } from '../../services/atividade.service';
 
 @Component({
   templateUrl: './atividade-delete-dialog.component.html',

@@ -5,10 +5,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { ISocio, Socio } from 'app/shared/model/socio.model';
-import { SocioService } from './socio.service';
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { ISocio, Socio } from 'app/model/socio.model';
+import { SocioService } from '../../services/socio.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from 'app/services/parceiro.service';
 
 @Component({
   selector: 'jhi-socio-update',

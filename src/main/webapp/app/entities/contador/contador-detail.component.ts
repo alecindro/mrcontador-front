@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IContador } from 'app/shared/model/contador.model';
+import { IContador } from 'app/model/contador.model';
 import { JsonUtil } from 'app/shared/util/json-util';
 
 @Component({

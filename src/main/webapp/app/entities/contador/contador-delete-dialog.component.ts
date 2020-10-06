@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IContador } from 'app/shared/model/contador.model';
-import { ContadorService } from './contador.service';
+import { IContador } from 'app/model/contador.model';
+import { ContadorService } from '../../services/contador.service';
 
 @Component({
   templateUrl: './contador-delete-dialog.component.html',

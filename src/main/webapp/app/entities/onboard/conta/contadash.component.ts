@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { combineLatest } from 'rxjs';
-import { IParceiro } from 'app/shared/model/parceiro.model';
+import { IParceiro } from 'app/model/parceiro.model';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
-import { ContaService } from 'app/entities/conta/conta.service';
-import { IConta } from 'app/shared/model/conta.model';
+import { ParceiroService } from 'app/services/parceiro.service';
+import { ContaService } from 'app/services/conta.service';
+import { IConta } from 'app/model/conta.model';
 import { HttpResponse, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { Router, ActivatedRoute, ParamMap, Data } from '@angular/router';
 import { UploadService } from 'app/shared/file/file-upload.service ';
+import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
   selector: 'jhi-dash-conta',
@@ -37,7 +38,8 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     public spinner: NgxSpinnerService,
     protected router: Router,
     protected activatedRoute: ActivatedRoute,
-    protected uploadService: UploadService
+    protected uploadService: UploadService,
+    public eventManager: JhiEventManager
   ) {}
 
   ngOnInit(): void {
@@ -159,6 +161,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
             this.progressInfo.file = undefined;
           } else if (event instanceof HttpResponse) {
             this.message = event.status.toString();
+            this.eventManager.broadcast('contasaved');
             this.spinner.hide();
             this.loadPage();
           }

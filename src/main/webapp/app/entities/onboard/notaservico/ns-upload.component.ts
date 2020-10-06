@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import { IParceiro } from 'app/shared/model/parceiro.model';
+import { IParceiro } from 'app/model/parceiro.model';
 import { UploadService } from 'app/shared/file/file-upload.service ';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { ParceiroService } from 'app/services/parceiro.service';
 
 @Component({
   templateUrl: './ns-dialog.component.html',

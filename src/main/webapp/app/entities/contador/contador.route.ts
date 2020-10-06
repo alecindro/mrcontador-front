@@ -6,8 +6,8 @@ import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IContador, Contador } from 'app/shared/model/contador.model';
-import { ContadorService } from './contador.service';
+import { IContador, Contador } from 'app/model/contador.model';
+import { ContadorService } from '../../services/contador.service';
 import { ContadorComponent } from './contador.component';
 import { ContadorDetailComponent } from './contador-detail.component';
 import { ContadorUpdateComponent } from './contador-update.component';

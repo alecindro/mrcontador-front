@@ -17,6 +17,7 @@ const ENV = 'development';
 module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
     devtool: 'eval-source-map',
     devServer: {
+        open: false,
         hot: false,
         inline: false,
         contentBase: './build/resources/main/static/',

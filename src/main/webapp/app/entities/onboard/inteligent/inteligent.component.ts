@@ -1,27 +1,27 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { IInteligent } from 'app/shared/model/inteligent.model';
+import { IInteligent } from 'app/model/inteligent.model';
 import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
-import { InteligentService } from 'app/entities/inteligent/inteligent.service';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
+import { InteligentService } from 'app/services/inteligent.service';
+import { ParceiroService } from 'app/services/parceiro.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
 import { HttpResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
-import { IRegra, Regra } from 'app/shared/model/regra.model';
+import { IRegra, Regra } from 'app/model/regra.model';
 import { SERVER_API_URL } from 'app/app.constants';
 import { UploadService } from 'app/shared/file/file-upload.service ';
-import { IComprovante } from 'app/shared/model/comprovante.model';
-import { INotafiscal } from 'app/shared/model/notafiscal.model';
-import { ContaService } from 'app/entities/conta/conta.service';
-import { IConta, Conta } from 'app/shared/model/conta.model';
+import { IComprovante } from 'app/model/comprovante.model';
+import { INotafiscal } from 'app/model/notafiscal.model';
+import { ContaService } from 'app/services/conta.service';
+import { IConta } from 'app/model/conta.model';
 import { TipoRegra } from 'app/shared/constants/TipoRegra.constants';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError, map } from 'rxjs/operators';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
-import { RegraService } from 'app/entities/regra/regra.service';
+import { RegraService } from 'app/services/regra.service';
 
 type EntityArrayResponseType = HttpResponse<IConta[]>;
 
@@ -134,7 +134,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.regra.tipoRegra = this.tipoRegraSelected.tipoRegra?.toString();
     this.regra.regDescricao = this.tipoRegraSelected.regDescricao;
     this.regra.parceiro = this.parceiro;
-    this.regra.regConta = this.contaSelected.conConta;
+    this.regra.conta = this.contaSelected.conConta;
     this.regraService.create(this.regra).subscribe(response => {
       console.log(response);
       this.cancelRegra();

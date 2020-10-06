@@ -5,10 +5,10 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IAtividade } from 'app/shared/model/atividade.model';
+import { IAtividade } from 'app/model/atividade.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { AtividadeService } from './atividade.service';
+import { AtividadeService } from '../../services/atividade.service';
 import { AtividadeDeleteDialogComponent } from './atividade-delete-dialog.component';
 
 @Component({

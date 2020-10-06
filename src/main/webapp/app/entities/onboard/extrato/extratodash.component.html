@@ -46,17 +46,21 @@
         </thead>
         <tbody>
             <tr *ngIf="extratoes?.length === 0">
-                <th colspan="9">
-                    <div class="alert alert-warning" id="no-result">
+                <td colspan="9">
+                    <div class="alert alert-light text-center" id="no-result">
                         <span jhiTranslate="mrcontadorFrontApp.extrato.home.notFound">No extratoes found</span>
                     </div>
-                </th>
+                </td>
             </tr>
             <tr *ngFor="let extrato of extratoes ;trackBy: trackId">
                 <td>{{ extrato.extDatalancamento | date:'dd/MM/yyyy' }}</td>
                 <td><span class="text-danger">{{ extrato.extDebito | currency:"BRL" }} </span></td>
                 <td><span class="text-info">{{ extrato.extCredito  | currency:"BRL"}}</span></td>
-                <td><a  (click)="download(extrato)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ extrato.extNumerodocumento }}</u></span></a></td>
+                <td><a  (click)="download(extrato)" target="_blank"><span class="font-weight-normal text-truncate text-info" >
+                    <u placement="top" ngbTooltip="Click para Visualizar documento">{{ extrato.extNumerodocumento }}</u></span>
+                    <fa-icon icon="exclamation"  class="text-danger" *ngIf="!extrato.processado" placement="top" ngbTooltip="Extrato não processado"></fa-icon>
+                    <fa-icon icon="check"  class="text-sucess" *ngIf="extrato.processado" placement="top" ngbTooltip="Extrato processado"></fa-icon>    
+                </a></td>
                 <td><span class="font-weight-normal text-truncate">{{ extrato.extHistorico }}</span></td>
                 <td><span class="font-weight-normal text-truncate">{{ extrato.infoAdicional }}</span></td>
                 

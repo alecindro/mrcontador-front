@@ -64,15 +64,19 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th colspan="13">
-                    <div class="alert alert-warning" id="no-result" *ngIf="notafiscals?.length === 0">
+            <tr *ngIf="notafiscals?.length === 0">
+                <td colspan="13">
+                    <div class="alert alert-light text-center" id="no-result">
                         <span jhiTranslate="mrcontadorFrontApp.notafiscal.home.notFound">No notafiscals found</span>
                     </div>
-                </th>
+                </td>
             </tr>
             <tr *ngFor="let notafiscal of notafiscals ;trackBy: trackId">
-                <td><a  (click)="download(notafiscal)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ notafiscal.notNumero }}</u></span></a></td>
+                <td><a  (click)="download(notafiscal)" target="_blank" ><span class="font-weight-normal text-truncate text-info" >
+                    <u placement="top" ngbTooltip="Click para Visualizar documento">{{ notafiscal.notNumero }}</u></span>
+                    <fa-icon icon="exclamation"  class="text-danger" *ngIf="!notafiscal.processado" placement="top" ngbTooltip="Nota Fiscal não processada"></fa-icon>
+                    <fa-icon icon="check"  class="text-sucess" *ngIf="notafiscal.processado" placement="top" ngbTooltip="Nota Fiscal processada"></fa-icon>    
+                </a></td>
                 <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notDescricao }}</span></td>
                 <td>{{ notafiscal.notCnpj }}</td>
                 <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notEmpresa }}</span></td>

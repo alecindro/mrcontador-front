@@ -68,16 +68,20 @@
             </thead>
             <tbody>
                 <tr *ngIf="comprovantes?.length === 0">
-                    <th colspan="11">
-                        <div class="alert alert-warning" id="no-result">
+                    <td colspan="11">
+                        <div class="alert alert-light text-center" id="no-result">
                             <span jhiTranslate="mrcontadorFrontApp.comprovante.home.notFound">No comprovantes
                                 found</span>
                         </div>
-                    </th>
+                    </td>
                 </tr>
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
                     <td><span class="font-weight-normal text-truncate">{{ comprovante.comBeneficiario }}</span></td>
-                    <td><a (click)="downloadComprovante(comprovante)" target="_blank" placement="top" ngbTooltip="Click para Visualizar documento"><span class="font-weight-normal text-truncate text-info" ><u>{{ comprovante.comDocumento }}</u></span></a></td>
+                    <td><a (click)="downloadComprovante(comprovante)" target="_blank" >
+                        <span class="font-weight-normal text-truncate text-info" ><u placement="top" ngbTooltip="Click para Visualizar documento">{{ comprovante.comDocumento }}</u></span>
+                        <fa-icon icon="exclamation"  class="text-danger" *ngIf="!comprovante.processado" placement="top" ngbTooltip="Comprovante não processado"></fa-icon>
+                            <fa-icon icon="check"  class="text-sucess" *ngIf="comprovante.processado" placement="top" ngbTooltip="Comprovante processado"></fa-icon>                        
+                    </a></td>
                     <td>{{ comprovante.comDatavencimento | date:'dd/MM/yyyy' }}</td>
                     <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="text-info">{{ comprovante.comValordocumento | currency:"BRL"}}</span></td>

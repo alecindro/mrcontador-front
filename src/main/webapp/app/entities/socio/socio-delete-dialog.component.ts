@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { ISocio } from 'app/shared/model/socio.model';
-import { SocioService } from './socio.service';
+import { ISocio } from 'app/model/socio.model';
+import { SocioService } from '../../services/socio.service';
 
 @Component({
   templateUrl: './socio-delete-dialog.component.html',

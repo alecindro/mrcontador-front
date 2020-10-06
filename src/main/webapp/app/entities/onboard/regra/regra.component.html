@@ -36,28 +36,30 @@
                   
                 </th>
                     <th>
-                        <button class="btn btn-primary btn-sm" (click)="new()">
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.new"></span>
-                        </button>
+                    
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr  id="no-result" *ngIf="regras?.length === 0">
-                    <td colspan="7" class="alert alert-warning text-center">
+                    <td colspan="7" class="alert alert-light text-center">
                     <span  jhiTranslate="mrcontadorFrontApp.regra.home.notFound">No regras found</span>
                 </td>
                 </tr>
                 <tr *ngFor="let regra of regras ;trackBy: trackId">
                     <td>{{ regra.dataCadastro | date:'dd/MM/yyyy' }}</td>
                     <td>{{ regra.regDescricao }}</td>
-                    <td>{{ regra.regConta }}</td>
+                    <td>{{ regra.conta?.conConta }}</td>
                     <td>{{ regra.regHistorico }}</td>
                     <td>{{ regra.regTodos }}</td>
                     <td><input type="checkbox" [checked]="regra.aplicacao" readonly></td>
                     <td>                        <button class="btn btn-primary btn-sm" (click)="edit(regra)">
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.edit"></span>
-                    </button></td>
+                    </button>
+                    <button class="btn btn-danger btn-sm" (click)="delete(regra)">
+                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete"></span>
+                    </button>
+                </td>
                 </tr>
             </tbody>
         </table>

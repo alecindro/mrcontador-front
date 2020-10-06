@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IAgenciabancaria, Agenciabancaria } from 'app/shared/model/agenciabancaria.model';
+import { IAgenciabancaria, Agenciabancaria } from 'app/model/agenciabancaria.model';
 import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { AgenciabancariaService } from 'app/entities/agenciabancaria/agenciabancaria.service';
+import { AgenciabancariaService } from 'app/services/agenciabancaria.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { AgenciabancariaDeleteDialogComponent } from 'app/entities/onboard/agencia/agenciabancaria-delete-dialog.component';
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from 'app/services/parceiro.service';
 
 @Component({
   selector: 'jhi-agenciadash',

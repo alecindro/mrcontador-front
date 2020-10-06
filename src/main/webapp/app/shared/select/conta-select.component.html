@@ -1,0 +1,5 @@
+<label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta" for="field_reg_conta">Reg Conta</label>
+<input id="field_reg_conta" type="text" class="form-control" (selectItem)="selectedConta($event)" [ngbTypeahead]="search" placeholder="Digite a Conta"  [(ngModel)]="conta" name="field_reg_conta"
+[inputFormatter]="inputcontaFormatter"
+[resultFormatter]="contaFormatter"
+[editable]='false'/>

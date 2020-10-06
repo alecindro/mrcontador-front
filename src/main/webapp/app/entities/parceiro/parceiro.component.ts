@@ -5,10 +5,10 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IParceiro } from 'app/shared/model/parceiro.model';
+import { IParceiro } from 'app/model/parceiro.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { ParceiroService } from './parceiro.service';
+import { ParceiroService } from '../../services/parceiro.service';
 import { ParceiroDeleteDialogComponent } from './parceiro-delete-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 

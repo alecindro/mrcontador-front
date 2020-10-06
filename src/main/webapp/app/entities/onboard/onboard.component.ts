@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ParceiroService } from '../parceiro/parceiro.service';
-import { IParceiro } from 'app/shared/model/parceiro.model';
+import { ParceiroService } from '../../services/parceiro.service';
+import { IParceiro } from 'app/model/parceiro.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Subscription, Subject, Observable, merge } from 'rxjs';
-import { AgenciabancariaService } from '../agenciabancaria/agenciabancaria.service';
-import { IAgenciabancaria } from 'app/shared/model/agenciabancaria.model';
+import { AgenciabancariaService } from '../../services/agenciabancaria.service';
+import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
 import { HttpResponse } from '@angular/common/http';
 import { NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { ContaService } from 'app/services/conta.service';
 
 @Component({
   selector: 'jhi-onboard',
@@ -27,17 +28,23 @@ export class OnboardComponent implements OnInit, OnDestroy {
   parceiro!: IParceiro;
   parceiros!: IParceiro[];
   agenciaListener!: Subscription;
+  contaListener!: Subscription;
   hasAgencia = false;
+  hasConta = false;
   constructor(
     public parceiroService: ParceiroService,
     public activatedRoute: ActivatedRoute,
     public spinner: NgxSpinnerService,
     public eventManager: JhiEventManager,
     protected router: Router,
-    protected agenciabancariaService: AgenciabancariaService
+    protected agenciabancariaService: AgenciabancariaService,
+    protected contaService: ContaService
   ) {
     this.agenciaListener = eventManager.subscribe('agenciasaved', () => {
       this.loadAgencias(this.parceiro);
+    });
+    this.contaListener = eventManager.subscribe('contasaved', () => {
+      this.hasConta = true;
     });
   }
 
@@ -48,10 +55,20 @@ export class OnboardComponent implements OnInit, OnDestroy {
       this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
       this.parceiroService.setParceiroSelected(parceiro);
       this.loadAgencias(parceiro);
+      this.searchConta(parceiro);
       this.parceiroService.get().subscribe(response => {
         this.parceiros = response.body || [parceiro];
         this.spinner.hide();
       });
+    });
+  }
+
+  private searchConta(parceiro: IParceiro): void {
+    const param = { 'parceiroId.equals': parceiro?.id };
+    this.contaService.query(param).subscribe(response => {
+      if (response.body && response.body.length > 0) {
+        this.hasConta = true;
+      }
     });
   }
 
@@ -71,9 +88,11 @@ export class OnboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.eventManager.destroy(this.agenciaListener);
+    this.eventManager.destroy(this.contaListener);
   }
   onChangeParceiro(event: NgbTypeaheadSelectItemEvent): void {
     this.loadParceiro(event.item);
+    this.searchConta(event.item);
     this.router.navigate([`/onboard/${this.parceiro.id}`]);
   }
 

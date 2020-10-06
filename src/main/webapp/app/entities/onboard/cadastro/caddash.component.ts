@@ -3,8 +3,8 @@ import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
-import { IParceiro, Parceiro } from '../../../shared/model/parceiro.model';
-import { ParceiroService } from '../../parceiro/parceiro.service';
+import { IParceiro, Parceiro } from '../../../model/parceiro.model';
+import { ParceiroService } from '../../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 

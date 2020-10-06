@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from './parceiro.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from '../../services/parceiro.service';
 
 @Component({
   templateUrl: './parceiro-delete-dialog.component.html',

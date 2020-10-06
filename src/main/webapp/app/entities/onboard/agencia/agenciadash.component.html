@@ -23,9 +23,9 @@
     </tr>
 </thead>
 <tbody>
-    <tr>
+    <tr *ngIf="agenciabancarias?.length === 0">
 <td colspan="8">
-<div class="alert alert-warning" id="no-result" *ngIf="agenciabancarias?.length === 0">
+<div class="alert alert-light text-center" id="no-result" >
     <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.notFound">No agenciabancarias found</span>
     </div>
 </td>
@@ -35,7 +35,7 @@
         <td>{{ agenciabancaria.ageDigito }}</td>
         <td>{{ agenciabancaria.ageAgencia }}</td>
         <td>{{ agenciabancaria.ageDescricao }}</td>
-        <td>{{ agenciabancaria.conConta }}</td>
+        <td>{{ agenciabancaria.conta?.conConta }}</td>
         <td><input type="checkbox" [(ngModel)]="agenciabancaria.ageSituacao" readonly></td>
         <td>{{ agenciabancaria.banco?.banDescricao }}</td>
         <td class="text-right">
@@ -45,7 +45,6 @@
                     <fa-icon icon="pencil-alt"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                 </button>
-
                 <button type="submit" (click)="delete(agenciabancaria)" disabled
                         class="btn btn-danger btn-sm">
                     <fa-icon icon="times"></fa-icon>

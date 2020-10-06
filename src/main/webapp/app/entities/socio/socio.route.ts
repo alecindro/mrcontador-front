@@ -6,8 +6,8 @@ import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { ISocio, Socio } from 'app/shared/model/socio.model';
-import { SocioService } from './socio.service';
+import { ISocio, Socio } from 'app/model/socio.model';
+import { SocioService } from '../../services/socio.service';
 import { SocioComponent } from './socio.component';
 import { SocioDetailComponent } from './socio-detail.component';
 import { SocioUpdateComponent } from './socio-update.component';

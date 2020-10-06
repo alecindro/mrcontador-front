@@ -33,6 +33,7 @@ export class LoginPageComponent {
 
   login(): void {
     this.spinner.show();
+    this.loginService.logout();
     this.loginService
       .login({
         username: this.loginForm.get('username')!.value,

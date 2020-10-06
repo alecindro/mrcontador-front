@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IBanco } from 'app/shared/model/banco.model';
+import { IBanco } from 'app/model/banco.model';
 
 @Component({
   selector: 'jhi-banco-detail',

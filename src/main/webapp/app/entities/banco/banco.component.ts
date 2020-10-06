@@ -5,10 +5,10 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IBanco } from 'app/shared/model/banco.model';
+import { IBanco } from 'app/model/banco.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { BancoService } from './banco.service';
+import { BancoService } from '../../services/banco.service';
 import { BancoDeleteDialogComponent } from './banco-delete-dialog.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 

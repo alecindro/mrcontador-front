@@ -3,8 +3,8 @@ import { HttpResponse, HttpEventType } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IParceiro, Parceiro } from '../../shared/model/parceiro.model';
-import { ParceiroService } from './parceiro.service';
+import { IParceiro, Parceiro } from '../../model/parceiro.model';
+import { ParceiroService } from '../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { UploadService } from 'app/shared/file/file-upload.service ';
 import { JhiEventManager } from 'ng-jhipster';
@@ -14,7 +14,6 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'jhi-parceiro-create',
   templateUrl: './parceiro-create.component.html',
-  styleUrls: ['filecomponent.scss'],
 })
 export class ParceiroCreateComponent implements OnInit {
   progressInfo: { value?: number; fileName?: string; file?: any; index?: number; _event?: any; message?: string; error?: boolean } = {};
@@ -239,10 +238,10 @@ export class ParceiroCreateComponent implements OnInit {
       this.parceiroService.createByCnpj(this.cnpj).subscribe(
         response => {
           const parceiro: Parceiro = response.body || {};
-          console.log(parceiro);
           this.updateForm(parceiro);
           this.isSaving = false;
           this.editable = false;
+          this.eventManager.broadcast('parceiroListModification');
           this.spinner.hide();
         },
         error => {

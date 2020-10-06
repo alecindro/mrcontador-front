@@ -85,10 +85,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngIf="divergencias?.length === 0">
+                        <tr *ngIf="divergencias?.length === 0">                           
                             <td colspan="10">
+                                <div class="alert alert-light text-center">
                                 <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">No inteligents
                                     found</span>
+                                </div>
                             </td>
                         </tr>
                         <tr *ngFor="let inteligent of divergencias">
@@ -133,7 +135,9 @@
                     <tbody>
                         <tr *ngIf="conciliados?.length === 0">
                             <td colspan="10">
+                                <div class="alert alert-light text-center">
                                 <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">teste</span>
+                            </div>
                             </td>
                         </tr>
                         <tr *ngFor="let inteligent of conciliados">

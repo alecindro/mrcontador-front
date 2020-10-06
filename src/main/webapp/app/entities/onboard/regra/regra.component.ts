@@ -4,12 +4,13 @@ import { ActivatedRoute, ParamMap, Router, Data } from '@angular/router';
 import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IRegra, Regra } from 'app/shared/model/regra.model';
+import { IRegra, Regra } from 'app/model/regra.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { RegraService } from 'app/entities/regra/regra.service';
+import { RegraService } from 'app/services/regra.service';
 import { RegraUpdateComponent } from './regra-update.component';
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from 'app/services/parceiro.service';
+import { RegraDeleteDialogComponent } from './regra-delete-dialog.component';
 
 @Component({
   selector: 'jhi-regra',
@@ -130,6 +131,11 @@ export class RegraComponent implements OnInit, OnDestroy {
   edit(regra: IRegra): void {
     const modalRef = this.modalService.open(RegraUpdateComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.parceiro = this.parceiro;
+    modalRef.componentInstance.regra = regra;
+  }
+
+  delete(regra: IRegra): void {
+    const modalRef = this.modalService.open(RegraDeleteDialogComponent, { size: 'xl', backdrop: 'static' });
     modalRef.componentInstance.regra = regra;
   }
   new(): void {

@@ -13,7 +13,6 @@
     "component-class-suffix": true,
     "directive-class-suffix": true,
     "typedef": [true, "call-signature"],
-    "no-console": [false, "debug", "info", "time", "timeEnd", "trace"],
-    "prefer-includes": false
+    "no-console": [false, "debug", "info", "time", "timeEnd", "trace"]
   }
 }

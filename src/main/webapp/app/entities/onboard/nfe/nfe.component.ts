@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { INotafiscal } from 'app/shared/model/notafiscal.model';
+import { INotafiscal } from 'app/model/notafiscal.model';
 import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { NotafiscalService } from 'app/entities/notafiscal/notafiscal.service';
+import { NotafiscalService } from 'app/services/notafiscal.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from 'app/services/parceiro.service';
 import { NfeUploadComponent } from './nfe-upload.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
@@ -66,6 +66,7 @@ export class NfeComponent implements OnInit, OnDestroy {
     };
     const _begin = moment();
     const _end = moment();
+
     if (this.anoSelected) {
       _begin.set('year', this.anoSelected).format();
       _begin.set('month', 0).format();
@@ -81,8 +82,8 @@ export class NfeComponent implements OnInit, OnDestroy {
       _end.add(-1, 'days').format();
     }
     if (this.anoSelected || this.mesSelected) {
-      queryParam['notDatasaida.lessThanOrEqual'] = _end.toJSON();
-      queryParam['notDatasaida.greaterThanOrEqual'] = _begin.toJSON();
+      queryParam['notDatasaida.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
+      queryParam['notDatasaida.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
     }
     this.notafiscalService.query(queryParam).subscribe(
       (res: HttpResponse<INotafiscal[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),

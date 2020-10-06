@@ -6,8 +6,8 @@ import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IAtividade, Atividade } from 'app/shared/model/atividade.model';
-import { AtividadeService } from './atividade.service';
+import { IAtividade, Atividade } from 'app/model/atividade.model';
+import { AtividadeService } from '../../services/atividade.service';
 import { AtividadeComponent } from './atividade.component';
 import { AtividadeDetailComponent } from './atividade-detail.component';
 import { AtividadeUpdateComponent } from './atividade-update.component';

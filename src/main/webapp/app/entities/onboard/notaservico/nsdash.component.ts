@@ -1,16 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { INotaservico } from 'app/shared/model/notaservico.model';
+import { INotaservico } from 'app/model/notaservico.model';
 import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { NotaservicoService } from 'app/entities/notaservico/notaservico.service';
+import { NotaservicoService } from 'app/services/notaservico.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { NotaservicoDeleteDialogComponent } from 'app/entities/notaservico/notaservico-delete-dialog.component';
 import { NsUploadComponent } from './ns-upload.component';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
-import { IParceiro } from 'app/shared/model/parceiro.model';
+import { ParceiroService } from 'app/services/parceiro.service';
+import { IParceiro } from 'app/model/parceiro.model';
 
 @Component({
   selector: 'jhi-nsdash',
@@ -86,11 +85,6 @@ export class NsDashComponent implements OnInit, OnDestroy {
 
   registerChangeInNotaservicos(): void {
     this.eventSubscriber = this.eventManager.subscribe('notaservicoListModification', () => this.loadPage());
-  }
-
-  delete(notaservico: INotaservico): void {
-    const modalRef = this.modalService.open(NotaservicoDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.notaservico = notaservico;
   }
 
   sort(): string[] {

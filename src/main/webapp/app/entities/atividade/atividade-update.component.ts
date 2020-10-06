@@ -5,10 +5,10 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { IAtividade, Atividade } from 'app/shared/model/atividade.model';
-import { AtividadeService } from './atividade.service';
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { IAtividade, Atividade } from 'app/model/atividade.model';
+import { AtividadeService } from '../../services/atividade.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from 'app/services/parceiro.service';
 
 @Component({
   selector: 'jhi-atividade-update',

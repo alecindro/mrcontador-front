@@ -5,10 +5,10 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IParceiro } from 'app/shared/model/parceiro.model';
+import { IParceiro } from 'app/model/parceiro.model';
 
 import { ITEMS_DASH_PARCEIRO } from 'app/shared/constants/pagination.constants';
-import { ParceiroService } from './parceiro.service';
+import { ParceiroService } from '../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ParceiroCreateComponent } from './parceiro-create.component';
 
@@ -91,7 +91,7 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
   }
 
   newParceiro(): void {
-    const modalRef = this.modalService.open(ParceiroCreateComponent, { size: 'lg', backdrop: 'static' });
+    this.modalService.open(ParceiroCreateComponent, { size: 'lg', backdrop: 'static' });
   }
 
   sort(): string[] {

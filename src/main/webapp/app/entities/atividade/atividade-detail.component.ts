@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { IAtividade } from 'app/shared/model/atividade.model';
+import { IAtividade } from 'app/model/atividade.model';
 
 @Component({
   selector: 'jhi-atividade-detail',

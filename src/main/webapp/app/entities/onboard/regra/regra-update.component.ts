@@ -4,10 +4,10 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { IRegra, Regra } from 'app/shared/model/regra.model';
-import { RegraService } from 'app/entities/regra/regra.service';
+import { IRegra, Regra } from 'app/model/regra.model';
+import { RegraService } from 'app/services/regra.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IParceiro } from 'app/shared/model/parceiro.model';
+import { IParceiro } from 'app/model/parceiro.model';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager } from 'ng-jhipster';
@@ -20,7 +20,7 @@ export class RegraUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     reg_descricao: [null, [Validators.maxLength(60)]],
-    reg_conta: [],
+    conta: {},
     reg_historico: [null, [Validators.maxLength(60)]],
     reg_todos: [null, [Validators.maxLength(1)]],
     aplicacao: [null, [Validators.required]],
@@ -44,7 +44,7 @@ export class RegraUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: regra.id,
       reg_descricao: regra.regDescricao,
-      reg_conta: regra.regConta,
+      conta: regra?.conta,
       reg_historico: regra.regHistorico,
       reg_todos: regra.regTodos,
       aplicacao: regra.aplicacao,
@@ -72,7 +72,7 @@ export class RegraUpdateComponent implements OnInit {
       ...new Regra(),
       id: this.editForm.get(['id'])!.value,
       regDescricao: this.editForm.get(['reg_descricao'])!.value,
-      regConta: this.editForm.get(['reg_conta'])!.value,
+      conta: this.editForm.get(['conta'])!.value,
       regHistorico: this.editForm.get(['reg_historico'])!.value,
       regTodos: this.editForm.get(['reg_todos'])!.value,
       aplicacao: this.editForm.get(['aplicacao'])!.value,

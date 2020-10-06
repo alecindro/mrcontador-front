@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ISocio } from 'app/shared/model/socio.model';
+import { ISocio } from 'app/model/socio.model';
 
 @Component({
   selector: 'jhi-socio-detail',

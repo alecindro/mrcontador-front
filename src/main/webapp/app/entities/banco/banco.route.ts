@@ -6,8 +6,8 @@ import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IBanco, Banco } from 'app/shared/model/banco.model';
-import { BancoService } from './banco.service';
+import { IBanco, Banco } from 'app/model/banco.model';
+import { BancoService } from '../../services/banco.service';
 import { BancoComponent } from './banco.component';
 import { BancoDetailComponent } from './banco-detail.component';
 import { BancoUpdateComponent } from './banco-update.component';

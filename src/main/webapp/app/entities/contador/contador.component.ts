@@ -5,10 +5,10 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IContador } from 'app/shared/model/contador.model';
+import { IContador } from 'app/model/contador.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { ContadorService } from './contador.service';
+import { ContadorService } from '../../services/contador.service';
 import { ContadorDeleteDialogComponent } from './contador-delete-dialog.component';
 import { JsonUtil } from 'app/shared/util/json-util';
 

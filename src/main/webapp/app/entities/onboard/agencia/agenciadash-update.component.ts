@@ -3,13 +3,14 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IAgenciabancaria, Agenciabancaria } from 'app/shared/model/agenciabancaria.model';
-import { AgenciabancariaService } from 'app/entities/agenciabancaria/agenciabancaria.service';
-import { IBanco } from 'app/shared/model/banco.model';
-import { BancoService } from 'app/entities/banco/banco.service';
-import { IParceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from 'app/entities/parceiro/parceiro.service';
+import { IAgenciabancaria, Agenciabancaria } from 'app/model/agenciabancaria.model';
+import { AgenciabancariaService } from 'app/services/agenciabancaria.service';
+import { IBanco } from 'app/model/banco.model';
+import { BancoService } from 'app/services/banco.service';
+import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from 'app/services/parceiro.service';
 import { JhiEventManager } from 'ng-jhipster';
+import { IConta } from 'app/model/conta.model';
 
 type SelectableEntity = IBanco | IParceiro;
 
@@ -26,6 +27,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
   bancos!: IBanco[];
   parceiros: IParceiro[] = [];
   parceiro!: IParceiro;
+  conta?: IConta;
 
   editForm = this.fb.group({
     id: [],
@@ -35,7 +37,6 @@ export class AgenciaDashUpdateComponent implements OnInit {
     age_descricao: [null, [Validators.maxLength(30)]],
     age_situacao: [],
     bancoId: [null, Validators.required],
-    conConta: [null, Validators.required],
   });
 
   constructor(
@@ -50,7 +51,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
     const agenciabancaria = this.agenciabancariaService.getAgenciaSelected();
-    if (!agenciabancaria.id) {
+    if (agenciabancaria?.id) {
       agenciabancaria.ageSituacao = true;
     }
     this.updateForm(agenciabancaria);
@@ -59,18 +60,20 @@ export class AgenciaDashUpdateComponent implements OnInit {
 
   updateForm(agenciabancaria: IAgenciabancaria): void {
     this.editForm.patchValue({
-      id: agenciabancaria.id,
-      age_numero: agenciabancaria.ageNumero,
-      age_digito: agenciabancaria.ageDigito,
-      age_agencia: agenciabancaria.ageAgencia,
-      age_descricao: agenciabancaria.ageDescricao,
-      age_situacao: agenciabancaria.ageSituacao,
-      conConta: agenciabancaria.conConta,
+      id: agenciabancaria?.id,
+      age_numero: agenciabancaria?.ageNumero,
+      age_digito: agenciabancaria?.ageDigito,
+      age_agencia: agenciabancaria?.ageAgencia,
+      age_descricao: agenciabancaria?.ageDescricao,
+      age_situacao: agenciabancaria?.ageSituacao,
     });
-    if (agenciabancaria.banco) {
+    if (agenciabancaria?.banco) {
       this.editForm.patchValue({
         bancoId: agenciabancaria.banco.id,
       });
+    }
+    if (agenciabancaria?.conta) {
+      this.conta = agenciabancaria.conta;
     }
   }
 
@@ -104,7 +107,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
       ageAgencia: this.editForm.get(['age_agencia'])!.value,
       ageDescricao: this.editForm.get(['age_descricao'])!.value,
       ageSituacao: this.editForm.get(['age_situacao'])!.value,
-      conConta: this.editForm.get(['conConta'])!.value,
+      conta: this.conta,
       banco: _banco,
       parceiro: this.parceiro,
       banCodigobancario: _banco?.banCodigobancario,
@@ -136,5 +139,9 @@ export class AgenciaDashUpdateComponent implements OnInit {
     this.bancoService.get().subscribe(response => {
       this.bancos = response.body || [];
     });
+  }
+
+  selectedConta(conta: IConta): void {
+    this.conta = conta;
   }
 }

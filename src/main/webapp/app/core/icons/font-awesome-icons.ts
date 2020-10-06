@@ -36,6 +36,9 @@ import {
   faHome,
   faCloudUploadAlt,
   faExclamationCircle,
+  faExclamation,
+  faCheck,
+
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -77,5 +80,7 @@ export const fontAwesomeIcons = [
   faAsterisk,
   faCloudUploadAlt,
   faExclamationCircle,
+  faExclamation,
+  faCheck,
   // jhipster-needle-add-icon-import
 ];

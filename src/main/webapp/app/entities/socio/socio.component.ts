@@ -5,10 +5,10 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { ISocio } from 'app/shared/model/socio.model';
+import { ISocio } from 'app/model/socio.model';
 
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { SocioService } from './socio.service';
+import { SocioService } from '../../services/socio.service';
 import { SocioDeleteDialogComponent } from './socio-delete-dialog.component';
 
 @Component({

@@ -5,8 +5,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { IContador, Contador } from 'app/shared/model/contador.model';
-import { ContadorService } from './contador.service';
+import { IContador, Contador } from 'app/model/contador.model';
+import { ContadorService } from '../../services/contador.service';
 import { TelefoneDTO } from 'app/shared/dto/telefoneDTO';
 import { ViaCepService } from 'app/shared/services/viacepservice';
 import { NgxSpinnerService } from 'ngx-spinner';

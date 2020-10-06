@@ -6,8 +6,8 @@ import { flatMap } from 'rxjs/operators';
 
 import { Authority } from 'app/shared/constants/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
-import { IParceiro, Parceiro } from 'app/shared/model/parceiro.model';
-import { ParceiroService } from './parceiro.service';
+import { IParceiro, Parceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from '../../services/parceiro.service';
 import { ParceiroDetailComponent } from './parceiro-detail.component';
 import { ParceiroDashComponent } from './parceiro-dash.component';
 import { ParceiroCreateComponent } from './parceiro-create.component';
