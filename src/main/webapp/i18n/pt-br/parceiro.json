@@ -44,6 +44,7 @@
       "naturezaJuridica": "Natureza Juridica",
       "ultimaAtualizacao": "Última Atualização",
       "abertura": "Abertura",
+      "codExt": "Código do parceiro no sistema para importação da consolidação",
       "porte": "Porte",
       "email": "Email",
       "status": "Status"

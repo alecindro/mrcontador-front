@@ -36,6 +36,7 @@ export interface IParceiro {
   dataSituacaoEspecial?: string;
   capitalSocial?: string;
   enabled?: boolean;
+  codExt?: string;
   agenciabancarias?: Agenciabancaria[];
   atividades?: Atividade[];
   socios?: Socio[];
@@ -75,6 +76,7 @@ export class Parceiro implements IParceiro {
     public dataSituacaoEspecial?: string,
     public capitalSocial?: string,
     public enabled?: boolean,
+    public codExt?: string,
     public agenciabancarias?: Agenciabancaria[],
     public atividades?: Atividade[],
     public socios?: Socio[]

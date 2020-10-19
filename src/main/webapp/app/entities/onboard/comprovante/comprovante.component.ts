@@ -1,22 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComprovanteUploadComponent } from './comprovante-upload.component';
-import { IComprovante } from 'app/model/comprovante.model';
-import { ComprovanteService } from 'app/services/comprovante.service';
+import { IComprovante } from '../../../model/comprovante.model';
+import { ComprovanteService } from '../../../services/comprovante.service';
 import { Subscription, combineLatest } from 'rxjs';
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { IParceiro } from 'app/model/parceiro.model';
+import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
+import { IParceiro } from '../../../model/parceiro.model';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ParceiroService } from 'app/services/parceiro.service';
+import { ParceiroService } from '../../../services/parceiro.service';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
+import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
 import * as moment from 'moment';
-import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
+import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
+import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { SERVER_API_URL } from 'app/app.constants';
-import { UploadService } from 'app/services/file-upload.service ';
+import { SERVER_API_URL } from '../../../app.constants';
+import { UploadService } from '../../../services/file-upload.service';
 
 @Component({
   selector: 'jhi-comprovante',

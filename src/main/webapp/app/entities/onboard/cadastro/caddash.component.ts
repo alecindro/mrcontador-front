@@ -80,6 +80,7 @@ export class CadDashComponent implements OnInit {
       capitalSocial: [],
       areaAtuacao: [],
       enabled: [],
+      codExt: [],
       atividades: this.fb.array([]),
       socios: this.fb.array([]),
     });
@@ -120,6 +121,7 @@ export class CadDashComponent implements OnInit {
       dataSituacaoEspecial: parceiro.dataSituacaoEspecial,
       capitalSocial: parceiro.capitalSocial,
       enabled: parceiro.enabled,
+      codExt: parceiro.codExt,
     });
     const _socios = this.editForm.controls.socios as FormArray;
     const _atividades = this.editForm.controls.atividades as FormArray;
@@ -206,19 +208,21 @@ export class CadDashComponent implements OnInit {
       dataSituacaoEspecial: this.editForm.get(['dataSituacaoEspecial'])!.value,
       capitalSocial: this.editForm.get(['capitalSocial'])!.value,
       enabled: this.editForm.get(['enabled'])!.value,
+      codExt: this.editForm.get(['codExt']).value,
     };
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IParceiro>>): void {
     result.subscribe(
-      () => this.onSaveSuccess(),
+      response => this.onSaveSuccess(response),
       () => this.onSaveError()
     );
   }
 
-  protected onSaveSuccess(): void {
+  protected onSaveSuccess(response: any): void {
     this.isSaving = false;
     this.spinner.hide();
+    this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', response.body));
   }
 
   protected onSaveError(): void {

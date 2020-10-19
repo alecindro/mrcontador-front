@@ -3,14 +3,14 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IAgenciabancaria, Agenciabancaria } from 'app/model/agenciabancaria.model';
-import { AgenciabancariaService } from 'app/services/agenciabancaria.service';
-import { IBanco } from 'app/model/banco.model';
-import { BancoService } from 'app/services/banco.service';
-import { IParceiro } from 'app/model/parceiro.model';
-import { ParceiroService } from 'app/services/parceiro.service';
+import { IAgenciabancaria, Agenciabancaria } from '../../../model/agenciabancaria.model';
+import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
+import { IBanco } from '../../../model/banco.model';
+import { BancoService } from '../../../services/banco.service';
+import { IParceiro } from '../../../model/parceiro.model';
+import { ParceiroService } from '../../../services/parceiro.service';
 import { JhiEventManager } from 'ng-jhipster';
-import { IConta } from 'app/model/conta.model';
+import { IConta } from '../../../model/conta.model';
 
 type SelectableEntity = IBanco | IParceiro;
 

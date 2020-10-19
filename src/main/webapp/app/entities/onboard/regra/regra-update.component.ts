@@ -4,10 +4,10 @@ import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { IRegra, Regra } from 'app/model/regra.model';
-import { RegraService } from 'app/services/regra.service';
+import { IRegra, Regra } from '../../../model/regra.model';
+import { RegraService } from '../../../services/regra.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IParceiro } from 'app/model/parceiro.model';
+import { IParceiro } from '../../../model/parceiro.model';
 import * as moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager } from 'ng-jhipster';

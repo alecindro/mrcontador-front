@@ -1,6 +1,6 @@
 import { FormBuilder } from '@angular/forms';
 import { Component } from '@angular/core';
-import { UploadService } from 'app/services/file-upload.service ';
+import { UploadService } from '../../services/file-upload.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({

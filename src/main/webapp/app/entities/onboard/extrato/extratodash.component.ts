@@ -1,22 +1,22 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { IExtrato } from 'app/model/extrato.model';
+import { IExtrato } from '../../../model/extrato.model';
 import { Subscription, combineLatest } from 'rxjs';
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { ExtratoService } from 'app/services/extrato.service';
+import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
+import { ExtratoService } from '../../../services/extrato.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { ParceiroService } from 'app/services/parceiro.service';
-import { IParceiro } from 'app/model/parceiro.model';
+import { ParceiroService } from '../../../services/parceiro.service';
+import { IParceiro } from '../../../model/parceiro.model';
 import { ExtratoUploadComponent } from './extrato-upload.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
-import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
+import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
+import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
+import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
 import * as moment from 'moment';
-import { UploadService } from 'app/services/file-upload.service ';
-import { SERVER_API_URL } from 'app/app.constants';
+import { UploadService } from '../../../services/file-upload.service';
+import { SERVER_API_URL } from '../../../app.constants';
 
 @Component({
   selector: 'jhi-dash-extrato',

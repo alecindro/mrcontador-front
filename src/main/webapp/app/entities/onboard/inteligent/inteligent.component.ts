@@ -1,26 +1,28 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { IInteligent } from 'app/model/inteligent.model';
-import { MESLABELS } from 'app/shared/constants/input.constants';
-import { InteligentService } from 'app/services/inteligent.service';
-import { ParceiroService } from 'app/services/parceiro.service';
-import { IParceiro } from 'app/model/parceiro.model';
-import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
+import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
+import { IInteligent } from '../../../model/inteligent.model';
+import { MESLABELS } from '../../../shared/constants/input.constants';
+import { InteligentService } from '../../../services/inteligent.service';
+import { ParceiroService } from '../../../services/parceiro.service';
+import { IParceiro } from '../../../model/parceiro.model';
+import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
 import { HttpResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
-import { IRegra, Regra } from 'app/model/regra.model';
-import { SERVER_API_URL } from 'app/app.constants';
-import { UploadService } from 'app/services/file-upload.service ';
-import { IComprovante } from 'app/model/comprovante.model';
-import { INotafiscal } from 'app/model/notafiscal.model';
-import { ContaService } from 'app/services/conta.service';
-import { IConta } from 'app/model/conta.model';
-import { TipoRegra } from 'app/shared/constants/TipoRegra.constants';
+import { IRegra, Regra } from '../../../model/regra.model';
+import { SERVER_API_URL } from '../../../app.constants';
+import { UploadService } from '../../../services/file-upload.service';
+import { IComprovante } from '../../../model/comprovante.model';
+import { INotafiscal } from '../../../model/notafiscal.model';
+import { ContaService } from '../../../services/conta.service';
+import { IConta } from '../../../model/conta.model';
+import { TipoRegra } from '../../../shared/constants/TipoRegra.constants';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
-import { RegraService } from 'app/services/regra.service';
+import { RegraService } from '../../../services/regra.service';
+import { AuthServerProvider } from '../../../core/auth/auth-jwt.service';
+import { TipoSistema } from '../../../shared/constants/TipoSistema';
 
 type EntityArrayResponseType = HttpResponse<IConta[]>;
 
@@ -59,7 +61,8 @@ export class InteligentComponent implements OnInit, OnDestroy {
     public activatedRoute: ActivatedRoute,
     public fileService: UploadService,
     public contaService: ContaService,
-    public regraService: RegraService
+    public regraService: RegraService,
+    public authServerProvider: AuthServerProvider
   ) {
     this.registerParceiroListener();
   }
@@ -251,16 +254,32 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   public downloadLancamento(): void {
-    const _url =
-      this.resourceUrlLancamento + this.mesSelected + '' + this.anoSelected + '/' + this.agenciaSelected?.id + '/' + this.parceiro?.id;
-    this.fileService.downloadFile(_url).subscribe(
-      response => {
-        const blob: any = new Blob([response], { type: 'application/octet-stream' });
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-      },
-      error => console.log('Error downloading the file', error),
-      () => console.info('File downloaded successfully')
-    );
+    const sistema = this.authServerProvider.getSistema();
+    if (TipoSistema[sistema] === TipoSistema.DOMINIO_SISTEMAS && this.parceiro?.codExt) {
+      const _url =
+        this.resourceUrlLancamento +
+        this.mesSelected +
+        '' +
+        this.anoSelected +
+        '/' +
+        this.agenciaSelected?.id +
+        '/' +
+        this.parceiro?.id +
+        '/' +
+        this.parceiro?.codExt +
+        '/' +
+        sistema;
+      this.fileService.downloadFile(_url).subscribe(
+        response => {
+          const blob: any = new Blob([response], { type: 'application/octet-stream' });
+          const url = window.URL.createObjectURL(blob);
+          window.open(url);
+        },
+        error => console.log('Error downloading the file', error),
+        () => console.info('File downloaded successfully')
+      );
+    } else {
+      alert('Cadastrar código do sistema do parceiro.');
+    }
   }
 }

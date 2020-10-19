@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
-import { IParceiro } from 'app/model/parceiro.model';
-import { UploadService } from 'app/services/file-upload.service ';
+import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
+import { IParceiro } from '../../../model/parceiro.model';
+import { UploadService } from '../../../services/file-upload.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { ParceiroService } from 'app/services/parceiro.service';
+import { ParceiroService } from '../../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TranslateService } from '@ngx-translate/core';
 

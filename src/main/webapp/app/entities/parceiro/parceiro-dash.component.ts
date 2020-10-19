@@ -5,12 +5,14 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IParceiro } from 'app/model/parceiro.model';
+import { IParceiro } from '../../model/parceiro.model';
 
-import { ITEMS_DASH_PARCEIRO } from 'app/shared/constants/pagination.constants';
+import { ITEMS_DASH_PARCEIRO } from '../../shared/constants/pagination.constants';
 import { ParceiroService } from '../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ParceiroCreateComponent } from './parceiro-create.component';
+import { ContadorService } from '../../services/contador.service';
+import { AuthServerProvider } from '../../core/auth/auth-jwt.service';
 
 @Component({
   selector: 'jhi-parceiro-dash',
@@ -30,6 +32,8 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
 
   constructor(
     protected parceiroService: ParceiroService,
+    protected contadorService: ContadorService,
+    protected authServerProvider: AuthServerProvider,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,

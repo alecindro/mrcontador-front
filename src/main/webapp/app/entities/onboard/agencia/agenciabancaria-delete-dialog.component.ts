@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
-import { AgenciabancariaService } from 'app/services/agenciabancaria.service';
+import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
+import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
 
 @Component({
   templateUrl: './agenciabancaria-delete-dialog.component.html',

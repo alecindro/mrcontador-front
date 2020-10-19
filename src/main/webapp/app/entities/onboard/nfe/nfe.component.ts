@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { INotafiscal } from 'app/model/notafiscal.model';
+import { INotafiscal } from '../../../model/notafiscal.model';
 import { Subscription, combineLatest } from 'rxjs';
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
-import { NotafiscalService } from 'app/services/notafiscal.service';
+import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
+import { NotafiscalService } from '../../../services/notafiscal.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { IParceiro } from 'app/model/parceiro.model';
-import { ParceiroService } from 'app/services/parceiro.service';
+import { IParceiro } from '../../../model/parceiro.model';
+import { ParceiroService } from '../../../services/parceiro.service';
 import { NfeUploadComponent } from './nfe-upload.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
+import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
+import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
 import * as moment from 'moment';
-import { UploadService } from 'app/services/file-upload.service ';
-import { SERVER_API_URL } from 'app/app.constants';
+import { UploadService } from '../../../services/file-upload.service';
+import { SERVER_API_URL } from '../../../app.constants';
 
 @Component({
   selector: 'jhi-nfe',

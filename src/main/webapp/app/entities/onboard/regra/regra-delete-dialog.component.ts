@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
-import { RegraService } from 'app/services/regra.service';
-import { IRegra } from 'app/model/regra.model';
+import { RegraService } from '../../../services/regra.service';
+import { IRegra } from '../../../model/regra.model';
 
 @Component({
   templateUrl: './regra-delete-dialog.component.html',

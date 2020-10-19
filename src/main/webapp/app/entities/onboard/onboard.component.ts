@@ -1,16 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ParceiroService } from '../../services/parceiro.service';
-import { IParceiro } from 'app/model/parceiro.model';
+import { IParceiro } from '../../model/parceiro.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { Subscription, Subject, Observable, merge } from 'rxjs';
 import { AgenciabancariaService } from '../../services/agenciabancaria.service';
-import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
+import { IAgenciabancaria } from '../../model/agenciabancaria.model';
 import { HttpResponse } from '@angular/common/http';
 import { NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { ContaService } from 'app/services/conta.service';
+import { ContaService } from '../../services/conta.service';
 
 @Component({
   selector: 'jhi-onboard',

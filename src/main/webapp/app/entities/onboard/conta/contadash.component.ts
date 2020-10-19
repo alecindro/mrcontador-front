@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { combineLatest } from 'rxjs';
-import { IParceiro } from 'app/model/parceiro.model';
-import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
-import { ParceiroService } from 'app/services/parceiro.service';
-import { ContaService } from 'app/services/conta.service';
-import { IConta } from 'app/model/conta.model';
+import { IParceiro } from '../../../model/parceiro.model';
+import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
+import { ParceiroService } from '../../../services/parceiro.service';
+import { ContaService } from '../../../services/conta.service';
+import { IConta } from '../../../model/conta.model';
 import { HttpResponse, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
+import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { Router, ActivatedRoute, ParamMap, Data } from '@angular/router';
-import { UploadService } from 'app/services/file-upload.service ';
+import { UploadService } from '../../../services/file-upload.service';
 import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
