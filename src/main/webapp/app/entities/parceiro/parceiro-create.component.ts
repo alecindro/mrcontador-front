@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { IParceiro, Parceiro } from '../../model/parceiro.model';
 import { ParceiroService } from '../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { UploadService } from 'app/shared/file/file-upload.service ';
+import { UploadService } from 'app/services/file-upload.service ';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';

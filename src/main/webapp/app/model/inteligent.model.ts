@@ -31,6 +31,7 @@ export interface IInteligent {
   extrato?: IExtrato;
   agenciabancaria?: IAgenciabancaria;
   regra?: IRegra;
+  tipoInteligent?: string;
 }
 
 export class Inteligent implements IInteligent {
@@ -56,7 +57,8 @@ export class Inteligent implements IInteligent {
     public conta?: IConta,
     public extrato?: IExtrato,
     public agenciabancaria?: IAgenciabancaria,
-    public regra?: IRegra
+    public regra?: IRegra,
+    public tipoInteligent?: string
   ) {
     this.associado = this.associado || false;
   }

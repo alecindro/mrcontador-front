@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
 import { IParceiro } from 'app/model/parceiro.model';
-import { UploadService } from 'app/shared/file/file-upload.service ';
+import { UploadService } from 'app/services/file-upload.service ';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ParceiroService } from 'app/services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';

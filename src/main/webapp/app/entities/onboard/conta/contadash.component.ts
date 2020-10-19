@@ -9,7 +9,7 @@ import { HttpResponse, HttpHeaders, HttpEventType } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { Router, ActivatedRoute, ParamMap, Data } from '@angular/router';
-import { UploadService } from 'app/shared/file/file-upload.service ';
+import { UploadService } from 'app/services/file-upload.service ';
 import { JhiEventManager } from 'ng-jhipster';
 
 @Component({
@@ -31,6 +31,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
   parceiro?: IParceiro;
   pesquisa?: any;
   selected = 'conClassificacao.contains';
+  atualiza = false;
 
   constructor(
     private parceiroService: ParceiroService,
@@ -108,6 +109,9 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     }
     this.spinner.hide();
     this.contas = data || [];
+    if (this.contas.length === 0) {
+      this.atualiza = true;
+    }
     this.ngbPaginationPage = this.page;
   }
 
@@ -164,6 +168,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
             this.eventManager.broadcast('contasaved');
             this.spinner.hide();
             this.loadPage();
+            this.atualiza = false;
           }
         },
         err => {
@@ -173,5 +178,9 @@ export class ContaDashComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  carregar(): void {
+    this.atualiza = !this.atualiza;
   }
 }

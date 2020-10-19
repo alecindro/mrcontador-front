@@ -14,9 +14,16 @@ type EntityArrayResponseType = HttpResponse<IInteligent[]>;
 @Injectable({ providedIn: 'root' })
 export class InteligentService {
   public resourceUrl = SERVER_API_URL + 'api/inteligents';
+  public periodoUrl = SERVER_API_URL + 'api/inteligents/periodo';
   public resourceUrlFunction = SERVER_API_URL + 'api/inteligents/function';
 
   constructor(protected http: HttpClient) {}
+
+  create(inteligent: IInteligent): Observable<EntityResponseType> {
+    return this.http
+      .post<IInteligent>(this.resourceUrl, inteligent, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
 
   find(id: number): Observable<EntityResponseType> {
     return this.http
@@ -29,6 +36,11 @@ export class InteligentService {
     return this.http
       .get<IInteligent[]>(this.resourceUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryPeriodo(req?: any): Observable<any> {
+    const options = createRequestOption(req);
+    return this.http.get<IInteligent[]>(this.periodoUrl, { params: options, observe: 'response' });
   }
 
   queryFuntion(req?: any): Observable<EntityArrayResponseType> {

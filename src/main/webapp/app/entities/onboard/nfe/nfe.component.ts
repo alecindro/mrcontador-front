@@ -14,7 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
 import * as moment from 'moment';
-import { UploadService } from 'app/shared/file/file-upload.service ';
+import { UploadService } from 'app/services/file-upload.service ';
 import { SERVER_API_URL } from 'app/app.constants';
 
 @Component({

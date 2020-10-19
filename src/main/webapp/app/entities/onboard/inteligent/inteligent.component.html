@@ -21,7 +21,7 @@
                 {{ ano }}
             </option>
         </select>
-<button class="form-control mr-sm-2 btn btn-primary" name="consolida" type="button" (click)="processConsolidacao()" [disabled]="parceiro?.agenciabancarias?.length === 0"><span jhiTranslate="mrcontadorFrontApp.inteligent.conciliar"></span></button>
+        <button class="btn btn-primary" (click)="downloadLancamento()">Exportar Lançamento</button>
     </form>
 </nav>
 
@@ -29,7 +29,7 @@
     <form>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_descricao" for="field_reg_descricao">Reg Descricao</label>
-                   <select id="field_reg_descricao" [(ngModel)]="tipoRegraSelected" class="form-control" name="field_reg_descricao">
+                   <select id="field_reg_descricao" [(ngModel)]="tipoRegraSelected" class="form-control" name="field_reg_descricao" required>
                     <option *ngFor="let tipoRegra of tipoRegras" [ngValue]="tipoRegra">
                       {{ tipoRegra?.regDescricao }} 
                     </option>
@@ -37,14 +37,12 @@
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta" for="field_reg_conta">Reg Conta</label>
-            <input id="field_reg_conta" type="text" class="form-control" [(ngModel)]="contaSelected" [ngbTypeahead]="search" placeholder="Digite a Conta"  name="field_reg_conta"
-            [inputFormatter]="contaFormatter"
-            [resultFormatter]="contaFormatter"
-            [editable]='false'/>
+            <jhi-conta-select [parceiro]="parceiro?.id" name="contaId" id="field_reg_conta" (contaSelected)="selectedConta($event)" [conta]="contaSelected" required></jhi-conta-select>
+      
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_historico" for="field_reg_historico">Reg Historico</label>
-            <input type="text" class="form-control" name="reg_historico" id="field_reg_historico"
+            <input type="text" class="form-control" name="reg_historico" id="field_reg_historico" required
             [(ngModel)]="regra.regHistorico"/>
         </div>
         <div>
@@ -52,12 +50,36 @@
                 <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
 
-            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveRegra()">
+            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveRegra()" [disabled]="!contaSelected || !tipoRegraSelected.tipoRegra || !regra.regHistorico">
                 <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>
         </div>
 </form>
 </ng-template>
+<ng-template #popConta> 
+    <form>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta" for="field_pop_conta"></label>
+            <jhi-conta-select [parceiro]="parceiro?.id" name="field_pop_conta" id="field_pop_conta" (contaSelected)="selectedConta($event)" [conta]="contaSelected" required></jhi-conta-select>
+      
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_historico" for="field_pop_historico"></label>
+            <input type="text" class="form-control" name="pop_historico" id="field_pop_historico" required
+            [(ngModel)]="inteligentSelected.historicofinal"/>
+        </div>
+        <div>
+            <button type="button" id="cancel-save" class="btn btn-secondary" (click)="cancelConta()">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+
+            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveConta()" [disabled]="!contaSelected  || !inteligentSelected.historicofinal">
+                <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            </button>
+        </div>
+</form>
+</ng-template>
+<ng-template #popContaTitle><b>Associar conta</b></ng-template>
 <ng-template #popTitle><b>Associar regra</b></ng-template>
 <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs">
     <li [ngbNavItem]="1">
@@ -95,11 +117,17 @@
                         </tr>
                         <tr *ngFor="let inteligent of divergencias">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
-                            <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #popOver="ngbPopover" triggers="manual" (click)="selectInteligent(inteligent,popOver)" class="text-info"><u>{{ inteligent.historico }}</u></a></td>
+                            <td><a [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #popOver="ngbPopover" triggers="manual" (click)="selectInteligent(inteligent,popOver)" class="text-info"><u placement="top" ngbTooltip="Associar regra">{{ inteligent.historico }}</u></a></td>
                             <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
-                            <td>{{ inteligent.debito  | currency:"BRL"}}</td>
+                            <td><span class="text-danger"> {{inteligent.debito  | currency:"BRL"}}</span></td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
-                            <td>{{ inteligent.conta?.conConta}}</td>
+                            <td><span>{{ inteligent.conta?.conConta}}</span>
+                            <div >
+                                <a [ngbPopover]="popConta" [popoverTitle]="popContaTitle" [autoClose]="false" #p1="ngbPopover" triggers="manual" (click)="selectConta(inteligent,p1)" class="text-info">
+                                    <u placement="top" ngbTooltip="Associar conta">Associar conta</u>
+                                </a>
+                            </div>
+                            </td>
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
@@ -143,7 +171,11 @@
                         <tr *ngFor="let inteligent of conciliados">
                             <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
                             <td><a class="text-info"><u>{{ inteligent.historico }}</u></a></td>
-                            <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante"><span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
+                            <td ><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span>
+                                <a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante">
+                                    <span class="font-weight-normal text-truncate text-info" ><u>{{inteligent.numerodocumento}}</u></span>
+                                </a>
+                            </td>
                             <td>{{ inteligent.debito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.conta?.conConta}}</td>

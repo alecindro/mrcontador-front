@@ -16,7 +16,7 @@ import { MesAnoDTO } from 'app/shared/dto/mesAnoDTO';
 import { MESES, MESLABELS } from 'app/shared/constants/input.constants';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SERVER_API_URL } from 'app/app.constants';
-import { UploadService } from 'app/shared/file/file-upload.service ';
+import { UploadService } from 'app/services/file-upload.service ';
 
 @Component({
   selector: 'jhi-comprovante',
