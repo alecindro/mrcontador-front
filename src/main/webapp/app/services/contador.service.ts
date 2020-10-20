@@ -14,7 +14,7 @@ type EntityArrayResponseType = HttpResponse<IContador[]>;
 export class ContadorService {
   public resourceUrl = SERVER_API_URL + 'api/contadors';
   public resourceTenantUrl = SERVER_API_URL + 'api/contadors/tenant';
-  private tipoSistema: TipoSistema;
+  private tipoSistema?: TipoSistema;
   constructor(protected http: HttpClient) {}
 
   create(contador: IContador): Observable<EntityResponseType> {

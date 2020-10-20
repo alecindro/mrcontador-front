@@ -30,6 +30,13 @@ export class AuthServerProvider {
   }
 
   login(credentials: Login): Observable<void> {
+    if (this.getToken()) {
+      this.logout().subscribe(result => this._login(credentials));
+    } else {
+      return this._login(credentials);
+    }
+  }
+  _login(credentials: Login): Observable<void> {
     return this.http
       .post<JwtToken>(SERVER_API_URL + 'api/authenticate', credentials)
       .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
