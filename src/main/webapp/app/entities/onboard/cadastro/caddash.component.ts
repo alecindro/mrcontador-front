@@ -208,7 +208,7 @@ export class CadDashComponent implements OnInit {
       dataSituacaoEspecial: this.editForm.get(['dataSituacaoEspecial'])!.value,
       capitalSocial: this.editForm.get(['capitalSocial'])!.value,
       enabled: this.editForm.get(['enabled'])!.value,
-      codExt: this.editForm.get(['codExt']).value,
+      codExt: this.editForm.get(['codExt'])!.value,
     };
   }
 
