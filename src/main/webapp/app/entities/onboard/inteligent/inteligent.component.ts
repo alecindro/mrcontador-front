@@ -208,15 +208,11 @@ export class InteligentComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangeTipoRegra(event: any): void {
-    this.tipoRegraSelected = this.tipoRegras.filter(value => value.regDescricao === event)[0];
-  }
-
   selectInteligent(inteligent: IInteligent, popover: NgbPopover): void {
     this.regra = new Regra();
     this.regra.regHistorico = '';
     this.tipoRegras = [];
-    const tipoRegraDefault = { tipoRegra: null, regDescricao: 'Selecione ..' };
+    const tipoRegraDefault = { tipoRegra: undefined, regDescricao: 'Selecione ..' };
     this.tipoRegras.push(tipoRegraDefault);
     this.tipoRegraSelected = tipoRegraDefault;
     if (inteligent.extrato?.infoAdicional) {
