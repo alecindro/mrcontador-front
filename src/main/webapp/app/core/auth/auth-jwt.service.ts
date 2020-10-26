@@ -31,7 +31,13 @@ export class AuthServerProvider {
 
   login(credentials: Login): Observable<void> {
     if (this.getToken()) {
-      this.logout().subscribe(result => this._login(credentials));
+      this.$localStorage.clear('authenticationToken');
+      this.$sessionStorage.clear('authenticationToken');
+      this.$localStorage.clear('tenant_uuid');
+      this.$sessionStorage.clear('tenant_uuid');
+      this.$localStorage.clear('sistema');
+      this.$sessionStorage.clear('sistema');
+      return this._login(credentials);
     } else {
       return this._login(credentials);
     }

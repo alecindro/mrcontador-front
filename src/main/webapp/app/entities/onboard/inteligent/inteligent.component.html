@@ -50,7 +50,7 @@
                 <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
 
-            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveRegra()" [disabled]="!contaSelected || !tipoRegraSelected.tipoRegra || !regra.regHistorico">
+            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveRegra()" [disabled]="!contaSelected || tipoRegraSelected.tipoRegra === null || !regra.regHistorico">
                 <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>
         </div>
