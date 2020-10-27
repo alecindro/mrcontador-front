@@ -1,0 +1,22 @@
+<jhi-alert-error></jhi-alert-error>
+<jhi-alert></jhi-alert>
+
+<div class="card">
+    <div class="card-header bg-primary text-center text-light">
+        <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.caixaLabel"></span>
+      </div>
+<form>
+        <div class="form-group" *ngIf="editable">
+            <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta" for="field_reg_conta">Reg Conta</label>
+            <jhi-conta-select [parceiro]="parceiro?.id" name="contaId" id="field_reg_conta" (contaSelected)="selectedConta($event)" [conta]="contaSelected" required></jhi-conta-select>
+        </div>
+        <div class="form-group" *ngIf="!editable">
+                <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.regra.reg_conta"></label>
+                <span class="form-control">{{caixa.conta?.conConta}} -  {{caixa.conta?.conClassificacao}} - {{caixa.conta?.conDescricao}}</span>
+            </div>
+        <div>
+                <button (click)="cancel()" class="btn btn-primary" *ngIf="editable">Cancelar</button>
+    <button (click)="save()" class="btn btn-primary" *ngIf="editable">Salvar</button>
+    <button (click)="edit()" class="btn btn-primary" *ngIf="!editable">Editar</button>
+</div>
+  </form>

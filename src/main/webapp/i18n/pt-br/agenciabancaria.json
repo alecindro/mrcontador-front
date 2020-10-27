@@ -5,7 +5,8 @@
         "title": "Agências bancárias",
         "createLabel": "Cadastrar Agência Bancária",
         "createOrEditLabel": "Cadastro de Agência Bancária",
-        "notFound": "Nenhuma agência bancária encontrada"
+        "notFound": "Nenhuma agência bancária encontrada",
+        "caixaLabel": "Cadastro de Caixa"
       },
       "created": "Agência bancária cadastrada com sucesso",
       "updated": "Agência bancária atualizada com sucesso",
@@ -23,7 +24,9 @@
       "age_situacao": "Situação",
       "banco": "Banco",
       "conconta": "Conta",
-      "parceiro": "Cliente"
+      "parceiro": "Cliente",
+      "caixa": "Caixa",
+      "possueAplicacao": "Aplicação Automática"
     }
   }
 }

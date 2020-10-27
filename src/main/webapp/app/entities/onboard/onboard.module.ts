@@ -22,6 +22,7 @@ import { RegraUpdateComponent } from './regra/regra-update.component';
 import { AgenciabancariaDeleteDialogComponent } from './agencia/agenciabancaria-delete-dialog.component';
 import { FileUploadModule } from 'primeng/fileupload';
 import { RegraDeleteDialogComponent } from './regra/regra-delete-dialog.component';
+import { CaixaComponent } from './caixa/caixa.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { RegraDeleteDialogComponent } from './regra/regra-delete-dialog.componen
     RegraUpdateComponent,
     RegraDeleteDialogComponent,
     AgenciabancariaDeleteDialogComponent,
+    CaixaComponent,
   ],
   imports: [
     CommonModule,

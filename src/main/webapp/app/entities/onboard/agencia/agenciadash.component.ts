@@ -10,6 +10,7 @@ import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { AgenciabancariaDeleteDialogComponent } from '../../../entities/onboard/agencia/agenciabancaria-delete-dialog.component';
 import { IParceiro } from '../../../model/parceiro.model';
 import { ParceiroService } from '../../../services/parceiro.service';
+import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 
 @Component({
   selector: 'jhi-agenciadash',
@@ -105,7 +106,11 @@ export class AgenciaDashComponent implements OnInit, OnDestroy {
         },
       });
     }
-    this.agenciabancarias = data || [];
+    this.agenciabancarias = [];
+    if (data) {
+      this.agenciabancarias = data.filter(_agencia => _agencia.tipoAgencia !== TipoAgencia[TipoAgencia.CAIXA]);
+    }
+
     this.ngbPaginationPage = this.page;
   }
 

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ExtratoDashComponent } from './extrato/extratodash.component';
-import { Authority } from 'app/shared/constants/authority.constants';
-import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { Authority } from '../../shared/constants/authority.constants';
+import { UserRouteAccessService } from '../../core/auth/user-route-access-service';
 import { ContaDashComponent } from './conta/contadash.component';
 import { NfeComponent } from './nfe/nfe.component';
 import { OnboardComponent } from './onboard.component';
@@ -14,6 +14,7 @@ import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.compone
 import { ComprovanteComponent } from './comprovante/comprovante.component';
 import { InteligentComponent } from './inteligent/inteligent.component';
 import { RegraComponent } from './regra/regra.component';
+import { CaixaComponent } from './caixa/caixa.component';
 
 const routes: Routes = [
   {
@@ -34,7 +35,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.inteligent.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -44,7 +45,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'extDatalancamento,desc',
-          pageTitle: 'mrcontadorFrontApp.extrato.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -54,7 +55,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.conta.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -64,7 +65,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'notDatasaida,desc',
-          pageTitle: 'mrcontadorFrontApp.notafiscal.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -74,7 +75,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.notaservico.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -84,7 +85,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.agenciabancaria.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -94,7 +95,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.agenciabancaria.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -104,7 +105,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'id,asc',
-          pageTitle: 'mrcontadorFrontApp.parceiro.home.createOrEditLabel',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -114,7 +115,7 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'comDatapagamento,asc',
-          pageTitle: 'mrcontadorFrontApp.comprovante.home.title',
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },
@@ -124,7 +125,16 @@ const routes: Routes = [
         data: {
           authorities: [Authority.USER],
           defaultSort: 'dataCadastro,desc',
-          pageTitle: 'mrcontadorFrontApp.regra.home.title',
+          pageTitle: 'global.title',
+        },
+        canActivate: [UserRouteAccessService],
+      },
+      {
+        path: 'caixa',
+        component: CaixaComponent,
+        data: {
+          authorities: [Authority.USER],
+          pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
       },

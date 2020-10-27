@@ -10,6 +10,8 @@ export interface IAgenciabancaria {
   ageDescricao?: string;
   ageSituacao?: boolean;
   banCodigobancario?: string;
+  tipoAgencia?: string;
+  possueAplicacao?: boolean;
   banco?: IBanco;
   parceiro?: IParceiro;
   conta?: IConta;
@@ -24,10 +26,13 @@ export class Agenciabancaria implements IAgenciabancaria {
     public ageDescricao?: string,
     public ageSituacao?: boolean,
     public banCodigobancario?: string,
+    public tipoAgencia?: string,
+    public possueAplicacao?: boolean,
     public banco?: IBanco,
     public parceiro?: IParceiro,
     public conta?: IConta
   ) {
+    this.possueAplicacao = this.possueAplicacao || false;
     this.ageSituacao = this.ageSituacao || false;
   }
 }

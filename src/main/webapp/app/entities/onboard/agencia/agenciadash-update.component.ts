@@ -20,6 +20,7 @@ type SelectableEntity = IBanco | IParceiro;
 })
 export class AgenciaDashUpdateComponent implements OnInit {
   isSaving = false;
+  contemAplicacao = false;
   searchingBanco = false;
   searchFailedBanco = false;
   searchingParceiro = false;
@@ -28,6 +29,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
   parceiros: IParceiro[] = [];
   parceiro!: IParceiro;
   conta?: IConta;
+  contaAplicacao?: IConta;
 
   editForm = this.fb.group({
     id: [],
@@ -37,6 +39,8 @@ export class AgenciaDashUpdateComponent implements OnInit {
     age_descricao: [null, [Validators.maxLength(30)]],
     age_situacao: [],
     bancoId: [null, Validators.required],
+    possueAplicacao: [],
+    tipoAgencia: [],
   });
 
   constructor(
@@ -54,6 +58,9 @@ export class AgenciaDashUpdateComponent implements OnInit {
     if (agenciabancaria?.id) {
       agenciabancaria.ageSituacao = true;
     }
+    if (agenciabancaria) {
+      this.contemAplicacao = agenciabancaria.possueAplicacao || false;
+    }
     this.updateForm(agenciabancaria);
     this.loadBancos();
   }
@@ -66,6 +73,8 @@ export class AgenciaDashUpdateComponent implements OnInit {
       age_agencia: agenciabancaria?.ageAgencia,
       age_descricao: agenciabancaria?.ageDescricao,
       age_situacao: agenciabancaria?.ageSituacao,
+      possueAplicacao: agenciabancaria?.possueAplicacao,
+      tipoAgencia: agenciabancaria?.tipoAgencia,
     });
     if (agenciabancaria?.banco) {
       this.editForm.patchValue({
@@ -107,6 +116,8 @@ export class AgenciaDashUpdateComponent implements OnInit {
       ageAgencia: this.editForm.get(['age_agencia'])!.value,
       ageDescricao: this.editForm.get(['age_descricao'])!.value,
       ageSituacao: this.editForm.get(['age_situacao'])!.value,
+      tipoAgencia: this.editForm.get(['tipoAgencia'])!.value,
+      possueAplicacao: this.editForm.get(['possueAplicacao'])!.value,
       conta: this.conta,
       banco: _banco,
       parceiro: this.parceiro,
@@ -143,5 +154,9 @@ export class AgenciaDashUpdateComponent implements OnInit {
 
   selectedConta(conta: IConta): void {
     this.conta = conta;
+  }
+
+  selectedContaAplicacao(conta: IConta): void {
+    this.contaAplicacao = conta;
   }
 }
