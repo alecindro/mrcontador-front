@@ -17,6 +17,7 @@ import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SERVER_API_URL } from '../../../app.constants';
 import { UploadService } from '../../../services/file-upload.service';
+import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 
 @Component({
   selector: 'jhi-comprovante',
@@ -42,6 +43,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   anos: number[] = [];
   anoSelected?: number;
   mesSelected?: number;
+  agencias?: IAgenciabancaria[];
 
   constructor(
     protected comprovanteService: ComprovanteService,
@@ -96,9 +98,17 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initDate();
-    this.parceiro = this.parceiroService.getParceiroSelected();
+    this.activatedRoute.data.subscribe(({ parceiro }) => {
+      this.parceiro = parceiro;
+      if (!parceiro) {
+        this.parceiro = this.parceiroService.getParceiroSelected();
+      }
+    });
     if (this.parceiro?.agenciabancarias) {
-      this.agenciaSelected = this.parceiro?.agenciabancarias[0];
+      this.agencias = this.parceiro?.agenciabancarias.filter(ag => ag.tipoAgencia === TipoAgencia[TipoAgencia.CONTA]);
+      if (this.agencias.length > 0) {
+        this.agenciaSelected = this.agencias[0];
+      }
     }
     this.handleNavigation();
     this.registerChangeInComprovantes();
@@ -196,7 +206,10 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       this.parceiro = response.content;
       this.initDate();
       if (this.parceiro?.agenciabancarias) {
-        this.agenciaSelected = this.parceiro?.agenciabancarias[0];
+        this.agencias = this.parceiro?.agenciabancarias.filter(ag => ag.tipoAgencia === TipoAgencia[TipoAgencia.CONTA]);
+        if (this.agencias.length > 0) {
+          this.agenciaSelected = this.agencias[0];
+        }
         this.onChangeAgencia();
       }
     });

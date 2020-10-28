@@ -23,7 +23,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { RegraService } from '../../../services/regra.service';
 import { AuthServerProvider } from '../../../core/auth/auth-jwt.service';
 import { TipoSistema } from '../../../shared/constants/TipoSistema';
-import { TipoAgencia } from 'app/shared/constants/TipoAgencia';
+import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 
 type EntityArrayResponseType = HttpResponse<IConta[]>;
 
@@ -53,6 +53,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   contaSelected?: IConta;
   inteligentSelected: IInteligent = {};
   popover?: NgbPopover;
+  activeTab = 1;
 
   constructor(
     private eventManager: JhiEventManager,
@@ -69,13 +70,21 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    /*   this.activatedRoute.data.subscribe(({ parceiro }) => {
+    this.activatedRoute.data.subscribe(({ parceiro }) => {
       this.parceiro = parceiro;
       if (!parceiro) {
         this.parceiro = this.parceiroService.getParceiroSelected();
       }
-      this.loadData();
-    });*/
+      if (this.parceiro) {
+        const agencias = this.parceiro.agenciabancarias?.filter(agencia => {
+          return agencia.ageSituacao === true && agencia.tipoAgencia === TipoAgencia[TipoAgencia.CONTA];
+        });
+        if (agencias && agencias.length > 0) {
+          this.agenciaSelected = agencias[0];
+        }
+        this.loadPeriodo();
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -148,6 +157,13 @@ export class InteligentComponent implements OnInit, OnDestroy {
 
   onChangeAgencia(): void {
     this.loadPeriodo();
+    this.activeTab = 1;
+    if (this.agenciaSelected.tipoAgencia === TipoAgencia[TipoAgencia.CAIXA]) {
+      this.activeTab = 4;
+    }
+    if (this.agenciaSelected.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
+      this.activeTab = 3;
+    }
   }
 
   onChangeMes(): void {

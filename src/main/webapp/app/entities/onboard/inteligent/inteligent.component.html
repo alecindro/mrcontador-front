@@ -83,7 +83,7 @@
 </ng-template>
 <ng-template #popContaTitle><b>Associar conta</b></ng-template>
 <ng-template #popTitle><b>Associar regra</b></ng-template>
-<ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs">
+<ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs" [(activeId)]="activeTab">
     <li [ngbNavItem]="1" *ngIf="agenciaSelected?.tipoAgencia === 'CONTA'">
         <a ngbNavLink>
             <span jhiTranslate="mrcontadorFrontApp.inteligent.lancamento_divergencia"></span>
@@ -140,10 +140,8 @@
             </div>
         </ng-template>
     </li>
-    <li [ngbNavItem]="2">
-        <a ngbNavLink><span jhiTranslate="mrcontadorFrontApp.inteligent.lancamento_conciliado" *ngIf="agenciaSelected?.tipoAgencia === 'CONTA'"></span>
-            <span jhiTranslate="mrcontadorFrontApp.inteligent.caixa" *ngIf="agenciaSelected?.tipoAgencia === 'CAIXA'"></span>
-            <span jhiTranslate="mrcontadorFrontApp.inteligent.aplicacao" *ngIf="agenciaSelected?.tipoAgencia === 'APLICACAO'"></span>
+    <li [ngbNavItem]="2" *ngIf="agenciaSelected?.tipoAgencia === 'CONTA'">
+        <a ngbNavLink><span jhiTranslate="mrcontadorFrontApp.inteligent.lancamento_conciliado"></span>
             <span class="badge badge-pill badge-light ml-2">{{conciliados?.length}}</span></a>
         <ng-template ngbNavContent>
             <div class="table-responsive" id="conciliados">
@@ -195,6 +193,90 @@
         </ng-template>
     </li>
 
+    <li [ngbNavItem]="3" *ngIf="agenciaSelected?.tipoAgencia === 'APLICACAO'">
+            <a ngbNavLink><span jhiTranslate="mrcontadorFrontApp.inteligent.aplicacao"></span>
+                <span class="badge badge-pill badge-light ml-2">{{conciliados?.length}}</span></a>
+            <ng-template ngbNavContent>
+                <div class="table-responsive" id="conciliados">
+                    <table class="table table-sm table-striped" aria-describedby="page-heading">
+                        <thead>
+                            <tr>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.datalancamento"></span>
+                                </th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito"></span></th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.credito"></span></th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.conta"></span></th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngIf="conciliados?.length === 0">
+                                <td colspan="6">
+                                    <div class="alert alert-light text-center">
+                                    <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound"></span>
+                                </div>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let inteligent of conciliados">
+                                <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
+                                <td>{{ inteligent.debito  | currency:"BRL"}}</td>
+                                <td>{{ inteligent.credito  | currency:"BRL"}}</td>
+                                <td>{{ inteligent.conta?.conConta}}</td>
+                                <td>{{ inteligent.conta?.conClassificacao}}</td>
+                                <td>{{ inteligent.historicofinal }}</td>
+                             
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="4" *ngIf="agenciaSelected?.tipoAgencia === 'CAIXA'">
+                <a ngbNavLink><span jhiTranslate="mrcontadorFrontApp.inteligent.caixa"></span>
+                    <span class="badge badge-pill badge-light ml-2">{{conciliados?.length}}</span></a>
+                <ng-template ngbNavContent>
+                    <div class="table-responsive" id="conciliados">
+                        <table class="table table-sm table-striped" aria-describedby="page-heading">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.datalancamento"></span>
+                                    </th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.credito"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.conta"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="conciliados?.length === 0">
+                                    <td colspan="6">
+                                        <div class="alert alert-light text-center">
+                                        <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound"></span>
+                                    </div>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let inteligent of conciliados">
+                                    <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
+                                    <td>{{ inteligent.debito  | currency:"BRL"}}</td>
+                                    <td>{{ inteligent.credito  | currency:"BRL"}}</td>
+                                    <td>{{ inteligent.conta?.conConta}}</td>
+                                    <td>{{ inteligent.conta?.conClassificacao}}</td>
+                                    <td>{{ inteligent.historicofinal }}</td>
+                                 
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </li>
+
 </ul>
+
+
+
 
 <div [ngbNavOutlet]="nav" class="mt-2"></div>

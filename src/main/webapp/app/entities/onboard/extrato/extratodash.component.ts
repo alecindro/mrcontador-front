@@ -17,7 +17,7 @@ import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
 import * as moment from 'moment';
 import { UploadService } from '../../../services/file-upload.service';
 import { SERVER_API_URL } from '../../../app.constants';
-import { TipoAgencia } from 'app/shared/constants/TipoAgencia';
+import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 
 @Component({
   selector: 'jhi-dash-extrato',

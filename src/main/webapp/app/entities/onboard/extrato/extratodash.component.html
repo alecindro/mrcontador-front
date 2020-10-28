@@ -4,7 +4,7 @@
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
             <option *ngFor="let agencia of agencias" [ngValue]="agencia">
-                {{ agencia.ageNumero + ' - ' + agencia.ageAgencia }}
+                {{ agencia.ageNumero + '/' + agencia.ageAgencia }}
             </option>
         </select>
         <label class="mr-sm-2"  for="field_mes" >Mês</label>
