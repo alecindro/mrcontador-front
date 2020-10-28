@@ -13,8 +13,7 @@
     <div class="pl-3">
       <select id="field_agencia" [(ngModel)]="agenciaSelected" class="custom-select">
         <option *ngFor="let agencia of agencias" [ngValue]="agencia">
-          {{ agencia?.banco?.banDescricao }} Agência: {{agencia.ageAgencia }} Conta:
-          {{agencia.ageNumero }}-{{agencia.ageDigito }}
+           {{agencia.ageAgencia}}/{{agencia.ageNumero }}
         </option>
       </select>
     </div>

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
+import { AgenciabancariaAplicacao } from 'app/shared/dto/agenciabancariaAplicacao';
 
 type EntityResponseType = HttpResponse<IAgenciabancaria>;
 type EntityArrayResponseType = HttpResponse<IAgenciabancaria[]>;
@@ -17,6 +18,10 @@ export class AgenciabancariaService {
 
   create(agenciabancaria: IAgenciabancaria): Observable<EntityResponseType> {
     return this.http.post<IAgenciabancaria>(this.resourceUrl, agenciabancaria, { observe: 'response' });
+  }
+
+  createAplicao(agenciabancariaAplicacao: AgenciabancariaAplicacao): Observable<EntityResponseType> {
+    return this.http.post<IAgenciabancaria>(this.resourceUrl + '/aplicacao', agenciabancariaAplicacao, { observe: 'response' });
   }
 
   setAgenciaSelected(agenciaSelected: IAgenciabancaria): void {

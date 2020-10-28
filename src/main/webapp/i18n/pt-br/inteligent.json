@@ -39,7 +39,9 @@
       "lancamento_conciliado": "Lançamento(s) com Conciliado",
       "conciliar": "Conciliar",
       "infoAdicional": "Informação",
-      "classificacao": "Classificação"
+      "classificacao": "Classificação",
+      "caixa": "Caixa",
+      "aplicacao": "Aplicação"
     }
   }
 }

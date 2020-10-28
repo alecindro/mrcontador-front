@@ -4,8 +4,8 @@
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
             <option *ngFor="let agencia of parceiro?.agenciabancarias" [ngValue]="agencia">
-               <span *ngIf="agencia.tipoAgencia === 'CONTA'">{{ agencia.ageNumero + ' - ' + agencia.ageAgencia }}</span>
-               <span *ngIf="agencia.tipoAgencia === 'APLICACAO'">{{ agencia.ageNumero + ' - ' + agencia.ageAgencia }}</span>
+               <span *ngIf="agencia.tipoAgencia === 'CONTA'">{{ 'CONTA '+agencia.ageAgencia + '/' + agencia.ageNumero }}</span>
+               <span *ngIf="agencia.tipoAgencia === 'APLICACAO'">{{ 'APLICACAO '+agencia.ageAgencia + '/' + agencia.ageNumero }}</span>
                <span *ngIf="agencia.tipoAgencia === 'CAIXA'">{{ agencia.ageAgencia }}</span>
             </option>
         </select>
@@ -84,7 +84,7 @@
 <ng-template #popContaTitle><b>Associar conta</b></ng-template>
 <ng-template #popTitle><b>Associar regra</b></ng-template>
 <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs">
-    <li [ngbNavItem]="1">
+    <li [ngbNavItem]="1" *ngIf="agenciaSelected?.tipoAgencia === 'CONTA'">
         <a ngbNavLink>
             <span jhiTranslate="mrcontadorFrontApp.inteligent.lancamento_divergencia"></span>
         <span class="badge badge-pill badge-light ml-2">{{divergencias?.length}}</span>
@@ -141,7 +141,9 @@
         </ng-template>
     </li>
     <li [ngbNavItem]="2">
-        <a ngbNavLink><span jhiTranslate="mrcontadorFrontApp.inteligent.lancamento_conciliado"></span>
+        <a ngbNavLink><span jhiTranslate="mrcontadorFrontApp.inteligent.lancamento_conciliado" *ngIf="agenciaSelected?.tipoAgencia === 'CONTA'"></span>
+            <span jhiTranslate="mrcontadorFrontApp.inteligent.caixa" *ngIf="agenciaSelected?.tipoAgencia === 'CAIXA'"></span>
+            <span jhiTranslate="mrcontadorFrontApp.inteligent.aplicacao" *ngIf="agenciaSelected?.tipoAgencia === 'APLICACAO'"></span>
             <span class="badge badge-pill badge-light ml-2">{{conciliados?.length}}</span></a>
         <ng-template ngbNavContent>
             <div class="table-responsive" id="conciliados">

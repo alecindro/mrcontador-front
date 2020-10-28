@@ -11,6 +11,8 @@ import { IParceiro } from '../../../model/parceiro.model';
 import { ParceiroService } from '../../../services/parceiro.service';
 import { JhiEventManager } from 'ng-jhipster';
 import { IConta } from '../../../model/conta.model';
+import { AgenciabancariaAplicacao } from 'app/shared/dto/agenciabancariaAplicacao';
+import { TipoAgencia } from 'app/shared/constants/TipoAgencia';
 
 type SelectableEntity = IBanco | IParceiro;
 
@@ -60,7 +62,11 @@ export class AgenciaDashUpdateComponent implements OnInit {
     }
     if (agenciabancaria) {
       this.contemAplicacao = agenciabancaria.possueAplicacao || false;
+      if (agenciabancaria.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
+        this.contemAplicacao = true;
+      }
     }
+
     this.updateForm(agenciabancaria);
     this.loadBancos();
   }
@@ -93,10 +99,16 @@ export class AgenciaDashUpdateComponent implements OnInit {
   save(): void {
     this.isSaving = true;
     const agenciabancaria = this.createFromForm();
-    if (agenciabancaria.id !== undefined) {
-      this.subscribeToSaveResponse(this.agenciabancariaService.update(agenciabancaria));
+    if (!this.contemAplicacao && agenciabancaria.possueAplicacao) {
+      agenciabancaria.tipoAgencia = TipoAgencia[TipoAgencia.CONTA];
+      const agenciabancariaAplicacao = new AgenciabancariaAplicacao(agenciabancaria, this.contaAplicacao, true);
+      this.subscribeToSaveResponse(this.agenciabancariaService.createAplicao(agenciabancariaAplicacao));
     } else {
-      this.subscribeToSaveResponse(this.agenciabancariaService.create(agenciabancaria));
+      if (agenciabancaria.id !== undefined) {
+        this.subscribeToSaveResponse(this.agenciabancariaService.update(agenciabancaria));
+      } else {
+        this.subscribeToSaveResponse(this.agenciabancariaService.create(agenciabancaria));
+      }
     }
   }
 

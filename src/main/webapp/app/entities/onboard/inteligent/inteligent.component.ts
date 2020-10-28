@@ -23,6 +23,7 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { RegraService } from '../../../services/regra.service';
 import { AuthServerProvider } from '../../../core/auth/auth-jwt.service';
 import { TipoSistema } from '../../../shared/constants/TipoSistema';
+import { TipoAgencia } from 'app/shared/constants/TipoAgencia';
 
 type EntityArrayResponseType = HttpResponse<IConta[]>;
 
@@ -68,13 +69,13 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ parceiro }) => {
+    /*   this.activatedRoute.data.subscribe(({ parceiro }) => {
       this.parceiro = parceiro;
       if (!parceiro) {
         this.parceiro = this.parceiroService.getParceiroSelected();
       }
-      this.loadPeriodo();
-    });
+      this.loadData();
+    });*/
   }
 
   ngOnDestroy(): void {
@@ -84,33 +85,28 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   private loadPeriodo(): void {
-    if (this.parceiro?.agenciabancarias) {
-      this.agenciaSelected = this.parceiro?.agenciabancarias[0];
-      if (this.agenciaSelected) {
-        this.inteligentService
-          .queryPeriodo({
-            parceiroId: this.parceiro?.id,
-            agenciabancariaId: this.agenciaSelected.id,
-          })
-          .subscribe(response => {
-            if (response.body) {
-              this.initDate(response.body);
-              this.loadData();
-            }
-          });
-      }
+    if (this.agenciaSelected) {
+      this.inteligentService
+        .queryPeriodo({
+          parceiroId: this.parceiro?.id,
+          agenciabancariaId: this.agenciaSelected.id,
+        })
+        .subscribe(response => {
+          if (response.body) {
+            this.initDate(response.body);
+            this.loadData();
+          }
+        });
     }
   }
 
   private loadData(): void {
     const queryParam = {
       'parceiroId.equals': this.parceiro?.id,
+      'agenciabancariaId.equals': this.agenciaSelected?.id,
       'periodo.equals': this.mesSelected + '' + this.anoSelected,
       sort: ['datalancamento,asc'],
     };
-    if (this.agenciaSelected) {
-      queryParam['agenciabancariaId.equals'] = this.agenciaSelected?.id;
-    }
     this.spinner.show();
     this.inteligentService.query(queryParam).subscribe(
       (res: HttpResponse<IInteligent[]>) => {
@@ -167,6 +163,8 @@ export class InteligentComponent implements OnInit, OnDestroy {
       this.anos.push(+_ano);
       this.meses.push(+_month);
     });
+    this.anos = Array.from(new Set(this.anos));
+    this.meses = Array.from(new Set(this.meses));
     this.anoSelected = this.anos[0];
     this.mesSelected = this.meses[0];
   }
@@ -174,6 +172,12 @@ export class InteligentComponent implements OnInit, OnDestroy {
   private registerParceiroListener(): void {
     this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
       this.parceiro = response.content;
+      const agencias = this.parceiro.agenciabancarias?.filter(agencia => {
+        return agencia.ageSituacao === true && agencia.tipoAgencia === TipoAgencia[TipoAgencia.CONTA];
+      });
+      if (agencias && agencias.length > 0) {
+        this.agenciaSelected = agencias[0];
+      }
       this.loadPeriodo();
     });
   }

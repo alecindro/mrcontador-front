@@ -118,7 +118,7 @@
                             <div class="form-group col-md-4" *ngIf="editForm.get(['possueAplicacao'])?.value">
                                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.agenciabancaria.conconta"
                                     for="field_conContaAplicacao"></label>
-                                    <jhi-conta-select [parceiro]="parceiro?.id" name="contaIdAplicacao" id="field_conContaAplicacao" (contaSelected)="selectedConta($event)" [conta]="conta"></jhi-conta-select>
+                                    <jhi-conta-select [parceiro]="parceiro?.id" name="contaIdAplicacao" id="field_conContaAplicacao" (contaSelected)="selectedContaAplicacao($event)" [conta]="contaAplicacao"></jhi-conta-select>
                                     
                                     <small class="form-text text-danger" *ngIf="!conta"
                                         jhiTranslate="entity.validation.required">
