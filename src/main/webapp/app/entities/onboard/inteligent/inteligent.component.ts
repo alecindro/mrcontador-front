@@ -114,7 +114,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
       'parceiroId.equals': this.parceiro?.id,
       'agenciabancariaId.equals': this.agenciaSelected?.id,
       'periodo.equals': this.mesSelected + '' + this.anoSelected,
-      sort: ['datalancamento,asc'],
+      sort: ['datalancamento,asc', 'comprovante,asc'],
     };
     this.spinner.show();
     this.inteligentService.query(queryParam).subscribe(
@@ -158,10 +158,10 @@ export class InteligentComponent implements OnInit, OnDestroy {
   onChangeAgencia(): void {
     this.loadPeriodo();
     this.activeTab = 1;
-    if (this.agenciaSelected.tipoAgencia === TipoAgencia[TipoAgencia.CAIXA]) {
+    if (this.agenciaSelected && this.agenciaSelected?.tipoAgencia === TipoAgencia[TipoAgencia.CAIXA]) {
       this.activeTab = 4;
     }
-    if (this.agenciaSelected.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
+    if (this.agenciaSelected && this.agenciaSelected?.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
       this.activeTab = 3;
     }
   }

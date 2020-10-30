@@ -8,6 +8,7 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { ParceiroService } from '../../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TranslateService } from '@ngx-translate/core';
+import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 
 @Component({
   templateUrl: './comprovante-dialog.component.html',
@@ -36,8 +37,11 @@ export class ComprovanteUploadComponent implements OnInit {
     this.agencias = this.parceiro.agenciabancarias?.filter(agencia => {
       return agencia.ageSituacao === true;
     });
-    if (this.agencias && this.agencias.length > 0) {
-      this.agenciaSelected = this.agencias[0];
+    if (this.parceiro?.agenciabancarias) {
+      this.agencias = this.parceiro?.agenciabancarias.filter(ag => ag.tipoAgencia === TipoAgencia[TipoAgencia.CONTA]);
+      if (this.agencias.length > 0) {
+        this.agenciaSelected = this.agencias[0];
+      }
     }
   }
 
