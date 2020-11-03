@@ -40,6 +40,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   mesAno!: MesAnoDTO;
   meses: number[] = [];
   readonly mesLabels = MESLABELS;
+  readonly regras = TipoRegra;
   anos: number[] = [];
   anoSelected?: number;
   mesSelected?: number;
@@ -48,11 +49,12 @@ export class InteligentComponent implements OnInit, OnDestroy {
   resourceUrl = SERVER_API_URL + 'api/downloadFile/comprovante/';
   resourceUrlNfe = SERVER_API_URL + 'api/downloadFile/notafiscal/';
   resourceUrlLancamento = SERVER_API_URL + 'api/downloadFile/lancamento/';
-  tipoRegras: { tipoRegra?: TipoRegra; regDescricao?: string }[] = [];
-  tipoRegraSelected: { tipoRegra?: TipoRegra; regDescricao?: string } = {};
+  tipoRegras: { tipoRegra?: string; regDescricao?: string }[] = [];
+  tipoRegraSelected: { tipoRegra?: string; regDescricao?: string } = {};
   contaSelected?: IConta;
   inteligentSelected: IInteligent = {};
   popover?: NgbPopover;
+  popoverConta?: NgbPopover;
   activeTab = 1;
 
   constructor(
@@ -136,7 +138,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   saveRegra(): void {
-    this.regra.tipoRegra = this.tipoRegraSelected.tipoRegra?.toString();
+    this.regra.tipoRegra = this.tipoRegraSelected.tipoRegra;
     this.regra.regDescricao = this.tipoRegraSelected.regDescricao;
     this.regra.parceiro = this.parceiro;
     this.regra.conta = this.contaSelected;
@@ -200,12 +202,11 @@ export class InteligentComponent implements OnInit, OnDestroy {
 
   selectConta(inteligent: IInteligent, popover: NgbPopover): void {
     this.inteligentSelected = inteligent;
-    if (popover.isOpen()) {
-      popover.close();
-    } else {
-      popover.open({ popover });
+    if (this.popoverConta?.isOpen()) {
+      this.popoverConta.close();
     }
-    this.popover = popover;
+    popover.open({ popover });
+    this.popoverConta = popover;
   }
 
   saveConta(): void {
@@ -223,8 +224,8 @@ export class InteligentComponent implements OnInit, OnDestroy {
   cancelConta(): void {
     this.contaSelected = undefined;
     this.inteligentSelected = {};
-    if (this.popover) {
-      this.popover.close();
+    if (this.popoverConta) {
+      this.popoverConta.close();
     }
   }
 
@@ -232,21 +233,22 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.regra = new Regra();
     this.regra.regHistorico = '';
     this.tipoRegras = [];
-    const tipoRegraDefault = { tipoRegra: undefined, regDescricao: 'Selecione ..' };
+    const tipoRegraDefault = { tipoRegra: 'Selecione ..', regDescricao: undefined };
     this.tipoRegras.push(tipoRegraDefault);
     this.tipoRegraSelected = tipoRegraDefault;
     if (inteligent.extrato?.infoAdicional) {
-      this.tipoRegras.push({ tipoRegra: TipoRegra.INFORMACAO_ADICIONAL, regDescricao: inteligent.extrato?.infoAdicional });
+      this.tipoRegras.push({ tipoRegra: TipoRegra[TipoRegra.INFORMACAO_ADICIONAL], regDescricao: inteligent.extrato?.infoAdicional });
     }
     if (inteligent.beneficiario) {
-      this.tipoRegras.push({ tipoRegra: TipoRegra.BENEFICIARIO, regDescricao: inteligent.beneficiario });
+      this.tipoRegras.push({ tipoRegra: TipoRegra[TipoRegra.BENEFICIARIO], regDescricao: inteligent.beneficiario });
     }
-    this.tipoRegras.push({ tipoRegra: TipoRegra.HISTORICO, regDescricao: inteligent?.historico });
-    if (popover.isOpen()) {
-      popover.close();
-    } else {
-      popover.open({ popover });
+    if (inteligent.comprovante?.tipoComprovante !== 'TITULO') {
+      this.tipoRegras.push({ tipoRegra: TipoRegra[TipoRegra.HISTORICO], regDescricao: inteligent?.historico });
     }
+    if (this.popover?.isOpen()) {
+      this.popover.close();
+    }
+    popover.open({ popover });
     this.popover = popover;
   }
   public downloadComprovante(comprovante: IComprovante): void {
