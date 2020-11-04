@@ -26,7 +26,8 @@
       "com_datapagamento": "Dt Pagto",
       "com_valordocumento": "Valor Doc",
       "com_valorpagamento": "Valor Pag",
-      "com_observacao": "Obs"
+      "com_observacao": "Obs",
+      "juros": "Juros"
     }
   }
 }

@@ -114,7 +114,8 @@
       "save": "Salvar",
       "view": "Visualizar",
       "upload": "Carregar",
-      "new": "Cadastrar"
+      "new": "Cadastrar",
+      "close": "Fechar"
     },
     "detail": {
       "field": "Campo",

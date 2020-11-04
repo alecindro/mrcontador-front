@@ -130,7 +130,7 @@ export class NfeComponent implements OnInit, OnDestroy {
   }
 
   upload(): void {
-    const modalRef = this.modalService.open(NfeUploadComponent, { size: 'xl', backdrop: 'static' });
+    const modalRef = this.modalService.open(NfeUploadComponent, { size: 'xl', backdrop: 'static', scrollable: true });
     modalRef.componentInstance.parceiro = this.parceiro;
   }
 

@@ -177,7 +177,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   upload(): void {
-    const modalRef = this.modalService.open(ComprovanteUploadComponent, { size: 'xl', backdrop: 'static' });
+    const modalRef = this.modalService.open(ComprovanteUploadComponent, { size: 'xl', backdrop: 'static', scrollable: true });
     modalRef.componentInstance.parceiro = this.parceiro;
   }
   onChangeAgencia(): void {

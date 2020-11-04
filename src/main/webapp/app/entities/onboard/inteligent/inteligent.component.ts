@@ -55,6 +55,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   inteligentSelected: IInteligent = {};
   popover?: NgbPopover;
   popoverConta?: NgbPopover;
+  popoverTaxa?: NgbPopover;
   activeTab = 1;
 
   constructor(
@@ -207,6 +208,22 @@ export class InteligentComponent implements OnInit, OnDestroy {
     }
     popover.open({ popover });
     this.popoverConta = popover;
+  }
+
+  selectTaxa(inteligent: IInteligent, popover: NgbPopover): void {
+    this.inteligentSelected = inteligent;
+    if (this.popoverTaxa?.isOpen()) {
+      this.popoverTaxa.close();
+    }
+    popover.open({ popover });
+    this.popoverTaxa = popover;
+  }
+
+  closeTaxa(): void {
+    this.inteligentSelected = {};
+    if (this.popoverTaxa) {
+      this.popoverTaxa.close();
+    }
   }
 
   saveConta(): void {
