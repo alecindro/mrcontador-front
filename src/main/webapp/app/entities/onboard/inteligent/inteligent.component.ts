@@ -24,6 +24,9 @@ import { RegraService } from '../../../services/regra.service';
 import { AuthServerProvider } from '../../../core/auth/auth-jwt.service';
 import { TipoSistema } from '../../../shared/constants/TipoSistema';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
+import { NotafiscalService } from '../../../services/notafiscal.service';
+import { TipoComprovante } from '../../../shared/constants/TipoComprovante.constants';
+import { TipoValor } from '../../../shared/constants/TipoValor.constants';
 
 type EntityArrayResponseType = HttpResponse<IConta[]>;
 
@@ -41,6 +44,8 @@ export class InteligentComponent implements OnInit, OnDestroy {
   meses: number[] = [];
   readonly mesLabels = MESLABELS;
   readonly regras = TipoRegra;
+  readonly tipoComprovante = TipoComprovante;
+  readonly tipoValor = TipoValor;
   anos: number[] = [];
   anoSelected?: number;
   mesSelected?: number;
@@ -56,12 +61,15 @@ export class InteligentComponent implements OnInit, OnDestroy {
   popover?: NgbPopover;
   popoverConta?: NgbPopover;
   popoverTaxa?: NgbPopover;
+  popoverNotaFiscal?: NgbPopover;
   activeTab = 1;
+  notafiscals?: INotafiscal[];
 
   constructor(
     private eventManager: JhiEventManager,
     protected inteligentService: InteligentService,
     protected parceiroService: ParceiroService,
+    protected notafiscalService: NotafiscalService,
     public spinner: NgxSpinnerService,
     public activatedRoute: ActivatedRoute,
     public fileService: UploadService,
@@ -226,6 +234,13 @@ export class InteligentComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeNota(): void {
+    this.notafiscals = [];
+    if (this.popoverNotaFiscal) {
+      this.popoverNotaFiscal.close();
+    }
+  }
+
   saveConta(): void {
     if (this.inteligentSelected) {
       this.inteligentSelected.associado = true;
@@ -278,6 +293,32 @@ export class InteligentComponent implements OnInit, OnDestroy {
       error => console.log('Error downloading the file', error),
       () => console.info('File downloaded successfully')
     );
+  }
+
+  public loadNotas(inteligent: IInteligent, popover: NgbPopover): void {
+    if (
+      inteligent.tipoValor === TipoValor[TipoValor.PRINCIPAL] &&
+      inteligent?.comprovante &&
+      inteligent.comprovante?.tipoComprovante === TipoComprovante[TipoComprovante.TITULO]
+    ) {
+      const queryParam = {
+        cnpj: `${inteligent?.cnpj}`,
+        valor: inteligent?.debito,
+        dataInicial: inteligent?.datalancamento.format('YYYY-MM-DD'),
+      };
+      this.notafiscalService.findNear(queryParam).subscribe(response => {
+        this.notafiscals = response.body || [];
+        this.selectNota(popover);
+      });
+    }
+  }
+
+  selectNota(popover: NgbPopover): void {
+    if (this.popoverNotaFiscal?.isOpen()) {
+      this.popoverNotaFiscal.close();
+    }
+    popover.open({ popover });
+    this.popoverNotaFiscal = popover;
   }
 
   public downloadNfe(nfe: INotafiscal): void {

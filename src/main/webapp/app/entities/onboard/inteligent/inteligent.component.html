@@ -85,6 +85,47 @@
 </form>
 </ng-template>
 
+<ng-template #popNotaFiscal> 
+    <div  *ngIf="notafiscals?.length === 0">
+            <span jhiTranslate="mrcontadorFrontApp.notafiscal.home.notFound">No notafiscals found</span>
+    </div>
+        <div class="table-responsive" id="notasPop" *ngIf="notafiscals?.length > 0">
+                <table class="table table-sm table-striped" aria-describedby="page-heading">
+                    <thead>
+                        <tr>                      
+                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not
+                                Numero</span>
+                        </th>
+                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa">Not
+                                Empresa</span>
+                        </th>
+                        <th scope="col"><span
+                                jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela">Not Dataparcela</span>
+                        </th>
+                        <th scope="col"><span
+                                jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota">Not Valorparcela</span>
+                        </th>
+                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela">Not
+                                Parcela</span>
+                        </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let notafiscal of notafiscals">
+                            <td>{{ notafiscal.notNumero }}</td>
+                            <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notEmpresa }}</span></td>
+                            <td >{{ notafiscal.notDataparcela | date:'dd/MM/yyyy' }}</td>
+                            <td >{{ notafiscal.notValorparcela | currency:"BRL" }}</td>
+                            <td >{{ notafiscal.notParcela }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="closeNota()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.close"></span>
+                </button>
+    </ng-template>
+
 <ng-template #popTaxa> 
     <form>
             <div class="form-group">
@@ -114,6 +155,7 @@
         </div>
 </form>
 </ng-template>
+<ng-template #popNotFiscalTitle><b>Notas Fiscais</b></ng-template>
 <ng-template #popTaxaTitle><b>Detalhes</b></ng-template>
 <ng-template #popContaTitle><b>Associar conta</b></ng-template>
 <ng-template #popTitle><b>Associar regra</b></ng-template>
@@ -164,7 +206,7 @@
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
                             <td><span>{{ inteligent.conta?.conConta}}</span>
                             <div >
-                                <a [ngbPopover]="popConta" [popoverTitle]="popContaTitle" [autoClose]="false" #p1="ngbPopover" triggers="manual" (click)="selectConta(inteligent,p1)" class="text-info">
+                                <a [ngbPopover]="popConta" [popoverTitle]="popNotFiscalTitle" [autoClose]="false" #p1="ngbPopover" triggers="manual" (click)="selectConta(inteligent,p1)" class="text-info">
                                     <u placement="top" ngbTooltip="Associar conta">Associar conta</u>
                                 </a>
                             </div>
@@ -172,6 +214,9 @@
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td>{{ inteligent.cnpj }}</td>
                             <td>
+                                    <a [ngbPopover]="popNotaFiscal" [popoverTitle]="popNotaFiscalTitle" [autoClose]="false" #pNota="ngbPopover" triggers="manual" (click)="loadNotas(inteligent,pNota)" class="text-info" *ngIf="inteligent.tipoValor && inteligent.tipoValor === tipoValor[tipoValor.PRINCIPAL] && inteligent?.comprovante && inteligent?.comprovante.tipoComprovante === tipoComprovante[tipoComprovante.TITULO]">
+                                            <u placement="top" ngbTooltip="Associar nota fiscal">Associar nota fiscal</u>
+                                        </a>
                                 <a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.notafiscal?.notNumero }}</u></span></a>
                                
                             </td>

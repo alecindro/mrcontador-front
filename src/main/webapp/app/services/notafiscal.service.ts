@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
-import { INotafiscal } from 'app/model/notafiscal.model';
+import { SERVER_API_URL } from '../../app/app.constants';
+import { createRequestOption } from '../../app/shared/util/request-util';
+import { INotafiscal } from '../../app/model/notafiscal.model';
 
 type EntityResponseType = HttpResponse<INotafiscal>;
 type EntityArrayResponseType = HttpResponse<INotafiscal[]>;
@@ -35,6 +35,12 @@ export class NotafiscalService {
     return this.http
       .get<INotafiscal>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+  findNear(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<INotafiscal[]>(`${this.resourceUrl}/near`, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
