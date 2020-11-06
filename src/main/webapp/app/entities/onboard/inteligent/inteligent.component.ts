@@ -304,7 +304,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
       const queryParam = {
         cnpj: `${inteligent?.cnpj}`,
         valor: inteligent?.debito,
-        dataInicial: inteligent?.datalancamento.format('YYYY-MM-DD'),
+        dataInicial: inteligent?.datalancamento ? inteligent?.datalancamento.format('YYYY-MM-DD') : '',
       };
       this.notafiscalService.findNear(queryParam).subscribe(response => {
         this.notafiscals = response.body || [];

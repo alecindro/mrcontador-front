@@ -115,7 +115,8 @@
       "view": "Visualizar",
       "upload": "Carregar",
       "new": "Cadastrar",
-      "close": "Fechar"
+      "close": "Fechar",
+      "next": "Próximo"
     },
     "detail": {
       "field": "Campo",

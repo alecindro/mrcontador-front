@@ -21,6 +21,7 @@
       "par_razaosocial": "Razão Social",
       "par_tipopessoa": "Tipo de Pessoa",
       "par_cnpjcpf": "CPF/CNPJ",
+      "par_cnpj": "CNPJ",
       "par_rgie": "RG",
       "par_obs": "Observação",
       "par_datacadastro": "Data de Cadastro",
@@ -47,7 +48,8 @@
       "codExt": "Código do parceiro no sistema para importação da consolidação",
       "porte": "Porte",
       "email": "Email",
-      "status": "Status"
+      "status": "Status",
+      "write_cnpj": "Digite o CNPJ"
     }
   }
 }

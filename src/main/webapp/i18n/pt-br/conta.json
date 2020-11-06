@@ -22,7 +22,8 @@
       "con_descricao": "Descrição",
       "con_cnpj": "Cnpj",
       "con_grau": "Grau",
-      "parceiro": "Parceiro"
+      "parceiro": "Parceiro",
+      "conta_juros": "Conta de juros"
     }
   }
 }

@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'jhi-parceiro-create',
   templateUrl: './parceiro-create.component.html',
+  styleUrls: ['./parceiro-create.component.scss'],
 })
 export class ParceiroCreateComponent implements OnInit {
   progressInfo: { value?: number; fileName?: string; file?: any; index?: number; _event?: any; message?: string; error?: boolean } = {};
@@ -22,10 +23,12 @@ export class ParceiroCreateComponent implements OnInit {
   cnpj: any;
   isSaving = false;
   editable = true;
-
+  current_fs: any;
+  next_fs: any;
   maskJuridica = '00.000.000/0000-00';
   maskFisica = '000.000.000-00';
   mask = this.maskJuridica;
+  step = 0;
 
   juridica = 'J';
   fisica = 'F';
@@ -255,6 +258,12 @@ export class ParceiroCreateComponent implements OnInit {
         }
       );
     }
+  }
+
+  next($event: any): void {
+    this.current_fs = $event.target.parentElement.parentElement;
+    this.next_fs = this.current_fs.nextElementSibling;
+    this.step = this.step + 1;
   }
 
   selectFile(event: any): void {
