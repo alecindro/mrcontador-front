@@ -10,7 +10,9 @@ import { UploadService } from '../../services/file-upload.service';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import { IConta } from '../../model/conta.model';
 
+type EntityResponseType = HttpResponse<IParceiro>;
 @Component({
   selector: 'jhi-parceiro-create',
   templateUrl: './parceiro-create.component.html',
@@ -29,11 +31,19 @@ export class ParceiroCreateComponent implements OnInit {
   maskFisica = '000.000.000-00';
   mask = this.maskJuridica;
   step = 0;
-
+  parceiro?: IParceiro;
   juridica = 'J';
   fisica = 'F';
+  despesaJurosConta?: IConta;
+  despesaIofConta?: IConta;
+  jurosAtivosConta?: IConta;
+  descontosAtivosConta?: IConta;
+  caixaConta?: IConta;
+  despesasBancariasConta?: IConta;
+  despesaTarifaConta?: IConta;
+  codExt?: string;
 
-  editForm = this.fb.group({
+  formParceiro = this.fb.group({
     id: [],
     parDescricao: [null, [Validators.maxLength(50)]],
     parRazaosocial: [null, [Validators.maxLength(70), Validators.required]],
@@ -85,11 +95,15 @@ export class ParceiroCreateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.parceiro) {
+      this.updateForm(this.parceiro);
+      this.step = this.parceiro.cadastroStatus! + 1;
+    }
     this.mask = this.maskJuridica;
   }
 
   updateForm(parceiro: IParceiro): void {
-    this.editForm.patchValue({
+    this.formParceiro.patchValue({
       id: parceiro.id,
       parDescricao: parceiro.parDescricao,
       parRazaosocial: parceiro.parRazaosocial,
@@ -124,8 +138,8 @@ export class ParceiroCreateComponent implements OnInit {
       enabled: parceiro.enabled,
       codExt: parceiro.codExt,
     });
-    const _socios = this.editForm.controls.socios as FormArray;
-    const _atividades = this.editForm.controls.atividades as FormArray;
+    const _socios = this.formParceiro.controls.socios as FormArray;
+    const _atividades = this.formParceiro.controls.atividades as FormArray;
     if (parceiro.socios) {
       parceiro.socios.forEach(socio => {
         _socios.push(
@@ -152,10 +166,10 @@ export class ParceiroCreateComponent implements OnInit {
   }
 
   get socios(): FormArray {
-    return this.editForm.get('socios') as FormArray;
+    return this.formParceiro.get('socios') as FormArray;
   }
   get atividades(): FormArray {
-    return this.editForm.get('atividades') as FormArray;
+    return this.formParceiro.get('atividades') as FormArray;
   }
 
   save(): void {
@@ -166,14 +180,6 @@ export class ParceiroCreateComponent implements OnInit {
     this.subscribeToSaveResponse(this.parceiroService.create(parceiro));
   }
 
-  saveClick(): void {
-    if (this.editForm.dirty) {
-      this.save();
-    } else {
-      this.closeModal();
-    }
-  }
-
   closeModal(): void {
     this.activeModal.close();
   }
@@ -181,39 +187,39 @@ export class ParceiroCreateComponent implements OnInit {
   private createFromForm(): IParceiro {
     return {
       ...new Parceiro(),
-      id: this.editForm.get(['id'])!.value,
-      parDescricao: this.editForm.get(['parDescricao'])!.value,
-      parRazaosocial: this.editForm.get(['parRazaosocial'])!.value,
-      parTipopessoa: this.editForm.get(['pessoafisica'])!.value ? this.fisica : this.juridica,
-      parCnpjcpf: this.editForm.get(['parCnpjcpf'])!.value,
-      parRgie: this.editForm.get(['parRgie'])!.value,
-      parObs: this.editForm.get(['parObs'])!.value,
-      parDatacadastro: this.editForm.get(['parDatacadastro'])!.value,
-      spaCodigo: this.editForm.get(['spaCodigo'])!.value,
-      logradouro: this.editForm.get(['logradouro'])!.value,
-      cep: this.editForm.get(['cep'])!.value,
-      cidade: this.editForm.get(['cidade'])!.value,
-      estado: this.editForm.get(['estado'])!.value,
-      areAtuacao: this.editForm.get(['areAtuacao'])!.value,
-      numero: this.editForm.get(['numero'])!.value,
-      bairro: this.editForm.get(['bairro'])!.value,
-      porte: this.editForm.get(['porte'])!.value,
-      abertura: this.editForm.get(['abertura'])!.value,
-      naturezaJuridica: this.editForm.get(['naturezaJuridica'])!.value,
-      ultimaAtualizacao: this.editForm.get(['ultimaAtualizacao'])!.value,
-      status: this.editForm.get(['status'])!.value,
-      tipo: this.editForm.get(['tipo'])!.value,
-      complemento: this.editForm.get(['complemento'])!.value,
-      email: this.editForm.get(['email'])!.value,
-      telefone: this.editForm.get(['telefone'])!.value,
-      dataSituacao: this.editForm.get(['dataSituacao'])!.value,
-      efr: this.editForm.get(['efr'])!.value,
-      motivoSituacao: this.editForm.get(['motivoSituacao'])!.value,
-      situacaoEspecial: this.editForm.get(['situacaoEspecial'])!.value,
-      dataSituacaoEspecial: this.editForm.get(['dataSituacaoEspecial'])!.value,
-      capitalSocial: this.editForm.get(['capitalSocial'])!.value,
-      enabled: this.editForm.get(['enabled'])!.value,
-      codExt: this.editForm.get(['codExt'])!.value,
+      id: this.formParceiro.get(['id'])!.value,
+      parDescricao: this.formParceiro.get(['parDescricao'])!.value,
+      parRazaosocial: this.formParceiro.get(['parRazaosocial'])!.value,
+      parTipopessoa: this.formParceiro.get(['pessoafisica'])!.value ? this.fisica : this.juridica,
+      parCnpjcpf: this.formParceiro.get(['parCnpjcpf'])!.value,
+      parRgie: this.formParceiro.get(['parRgie'])!.value,
+      parObs: this.formParceiro.get(['parObs'])!.value,
+      parDatacadastro: this.formParceiro.get(['parDatacadastro'])!.value,
+      spaCodigo: this.formParceiro.get(['spaCodigo'])!.value,
+      logradouro: this.formParceiro.get(['logradouro'])!.value,
+      cep: this.formParceiro.get(['cep'])!.value,
+      cidade: this.formParceiro.get(['cidade'])!.value,
+      estado: this.formParceiro.get(['estado'])!.value,
+      areAtuacao: this.formParceiro.get(['areAtuacao'])!.value,
+      numero: this.formParceiro.get(['numero'])!.value,
+      bairro: this.formParceiro.get(['bairro'])!.value,
+      porte: this.formParceiro.get(['porte'])!.value,
+      abertura: this.formParceiro.get(['abertura'])!.value,
+      naturezaJuridica: this.formParceiro.get(['naturezaJuridica'])!.value,
+      ultimaAtualizacao: this.formParceiro.get(['ultimaAtualizacao'])!.value,
+      status: this.formParceiro.get(['status'])!.value,
+      tipo: this.formParceiro.get(['tipo'])!.value,
+      complemento: this.formParceiro.get(['complemento'])!.value,
+      email: this.formParceiro.get(['email'])!.value,
+      telefone: this.formParceiro.get(['telefone'])!.value,
+      dataSituacao: this.formParceiro.get(['dataSituacao'])!.value,
+      efr: this.formParceiro.get(['efr'])!.value,
+      motivoSituacao: this.formParceiro.get(['motivoSituacao'])!.value,
+      situacaoEspecial: this.formParceiro.get(['situacaoEspecial'])!.value,
+      dataSituacaoEspecial: this.formParceiro.get(['dataSituacaoEspecial'])!.value,
+      capitalSocial: this.formParceiro.get(['capitalSocial'])!.value,
+      enabled: this.formParceiro.get(['enabled'])!.value,
+      codExt: this.formParceiro.get(['codExt'])!.value,
     };
   }
 
@@ -238,32 +244,120 @@ export class ParceiroCreateComponent implements OnInit {
     this.spinner.hide();
   }
 
-  onCnpj(): void {
-    if (this.cnpj) {
-      this.spinner.show();
-      this.parceiroService.createByCnpj(this.cnpj).subscribe(
-        response => {
-          const parceiro: Parceiro = response.body || {};
-          this.updateForm(parceiro);
-          this.isSaving = false;
-          this.editable = false;
-          this.eventManager.broadcast('parceiroListModification');
-          this.spinner.hide();
-        },
-        error => {
-          console.log(error);
-          this.isSaving = false;
-          this.editable = true;
-          this.spinner.hide();
-        }
-      );
-    }
+  onCnpj(): Observable<EntityResponseType> {
+    return this.parceiroService.createByCnpj(this.cnpj);
+  }
+
+  updateParceiroConta(): Observable<EntityResponseType> {
+    this.parceiro!.jurosAtivos = this.jurosAtivosConta || undefined;
+    this.parceiro!.despesaJuros = this.despesaJurosConta || undefined;
+    this.parceiro!.despesaIof = this.despesaIofConta || undefined;
+    this.parceiro!.despesaTarifa = this.despesaTarifaConta || undefined;
+    this.parceiro!.despesasBancarias = this.despesasBancariasConta || undefined;
+    this.parceiro!.caixaConta = this.caixaConta || undefined;
+    this.parceiro!.descontosAtivos = this.descontosAtivosConta || undefined;
+    this.parceiro!.codExt = this.codExt || undefined;
+    return this.parceiroService.update(this.parceiro!);
   }
 
   next($event: any): void {
     this.current_fs = $event.target.parentElement.parentElement;
     this.next_fs = this.current_fs.nextElementSibling;
-    this.step = this.step + 1;
+    this.spinner.show();
+    switch (this.step) {
+      case 0:
+        this.onCnpj().subscribe(
+          response => {
+            this.parceiro = response.body || {};
+            this.isSaving = false;
+            this.editable = false;
+            this.eventManager.broadcast('parceiroListModification');
+            this.spinner.hide();
+            this.step = this.step + 1;
+          },
+          error => {
+            console.log(error);
+            this.isSaving = false;
+            this.editable = true;
+            this.spinner.hide();
+          }
+        );
+        break;
+      case 1:
+        this.upload().subscribe(
+          event => {
+            if (event && event.type === HttpEventType.UploadProgress) {
+              this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
+              this.progressInfo.file = undefined;
+              this.eventManager.broadcast('parceiroListModification');
+              this.step = this.step + 1;
+              this.spinner.hide();
+            } else if (event instanceof HttpResponse) {
+              this.parceiro = event.body;
+              this.isSaving = false;
+              this.editable = false;
+              this.spinner.hide();
+            }
+          },
+          err => {
+            this.progressInfo.value = 0;
+            this.isSaving = false;
+            this.editable = true;
+            this.progressInfo.message = this.translate.instant(err.error.message);
+            this.progressInfo.error = true;
+            this.spinner.hide();
+          }
+        );
+        break;
+      case 2:
+        this.updateParceiroConta().subscribe(
+          response => {
+            this.spinner.hide();
+            this.eventManager.broadcast('parceiroListModification');
+            this.parceiro = response.body || {};
+            this.step = this.step + 1;
+          },
+          () => {
+            this.spinner.hide();
+          }
+        );
+        break;
+      case 3:
+        if (this.parceiro) {
+          this.parceiroService.update(this.parceiro!).subscribe(
+            response => {
+              this.spinner.hide();
+              this.eventManager.broadcast('parceiroListModification');
+              this.parceiro = response.body || {};
+              this.step = this.step + 1;
+              this.updateForm(this.parceiro);
+            },
+            () => {
+              this.spinner.hide();
+            }
+          );
+        }
+        break;
+      case 4:
+        if (this.parceiro) {
+          this.parceiroService.update(this.parceiro!).subscribe(
+            response => {
+              this.spinner.hide();
+              this.eventManager.broadcast('parceiroListModification');
+              this.parceiro = response.body || {};
+              this.step = this.step + 1;
+              this.closeModal();
+            },
+            () => {
+              this.spinner.hide();
+            }
+          );
+        }
+        break;
+      default:
+        this.spinner.hide();
+        break;
+    }
   }
 
   selectFile(event: any): void {
@@ -271,32 +365,8 @@ export class ParceiroCreateComponent implements OnInit {
     this.progressInfo = { value: 0, fileName: event.target.files[0].name, file: event.target.files[0] };
   }
 
-  upload(): void {
-    if (this.progressInfo.file) {
-      this.spinner.show();
-      this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl).subscribe(
-        event => {
-          if (event && event.type === HttpEventType.UploadProgress) {
-            this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
-            this.progressInfo.file = undefined;
-          } else if (event instanceof HttpResponse) {
-            this.updateForm(event.body);
-            this.isSaving = false;
-            this.editable = false;
-            this.eventManager.broadcast('parceiroListModification');
-            this.spinner.hide();
-          }
-        },
-        err => {
-          this.progressInfo.value = 0;
-          this.isSaving = false;
-          this.editable = true;
-          this.progressInfo.message = this.translate.instant(err.error.message);
-          this.progressInfo.error = true;
-          this.spinner.hide();
-        }
-      );
-    }
+  upload(): Observable<any> {
+    return this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl);
   }
 
   allowDrop(ev: any): void {
@@ -312,5 +382,27 @@ export class ParceiroCreateComponent implements OnInit {
   remove(): void {
     this.progressInfo.file = undefined;
     this.progressInfo = {};
+  }
+
+  selectedCaixaConta(conta: IConta): void {
+    this.caixaConta = conta;
+  }
+  selectedDescontosAtivosConta(conta: IConta): void {
+    this.descontosAtivosConta = conta;
+  }
+  selectedDespesaJurosConta(conta: IConta): void {
+    this.despesaJurosConta = conta;
+  }
+  selectedDespesaIofConta(conta: IConta): void {
+    this.despesaIofConta = conta;
+  }
+  selectedJurosAtivosConta(conta: IConta): void {
+    this.jurosAtivosConta = conta;
+  }
+  selectedDespesasBancariasConta(conta: IConta): void {
+    this.despesasBancariasConta = conta;
+  }
+  selectedDespesaTarifaConta(conta: IConta): void {
+    this.despesaTarifaConta = conta;
   }
 }

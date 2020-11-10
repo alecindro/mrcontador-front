@@ -1,78 +1,540 @@
 <!-- MultiStep Form -->
-<div class="container-fluid" id="grad1">
-    <div class="row justify-content-center mt-0">
-        <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
-            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
-                <h3 jhiTranslate="mrcontadorFrontApp.parceiro.home.createOrEditLabel"></h3>
-                <div class="row">
-                    <div class="col-md-12 mx-0">
-                        <form id="msform">
-                            <!-- progressbar -->
-                            <ul id="progressbar">
-                                <li [ngClass]="{'active': step === 0}" id="account"><strong jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpj"></strong></li>
-                                <li id="personal" [ngClass]="{'active': step === 1}"><strong jhiTranslate="mrcontadorFrontApp.conta.home.title"></strong></li>
-                                <li id="payment" [ngClass]="{'active': step === 2}"><strong  jhiTranslate="mrcontadorFrontApp.conta.conta_juros"></strong></li>
-                                <li id="confirm" [ngClass]="{'active': step === 3}"><strong>Finalizar</strong></li>
-                            </ul> <!-- fieldsets -->
-                            <fieldset [ngClass]= "step === 0 ? 'display_fieldset' : ''">
-                                <div class="form-card">
-                                    <h2 class="fs-title" jhiTranslate="mrcontadorFrontApp.parceiro.write_cnpj"></h2>
-                                    <input type="text" [mask]="mask" [showMaskTyped]="true" name="par_cnpjcpf"
-                                    class="form-control default-input" [(ngModel)]="cnpj" (keyup.enter)="onCnpj()" />
-                                </div> <button type="button" name="next" class="btn btn-primary" (click)="next($event)" [disabled]="!cnpj" ><span jhiTranslate="entity.action.next"></span></button>
-                            </fieldset>
-                            <fieldset [ngClass]= "step === 1 ? 'display_fieldset' : ''">
-                                <div class="form-card">
-                                    <h2 class="fs-title">Personal Information</h2> <input type="text" name="fname" placeholder="First Name" /> <input type="text" name="lname" placeholder="Last Name" /> <input type="text" name="phno" placeholder="Contact No." /> <input type="text" name="phno_2" placeholder="Alternate Contact No." />
-                                </div> <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> <input type="button" name="next" class="next action-button" value="Next Step" />
-                            </fieldset>
-                            <fieldset [ngClass]= "step === 2 ? 'display_fieldset' : ''">
-                                <div class="form-card">
-                                    <h2 class="fs-title">Payment Information</h2>
-                                    <div class="radio-group">
-                                        <div class='radio' data-value="credit"><img src="https://i.imgur.com/XzOzVHZ.jpg" width="200px" height="100px"></div>
-                                        <div class='radio' data-value="paypal"><img src="https://i.imgur.com/jXjwZlj.jpg" width="200px" height="100px"></div> <br>
-                                    </div> <label class="pay">Card Holder Name*</label> <input type="text" name="holdername" placeholder="" />
-                                    <div class="row">
-                                        <div class="col-9"> <label class="pay">Card Number*</label> <input type="text" name="cardno" placeholder="" /> </div>
-                                        <div class="col-3"> <label class="pay">CVC*</label> <input type="password" name="cvcpwd" placeholder="***" /> </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-3"> <label class="pay">Expiry Date*</label> </div>
-                                        <div class="col-9"> <select class="list-dt" id="month" name="expmonth">
-                                                <option selected>Month</option>
-                                                <option>January</option>
-                                                <option>February</option>
-                                                <option>March</option>
-                                                <option>April</option>
-                                                <option>May</option>
-                                                <option>June</option>
-                                                <option>July</option>
-                                                <option>August</option>
-                                                <option>September</option>
-                                                <option>October</option>
-                                                <option>November</option>
-                                                <option>December</option>
-                                            </select> <select class="list-dt" id="year" name="expyear">
-                                                <option selected>Year</option>
-                                            </select> </div>
-                                    </div>
-                                </div> <input type="button" name="previous" class="previous action-button-previous" value="Previous" /> <input type="button" name="make_payment" class="next action-button" value="Confirm" />
-                            </fieldset>
-                            <fieldset [ngClass]= "step === 3 ? 'display_fieldset' : ''">
-                                <div class="form-card">
-                                    <h2 class="fs-title text-center">Success !</h2> <br><br>
-                                    <div class="row justify-content-center">
-                                        <div class="col-3"> <img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image"> </div>
-                                    </div> <br><br>
-                                    <div class="row justify-content-center">
-                                        <div class="col-7 text-center">
-                                            <h5>You Have Successfully Signed Up</h5>
+<div class="modal-parceiro  d-block pb-1">
+    <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">&times;</button>
+</div>
+<div class="modal-body">
+    <div class="container-fluid" id="grad1">
+        <div class="row justify-content-center mt-0">
+            <div class="col-11 col-sm-9 col-md-9 col-lg-9 text-center p-0 mt-3 mb-2">
+                <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                    <h3 jhiTranslate="mrcontadorFrontApp.parceiro.home.createOrEditLabel" *ngIf="step !== 4"></h3>
+                    <h3 jhiTranslate="mrcontadorFrontApp.parceiro.home.createSucesso" *ngIf="step === 4"></h3>
+
+                    <div class="row">
+                        <div class="col-md-12 mx-0">
+                            <div id="msform">
+                                <!-- progressbar -->
+                                <ul id="progressbar">
+                                    <li [ngClass]="{'active': step === 0}" id="account"><strong
+                                            jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpj"></strong></li>
+                                    <li id="personal" [ngClass]="{'active': step === 1}"><strong
+                                            jhiTranslate="mrcontadorFrontApp.conta.home.title"></strong></li>
+                                    <li id="payment" [ngClass]="{'active': step === 2}"><strong
+                                            jhiTranslate="mrcontadorFrontApp.conta.conta_default"></strong></li>
+                                    <li id="confirm" [ngClass]="{'active': step === 3}"
+                                        jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.createOrEditLabel">
+                                        <strong>Finalizar</strong></li>
+                                    <li id="confirm" [ngClass]="{'active': step === 4}"><strong>Finalizar</strong></li>
+                                </ul> <!-- fieldsets -->
+                                <fieldset [ngClass]="step === 0 ? '' : 'display_fieldset'">
+                                    <div class="form-card">
+                                        <h2 class="fs-title" jhiTranslate="mrcontadorFrontApp.parceiro.write_cnpj"></h2>
+                                        <input type="text" [mask]="mask" [showMaskTyped]="true" name="par_cnpjcpf"
+                                            class="form-control default-input" [(ngModel)]="cnpj"
+                                            (keyup.enter)="onCnpj()" />
+                                    </div> <button type="button" name="next" class="btn btn-primary"
+                                        (click)="next($event)" [disabled]="!cnpj"><span
+                                            jhiTranslate="entity.action.next"></span></button>
+                                </fieldset>
+                                <fieldset [ngClass]="step === 1 ? '' : 'display_fieldset'">
+                                    <div class="form-card">
+                                        <div class="uploadimage-dragndrop uploadimage-pos" id="dragndropimage">
+                                            <div class="uploadimage-text">Arraste o aquivo do Plano de Contas aqui</div>
+                                            <div class="mb-2" *ngIf="progressInfo.file">
+                                                <span>{{ progressInfo.fileName }}</span>
+                                                <button class="btn  btn-sm" (click)="remove()">
+                                                    <fa-icon [icon]="'times'" class="text-danger"></fa-icon>
+                                                </button>
+                                                <div class="progress">
+                                                    <div [ngClass]="{'progress-bar bg-danger progress-bar-striped' : progressInfo.error, 'progress-bar bg-info progress-bar-striped' : !progressInfo.error}"
+                                                        role="progressbar" attr.aria-valuenow="{{ progressInfo.value }}"
+                                                        aria-valuemin="0" aria-valuemax="100"
+                                                        [ngStyle]="{ width: progressInfo.value + '%' }">
+                                                        {{ progressInfo.value }}%
+                                                    </div>
+                                                </div>
+                                                <span>{{progressInfo.message}}</span>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="custom-file" *ngIf="!progressInfo.file">
+                                                    <label for="customFileLang" class="btn btn-primary">ou Selecione o
+                                                        Arquivo</label>
+                                                    <input type="file" class="custom-file-input"
+                                                        [disabled]="progressInfo.file" lang="pt" id="customFileLang"
+                                                        (change)="selectFile($event)" />
+                                                </div>
+                                            </div>
+                                            <div class="d-flex">
+                                                <div class="w-100">
+                                                    <button class="btn btn-primary" *ngIf="progressInfo.file"
+                                                        (click)="next($event)">
+                                                        Upload
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
-                        </form>
+
+                                </fieldset>
+                                <fieldset [ngClass]="step === 2 ? '' : 'display_fieldset'">
+                                    <div class="form-card">
+                                        <form name="formParceiro" role="form" novalidate>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.despesa_juros"
+                                                        for="field_despesa_juros"></label>
+                                                    <jhi-conta-select [parceiro]="parceiro?.id" name="despesa_juros"
+                                                        id="field_despesa_juros"
+                                                        (contaSelected)="selectedDespesaJurosConta($event)"
+                                                        [conta]="despesaJurosConta" required></jhi-conta-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.despesa_iof"
+                                                        for="field_despesa_iof"></label>
+                                                    <jhi-conta-select [parceiro]="parceiro?.id" name="despesa_iof"
+                                                        id="field_despesa_iof"
+                                                        (contaSelected)="selectedDespesaIofConta($event)"
+                                                        [conta]="despesaIofConta" required></jhi-conta-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.juros_ativos"
+                                                        for="field_juros_ativos"></label>
+                                                    <jhi-conta-select [parceiro]="parceiro?.id" name="juros_ativos"
+                                                        id="field_juros_ativos"
+                                                        (contaSelected)="selectedJurosAtivosConta($event)"
+                                                        [conta]="jurosAtivosConta" required></jhi-conta-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.descontos_ativos"
+                                                        for="field_descontos_ativos"></label>
+                                                    <jhi-conta-select [parceiro]="parceiro?.id" name="descontos_ativos"
+                                                        id="field_descontos_ativos"
+                                                        (contaSelected)="selectedDescontosAtivosConta($event)"
+                                                        [conta]="descontosAtivosConta" required></jhi-conta-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.conta_caixa"
+                                                        for="field_conta_caixa"></label>
+                                                    <jhi-conta-select [parceiro]="parceiro?.id" name="conta_caixa" 
+                                                        id="field_conta_caixa"
+                                                        (contaSelected)="selectedCaixaConta($event)"
+                                                        [conta]="caixaConta"></jhi-conta-select>
+                                                        <small class="form-text text-danger" *ngIf="!caixaConta"
+                                                        jhiTranslate="entity.validation.required">
+                                                        This field is required.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.despesas_bancarias"
+                                                        for="field_despesas_bancarias"></label>
+                                                    <jhi-conta-select [parceiro]="parceiro?.id"
+                                                        name="despesas_bancarias" id="field_despesas_bancarias"
+                                                        (contaSelected)="selectedDespesasBancariasConta($event)"
+                                                        [conta]="despesasBancariasConta" required></jhi-conta-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.despesa_tarifa"
+                                                        for="field_despesa_tarifa"></label>
+                                                    <jhi-conta-select [parceiro]="parceiro?.id" name="despesa_tarifa"
+                                                        id="field_despesa_tarifa"
+                                                        (contaSelected)="selectedDespesaTarifaConta($event)"
+                                                        [conta]="despesaTarifaConta" required></jhi-conta-select>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.conta.conta_dominio"
+                                                        for="field_cod_ext"></label>
+                                                    <input type="text" class="form-control" name="cod_ext" 
+                                                        id="field_cod_ext" [(ngModel)]="codExt">
+                                                        <small class="form-text text-danger" *ngIf="!codExt"
+                                                        jhiTranslate="entity.validation.required">
+                                                        This field is required.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="text-center">
+                                            <button type="button" name="next" class="btn btn-primary"
+                                                (click)="next($event)" [disabled]="!caixaConta || !codExt"><span
+                                                    jhiTranslate="entity.action.next"></span></button>
+                                             </div>
+                                        </form>
+                                    </div>
+                                </fieldset>
+                                <fieldset [ngClass]="step === 3 ? '' : 'display_fieldset'">
+                                    <div class="form-card">
+                                        <jhi-agencia [parceiro]="parceiro!"></jhi-agencia>
+                                        <div class="text-center">
+                                        <button type="button" name="next" class="btn btn-primary"
+                                            (click)="next($event)"><span
+                                                jhiTranslate="entity.action.next"></span></button>
+                                            </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset [ngClass]="step === 4 ? '' : 'display_fieldset'">
+                                    <form name="formParceiro" role="form" novalidate [formGroup]="formParceiro">
+                                        <div>
+                                            <div class="form-group" [hidden]="true">
+                                                <input type="text" class="form-control" id="parTipopessoa" name="id"
+                                                    formControlName="parTipopessoa" readonly />
+                                                <input type="text" class="form-control" id="id" name="id"
+                                                    formControlName="id" readonly />
+                                                <input type="text" class="form-control" id="enabled" name="enabled"
+                                                    formControlName="enabled" readonly />
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-8">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"
+                                                        for="field_par_razaosocial"></label>
+                                                    <input type="text" class="form-control" name="par_razaosocial"
+                                                        id="field_par_razaosocial" formControlName="parRazaosocial"
+                                                        readonly />
+                                                    <div
+                                                        *ngIf="formParceiro.get('parRazaosocial')!.invalid && (formParceiro.get('parRazaosocial')!.dirty || formParceiro.get('parRazaosocial')!.touched)">
+                                                        <small class="form-text text-danger"
+                                                            *ngIf="formParceiro.get('parRazaosocial')?.errors?.maxlength"
+                                                            jhiTranslate="entity.validation.maxlength"
+                                                            [translateValues]="{ max: 70 }">
+                                                            This field cannot be longer than 70 characters.
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"
+                                                        for="field_par_cnpjcpf"></label>
+                                                    <input type="text" class="form-control" [mask]="mask"
+                                                        [showMaskTyped]="true" name="par_cnpjcpf" id="field_par_cnpjcpf"
+                                                        formControlName="parCnpjcpf" readonly />
+                                                    <div
+                                                        *ngIf="formParceiro.get('parCnpjcpf')!.invalid && (formParceiro.get('parCnpjcpf')!.dirty || formParceiro.get('parCnpjcpf')!.touched)">
+                                                        <small class="form-text text-danger"
+                                                            *ngIf="formParceiro.get('parCnpjcpf')?.errors?.maxlength"
+                                                            jhiTranslate="entity.validation.maxlength"
+                                                            [translateValues]="{ max: 20 }">
+                                                            This field cannot be longer than 20 characters.
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.cep"
+                                                        for="field_cep"></label>
+                                                    <input type="text" class="form-control" name="cep" id="field_cep"
+                                                        mask="00.000-000" formControlName="cep" readonly />
+                                                    <div
+                                                        *ngIf="formParceiro.get('cep')!.invalid && (formParceiro.get('cep')!.dirty || formParceiro.get('cep')!.touched)">
+                                                        <small class="form-text text-danger"
+                                                            *ngIf="formParceiro.get('cep')?.errors?.maxlength"
+                                                            jhiTranslate="entity.validation.maxlength"
+                                                            [translateValues]="{ max: 8 }">
+                                                            This field cannot be longer than 8 characters.
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.logradouro"
+                                                        for="field_logradouro"></label>
+                                                    <input type="text" class="form-control" name="logradouro"
+                                                        id="field_logradouro" formControlName="logradouro" readonly />
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.numero"
+                                                        for="field_numero"></label>
+                                                    <input type="text" class="form-control" name="numero"
+                                                        id="field_numero" formControlName="numero" readonly />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.complemento"
+                                                        for="field_complemento"></label>
+                                                    <input type="text" class="form-control" name="complemento"
+                                                        id="field_complemento" formControlName="complemento" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-4">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.bairro"
+                                                        for="field_bairro"></label>
+                                                    <input type="text" class="form-control" name="bairro"
+                                                        id="field_bairro" readonly formControlName="bairro" />
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.cidade"
+                                                        for="field_cidade"></label>
+                                                    <input type="text" class="form-control" name="cidade"
+                                                        id="field_cidade" formControlName="cidade" readonly />
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.estado"
+                                                        for="field_estado"></label>
+                                                    <input type="text" class="form-control" name="estado"
+                                                        id="field_estado" formControlName="estado" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.telefone"
+                                                        for="field_telefone"></label>
+                                                    <input type="text" class="form-control" name="telefone"
+                                                        id="field_telefone" formControlName="telefone" />
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.email"
+                                                        for="field_email"></label>
+                                                    <input type="text" class="form-control" name="email"
+                                                        id="field_email" formControlName="email" />
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.naturezaJuridica"
+                                                        for="field_naturezaJuridica"></label>
+                                                    <input type="text" class="form-control" name="naturezaJuridica"
+                                                        id="field_naturezaJuridica" formControlName="naturezaJuridica"
+                                                        readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.tipo"
+                                                        for="field_tipo"></label>
+                                                    <input type="text" class="form-control" name="tipo" id="field_tipo"
+                                                        formControlName="tipo" readonly />
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.porte"
+                                                        for="field_porte"></label>
+                                                    <input type="text" class="form-control" name="porte"
+                                                        id="field_porte" formControlName="porte" readonly />
+                                                </div>
+                                                <div class="form-group col-md-1">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.status"
+                                                        for="field_status"></label>
+                                                    <input type="text" class="form-control" name="status"
+                                                        id="field_status" formControlName="status" readonly />
+                                                </div>
+                                                <div class="form-group col-md-2">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.efr"
+                                                        for="field_efr"></label>
+                                                    <input type="text" class="form-control" name="efr" id="field_efr"
+                                                        formControlName="efr" readonly />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.ultimaAtualizacao"
+                                                        for="field_ultimaAtualizacao"></label>
+                                                    <input type="text" class="form-control" name="ultimaAtualizacao"
+                                                        id="field_ultimaAtualizacao" formControlName="ultimaAtualizacao"
+                                                        mask="39/19/9999" restrict="reject" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.abertura"
+                                                        for="field_abertura"></label>
+                                                    <input type="text" class="form-control" name="abertura"
+                                                        id="field_abertura" formControlName="abertura" readonly />
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.dataSituacao"
+                                                        for="field_dataSituacao"></label>
+                                                    <input type="text" class="form-control" name="dataSituacao"
+                                                        id="field_dataSituacao" formControlName="dataSituacao"
+                                                        readonly />
+                                                </div>
+
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.motivoSituacao"
+                                                        for="field_motivoSituacao"></label>
+                                                    <input type="text" class="form-control" name="motivoSituacao"
+                                                        id="field_motivoSituacao" formControlName="motivoSituacao"
+                                                        readonly />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.situacaoEspecial"
+                                                        for="field_situacaoEspecial"></label>
+                                                    <input type="text" class="form-control" name="situacaoEspecial"
+                                                        id="field_situacaoEspecial" formControlName="situacaoEspecial"
+                                                        readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.par_descricao"
+                                                        for="field_par_descricao"></label>
+                                                    <input type="text" class="form-control" name="par_descricao"
+                                                        id="field_par_descricao" formControlName="parDescricao"
+                                                        readonly />
+                                                    <div
+                                                        *ngIf="formParceiro.get('parDescricao')!.invalid && (formParceiro.get('parDescricao')!.dirty || formParceiro.get('parDescricao')!.touched)">
+                                                        <small class="form-text text-danger"
+                                                            *ngIf="formParceiro.get('parDescricao')?.errors?.maxlength"
+                                                            jhiTranslate="entity.validation.maxlength"
+                                                            [translateValues]="{ max: 50 }">
+                                                            This field cannot be longer than 50 characters.
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.area_atuacao"
+                                                        for="field_area_atuacao"></label>
+                                                    <input type="text" class="form-control" name="area_atuacao"
+                                                        id="field_area_atuacao" formControlName="areaAtuacao"
+                                                        readonly />
+                                                </div>
+                                                <div class="form-group col-md-3">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.spa_codigo"
+                                                        for="field_spa_codigo"></label>
+                                                    <input type="number" class="form-control" name="spa_codigo"
+                                                        id="field_spa_codigo" formControlName="spaCodigo" readonly />
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.codExt"
+                                                        for="field_cod_ext"></label>
+                                                    <input type="text" class="form-control" name="cod_ext"
+                                                        id="field_cod_ext" formControlName="codExt" readonly />
+                                                </div>
+                                            </div>
+                                            <div formArrayName="socios">
+                                                <legend
+                                                    class="text-center border border-secondary rounded shadow-lg bg-secondary">
+                                                    <h5>Sócios</h5>
+                                                </legend>
+                                                <div *ngFor="let socio of socios.controls; let i=index">
+                                                    <div [formGroupName]="i">
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6">
+                                                                <label class="form-control-label" for="nome_socio"
+                                                                    jhiTranslate="mrcontadorFrontApp.socio.nome"></label>
+                                                                <input formControlName="nome" class="form-control"
+                                                                    type="text" id="nome_socio" name="nome_socio"
+                                                                    readonly />
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label style="margin-right:5px;"
+                                                                    class="form-control-label" for="descricao_socio"
+                                                                    jhiTranslate="mrcontadorFrontApp.socio.descricao"></label>
+                                                                <input formControlName="descricao" class="form-control"
+                                                                    type="text" id="descricao_socio"
+                                                                    name="descricao_socio" readonly />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div formArrayName="atividades">
+                                                <legend
+                                                    class="text-center border border-secondary rounded shadow-lg bg-secondary">
+                                                    <h5>Atividades</h5>
+                                                </legend>
+                                                <div *ngFor="let atividade of atividades.controls; let i=index">
+                                                    <div [formGroupName]="i">
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6">
+                                                                <label class="form-control-label" for="descricao_socio"
+                                                                    jhiTranslate="mrcontadorFrontApp.atividade.descricao"></label>
+                                                                <input formControlName="descricao" class="form-control"
+                                                                    type="text" id="descricao_socio"
+                                                                    name="descricao_socio" readonly />
+                                                            </div>
+                                                            <div class="form-group col-md-3">
+                                                                <label style="margin-right:5px;"
+                                                                    class="form-control-label" for="code_atividade"
+                                                                    jhiTranslate="mrcontadorFrontApp.atividade.code"></label>
+                                                                <input formControlName="code" class="form-control"
+                                                                    type="text" id="code_atividade"
+                                                                    name="code_atividade" readonly />
+                                                            </div>
+                                                            <div class="form-group col-md-3">
+                                                                <label style="margin-right:5px;"
+                                                                    class="form-control-label" for="tipo_atividade"
+                                                                    jhiTranslate="mrcontadorFrontApp.atividade.tipo"></label>
+                                                                <input formControlName="tipo" class="form-control"
+                                                                    type="text" id="tipo_atividade"
+                                                                    name="tipo_atividade" readonly />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+
+                                                <div class="form-group col-md-12">
+                                                    <label class="form-control-label"
+                                                        jhiTranslate="mrcontadorFrontApp.parceiro.par_obs"
+                                                        for="field_par_obs"></label>
+                                                    <textarea type="text" class="form-control" name="par_obs"
+                                                        id="field_par_obs" formControlName="parObs"></textarea>
+                                                    <div
+                                                        *ngIf="formParceiro.get('parObs')!.invalid && (formParceiro.get('parObs')!.dirty || formParceiro.get('parObs')!.touched)">
+                                                        <small class="form-text text-danger"
+                                                            *ngIf="formParceiro.get('parObs')?.errors?.maxlength"
+                                                            jhiTranslate="entity.validation.maxlength"
+                                                            [translateValues]="{ max: 200 }">
+                                                            This field cannot be longer than 200 characters.
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="text-center">
+                                        <button type="button" id="save-entity" class="btn btn-primary"
+                                            (click)="next($event)">
+                                            <fa-icon icon="save"></fa-icon>&nbsp;<span
+                                                jhiTranslate="entity.action.save"></span>
+                                        </button>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

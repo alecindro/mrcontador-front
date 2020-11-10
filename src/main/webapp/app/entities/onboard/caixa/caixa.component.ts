@@ -63,7 +63,7 @@ export class CaixaComponent implements OnInit {
   save(): void {
     this.caixa.ageSituacao = true;
     this.caixa.conta = this.contaSelected;
-    this.agenciabancariaService.update(this.caixa).subscribe(response => {
+    this.agenciabancariaService.update(this.caixa).subscribe(() => {
       this.editable = false;
     });
   }

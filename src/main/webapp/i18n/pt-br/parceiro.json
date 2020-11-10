@@ -4,6 +4,7 @@
       "home": {
         "title": "Clientes",
         "createLabel": "Cadastrar clientes",
+        "createSucesso": "Cadastrar efetuado com sucesso",
         "createOrEditLabel": "Cadastro de Clientes",
         "notFound": "Nenhum cliente encontrado",
         "lastPeriod": "Última exportação"

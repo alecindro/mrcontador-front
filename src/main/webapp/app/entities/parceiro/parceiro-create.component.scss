@@ -27,7 +27,7 @@
   position: relative;
 }
 
-#display_fieldset {
+.display_fieldset {
   display: none;
 }
 
@@ -39,10 +39,7 @@
 #msform input,
 #msform textarea {
   padding: 0px 8px 4px 8px;
-  border: none;
-  border-bottom: 1px solid #ccc;
   border-radius: 0px;
-  margin-bottom: 25px;
   margin-top: 2px;
   width: 100%;
   box-sizing: border-box;
@@ -59,7 +56,6 @@
   box-shadow: none !important;
   border: none;
   font-weight: bold;
-  border-bottom: 2px solid skyblue;
   outline-width: 0;
 }
 
@@ -137,7 +133,7 @@ select.list-dt:focus {
 #progressbar li {
   list-style-type: none;
   font-size: 12px;
-  width: 25%;
+  width: 20%;
   float: left;
   position: relative;
 }
@@ -219,4 +215,13 @@ select.list-dt:focus {
 .fit-image {
   width: 100%;
   object-fit: cover;
+}
+
+.modal-parceiro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1rem 1rem;
+  border-top-left-radius: calc(0.3rem - 1px);
+  border-top-right-radius: calc(0.3rem - 1px);
 }

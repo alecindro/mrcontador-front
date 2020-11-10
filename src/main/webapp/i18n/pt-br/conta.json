@@ -23,7 +23,15 @@
       "con_cnpj": "Cnpj",
       "con_grau": "Grau",
       "parceiro": "Parceiro",
-      "conta_juros": "Conta de juros"
+      "conta_default": "Contas padrão",
+      "despesa_juros": "Despesas c/ juros",
+      "despesa_iof": "Despesas iof",
+      "juros_ativos": "Juros ativos",
+      "descontos_ativos": "Descontos Ativos",
+      "conta_caixa": "Conta Caixa",
+      "despesas_bancarias": "Despesas bancárias",
+      "despesa_tarifa": "Despesas de tarifas com boletos",
+      "conta_dominio": "Código do cadastro da Domínio"
     }
   }
 }

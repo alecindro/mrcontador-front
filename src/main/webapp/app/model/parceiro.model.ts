@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import { Agenciabancaria } from './agenciabancaria.model';
 import { Atividade } from './atividade.model';
 import { Socio } from './socio.model';
+import { IConta } from './conta.model';
 
 export interface IParceiro {
   id?: number;
@@ -37,9 +38,17 @@ export interface IParceiro {
   capitalSocial?: string;
   enabled?: boolean;
   codExt?: string;
+  cadastroStatus?: number;
   agenciabancarias?: Agenciabancaria[];
   atividades?: Atividade[];
   socios?: Socio[];
+  despesaJuros?: IConta;
+  despesaIof?: IConta;
+  jurosAtivos?: IConta;
+  descontosAtivos?: IConta;
+  caixaConta?: IConta;
+  despesasBancarias?: IConta;
+  despesaTarifa?: IConta;
 }
 
 export class Parceiro implements IParceiro {
@@ -77,8 +86,16 @@ export class Parceiro implements IParceiro {
     public capitalSocial?: string,
     public enabled?: boolean,
     public codExt?: string,
+    public cadastroStatus?: number,
     public agenciabancarias?: Agenciabancaria[],
     public atividades?: Atividade[],
-    public socios?: Socio[]
+    public socios?: Socio[],
+    public despesaJuros?: IConta,
+    public despesaIof?: IConta,
+    public jurosAtivos?: IConta,
+    public descontosAtivos?: IConta,
+    public caixaConta?: IConta,
+    public despesasBancarias?: IConta,
+    public despesaTarifa?: IConta
   ) {}
 }

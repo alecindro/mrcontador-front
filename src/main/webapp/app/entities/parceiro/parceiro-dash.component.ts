@@ -94,8 +94,9 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('parceiroListModification', () => this.loadPage());
   }
 
-  newParceiro(): void {
-    this.modalService.open(ParceiroCreateComponent, { size: 'lg', backdrop: 'static' });
+  newParceiro(parceiro?: IParceiro): void {
+    const modalRef = this.modalService.open(ParceiroCreateComponent, { size: 'lg', backdrop: 'static', scrollable: true });
+    modalRef.componentInstance.parceiro = parceiro;
   }
 
   sort(): string[] {

@@ -10,11 +10,19 @@ import { NgxMaskModule } from 'ngx-mask';
 import { NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { ParceiroDashComponent } from './parceiro-dash.component';
 import { ParceiroCreateComponent } from './parceiro-create.component';
+import { AgenciaComponent } from './agencia.component';
 
 @NgModule({
   imports: [MrcontadorFrontSharedModule, RouterModule.forChild(parceiroRoute), NgxMaskModule.forChild(), NgbButtonsModule],
-  declarations: [ParceiroComponent, ParceiroDetailComponent, ParceiroCreateComponent, ParceiroDeleteDialogComponent, ParceiroDashComponent],
+  declarations: [
+    ParceiroComponent,
+    ParceiroDetailComponent,
+    ParceiroCreateComponent,
+    ParceiroDeleteDialogComponent,
+    ParceiroDashComponent,
+    AgenciaComponent,
+  ],
   exports: [ParceiroDetailComponent],
-  entryComponents: [ParceiroDeleteDialogComponent, ParceiroCreateComponent],
+  entryComponents: [ParceiroDeleteDialogComponent, ParceiroCreateComponent, AgenciaComponent],
 })
 export class MrcontadorFrontParceiroModule {}
