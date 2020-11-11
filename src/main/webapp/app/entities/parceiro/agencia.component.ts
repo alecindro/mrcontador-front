@@ -30,7 +30,6 @@ export class AgenciaComponent implements OnInit {
   searchingParceiro = false;
   searchFailedParceiro = false;
   bancos!: IBanco[];
-  parceiros: IParceiro[] = [];
   conta?: IConta;
   contaAplicacao?: IConta;
   agencias: IAgenciabancaria[] = [];
@@ -57,7 +56,9 @@ export class AgenciaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadAgencias();
+    if (this.parceiro?.id) {
+      this.loadAgencias();
+    }
     this.loadBancos();
   }
 
