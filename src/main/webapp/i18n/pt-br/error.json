@@ -35,6 +35,8 @@
     "parsercomprovante.notfound": "O comprovante selecionado corresponde a um banco não autorizado.",
     "codigobanco.notfound": "Banco não cadastrado",
     "inteligent.fail": "Não foi possível processar a conciliação: {{ params }}",
-    "ofx.notextrato": "O arquivo não é um extrato."
+    "ofx.notextrato": "O arquivo não é um extrato.",
+    "parceiro.notexists": "Parceiro não cadastrado",
+    "plano.notparceiro": "Plano de Contas não é do cliente selecionado"
   }
 }

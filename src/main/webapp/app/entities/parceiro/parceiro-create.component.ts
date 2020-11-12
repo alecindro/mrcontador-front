@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpEventType } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IParceiro, Parceiro } from '../../model/parceiro.model';
 import { ParceiroService } from '../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,6 +11,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { IConta } from '../../model/conta.model';
+import { AgenciabancariaService } from 'app/services/agenciabancaria.service';
 
 type EntityResponseType = HttpResponse<IParceiro>;
 @Component({
@@ -18,7 +19,7 @@ type EntityResponseType = HttpResponse<IParceiro>;
   templateUrl: './parceiro-create.component.html',
   styleUrls: ['./parceiro-create.component.scss'],
 })
-export class ParceiroCreateComponent implements OnInit {
+export class ParceiroCreateComponent implements OnInit, OnDestroy {
   progressInfo: { value?: number; fileName?: string; file?: any; index?: number; _event?: any; message?: string; error?: boolean } = {};
   error: any = {};
   uploadResponse = { status: '', message: '', percent: 0, filePath: '' };
@@ -42,6 +43,8 @@ export class ParceiroCreateComponent implements OnInit {
   despesasBancariasConta?: IConta;
   despesaTarifaConta?: IConta;
   codExt?: string;
+  agenciaListener!: Subscription;
+  agenciaSaved = false;
 
   formParceiro = this.fb.group({
     id: [],
@@ -91,8 +94,11 @@ export class ParceiroCreateComponent implements OnInit {
     private uploadService: UploadService,
     protected eventManager: JhiEventManager,
     public activeModal: NgbActiveModal,
-    public translate: TranslateService
-  ) {}
+    public translate: TranslateService,
+    protected agenciaBancariaService: AgenciabancariaService
+  ) {
+    this.registerAgenciaListener();
+  }
 
   ngOnInit(): void {
     if (this.parceiro) {
@@ -254,7 +260,6 @@ export class ParceiroCreateComponent implements OnInit {
     this.parceiro!.despesaIof = this.despesaIofConta || undefined;
     this.parceiro!.despesaTarifa = this.despesaTarifaConta || undefined;
     this.parceiro!.despesasBancarias = this.despesasBancariasConta || undefined;
-    this.parceiro!.caixaConta = this.caixaConta || undefined;
     this.parceiro!.descontosAtivos = this.descontosAtivosConta || undefined;
     this.parceiro!.codExt = this.codExt || undefined;
     return this.parceiroService.update(this.parceiro!);
@@ -284,30 +289,31 @@ export class ParceiroCreateComponent implements OnInit {
         );
         break;
       case 1:
-        this.upload().subscribe(
-          event => {
-            if (event && event.type === HttpEventType.UploadProgress) {
-              this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
-              this.progressInfo.file = undefined;
-              this.eventManager.broadcast('parceiroListModification');
-              this.step = this.step + 1;
-              this.spinner.hide();
-            } else if (event instanceof HttpResponse) {
-              this.parceiro = event.body;
+        if (this.parceiro) {
+          this.upload().subscribe(
+            event => {
+              if (event && event.type === HttpEventType.UploadProgress) {
+                this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
+              } else if (event instanceof HttpResponse) {
+                this.eventManager.broadcast('parceiroListModification');
+                this.step = this.step + 1;
+                this.parceiro = event.body;
+                this.isSaving = false;
+                this.editable = false;
+                this.progressInfo.file = undefined;
+                this.spinner.hide();
+              }
+            },
+            err => {
+              this.progressInfo.value = 0;
               this.isSaving = false;
-              this.editable = false;
+              this.editable = true;
+              this.progressInfo.message = this.translate.instant(err.error.message);
+              this.progressInfo.error = true;
               this.spinner.hide();
             }
-          },
-          err => {
-            this.progressInfo.value = 0;
-            this.isSaving = false;
-            this.editable = true;
-            this.progressInfo.message = this.translate.instant(err.error.message);
-            this.progressInfo.error = true;
-            this.spinner.hide();
-          }
-        );
+          );
+        }
         break;
       case 2:
         this.updateParceiroConta().subscribe(
@@ -336,6 +342,10 @@ export class ParceiroCreateComponent implements OnInit {
               this.spinner.hide();
             }
           );
+          if (this.caixaConta) {
+            this.caixaConta.parceiro = this.parceiro;
+            this.agenciaBancariaService.createCaixa(this.caixaConta).subscribe(() => {});
+          }
         }
         break;
       case 4:
@@ -366,7 +376,10 @@ export class ParceiroCreateComponent implements OnInit {
   }
 
   upload(): Observable<any> {
-    return this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl);
+    const queryParam = {
+      parceiroId: this.parceiro?.id,
+    };
+    return this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl, queryParam);
   }
 
   allowDrop(ev: any): void {
@@ -404,5 +417,17 @@ export class ParceiroCreateComponent implements OnInit {
   }
   selectedDespesaTarifaConta(conta: IConta): void {
     this.despesaTarifaConta = conta;
+  }
+
+  ngOnDestroy(): void {
+    if (this.agenciaListener) {
+      this.eventManager.destroy(this.agenciaListener);
+    }
+  }
+
+  private registerAgenciaListener(): void {
+    this.agenciaListener = this.eventManager.subscribe('agenciaListModification', () => {
+      this.agenciaSaved = true;
+    });
   }
 }

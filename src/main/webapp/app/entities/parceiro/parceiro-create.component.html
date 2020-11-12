@@ -38,6 +38,7 @@
                                 </fieldset>
                                 <fieldset [ngClass]="step === 1 ? '' : 'display_fieldset'">
                                     <div class="form-card">
+                                        <div (drop)="drop($event)" (dragover)="allowDrop($event)">
                                         <div class="uploadimage-dragndrop uploadimage-pos" id="dragndropimage">
                                             <div class="uploadimage-text">Arraste o aquivo do Plano de Contas aqui</div>
                                             <div class="mb-2" *ngIf="progressInfo.file">
@@ -73,6 +74,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
 
                                 </fieldset>
@@ -185,7 +187,7 @@
                                     <div class="form-card">
                                         <jhi-agencia [parceiro]="parceiro!"></jhi-agencia>
                                         <div class="text-center">
-                                        <button type="button" name="next" class="btn btn-primary"
+                                        <button type="button" name="next" class="btn btn-primary" [disabled] ="!agenciaSaved"
                                             (click)="next($event)"><span
                                                 jhiTranslate="entity.action.next"></span></button>
                                             </div>
@@ -197,7 +199,7 @@
                                             <div class="form-group" [hidden]="true">
                                                 <input type="text" class="form-control" id="parTipopessoa" name="id"
                                                     formControlName="parTipopessoa" readonly />
-                                                <input type="text" class="form-control" id="id" name="id"
+                                                <input type="text" class="form-control" id="id2" name="id2"
                                                     formControlName="id" readonly />
                                                 <input type="text" class="form-control" id="enabled" name="enabled"
                                                     formControlName="enabled" readonly />
@@ -206,9 +208,9 @@
                                                 <div class="form-group col-md-8">
                                                     <label class="form-control-label"
                                                         jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial"
-                                                        for="field_par_razaosocial"></label>
+                                                        for="field_parrazaosocial"></label>
                                                     <input type="text" class="form-control" name="par_razaosocial"
-                                                        id="field_par_razaosocial" formControlName="parRazaosocial"
+                                                        id="field_parrazaosocial" formControlName="parRazaosocial"
                                                         readonly />
                                                     <div
                                                         *ngIf="formParceiro.get('parRazaosocial')!.invalid && (formParceiro.get('parRazaosocial')!.dirty || formParceiro.get('parRazaosocial')!.touched)">
@@ -437,9 +439,9 @@
                                                 <div class="form-group col-md-6">
                                                     <label class="form-control-label"
                                                         jhiTranslate="mrcontadorFrontApp.parceiro.codExt"
-                                                        for="field_cod_ext"></label>
+                                                        for="field_codext"></label>
                                                     <input type="text" class="form-control" name="cod_ext"
-                                                        id="field_cod_ext" formControlName="codExt" readonly />
+                                                        id="field_codext" formControlName="codExt" readonly />
                                                 </div>
                                             </div>
                                             <div formArrayName="socios">

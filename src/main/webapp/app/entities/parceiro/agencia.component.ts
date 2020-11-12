@@ -12,6 +12,7 @@ import { TipoAgencia } from '../../shared/constants/TipoAgencia';
 import { AgenciabancariaAplicacao } from '../../shared/dto/agenciabancariaAplicacao';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpResponse } from '@angular/common/http';
+import { JhiEventManager } from 'ng-jhipster';
 
 type SelectableEntity = IBanco | IParceiro;
 
@@ -52,7 +53,8 @@ export class AgenciaComponent implements OnInit {
     protected parceiroService: ParceiroService,
     protected activatedRoute: ActivatedRoute,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    protected eventManager: JhiEventManager
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +68,7 @@ export class AgenciaComponent implements OnInit {
     this.spinner.show();
     const queryParam = {
       'parceiroId.equals': this.parceiro.id,
+      'tipoAgencia.notEquals': TipoAgencia[TipoAgencia.CAIXA],
     };
     this.agenciabancariaService.query(queryParam).subscribe(
       (res: HttpResponse<IAgenciabancaria[]>) => {
@@ -106,6 +109,7 @@ export class AgenciaComponent implements OnInit {
       this.agenciabancariaService.createAplicao(agenciabancariaAplicacao).subscribe(
         response => {
           this.updateForm(new Agenciabancaria());
+          this.eventManager.broadcast('agenciaListModification');
           const _agencia = response.body;
           if (_agencia) this.agencias.push(_agencia);
           this.isSaving = false;
@@ -113,7 +117,16 @@ export class AgenciaComponent implements OnInit {
         () => (this.isSaving = false)
       );
     } else {
-      this.agenciabancariaService.create(agenciabancaria);
+      this.agenciabancariaService.create(agenciabancaria).subscribe(
+        response => {
+          this.updateForm(new Agenciabancaria());
+          this.eventManager.broadcast('agenciaListModification');
+          const _agencia = response.body;
+          if (_agencia) this.agencias.push(_agencia);
+          this.isSaving = false;
+        },
+        () => (this.isSaving = false)
+      );
     }
   }
 
