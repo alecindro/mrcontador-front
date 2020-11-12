@@ -13,3 +13,7 @@
   background-color: theme-color('light');
   color: #2c3e50;
 }
+
+.popover {
+  max-width: 100%; /* Max Width of the popover (depending on the container!) */
+}
