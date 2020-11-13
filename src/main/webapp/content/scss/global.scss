@@ -195,4 +195,7 @@ ui bootstrap tweaks
   background-color: theme-color('info');
 }
 
+.popover {
+  max-width: 100% !important; /* Max Width of the popover (depending on the container!) */
+}
 /* jhipster-needle-scss-add-main JHipster will add new css style */

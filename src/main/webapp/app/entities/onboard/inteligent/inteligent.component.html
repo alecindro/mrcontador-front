@@ -214,7 +214,7 @@
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td>{{ inteligent.cnpj }}</td>
                             <td>
-                                    <a [ngbPopover]="popNotaFiscal" [popoverTitle]="popNotaFiscalTitle" [autoClose]="false" #pNota="ngbPopover" triggers="manual" (click)="loadNotas(inteligent,pNota)" class="text-info" *ngIf="inteligent.tipoValor && inteligent.tipoValor === tipoValor[tipoValor.PRINCIPAL] && inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === tipoComprovante[tipoComprovante.TITULO]">
+                                    <a [ngbPopover]="popNotaFiscal" [popoverTitle]="popNotaFiscalTitle" [autoClose]="false" #pNota="ngbPopover" triggers="manual" (click)="loadNotas(inteligent,pNota)" class="text-info" *ngIf="inteligent.tipoValor && inteligent.tipoValor === tipoValor[tipoValor.PRINCIPAL] && inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === tipoComprovante[tipoComprovante.TITULO] && !inteligent.notafiscal?.notNumero">
                                             <u placement="top" ngbTooltip="Associar nota fiscal">Associar nota fiscal</u>
                                         </a>
                                 <a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.notafiscal?.notNumero }}</u></span></a>
