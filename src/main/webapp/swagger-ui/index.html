@@ -21,9 +21,9 @@
 
 
         var urls = [];
-        axios.get("/swagger-resources").then(function (response) {
+        axios.get("http://ec2-34-224-6-165.compute-1.amazonaws.com:8180/swagger-resources").then(function (response) {
             response.data.forEach(function (resource) {
-                urls.push({"name": resource.name, "url": resource.location});
+                urls.push({"name": resource.name, "url": "http://ec2-34-224-6-165.compute-1.amazonaws.com:8180" + resource.location});
             });
 
             urls.sort(function (a, b) {
@@ -51,6 +51,7 @@
                         || sessionStorage.getItem("jhi-authenticationtoken"));
                     if (authToken) {
                         req.headers['Authorization'] = "Bearer " + authToken;
+                        req.headers['tenant-uuid'] = 'ds_demo';
                     }
                     return req;
                 }
