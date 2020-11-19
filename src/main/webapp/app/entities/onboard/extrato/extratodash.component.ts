@@ -4,7 +4,7 @@ import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { ExtratoService } from '../../../services/extrato.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent, JhiAlertService } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { ParceiroService } from '../../../services/parceiro.service';
@@ -18,6 +18,7 @@ import * as moment from 'moment';
 import { UploadService } from '../../../services/file-upload.service';
 import { SERVER_API_URL } from '../../../app.constants';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-dash-extrato',
@@ -53,7 +54,8 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     protected parceiroService: ParceiroService,
     public spinner: NgxSpinnerService,
-    public fileService: UploadService
+    public fileService: UploadService,
+    private alertService: JhiAlertService
   ) {
     this.registerParceiroListener();
     this.registerChangeInExtratoes();
@@ -143,7 +145,11 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInExtratoes(): void {
-    this.eventSubscriber = this.eventManager.subscribe('extratoUpload', () => this.loadPage());
+    this.eventSubscriber = this.eventManager.subscribe('extratoUpload', (response: JhiEventWithContent<string>) => {
+      this.alertService.success('mrcontadorFrontApp.extrato.uploaded');
+      this.processPeriodo(response.content);
+      this.loadPage();
+    });
   }
 
   sort(): string[] {
@@ -168,6 +174,9 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
       });
     }
     this.extratoes = data || [];
+    if (this.extratoes.length > 0) {
+      this.processDate(this.extratoes[0].extDatalancamento);
+    }
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
@@ -230,5 +239,16 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
         () => console.info('File downloaded successfully')
       );
     }
+  }
+
+  private processDate(periodo: Moment): void {
+    this.anoSelected = periodo.year();
+    this.mesSelected = periodo.month() + 1;
+  }
+
+  private processPeriodo(periodo: string): void {
+    const _ano = periodo.substring(periodo.length - 4);
+    this.anoSelected = +_ano;
+    this.mesSelected = +periodo.split(_ano)[0];
   }
 }

@@ -1,35 +1,39 @@
-<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
-    <form class="form-inline" action="">
-        <label class="mr-sm-2" for="field_mes">Mês</label>
-        <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
-            (change)="onChangeMes()">
-            <option> </option>
-            <option *ngFor="let id of meses" [ngValue]="id">
-                {{ mesLabels[id] }}
-            </option>
-        </select>
-        <label class="mr-sm-2" for="field_ano">Ano</label>
-        <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
-            (change)="onChangeAno()">
-            <option> </option>
-            <option *ngFor="let ano of anos" [ngValue]="ano">
-                {{ ano }}
-            </option>
-        </select>
-        <button class="btn btn-primary" (click)="upload()">
-            <fa-icon icon="cloud-upload-alt"></fa-icon>
-            <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
-        </button>
-    </form>
-</nav>
+<div class="card">
+    <div class="card-header bg-primary text-center text-light">
+        <span
+        jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span>
+    </div>
+    <nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
+        <form class="form-inline" action="">
+            <label class="mr-sm-2" for="field_mes">Mês</label>
+            <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
+                (change)="onChangeMes()">
+                <option> </option>
+                <option *ngFor="let id of meses" [ngValue]="id">
+                    {{ mesLabels[id] }}
+                </option>
+            </select>
+            <label class="mr-sm-2" for="field_ano">Ano</label>
+            <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
+                (change)="onChangeAno()">
+                <option> </option>
+                <option *ngFor="let ano of anos" [ngValue]="ano">
+                    {{ ano }}
+                </option>
+            </select>
+            <button class="btn btn-primary" (click)="upload()">
+                <fa-icon icon="cloud-upload-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
+            </button>
+        </form>
+    </nav>
+    <div class="card-body">
+<jhi-alert></jhi-alert>
+
 
 <div class="table-responsive" id="entities">
     <table class="table table-sm table-striped" aria-describedby="page-heading">
         <thead>
-            <tr>
-                <th colspan="9" class="text-center text-light bg-primary"><span
-                        jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></th>
-            </tr>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
           
             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero">Not
@@ -72,11 +76,13 @@
                 </td>
             </tr>
             <tr *ngFor="let notafiscal of notafiscals ;trackBy: trackId">
-                <td><a  (click)="download(notafiscal)" target="_blank" ><span class="font-weight-normal text-truncate text-info" >
+                <td><a  *ngIf="notafiscal.arquivoPDF" (click)="download(notafiscal)" target="_blank" ><span class="font-weight-normal text-truncate text-info" >
                     <u placement="top" ngbTooltip="Click para Visualizar documento">{{ notafiscal.notNumero }}</u></span>
                     <fa-icon icon="exclamation"  class="text-danger" *ngIf="!notafiscal.processado" placement="top" ngbTooltip="Nota Fiscal não processada"></fa-icon>
                     <fa-icon icon="check"  class="text-sucess" *ngIf="notafiscal.processado" placement="top" ngbTooltip="Nota Fiscal processada"></fa-icon>    
-                </a></td>
+                </a>
+            <span *ngIf="!notafiscal.arquivoPDF">{{ notafiscal.notNumero }}</span>
+            </td>
                 <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notDescricao }}</span></td>
                 <td>{{ notafiscal.notCnpj }}</td>
                 <td><span  class="font-weight-normal text-truncate">{{ notafiscal.notEmpresa }}</span></td>
@@ -99,4 +105,6 @@
         <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
             [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
     </div>
+</div>
+</div>
 </div>

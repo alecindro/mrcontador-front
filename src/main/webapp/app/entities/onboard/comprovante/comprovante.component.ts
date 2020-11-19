@@ -6,7 +6,7 @@ import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { IParceiro } from '../../../model/parceiro.model';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent, JhiAlertService } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ParceiroService } from '../../../services/parceiro.service';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
@@ -18,6 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SERVER_API_URL } from '../../../app.constants';
 import { UploadService } from '../../../services/file-upload.service';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-comprovante',
@@ -53,7 +54,8 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     protected parceiroService: ParceiroService,
     public spinner: NgxSpinnerService,
-    public fileService: UploadService
+    public fileService: UploadService,
+    private alertService: JhiAlertService
   ) {
     this.registerParceiroListener();
   }
@@ -143,7 +145,11 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInComprovantes(): void {
-    this.eventSubscriber = this.eventManager.subscribe('comprovateUpload', () => this.loadPage());
+    this.eventSubscriber = this.eventManager.subscribe('comprovateUpload', (response: JhiEventWithContent<string>) => {
+      this.alertService.success('mrcontadorFrontApp.comprovante.uploaded');
+      this.processPeriodo(response.content);
+      this.loadPage();
+    });
   }
 
   sort(): string[] {
@@ -155,7 +161,6 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   protected onSuccess(data: IComprovante[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
-    this.spinner.hide();
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
@@ -168,7 +173,11 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       });
     }
     this.comprovantes = data || [];
+    if (this.comprovantes.length > 0) {
+      this.processDate(this.comprovantes[0].comDatapagamento);
+    }
     this.ngbPaginationPage = this.page;
+    this.spinner.hide();
   }
 
   protected onError(): void {
@@ -225,5 +234,16 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       error => console.log('Error downloading the file', error),
       () => console.info('File downloaded successfully')
     );
+  }
+
+  private processDate(periodo: Moment): void {
+    this.anoSelected = periodo.year();
+    this.mesSelected = periodo.month() + 1;
+  }
+
+  private processPeriodo(periodo: string): void {
+    const _ano = periodo.substring(periodo.length - 4);
+    this.anoSelected = +_ano;
+    this.mesSelected = +periodo.split(_ano)[0];
   }
 }

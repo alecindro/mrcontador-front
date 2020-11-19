@@ -61,7 +61,9 @@ export class UploadService {
 
   protected convertDateFromServer(res: any): any {
     if (res.body) {
-      res.body.parDatacadastro = res.body.parDatacadastro ? moment(res.body.parDatacadastro) : undefined;
+      if (res.body.parDatacadastro) {
+        res.body.parDatacadastro = res.body.parDatacadastro ? moment(res.body.parDatacadastro) : undefined;
+      }
     }
     return res;
   }

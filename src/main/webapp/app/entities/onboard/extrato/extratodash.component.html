@@ -1,3 +1,8 @@
+<div class="card">
+        <div class="card-header bg-primary text-center text-light">
+            <span
+            jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span>
+        </div>
 <nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
     <form class="form-inline" action="">
         <label for="field_agencia" class="mr-sm-2" >Agência bancária</label>
@@ -29,11 +34,11 @@
                         </button>
 </form>
 </nav>
-
+<div class="card-body">
+        <jhi-alert></jhi-alert>
 <div class="table-responsive" id="entities">
     <table class="table table-sm table-striped table-hover" aria-describedby="page-heading">
         <thead>
-            <tr><th colspan="6" class="text-center text-light bg-primary"><span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></th></tr>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                 <th scope="col" jhiSortBy="extDatalancamento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento"></span>  <fa-icon icon="sort"></fa-icon></th>
                 <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito"></span></th>
@@ -77,4 +82,4 @@
         <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
     </div>
 </div>
-
+</div>

@@ -7,6 +7,7 @@
         "createOrEditLabel": "Criar ou editar Comprovante",
         "notFound": "Nenhum Comprovante encontrado"
       },
+      "uploaded": "Comprovantes importados com sucesso. Os arquivos assim que processados serão disponibilizados no número do Documento.",
       "created": "Um novo Comprovante foi criado com o identificador {{ param }}",
       "updated": "Um Comprovante foi atualizado com o identificador {{ param }}",
       "deleted": "Um Comprovante foi excluído com o identificador {{ param }}",

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
 import { IParceiro } from '../../../model/parceiro.model';
 import { UploadService } from '../../../services/file-upload.service';
@@ -85,8 +85,8 @@ export class ComprovanteUploadComponent implements OnInit {
             if (size === this.totalUpload) {
               this.spinner.hide();
               this.totalUpload = 0;
-              this.eventManager.broadcast('comprovateUpload');
               if (this.progressInfos.length === 0) {
+                this.eventManager.broadcast(new JhiEventWithContent('comprovateUpload', event.body + ''));
                 this.activeModal.close();
               }
             }

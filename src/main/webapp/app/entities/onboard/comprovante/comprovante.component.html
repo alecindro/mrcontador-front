@@ -1,3 +1,8 @@
+<div class="card">
+    <div class="card-header bg-primary text-center text-light">
+        <span
+        jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span>
+    </div>
 <nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
     <form class="form-inline" action="">
             <label for="field_agencia" class="mr-sm-2" >Agência bancária</label>
@@ -31,12 +36,11 @@
         </button>
     </form>
 </nav>
-
-
+<div class="card-body">
+        <jhi-alert></jhi-alert>
     <div class="table-responsive" id="entities">
         <table class="table table-sm table-striped" aria-describedby="page-heading">         
             <thead>
-                <tr><th colspan="7" class="text-center text-light bg-primary"><span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></th></tr>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                     <th scope="col" jhiSortBy="comBeneficiario"><span
                             jhiTranslate="mrcontadorFrontApp.comprovante.com_beneficiario">Com Beneficiario</span>
@@ -78,11 +82,13 @@
                 </tr>
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
                     <td><span class="font-weight-normal text-truncate">{{ comprovante.comBeneficiario }}</span></td>
-                    <td><a (click)="downloadComprovante(comprovante)" target="_blank" >
+                    <td><a *ngIf="comprovante.arquivo" (click)="downloadComprovante(comprovante)" target="_blank" >
                         <span class="font-weight-normal text-truncate text-info" ><u placement="top" ngbTooltip="Click para Visualizar documento">{{ comprovante.comDocumento }}</u></span>
                         <fa-icon icon="exclamation"  class="text-danger" *ngIf="!comprovante.processado" placement="top" ngbTooltip="Comprovante não processado"></fa-icon>
                             <fa-icon icon="check"  class="text-sucess" *ngIf="comprovante.processado" placement="top" ngbTooltip="Comprovante processado"></fa-icon>                        
-                    </a></td>
+                    </a>
+                    <span *ngIf="!comprovante.arquivo">{{ comprovante.comDocumento }}</span>
+                </td>
                     <td>{{ comprovante.comDatavencimento | date:'dd/MM/yyyy' }}</td>
                     <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="text-info">{{ comprovante.comValordocumento | currency:"BRL"}}</span></td>
@@ -103,3 +109,5 @@
                 [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
         </div>
     </div>
+</div>
+</div>

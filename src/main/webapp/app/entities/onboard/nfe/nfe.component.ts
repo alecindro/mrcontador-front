@@ -4,7 +4,7 @@ import { Subscription, combineLatest } from 'rxjs';
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { NotafiscalService } from '../../../services/notafiscal.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent, JhiAlertService } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { IParceiro } from '../../../model/parceiro.model';
@@ -16,6 +16,7 @@ import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
 import * as moment from 'moment';
 import { UploadService } from '../../../services/file-upload.service';
 import { SERVER_API_URL } from '../../../app.constants';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-nfe',
@@ -49,7 +50,8 @@ export class NfeComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     private parceiroService: ParceiroService,
     public spinner: NgxSpinnerService,
-    public fileService: UploadService
+    public fileService: UploadService,
+    private alertService: JhiAlertService
   ) {
     this.registerParceiroListener();
     this.registerChangeInNotafiscals();
@@ -126,7 +128,11 @@ export class NfeComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInNotafiscals(): void {
-    this.eventSubscriber = this.eventManager.subscribe('nfeUpload', () => this.loadPage());
+    this.eventSubscriber = this.eventManager.subscribe('nfeUpload', (response: JhiEventWithContent<string>) => {
+      this.alertService.success('mrcontadorFrontApp.notafiscal.uploaded');
+      this.processPeriodo(response.content);
+      this.loadPage();
+    });
   }
 
   upload(): void {
@@ -155,6 +161,9 @@ export class NfeComponent implements OnInit, OnDestroy {
       });
     }
     this.notafiscals = data || [];
+    if (this.notafiscals.length > 0) {
+      this.processDate(this.notafiscals[0].notDatasaida);
+    }
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
@@ -204,5 +213,16 @@ export class NfeComponent implements OnInit, OnDestroy {
       error => console.log('Error downloading the file', error),
       () => console.info('File downloaded successfully')
     );
+  }
+
+  private processDate(periodo: Moment): void {
+    this.anoSelected = periodo.year();
+    this.mesSelected = periodo.month() + 1;
+  }
+
+  private processPeriodo(periodo: string): void {
+    const _ano = periodo.substring(periodo.length - 4);
+    this.anoSelected = +_ano;
+    this.mesSelected = +periodo.split(_ano)[0];
   }
 }

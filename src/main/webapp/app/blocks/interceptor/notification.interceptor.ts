@@ -24,8 +24,9 @@ export class NotificationInterceptor implements HttpInterceptor {
           });
 
           if (alert) {
-            console.log('NotificationInterceptor', alert);
-            this.alertService.success(alert, { param: alertParams });
+            if (alert !== 'mrcontadorFrontApp.uploadNF.created' && alert !== 'mrcontadorFrontApp.uploadComprovante.created') {
+              this.alertService.success(alert, { param: alertParams });
+            }
           }
         }
       })

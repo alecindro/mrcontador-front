@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { IParceiro } from '../../../model/parceiro.model';
 import { UploadService } from '../../../services/file-upload.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -67,8 +67,8 @@ export class NfeUploadComponent implements OnInit {
             if (size === this.totalUpload) {
               this.spinner.hide();
               this.totalUpload = 0;
-              this.eventManager.broadcast('nfeUpload');
               if (this.progressInfos.length === 0) {
+                this.eventManager.broadcast(new JhiEventWithContent('nfeUpload', event.body + ''));
                 this.activeModal.close();
               }
             }
@@ -81,7 +81,6 @@ export class NfeUploadComponent implements OnInit {
           if (size === this.totalUpload) {
             this.spinner.hide();
             this.totalUpload = 0;
-            this.eventManager.broadcast('nfeUpload');
           }
         }
       );
