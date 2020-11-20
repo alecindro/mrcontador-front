@@ -64,7 +64,7 @@ const routes: Routes = [
         component: NfeComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'notDatasaida,desc',
+          defaultSort: 'notDataparcela,desc',
           pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],

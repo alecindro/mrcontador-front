@@ -215,7 +215,7 @@ export class NfeComponent implements OnInit, OnDestroy {
     );
   }
 
-  private processDate(periodo: Moment): void {
+  private processDate(periodo?: Moment): void {
     this.anoSelected = periodo.year();
     this.mesSelected = periodo.month() + 1;
   }
