@@ -175,7 +175,9 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     }
     this.extratoes = data || [];
     if (this.extratoes.length > 0) {
-      this.processDate(this.extratoes[0].extDatalancamento);
+      if (this.extratoes[0].extDatalancamento) {
+        this.processDate(this.extratoes[0].extDatalancamento);
+      }
     }
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
@@ -241,7 +243,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     }
   }
 
-  private processDate(periodo?: Moment): void {
+  private processDate(periodo: Moment): void {
     this.anoSelected = periodo.year();
     this.mesSelected = periodo.month() + 1;
   }

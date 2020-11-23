@@ -161,7 +161,7 @@ export class NfeComponent implements OnInit, OnDestroy {
       });
     }
     this.notafiscals = data || [];
-    if (this.notafiscals.length > 0) {
+    if (this.notafiscals.length > 0 && this.notafiscals[0].notDatasaida) {
       this.processDate(this.notafiscals[0].notDatasaida);
     }
     this.ngbPaginationPage = this.page;
@@ -215,7 +215,7 @@ export class NfeComponent implements OnInit, OnDestroy {
     );
   }
 
-  private processDate(periodo?: Moment): void {
+  private processDate(periodo: Moment): void {
     this.anoSelected = periodo.year();
     this.mesSelected = periodo.month() + 1;
   }

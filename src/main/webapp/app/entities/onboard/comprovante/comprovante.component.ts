@@ -173,7 +173,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       });
     }
     this.comprovantes = data || [];
-    if (this.comprovantes.length > 0) {
+    if (this.comprovantes.length > 0 && this.comprovantes[0].comDatapagamento) {
       this.processDate(this.comprovantes[0].comDatapagamento);
     }
     this.ngbPaginationPage = this.page;
@@ -236,7 +236,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     );
   }
 
-  private processDate(periodo?: Moment): void {
+  private processDate(periodo: Moment): void {
     this.anoSelected = periodo.year();
     this.mesSelected = periodo.month() + 1;
   }
