@@ -84,8 +84,8 @@ export class NfeComponent implements OnInit, OnDestroy {
       _end.add(-1, 'days').format();
     }
     if (this.anoSelected || this.mesSelected) {
-      queryParam['notDatasaida.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
-      queryParam['notDatasaida.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
+      queryParam['notDataparcela.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
+      queryParam['notDataparcela.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
     }
     this.notafiscalService.query(queryParam).subscribe(
       (res: HttpResponse<INotafiscal[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -161,8 +161,8 @@ export class NfeComponent implements OnInit, OnDestroy {
       });
     }
     this.notafiscals = data || [];
-    if (this.notafiscals.length > 0 && this.notafiscals[0].notDatasaida) {
-      this.processDate(this.notafiscals[0].notDatasaida);
+    if (this.notafiscals.length > 0 && this.notafiscals[0].notDataparcela) {
+      this.processDate(this.notafiscals[0].notDataparcela);
     }
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
