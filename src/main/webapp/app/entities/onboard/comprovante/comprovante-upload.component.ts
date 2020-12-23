@@ -99,7 +99,7 @@ export class ComprovanteUploadComponent implements OnInit {
           if (size === this.totalUpload) {
             this.spinner.hide();
             this.totalUpload = 0;
-            this.eventManager.broadcast('comprovateUpload');
+            this.eventManager.broadcast(new JhiEventWithContent('comprovateUpload', ''));
           }
         }
       );

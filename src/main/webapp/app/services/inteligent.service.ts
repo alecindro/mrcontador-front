@@ -40,7 +40,7 @@ export class InteligentService {
 
   queryPeriodo(req?: any): Observable<any> {
     const options = createRequestOption(req);
-    return this.http.get<IInteligent[]>(this.periodoUrl, { params: options, observe: 'response' });
+    return this.http.get<string[]>(this.periodoUrl, { params: options, observe: 'response' });
   }
 
   queryFuntion(req?: any): Observable<EntityArrayResponseType> {

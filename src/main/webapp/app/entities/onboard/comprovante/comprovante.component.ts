@@ -56,9 +56,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     public spinner: NgxSpinnerService,
     public fileService: UploadService,
     private alertService: JhiAlertService
-  ) {
-    this.registerParceiroListener();
-  }
+  ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
     this.spinner.show();
@@ -147,7 +145,8 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   registerChangeInComprovantes(): void {
     this.eventSubscriber = this.eventManager.subscribe('comprovateUpload', (response: JhiEventWithContent<string>) => {
       this.alertService.success('mrcontadorFrontApp.comprovante.uploaded');
-      this.processPeriodo(response.content);
+      this.anoSelected = undefined;
+      this.mesSelected = undefined;
       this.loadPage();
     });
   }
@@ -208,20 +207,6 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     for (let i = 0; i < 5; i++) {
       this.anos.push(data.getFullYear() - i);
     }
-  }
-
-  private registerParceiroListener(): void {
-    this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
-      this.parceiro = response.content;
-      this.initDate();
-      if (this.parceiro?.agenciabancarias) {
-        this.agencias = this.parceiro?.agenciabancarias.filter(ag => ag.tipoAgencia === TipoAgencia[TipoAgencia.CONTA]);
-        if (this.agencias.length > 0) {
-          this.agenciaSelected = this.agencias[0];
-        }
-        this.onChangeAgencia();
-      }
-    });
   }
 
   public downloadComprovante(comprovante: IComprovante): void {

@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<INotafiscal[]>;
 @Injectable({ providedIn: 'root' })
 export class NotafiscalService {
   public resourceUrl = SERVER_API_URL + 'api/notafiscals';
+  public periodoUrl = SERVER_API_URL + 'api/notafiscals/periodo';
 
   constructor(protected http: HttpClient) {}
 
@@ -52,6 +53,11 @@ export class NotafiscalService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  queryPeriodo(req?: any): Observable<any> {
+    const options = createRequestOption(req);
+    return this.http.get<string[]>(this.periodoUrl, { params: options, observe: 'response' });
   }
 
   protected convertDateFromClient(notafiscal: INotafiscal): INotafiscal {

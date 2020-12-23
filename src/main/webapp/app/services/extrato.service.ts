@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<IExtrato[]>;
 @Injectable({ providedIn: 'root' })
 export class ExtratoService {
   public resourceUrl = SERVER_API_URL + 'api/extratoes';
+  public periodoUrl = SERVER_API_URL + 'api/extratoes/periodo';
 
   constructor(protected http: HttpClient) {}
 
@@ -46,6 +47,11 @@ export class ExtratoService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  queryPeriodo(req?: any): Observable<any> {
+    const options = createRequestOption(req);
+    return this.http.get<string[]>(this.periodoUrl, { params: options, observe: 'response' });
   }
 
   protected convertDateFromClient(extrato: IExtrato): IExtrato {
