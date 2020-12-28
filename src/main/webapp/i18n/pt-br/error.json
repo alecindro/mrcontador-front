@@ -37,6 +37,8 @@
     "inteligent.fail": "Não foi possível processar a conciliação: {{ params }}",
     "ofx.notextrato": "O arquivo não é um extrato.",
     "parceiro.notexists": "Parceiro não cadastrado",
-    "plano.notparceiro": "Plano de Contas não é do cliente selecionado"
+    "plano.notparceiro": "Plano de Contas não é do cliente selecionado",
+    "extrato.parser.error": "Extrato não processado. Verifique se o arquivo selecionado é um extrato, se é do parceiro, banco e agência selecionados.",
+    "extrato.not.bradesco": "Esse documento não é um extrato bancário do Bradesco."
   }
 }
