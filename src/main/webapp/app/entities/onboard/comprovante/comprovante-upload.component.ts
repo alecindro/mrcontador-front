@@ -94,8 +94,12 @@ export class ComprovanteUploadComponent implements OnInit {
         },
         err => {
           this.totalUpload = this.totalUpload + 1;
-          progressInfo.message = this.translate.instant(err.error.message);
-          progressInfo.error = true;
+          if (err.error.message) {
+            progressInfo.message = this.translate.instant(err.error.message);
+            progressInfo.error = true;
+          } else {
+            this.activeModal.close();
+          }
           if (size === this.totalUpload) {
             this.spinner.hide();
             this.totalUpload = 0;

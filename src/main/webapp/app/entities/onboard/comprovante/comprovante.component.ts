@@ -72,21 +72,17 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     }
     const _begin = moment();
     const _end = moment();
-    if (this.anoSelected) {
+    if (this.anoSelected && this.mesSelected && this.mesSelected !== 0) {
       _begin.set('year', this.anoSelected).format();
       _begin.set('month', 0).format();
       _begin.set('date', 1).format();
       _end.set('year', this.anoSelected).format();
       _end.set('month', 11).format();
       _end.set('date', 31).format();
-    }
-    if (this.mesSelected) {
       _begin.set('month', this.mesSelected - 1).format();
       _end.set('month', this.mesSelected).format();
       _end.set('date', 1).format();
       _end.add(-1, 'days').format();
-    }
-    if (this.anoSelected || this.mesSelected) {
       queryParam['comDatapagamento.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
       queryParam['comDatapagamento.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
     }
@@ -98,6 +94,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initDate();
+    this.mesSelected = MESES[0];
     this.activatedRoute.data.subscribe(({ parceiro }) => {
       this.parceiro = parceiro;
       if (!parceiro) {
@@ -144,18 +141,17 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
 
   registerChangeInComprovantes(): void {
     this.eventSubscriber = this.eventManager.subscribe('comprovateUpload', (response: JhiEventWithContent<string>) => {
-      this.alertService.success('mrcontadorFrontApp.comprovante.uploaded');
+      if (response.content != '') {
+        this.alertService.success('mrcontadorFrontApp.comprovante.uploaded');
+      }
       this.anoSelected = undefined;
-      this.mesSelected = undefined;
+      this.mesSelected = MESES[0];
       this.loadPage();
     });
   }
 
   sort(): string[] {
     const result = [this.predicate + ',' + (this.ascending ? 'asc' : 'desc')];
-    if (this.predicate !== 'id') {
-      result.push('id');
-    }
     return result;
   }
 
@@ -172,9 +168,6 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       });
     }
     this.comprovantes = data || [];
-    if (this.comprovantes.length > 0 && this.comprovantes[0].comDatapagamento) {
-      this.processDate(this.comprovantes[0].comDatapagamento);
-    }
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
@@ -219,16 +212,5 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       error => console.log('Error downloading the file', error),
       () => console.info('File downloaded successfully')
     );
-  }
-
-  private processDate(periodo: Moment): void {
-    this.anoSelected = periodo.year();
-    this.mesSelected = periodo.month() + 1;
-  }
-
-  private processPeriodo(periodo: string): void {
-    const _ano = periodo.substring(periodo.length - 4);
-    this.anoSelected = +_ano;
-    this.mesSelected = +periodo.split(_ano)[0];
   }
 }

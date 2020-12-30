@@ -75,21 +75,17 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     }
     const _begin = moment();
     const _end = moment();
-    if (this.anoSelected) {
+    if (this.anoSelected && this.mesSelected && this.mesSelected !== 0) {
       _begin.set('year', this.anoSelected).format();
       _begin.set('month', 0).format();
       _begin.set('date', 1).format();
       _end.set('year', this.anoSelected).format();
       _end.set('month', 11).format();
       _end.set('date', 31).format();
-    }
-    if (this.mesSelected) {
       _begin.set('month', this.mesSelected - 1).format();
       _end.set('month', this.mesSelected).format();
       _end.set('date', 1).format();
       _end.add(-1, 'days').format();
-    }
-    if (this.anoSelected || this.mesSelected) {
       queryParam['extDatalancamento.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
       queryParam['extDatalancamento.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
     }
@@ -113,6 +109,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
         this.agenciaSelected = this.agencias[0];
       }
     }
+    this.mesSelected = MESES[0];
     this.handleNavigation();
   }
 
@@ -147,7 +144,8 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   registerChangeInExtratoes(): void {
     this.eventSubscriber = this.eventManager.subscribe('extratoUpload', (response: JhiEventWithContent<string>) => {
       this.alertService.success('mrcontadorFrontApp.extrato.uploaded');
-      this.processPeriodo(response.content);
+      this.anoSelected = undefined;
+      this.mesSelected = MESES[0];
       this.loadPage();
     });
   }
@@ -174,11 +172,6 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
       });
     }
     this.extratoes = data || [];
-    if (this.extratoes.length > 0) {
-      if (this.extratoes[0].extDatalancamento) {
-        this.processDate(this.extratoes[0].extDatalancamento);
-      }
-    }
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
@@ -241,16 +234,5 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
         () => console.info('File downloaded successfully')
       );
     }
-  }
-
-  private processDate(periodo: Moment): void {
-    this.anoSelected = periodo.year();
-    this.mesSelected = periodo.month() + 1;
-  }
-
-  private processPeriodo(periodo: string): void {
-    const _ano = periodo.substring(periodo.length - 4);
-    this.anoSelected = +_ano;
-    this.mesSelected = +periodo.split(_ano)[0];
   }
 }

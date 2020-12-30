@@ -114,7 +114,7 @@ const routes: Routes = [
         component: ComprovanteComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'comDatapagamento,asc',
+          defaultSort: 'comDatapagamento,desc',
           pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],

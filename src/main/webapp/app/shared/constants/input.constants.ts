@@ -1,8 +1,9 @@
 export const DATE_FORMAT = 'YYYY-MM-DD';
 export const DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm';
-export const MESES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
+export const MESES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
 type MESID = typeof MESES[number];
 export const MESLABELS: Record<MESID, string> = {
+  0: 'Todos',
   1: 'JANEIRO',
   2: 'FEVEREIRO',
   3: 'MARÇO',

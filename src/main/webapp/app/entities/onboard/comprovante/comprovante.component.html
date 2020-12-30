@@ -14,22 +14,18 @@
         </select>
         <label class="mr-sm-2"  for="field_mes" >Mês</label>
         <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
-            (change)="onChangeMes()">
-            <option> </option>
+            (change)="onChangeMes()">         
             <option *ngFor="let id of meses" [ngValue]="id">
                 {{ mesLabels[id] }}
             </option>
         </select>
         <label class="mr-sm-2"  for="field_ano" >Ano</label>
         <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
-            (change)="onChangeAno()">
-            <option>  </option>
+            (change)="onChangeAno()">          
             <option *ngFor="let ano of anos" [ngValue]="ano">
                 {{ ano }}
             </option>
         </select>
-        
-    
         <button class="btn btn-primary form-control mr-sm-2" (click)="upload()" > 
             <fa-icon icon="cloud-upload-alt"></fa-icon>
             <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>

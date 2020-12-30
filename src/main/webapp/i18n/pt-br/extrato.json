@@ -7,6 +7,7 @@
         "createOrEditLabel": "Criar ou editar Extrato",
         "notFound": "Nenhum Extrato cadastrado"
       },
+      "uploaded": "Extrato importado com sucesso.",
       "created": "Um novo Extrato foi criado com o identificador {{ param }}",
       "updated": "Um Extrato foi atualizado com o identificador {{ param }}",
       "deleted": "Um Extrato foi excluído com o identificador {{ param }}",
