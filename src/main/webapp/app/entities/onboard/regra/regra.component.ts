@@ -46,6 +46,7 @@ export class RegraComponent implements OnInit, OnDestroy {
 
     this.regraService
       .query({
+        'parceiroId.equals': this.parceiro.id,
         page: pageToLoad - 1,
         size: this.itemsPerPage,
         sort: this.sort(),

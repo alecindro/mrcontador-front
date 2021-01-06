@@ -338,7 +338,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
 
   public downloadLancamento(): void {
     const sistema = this.authServerProvider.getSistema();
-    if (TipoSistema[sistema] === TipoSistema.DOMINIO_SISTEMAS && this.parceiro?.codExt) {
+    if (this.parceiro?.codExt) {
       const _url =
         this.resourceUrlLancamento +
         this.mesSelected +
@@ -349,9 +349,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
         '/' +
         this.parceiro?.id +
         '/' +
-        this.parceiro?.codExt +
-        '/' +
-        sistema;
+        this.parceiro?.codExt;
       this.fileService.downloadFile(_url).subscribe(
         response => {
           const blob: any = new Blob([response], { type: 'application/octet-stream' });

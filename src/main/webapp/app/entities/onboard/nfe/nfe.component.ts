@@ -69,21 +69,17 @@ export class NfeComponent implements OnInit, OnDestroy {
     const _begin = moment();
     const _end = moment();
 
-    if (this.anoSelected) {
+    if (this.anoSelected && this.mesSelected && this.mesSelected !== 0) {
       _begin.set('year', this.anoSelected).format();
       _begin.set('month', 0).format();
       _begin.set('date', 1).format();
       _end.set('year', this.anoSelected).format();
       _end.set('month', 11).format();
       _end.set('date', 31).format();
-    }
-    if (this.mesSelected) {
       _begin.set('month', this.mesSelected - 1).format();
       _end.set('month', this.mesSelected).format();
       _end.set('date', 1).format();
       _end.add(-1, 'days').format();
-    }
-    if (this.anoSelected || this.mesSelected) {
       queryParam['notDataparcela.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
       queryParam['notDataparcela.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
     }
@@ -96,6 +92,7 @@ export class NfeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initDate();
     this.parceiro = this.parceiroService.getParceiroSelected();
+    this.mesSelected = MESES[0];
     this.handleNavigation();
   }
 
@@ -130,7 +127,8 @@ export class NfeComponent implements OnInit, OnDestroy {
   registerChangeInNotafiscals(): void {
     this.eventSubscriber = this.eventManager.subscribe('nfeUpload', (response: JhiEventWithContent<string>) => {
       this.alertService.success('mrcontadorFrontApp.notafiscal.uploaded');
-      this.processPeriodo(response.content);
+      this.anoSelected = undefined;
+      this.mesSelected = MESES[0];
       this.loadPage();
     });
   }
@@ -161,9 +159,6 @@ export class NfeComponent implements OnInit, OnDestroy {
       });
     }
     this.notafiscals = data || [];
-    if (this.notafiscals.length > 0 && this.notafiscals[0].notDataparcela) {
-      this.processDate(this.notafiscals[0].notDataparcela);
-    }
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
@@ -213,16 +208,5 @@ export class NfeComponent implements OnInit, OnDestroy {
       error => console.log('Error downloading the file', error),
       () => console.info('File downloaded successfully')
     );
-  }
-
-  private processDate(periodo: Moment): void {
-    this.anoSelected = periodo.year();
-    this.mesSelected = periodo.month() + 1;
-  }
-
-  private processPeriodo(periodo: string): void {
-    const _ano = periodo.substring(periodo.length - 4);
-    this.anoSelected = +_ano;
-    this.mesSelected = +periodo.split(_ano)[0];
   }
 }
