@@ -151,6 +151,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.regra.regDescricao = this.tipoRegraSelected.regDescricao;
     this.regra.parceiro = this.parceiro;
     this.regra.conta = this.contaSelected;
+    if (!this.regra.regHistorico) {
+      this.regra.regHistorico = this.regra.regDescricao;
+    }
     this.regraService.create(this.regra).subscribe(response => {
       console.log(response);
       this.cancelRegra();
