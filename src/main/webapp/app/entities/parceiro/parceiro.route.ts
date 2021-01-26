@@ -39,7 +39,7 @@ export const parceiroRoute: Routes = [
     path: '',
     component: ParceiroDashComponent,
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'mrcontadorFrontApp.parceiro.home.title',
     },
@@ -52,7 +52,7 @@ export const parceiroRoute: Routes = [
       parceiro: ParceiroResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.ADMIN],
       pageTitle: 'mrcontadorFrontApp.parceiro.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -64,7 +64,7 @@ export const parceiroRoute: Routes = [
       parceiro: ParceiroResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.ADMIN],
       pageTitle: 'mrcontadorFrontApp.parceiro.home.title',
     },
     canActivate: [UserRouteAccessService],
@@ -76,7 +76,7 @@ export const parceiroRoute: Routes = [
       parceiro: ParceiroResolve,
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.ADMIN],
       pageTitle: 'mrcontadorFrontApp.parceiro.home.title',
     },
     canActivate: [UserRouteAccessService],

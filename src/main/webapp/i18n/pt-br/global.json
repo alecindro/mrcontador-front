@@ -118,7 +118,8 @@
       "new": "Cadastrar",
       "close": "Fechar",
       "next": "Próximo",
-      "finalizar": "Finalizar"
+      "finalizar": "Finalizar",
+      "process": "Processar"
     },
     "detail": {
       "field": "Campo",

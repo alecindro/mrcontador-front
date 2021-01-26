@@ -1,0 +1,30 @@
+{
+  "mrcontadorFrontApp": {
+    "arquivoerro": {
+      "home": {
+        "title": "Arquivos com Erro",
+        "createLabel": "Criar novo Arquivoerro",
+        "createOrEditLabel": "Criar ou editar Arquivoerro",
+        "notFound": "Nenhum Arquivoerro encontrado"
+      },
+      "created": "Um novo Arquivoerro foi criado com o identificador {{ param }}",
+      "updated": "Um Arquivoerro foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Arquivoerro foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Arquivoerro {{ id }}?"
+      },
+      "detail": {
+        "title": "Arquivoerro"
+      },
+      "nome": "Nome",
+      "nomeOriginal": "Nome Original",
+      "tipoArquivo": "Tipo Arquivo",
+      "s3Url": "Arquivo",
+      "s3Dir": "S 3 Dir",
+      "dataCadastro": "Data Cadastro",
+      "usuario": "Usuario",
+      "contador": "Contador",
+      "tamanho": "Tamanho"
+    }
+  }
+}

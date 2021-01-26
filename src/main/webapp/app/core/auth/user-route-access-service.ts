@@ -2,7 +2,7 @@ import { Injectable, isDevMode } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
+import { Authority } from 'app/shared/constants/authority.constants';
 import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { StateStorageService } from './state-storage.service';
@@ -32,6 +32,10 @@ export class UserRouteAccessService implements CanActivate {
         }
 
         if (account) {
+          if (this.accountService.hasAnyAuthority(Authority.MRCONTADOR_MASTER) && url === '/') {
+            this.router.navigate(['arquivoerro']);
+            return true;
+          }
           const hasAnyAuthority = this.accountService.hasAnyAuthority(authorities);
           if (hasAnyAuthority) {
             return true;

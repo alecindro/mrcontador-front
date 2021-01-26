@@ -40,10 +40,18 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
         {
           path: '',
           data: {
-            authorities: [Authority.ADMIN],
+            authorities: [Authority.ADMIN, Authority.USER],
           },
           canActivate: [UserRouteAccessService],
           loadChildren: () => import('./entities/parceiro/parceiro.module').then(m => m.MrcontadorFrontParceiroModule),
+        },
+        {
+          path: 'arquivoerro',
+          data: {
+            authorities: [Authority.MRCONTADOR_MASTER],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./entities/arquivoerro/arquivoerro.module').then(m => m.MrcontadorFrontArquivoerroModule),
         },
         {
           path: 'account',
