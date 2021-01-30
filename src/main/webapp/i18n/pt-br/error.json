@@ -44,6 +44,7 @@
     "conta.notequals": "A conta corrente não corresponde ao documento.",
     "parceiro.notequals": "O parceiro não corresponde ao selecionado.",
     "extrato.itau.notdate": "Extrato do Itaú inválido. Não possue período (ano) da informação.",
-    "doc.not.comprovante": "Não identificamos esse documento como um comprovante de pagamento."
+    "doc.not.comprovante": "Não identificamos esse documento como um comprovante de pagamento.",
+    "comprovante.notimported.all": "Não foi possível cadastrar os comprovantes"
   }
 }

@@ -10,6 +10,7 @@ import { IArquivoerro } from '../../model/arquivoerro.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { ArquivoerroService } from './arquivoerro.service';
 import { ArquivoerroDeleteDialogComponent } from './arquivoerro-delete-dialog.component';
+import { ArquivoerroProcessDialogComponent } from './arquivoerro-process-dialog.component';
 
 @Component({
   selector: 'jhi-arquivoerro',
@@ -23,7 +24,7 @@ export class ArquivoerroComponent implements OnInit, OnDestroy {
   page!: number;
   predicate!: string;
   ascending!: boolean;
-  processado!: boolean = false;
+  processado: boolean = false;
   ngbPaginationPage = 1;
 
   constructor(
@@ -43,7 +44,7 @@ export class ArquivoerroComponent implements OnInit, OnDestroy {
         size: this.itemsPerPage,
         sort: this.sort(),
         'processado.equals': this.processado,
-        'valido.equals': false,
+        'valido.equals': true,
       })
       .subscribe(
         (res: HttpResponse<IArquivoerro[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -86,8 +87,12 @@ export class ArquivoerroComponent implements OnInit, OnDestroy {
     this.eventSubscriber = this.eventManager.subscribe('arquivoerroListModification', () => this.loadPage());
   }
 
+  process(arquivoerro: IArquivoerro): void {
+    const modalRef = this.modalService.open(ArquivoerroProcessDialogComponent, { backdrop: 'static' });
+    modalRef.componentInstance.arquivoerro = arquivoerro;
+  }
   delete(arquivoerro: IArquivoerro): void {
-    const modalRef = this.modalService.open(ArquivoerroDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
+    const modalRef = this.modalService.open(ArquivoerroDeleteDialogComponent, { backdrop: 'static' });
     modalRef.componentInstance.arquivoerro = arquivoerro;
   }
 

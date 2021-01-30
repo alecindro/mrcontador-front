@@ -29,8 +29,7 @@ export class OnboardComponent implements OnInit, OnDestroy {
   parceiros!: IParceiro[];
   agenciaListener!: Subscription;
   contaListener!: Subscription;
-  hasAgencia = false;
-  hasConta = false;
+
   constructor(
     public parceiroService: ParceiroService,
     public activatedRoute: ActivatedRoute,
@@ -43,9 +42,6 @@ export class OnboardComponent implements OnInit, OnDestroy {
     this.agenciaListener = eventManager.subscribe('agenciasaved', () => {
       this.loadAgencias(this.parceiro);
     });
-    this.contaListener = eventManager.subscribe('contasaved', () => {
-      this.hasConta = true;
-    });
   }
 
   ngOnInit(): void {
@@ -55,20 +51,10 @@ export class OnboardComponent implements OnInit, OnDestroy {
       this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
       this.parceiroService.setParceiroSelected(parceiro);
       this.loadAgencias(parceiro);
-      this.searchConta(parceiro);
       this.parceiroService.get().subscribe(response => {
         this.parceiros = response.body || [parceiro];
         this.spinner.hide();
       });
-    });
-  }
-
-  private searchConta(parceiro: IParceiro): void {
-    const param = { 'parceiroId.equals': parceiro?.id };
-    this.contaService.query(param).subscribe(response => {
-      if (response.body && response.body.length > 0) {
-        this.hasConta = true;
-      }
     });
   }
 
@@ -78,9 +64,6 @@ export class OnboardComponent implements OnInit, OnDestroy {
       const value = this.parceiro.agenciabancarias.find(agencia => {
         return agencia.ageSituacao === true;
       });
-      this.hasAgencia = value?.ageSituacao || false;
-    } else {
-      this.hasAgencia = false;
     }
     this.parceiroService.setParceiroSelected(parceiro);
     this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
@@ -92,7 +75,6 @@ export class OnboardComponent implements OnInit, OnDestroy {
   }
   onChangeParceiro(event: NgbTypeaheadSelectItemEvent): void {
     this.loadParceiro(event.item);
-    this.searchConta(event.item);
     this.router.navigate([`/onboard/${this.parceiro.id}`]);
   }
 

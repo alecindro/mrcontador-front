@@ -6,9 +6,9 @@ import { IArquivoerro } from 'app/model/arquivoerro.model';
 import { ArquivoerroService } from './arquivoerro.service';
 
 @Component({
-  templateUrl: './arquivoerro-delete-dialog.component.html',
+  templateUrl: './arquivoerro-process-dialog.component.html',
 })
-export class ArquivoerroDeleteDialogComponent {
+export class ArquivoerroProcessDialogComponent {
   arquivoerro!: IArquivoerro;
 
   constructor(
@@ -21,8 +21,8 @@ export class ArquivoerroDeleteDialogComponent {
     this.activeModal.dismiss();
   }
 
-  confirmDelete(id: number): void {
-    this.arquivoerroService.delete(id).subscribe(() => {
+  confirmProcess(): void {
+    this.arquivoerroService.create(this.arquivoerro).subscribe(() => {
       this.eventManager.broadcast('arquivoerroListModification');
       this.activeModal.close();
     });

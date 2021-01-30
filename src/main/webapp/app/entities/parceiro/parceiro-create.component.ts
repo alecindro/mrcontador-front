@@ -101,6 +101,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.step = 0;
     if (this.parceiro) {
       this.updateForm(this.parceiro);
       this.step = this.parceiro.cadastroStatus! + 1;
@@ -255,13 +256,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
   }
 
   updateParceiroConta(): Observable<EntityResponseType> {
-    this.parceiro!.jurosAtivos = this.jurosAtivosConta || undefined;
-    this.parceiro!.despesaJuros = this.despesaJurosConta || undefined;
-    this.parceiro!.despesaIof = this.despesaIofConta || undefined;
-    this.parceiro!.despesaTarifa = this.despesaTarifaConta || undefined;
-    this.parceiro!.despesasBancarias = this.despesasBancariasConta || undefined;
-    this.parceiro!.descontosAtivos = this.descontosAtivosConta || undefined;
-    this.parceiro!.codExt = this.codExt || undefined;
+    this.parceiro.codExt = this.codExt;
     return this.parceiroService.update(this.parceiro!);
   }
 
@@ -271,6 +266,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
     this.spinner.show();
     switch (this.step) {
       case 0:
+        document.getElementById('par_cnpjcpf').focus();
         this.onCnpj().subscribe(
           response => {
             this.parceiro = response.body || {};
@@ -278,7 +274,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
             this.editable = false;
             this.eventManager.broadcast('parceiroListModification');
             this.spinner.hide();
-            this.step = this.step + 1;
+            this.step = this.parceiro.cadastroStatus! + 1;
           },
           error => {
             console.log(error);
@@ -295,13 +291,20 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
               if (event && event.type === HttpEventType.UploadProgress) {
                 this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
               } else if (event instanceof HttpResponse) {
-                this.eventManager.broadcast('parceiroListModification');
-                this.step = this.step + 1;
-                this.parceiro = event.body;
-                this.isSaving = false;
-                this.editable = false;
-                this.progressInfo.file = undefined;
-                this.spinner.hide();
+                this.parceiroService.update(this.parceiro!).subscribe(
+                  response => {
+                    this.spinner.hide();
+                    this.eventManager.broadcast('parceiroListModification');
+                    this.parceiro = response.body || {};
+                    this.step = this.parceiro.cadastroStatus! + 1;
+                    this.isSaving = false;
+                    this.editable = false;
+                    this.progressInfo.file = undefined;
+                  },
+                  () => {
+                    this.spinner.hide();
+                  }
+                );
               }
             },
             err => {
@@ -321,7 +324,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
             this.spinner.hide();
             this.eventManager.broadcast('parceiroListModification');
             this.parceiro = response.body || {};
-            this.step = this.step + 1;
+            this.step = this.parceiro.cadastroStatus! + 1;
           },
           () => {
             this.spinner.hide();
@@ -335,7 +338,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
               this.spinner.hide();
               this.eventManager.broadcast('parceiroListModification');
               this.parceiro = response.body || {};
-              this.step = this.step + 1;
+              this.step = this.parceiro.cadastroStatus! + 1;
               this.updateForm(this.parceiro);
             },
             () => {
@@ -350,12 +353,15 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
         break;
       case 4:
         if (this.parceiro) {
+          this.parceiro.parObs = this.formParceiro.get(['parObs'])!.value;
+          this.parceiro.email = this.formParceiro.get(['email'])!.value;
+          this.parceiro.telefone = this.formParceiro.get(['telefone'])!.value;
           this.parceiroService.update(this.parceiro!).subscribe(
             response => {
               this.spinner.hide();
               this.eventManager.broadcast('parceiroListModification');
               this.parceiro = response.body || {};
-              this.step = this.step + 1;
+              this.step = this.parceiro.cadastroStatus! + 1;
               this.closeModal();
             },
             () => {
@@ -399,24 +405,31 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
 
   selectedCaixaConta(conta: IConta): void {
     this.caixaConta = conta;
+    this.parceiro.caixaConta = conta;
   }
   selectedDescontosAtivosConta(conta: IConta): void {
     this.descontosAtivosConta = conta;
+    this.parceiro.descontosAtivos = conta;
   }
   selectedDespesaJurosConta(conta: IConta): void {
     this.despesaJurosConta = conta;
+    this.parceiro.despesaJuros = conta;
   }
   selectedDespesaIofConta(conta: IConta): void {
     this.despesaIofConta = conta;
+    this.parceiro.despesaIof = conta;
   }
   selectedJurosAtivosConta(conta: IConta): void {
     this.jurosAtivosConta = conta;
+    this.parceiro.jurosAtivos = conta;
   }
   selectedDespesasBancariasConta(conta: IConta): void {
     this.despesasBancariasConta = conta;
+    this.parceiro.despesasBancarias = conta;
   }
   selectedDespesaTarifaConta(conta: IConta): void {
     this.despesaTarifaConta = conta;
+    this.parceiro.despesaTarifa = conta;
   }
 
   ngOnDestroy(): void {

@@ -13,8 +13,8 @@
     </form>
 </nav>
 <div class="wrapper">
-    <nav id="sidebar" class="pr-1">
-        <ul class="list-unstyled components sidemenu" id="menu" *ngIf="!isMenu">
+    <nav id="sidebar" class="pr-0 pl-0 navbar-collapse sidemenu mr-1" *ngIf="!isMenu">
+        <ul class="list-unstyled components" id="menu">
             <li class="active">
                 <a (click)="isCadastro = !isCadastro" [attr.aria-expanded]="!isCadastro" aria-controls="homeSubmenu"
                     class="btn btn-primary active w-100" role="button"><span
@@ -25,13 +25,9 @@
                             role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></a>
                     </li>
                     <li>
-                        <a class="btn btn-outline w-100 text-left border-bottom" *ngIf="!hasConta" placement="right"
-                            ngbTooltip="Favor cadastrar Plano de Contas">
-                            <fa-icon icon="exclamation-circle" class="text-danger">
-                            </fa-icon> <span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span>
-                        </a>
+                     
                         <a [routerLink]="'agencia'" class="btn btn-outline w-100 text-left border-bottom" role="button"
-                            *ngIf="hasConta">
+                           >
                             <span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span></a>
                     </li>
                     <li>
@@ -53,34 +49,21 @@
                     aria-controls="pageSubmenu" class="btn btn-primary active w-100" role="button"><span
                         jhiTranslate="mrcontadorFrontApp.onboard.importacao"></span></a>
                 <ul class="list-unstyled" id="pageSubmenu" [ngbCollapse]="isImportacao">
-                    <li>
-                        <a class="btn btn-outline w-100 text-left border-bottom" *ngIf="!hasAgencia" placement="right"
-                            ngbTooltip="Favor cadastrar agência bancária">
-                            <fa-icon icon="exclamation-circle" class="text-danger">
-                            </fa-icon> <span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span>
-                        </a>
+                    <li>                       
                         <a [routerLink]="'extrato'" class="btn btn-outline w-100 text-left border-bottom"
-                            *ngIf="hasAgencia">
+                           >
                             <span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></a>
                     </li>
                     <li>
-                        <a class="btn btn-outline w-100 text-left border-bottom" *ngIf="!hasAgencia" placement="right"
-                            ngbTooltip="Favor cadastrar agência bancária">
-                            <fa-icon icon="exclamation-circle" class="text-danger">
-                            </fa-icon> <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span>
-                        </a>
+                    
                         <a [routerLink]="'comprovante'" class="btn btn-outline w-100 text-left border-bottom"
-                            *ngIf="hasAgencia">
+                            >
                             <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></a>
                     </li>
                     <li>
-                        <a class="btn btn-outline w-100 text-left border-bottom" *ngIf="!hasConta" placement="right"
-                            ngbTooltip="Favor cadastrar agência bancária">
-                            <fa-icon icon="exclamation-circle" class="text-danger">
-                            </fa-icon> <span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span>
-                        </a>
+                        
                         <a [routerLink]="'nfe'" class="btn btn-outline w-100 text-left border-bottom" role="button"
-                            *ngIf="hasConta">
+                           >
                             <span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></a>
                     </li>
                     <li>
@@ -110,12 +93,8 @@
                 </ul>
             </li>
             <li>
-                <a class="btn btn-primary active w-100" *ngIf="!hasAgencia" placement="right"
-                    ngbTooltip="Favor cadastrar agência bancária">
-                    <fa-icon icon="exclamation-circle" class="text-danger">
-                    </fa-icon> <span jhiTranslate="mrcontadorFrontApp.onboard.processamento"></span>
-                </a>
-                <a [routerLink]="'consolida'" *ngIf="hasAgencia" class="btn btn-primary active w-100" role="button">
+              
+                <a [routerLink]="'consolida'" class="btn btn-primary active w-100" role="button">
                     <span jhiTranslate="mrcontadorFrontApp.onboard.processamento"></span>
                 </a>
             </li>
@@ -126,14 +105,15 @@
                 </a>
             </li>
         </ul>
-        <div class="sidebar-header bg-primary" (click)="isMenu = !isMenu">
+   
+    </nav>
+    <div class="sidebar-header bg-primary" (click)="isMenu = !isMenu">
             <div class="sidebar-subheader">
                 <a class="btn active w-100" role="button" aria-pressed="true" *ngIf="isMenu">
                     <fa-icon icon="arrow-right" style="color:white"></fa-icon>
                 </a>
             </div>
         </div>
-    </nav>
 
     <div id="content">
         <router-outlet></router-outlet>

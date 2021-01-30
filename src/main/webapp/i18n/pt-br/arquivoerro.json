@@ -3,18 +3,21 @@
     "arquivoerro": {
       "home": {
         "title": "Arquivos com Erro",
-        "createLabel": "Criar novo Arquivoerro",
-        "createOrEditLabel": "Criar ou editar Arquivoerro",
-        "notFound": "Nenhum Arquivoerro encontrado"
+        "createLabel": "Criar novo Arquivo",
+        "createOrEditLabel": "Criar ou editar Arquivo",
+        "notFound": "Nenhum Arquivo encontrado"
       },
-      "created": "Um novo Arquivoerro foi criado com o identificador {{ param }}",
-      "updated": "Um Arquivoerro foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Arquivoerro foi excluído com o identificador {{ param }}",
+      "created": "Um novo Arquivo foi criado com o identificador {{ param }}",
+      "updated": "Um Arquivo foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Arquivo foi excluído com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Arquivoerro {{ id }}?"
+        "question": "Tem certeza de que deseja excluir o Arquivo {{ nome }}?"
+      },
+      "process": {
+        "question": "Tem certeza de que deseja processar o Arquivo {{ nome }}?"
       },
       "detail": {
-        "title": "Arquivoerro"
+        "title": "Arquivo"
       },
       "nome": "Nome",
       "nomeOriginal": "Nome Original",

@@ -9,8 +9,6 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { IArquivoerro, Arquivoerro } from 'app/model/arquivoerro.model';
 import { ArquivoerroService } from './arquivoerro.service';
 import { ArquivoerroComponent } from './arquivoerro.component';
-import { ArquivoerroDetailComponent } from './arquivoerro-detail.component';
-import { ArquivoerroUpdateComponent } from './arquivoerro-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class ArquivoerroResolve implements Resolve<IArquivoerro> {
@@ -41,42 +39,6 @@ export const arquivoerroRoute: Routes = [
     data: {
       authorities: [Authority.MRCONTADOR_MASTER],
       defaultSort: 'dataCadastro,desc',
-      pageTitle: 'mrcontadorFrontApp.arquivoerro.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/view',
-    component: ArquivoerroDetailComponent,
-    resolve: {
-      arquivoerro: ArquivoerroResolve,
-    },
-    data: {
-      authorities: [Authority.MRCONTADOR_MASTER],
-      pageTitle: 'mrcontadorFrontApp.arquivoerro.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: 'new',
-    component: ArquivoerroUpdateComponent,
-    resolve: {
-      arquivoerro: ArquivoerroResolve,
-    },
-    data: {
-      authorities: [Authority.MRCONTADOR_MASTER],
-      pageTitle: 'mrcontadorFrontApp.arquivoerro.home.title',
-    },
-    canActivate: [UserRouteAccessService],
-  },
-  {
-    path: ':id/edit',
-    component: ArquivoerroUpdateComponent,
-    resolve: {
-      arquivoerro: ArquivoerroResolve,
-    },
-    data: {
-      authorities: [Authority.MRCONTADOR_MASTER],
       pageTitle: 'mrcontadorFrontApp.arquivoerro.home.title',
     },
     canActivate: [UserRouteAccessService],

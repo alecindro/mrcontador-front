@@ -73,6 +73,7 @@ export class AgenciaComponent implements OnInit {
     this.agenciabancariaService.query(queryParam).subscribe(
       (res: HttpResponse<IAgenciabancaria[]>) => {
         this.agencias = res.body || [];
+        this.eventManager.broadcast('agenciaListModification');
         this.spinner.hide();
       },
       () => this.spinner.hide()
@@ -89,12 +90,14 @@ export class AgenciaComponent implements OnInit {
       age_situacao: agenciabancaria?.ageSituacao,
       possueAplicacao: agenciabancaria?.possueAplicacao,
       tipoAgencia: agenciabancaria?.tipoAgencia,
+      bancoId: null,
     });
     if (agenciabancaria?.banco) {
       this.editForm.patchValue({
         bancoId: agenciabancaria.banco.id,
       });
     }
+    this.conta = null;
     if (agenciabancaria?.conta) {
       this.conta = agenciabancaria.conta;
     }
