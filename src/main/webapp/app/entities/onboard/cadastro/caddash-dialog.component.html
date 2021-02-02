@@ -1,0 +1,26 @@
+
+
+<form *ngIf="parceiro" name="updateForm" (ngSubmit)="confirmUpdate()">
+        <div class="modal-header  bg-primary pb-1 pt-1 pr-1">
+            <h4 class="modal-title text-center text-light" jhiTranslate="entity.update.title"></h4>
+    
+            <button type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true"
+                    (click)="cancel()">&times;</button>
+        </div>
+    
+        <div class="modal-body">
+            <jhi-alert-error></jhi-alert-error>
+    
+            <p  jhiTranslate="mrcontadorFrontApp.parceiro.update.question" [translateValues]="{ nome: parceiro.parRazaosocial }"></p>
+        </div>
+    
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel"></span>
+            </button>
+    
+            <button type="submit" class="btn btn-info">
+                <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.update"></span>
+            </button>
+        </div>
+    </form>

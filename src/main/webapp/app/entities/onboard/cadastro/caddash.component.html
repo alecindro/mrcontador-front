@@ -206,62 +206,8 @@
                         <input type="text" class="form-control" name="cod_ext" id="field_cod_ext"
                             formControlName="codExt" />
                         </div>
-                </div>
-            <div formArrayName="socios">
-                <legend class="text-center border border-secondary rounded shadow-lg bg-secondary">
-                    <h5>Sócios</h5>
-                </legend>
-                <div *ngFor="let socio of socios.controls; let i=index">
-                    <div [formGroupName]="i">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="nome_socio"
-                                    jhiTranslate="mrcontadorFrontApp.socio.nome"></label>
-                                <input formControlName="nome" class="form-control" type="text" id="nome_socio"
-                                    name="nome_socio" readonly />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label style="margin-right:5px;" class="form-control-label" for="descricao_socio"
-                                    jhiTranslate="mrcontadorFrontApp.socio.descricao"></label>
-                                <input formControlName="descricao" class="form-control" type="text" id="descricao_socio"
-                                    name="descricao_socio" readonly />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div formArrayName="atividades">
-                <legend class="text-center border border-secondary rounded shadow-lg bg-secondary">
-                    <h5>Atividades</h5>
-                </legend>
-                <div *ngFor="let atividade of atividades.controls; let i=index">
-                    <div [formGroupName]="i">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="form-control-label" for="descricao_socio"
-                                    jhiTranslate="mrcontadorFrontApp.atividade.descricao"></label>
-                                <input formControlName="descricao" class="form-control" type="text" id="descricao_socio"
-                                    name="descricao_socio" readonly />
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label style="margin-right:5px;" class="form-control-label" for="code_atividade"
-                                    jhiTranslate="mrcontadorFrontApp.atividade.code"></label>
-                                <input formControlName="code" class="form-control" type="text" id="code_atividade"
-                                    name="code_atividade" readonly />
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label style="margin-right:5px;" class="form-control-label" for="tipo_atividade"
-                                    jhiTranslate="mrcontadorFrontApp.atividade.tipo"></label>
-                                <input formControlName="tipo" class="form-control" type="text" id="tipo_atividade"
-                                    name="tipo_atividade" readonly />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-
-                <div class="form-group col-md-12">
+              
+     <div class="form-group col-md-6">
                     <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.parceiro.par_obs"
                         for="field_par_obs"></label>
                     <textarea type="text" class="form-control" name="par_obs" id="field_par_obs"
@@ -275,6 +221,75 @@
                     </div>
                 </div>
             </div>
+            <div class="form-row">
+                    <div class="form-group col-md-4">
+                            <label class="form-control-label"
+                            jhiTranslate="mrcontadorFrontApp.conta.despesa_juros"
+                            for="field_despesa_juros"></label>
+                        <jhi-conta-select [parceiro]="parceiro?.id" name="despesa_juros"
+                            id="field_despesa_juros" class="col-9" [disabled]="disabled"
+                            (contaSelected)="selectedDespesaJuros($event)"
+                            [conta]="despesaJuros" required></jhi-conta-select>
+                        </div>
+                                <div class="form-group col-md-4">
+                                    <label class="form-control-label"
+                                        jhiTranslate="mrcontadorFrontApp.conta.despesa_iof"
+                                        for="field_despesa_iof"></label>
+                                    <jhi-conta-select [parceiro]="parceiro?.id" name="despesa_iof" [disabled]="disabled"
+                                        id="field_despesa_iof" class="col-9"
+                                        (contaSelected)="selectedDespesaIof($event)"
+                                        [conta]="despesaIof" required></jhi-conta-select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="form-control-label"
+                                        jhiTranslate="mrcontadorFrontApp.conta.juros_ativos"
+                                        for="field_juros_ativos"></label>
+                                    <jhi-conta-select [parceiro]="parceiro?.id" name="juros_ativos" [disabled]="disabled"
+                                        id="field_juros_ativos" class="col-9"
+                                        (contaSelected)="selectedJurosAtivos($event)"
+                                        [conta]="jurosAtivos" required></jhi-conta-select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label class="form-control-label"
+                                        jhiTranslate="mrcontadorFrontApp.conta.descontos_ativos"
+                                        for="field_descontos_ativos"></label>
+                                    <jhi-conta-select [parceiro]="parceiro?.id" name="descontos_ativos" [disabled]="disabled"
+                                        id="field_descontos_ativos" class="col-9"
+                                        (contaSelected)="selectedDescontosAtivos($event)"
+                                        [conta]="descontosAtivos" required></jhi-conta-select>
+                                </div>
+                                    <div class="form-group col-md-4">
+                                        <label class="form-control-label"
+                                            jhiTranslate="mrcontadorFrontApp.conta.conta_caixa"
+                                            for="field_conta_caixa"></label>
+                                        <jhi-conta-select [parceiro]="parceiro?.id" name="conta_caixa"  [disabled]="disabled"
+                                            id="field_conta_caixa" class="col-6"
+                                            (contaSelected)="selectedCaixaConta($event)"
+                                            [conta]="caixaConta"></jhi-conta-select>                                          
+                                    </div>                               
+                                    <div class="form-group col-md-4">
+                                        <label class="form-control-label"
+                                            jhiTranslate="mrcontadorFrontApp.conta.despesas_bancarias"
+                                            for="field_despesas_bancarias"></label>
+                                        <jhi-conta-select [parceiro]="parceiro?.id" class="col-9" [disabled]="disabled"
+                                            name="despesas_bancarias" id="field_despesas_bancarias"
+                                            (contaSelected)="selectedDespesasBancarias($event)"
+                                            [conta]="despesasBancarias" required></jhi-conta-select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label class="form-control-label"
+                                            jhiTranslate="mrcontadorFrontApp.conta.despesa_tarifa"
+                                            for="field_despesa_tarifa"></label>
+                                        <jhi-conta-select [parceiro]="parceiro?.id" name="despesa_tarifa" [disabled]="disabled"
+                                            id="field_despesa_tarifa" class="col-9"
+                                            (contaSelected)="selectedDespesaTarifa($event)"
+                                            [conta]="despesaTarifa" required></jhi-conta-select>
+                                    </div>
+                                </div>
         </div>
         <div>
             <button type="button" id="cancel-save" class="btn btn-secondary" (click)="edit()">

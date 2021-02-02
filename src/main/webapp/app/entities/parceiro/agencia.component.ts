@@ -97,7 +97,7 @@ export class AgenciaComponent implements OnInit {
         bancoId: agenciabancaria.banco.id,
       });
     }
-    this.conta = null;
+    this.conta = {};
     if (agenciabancaria?.conta) {
       this.conta = agenciabancaria.conta;
     }

@@ -23,6 +23,7 @@ import { AgenciabancariaDeleteDialogComponent } from './agencia/agenciabancaria-
 import { FileUploadModule } from 'primeng/fileupload';
 import { RegraDeleteDialogComponent } from './regra/regra-delete-dialog.component';
 import { CaixaComponent } from './caixa/caixa.component';
+import { CadDashDialogComponent } from './cadastro/caddash-diaolog.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CaixaComponent } from './caixa/caixa.component';
     AgenciaDashUpdateComponent,
     NsDashComponent,
     CadDashComponent,
+    CadDashDialogComponent,
     NfeUploadComponent,
     ExtratoUploadComponent,
     NsUploadComponent,
@@ -61,6 +63,7 @@ import { CaixaComponent } from './caixa/caixa.component';
     RegraUpdateComponent,
     RegraDeleteDialogComponent,
     AgenciabancariaDeleteDialogComponent,
+    CadDashDialogComponent,
   ],
 })
 export class OnboardModule {}

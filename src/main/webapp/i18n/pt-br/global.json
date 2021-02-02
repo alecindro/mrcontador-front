@@ -119,11 +119,15 @@
       "close": "Fechar",
       "next": "Próximo",
       "finalizar": "Finalizar",
-      "process": "Processar"
+      "process": "Processar",
+      "update": "Atualizar"
     },
     "detail": {
       "field": "Campo",
       "value": "Valor"
+    },
+    "update": {
+      "title": "Confirme a atualização"
     },
     "delete": {
       "title": "Confirme a exclusão"

@@ -15,6 +15,9 @@
       "delete": {
         "question": "Tem certeza de que deseja excluir o cliente {{ id }}?"
       },
+      "update": {
+        "question": "Tem certeza de que deseja atualizar o parceiro {{ nome }}?"
+      },
       "detail": {
         "title": "Cliente"
       },

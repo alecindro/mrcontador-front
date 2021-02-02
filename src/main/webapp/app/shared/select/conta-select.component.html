@@ -2,4 +2,4 @@
 <input type="text" class="form-control" (selectItem)="selectedConta($event)" [ngbTypeahead]="search" placeholder="Digite a Conta"  [(ngModel)]="conta" name="field_reg_conta"
 [inputFormatter]="inputcontaFormatter"
 [resultFormatter]="contaFormatter"
-[editable]='false'/>
+[disabled]='disabled'/>

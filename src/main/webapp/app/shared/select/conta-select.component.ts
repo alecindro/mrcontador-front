@@ -16,6 +16,8 @@ export class ContaSelectComponent {
   @Output() contaSelected = new EventEmitter();
   @Input()
   conta?: IConta;
+  @Input()
+  disabled = false;
 
   constructor(public contaService: ContaService, public spinner: NgxSpinnerService) {}
 

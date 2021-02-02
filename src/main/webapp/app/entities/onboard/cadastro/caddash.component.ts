@@ -7,6 +7,9 @@ import { IParceiro, Parceiro } from '../../../model/parceiro.model';
 import { ParceiroService } from '../../../services/parceiro.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
+import { IConta } from '../../../model/conta.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CadDashDialogComponent } from './caddash-diaolog.component';
 
 @Component({
   selector: 'jhi-caddash',
@@ -26,6 +29,15 @@ export class CadDashComponent implements OnInit {
   mask = this.maskJuridica;
   juridica = 'J';
   fisica = 'F';
+  despesaJuros: IConta = {};
+  despesaIof: IConta = {};
+  jurosAtivos: IConta = {};
+  descontosAtivos: IConta = {};
+  caixaConta: IConta = {};
+  despesasBancarias: IConta = {};
+  despesaTarifa: IConta = {};
+  parceiro: IParceiro = {};
+  disabled = true;
 
   editForm!: FormGroup;
 
@@ -33,7 +45,8 @@ export class CadDashComponent implements OnInit {
     protected parceiroService: ParceiroService,
     private fb: FormBuilder,
     private spinner: NgxSpinnerService,
-    private eventManager: JhiEventManager
+    private eventManager: JhiEventManager,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -81,13 +94,19 @@ export class CadDashComponent implements OnInit {
       areaAtuacao: [],
       enabled: [],
       codExt: [],
-      atividades: this.fb.array([]),
-      socios: this.fb.array([]),
     });
   }
 
   updateForm(parceiro: IParceiro): void {
     this.createForm();
+    this.parceiro = parceiro;
+    this.despesaJuros = parceiro.despesaJuros || {};
+    this.despesaIof = parceiro.despesaIof || {};
+    this.jurosAtivos = parceiro.jurosAtivos || {};
+    this.descontosAtivos = parceiro.descontosAtivos || {};
+    this.caixaConta = parceiro.caixaConta || {};
+    this.despesasBancarias = parceiro.despesasBancarias || {};
+    this.despesaTarifa = parceiro.despesaTarifa || {};
     this.editForm.patchValue({
       id: parceiro.id,
       parDescricao: parceiro.parDescricao,
@@ -123,47 +142,15 @@ export class CadDashComponent implements OnInit {
       enabled: parceiro.enabled,
       codExt: parceiro.codExt,
     });
-    const _socios = this.editForm.controls.socios as FormArray;
-    const _atividades = this.editForm.controls.atividades as FormArray;
-    if (parceiro.socios) {
-      parceiro.socios.forEach(socio => {
-        _socios.push(
-          this.fb.group({
-            id: socio.id,
-            descricao: socio.descricao,
-            nome: socio.nome,
-          })
-        );
-      });
-    }
-    if (parceiro.atividades) {
-      parceiro.atividades.forEach(atividade => {
-        _atividades.push(
-          this.fb.group({
-            id: atividade.id,
-            descricao: atividade.descricao,
-            code: atividade.code,
-            tipo: atividade.tipo,
-          })
-        );
-      });
-    }
-    setTimeout(() => this.editForm.disable(), 500);
-  }
-
-  get socios(): FormArray {
-    return this.editForm.get('socios') as FormArray;
-  }
-  get atividades(): FormArray {
-    return this.editForm.get('atividades') as FormArray;
+    setTimeout(() => this.disableForm(), 500);
   }
 
   save(): void {
     this.isSaving = true;
     const parceiro = this.createFromForm();
     parceiro.enabled = true;
-    this.spinner.show();
-    this.subscribeToSaveResponse(this.parceiroService.create(parceiro));
+    const modalRef = this.modalService.open(CadDashDialogComponent, { backdrop: 'static' });
+    modalRef.componentInstance.parceiro = parceiro;
   }
 
   saveClick(): void {
@@ -209,6 +196,13 @@ export class CadDashComponent implements OnInit {
       capitalSocial: this.editForm.get(['capitalSocial'])!.value,
       enabled: this.editForm.get(['enabled'])!.value,
       codExt: this.editForm.get(['codExt'])!.value,
+      despesaJuros: this.despesaJuros,
+      despesaIof: this.despesaIof,
+      jurosAtivos: this.jurosAtivos,
+      descontosAtivos: this.descontosAtivos,
+      caixaConta: this.caixaConta,
+      despesasBancarias: this.despesasBancarias,
+      despesaTarifa: this.despesaTarifa,
     };
   }
 
@@ -230,7 +224,37 @@ export class CadDashComponent implements OnInit {
     this.spinner.hide();
   }
 
+  selectedCaixaConta(conta: IConta): void {
+    this.caixaConta = conta;
+  }
+  selectedDescontosAtivos(conta: IConta): void {
+    this.descontosAtivos = conta;
+  }
+  selectedDespesaJuros(conta: IConta): void {
+    this.despesaJuros = conta;
+  }
+  selectedDespesaIof(conta: IConta): void {
+    this.despesaIof = conta;
+  }
+  selectedJurosAtivos(conta: IConta): void {
+    this.jurosAtivos = conta;
+  }
+  selectedDespesasBancarias(conta: IConta): void {
+    this.despesasBancarias = conta;
+  }
+  selectedDespesaTarifa(conta: IConta): void {
+    this.despesaTarifa = conta;
+  }
+
   edit(): void {
-    setTimeout(() => (this.editForm.disabled ? this.editForm.enable() : this.editForm.disable()), 500);
+    setTimeout(() => (this.editForm.disabled ? this.enableForm() : this.disableForm()), 500);
+  }
+  enableForm() {
+    this.editForm.enable();
+    this.disabled = false;
+  }
+  disableForm() {
+    this.editForm.disable();
+    this.disabled = true;
   }
 }

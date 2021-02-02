@@ -256,7 +256,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
   }
 
   updateParceiroConta(): Observable<EntityResponseType> {
-    this.parceiro.codExt = this.codExt;
+    this.parceiro!.codExt = this.codExt;
     return this.parceiroService.update(this.parceiro!);
   }
 
@@ -266,7 +266,6 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
     this.spinner.show();
     switch (this.step) {
       case 0:
-        document.getElementById('par_cnpjcpf').focus();
         this.onCnpj().subscribe(
           response => {
             this.parceiro = response.body || {};
@@ -405,31 +404,31 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
 
   selectedCaixaConta(conta: IConta): void {
     this.caixaConta = conta;
-    this.parceiro.caixaConta = conta;
+    this.parceiro!.caixaConta = conta;
   }
   selectedDescontosAtivosConta(conta: IConta): void {
     this.descontosAtivosConta = conta;
-    this.parceiro.descontosAtivos = conta;
+    this.parceiro!.descontosAtivos = conta;
   }
   selectedDespesaJurosConta(conta: IConta): void {
     this.despesaJurosConta = conta;
-    this.parceiro.despesaJuros = conta;
+    this.parceiro!.despesaJuros = conta;
   }
   selectedDespesaIofConta(conta: IConta): void {
     this.despesaIofConta = conta;
-    this.parceiro.despesaIof = conta;
+    this.parceiro!.despesaIof = conta;
   }
   selectedJurosAtivosConta(conta: IConta): void {
     this.jurosAtivosConta = conta;
-    this.parceiro.jurosAtivos = conta;
+    this.parceiro!.jurosAtivos = conta;
   }
   selectedDespesasBancariasConta(conta: IConta): void {
     this.despesasBancariasConta = conta;
-    this.parceiro.despesasBancarias = conta;
+    this.parceiro!.despesasBancarias = conta;
   }
   selectedDespesaTarifaConta(conta: IConta): void {
     this.despesaTarifaConta = conta;
-    this.parceiro.despesaTarifa = conta;
+    this.parceiro!.despesaTarifa = conta;
   }
 
   ngOnDestroy(): void {

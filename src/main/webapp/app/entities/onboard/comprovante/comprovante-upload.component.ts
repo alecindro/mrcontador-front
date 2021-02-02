@@ -97,6 +97,7 @@ export class ComprovanteUploadComponent implements OnInit {
           if (err.error.message) {
             progressInfo.message = this.translate.instant(err.error.message);
             progressInfo.error = true;
+            this.eventManager.broadcast(new JhiEventWithContent('comprovateUpload', ''));
           } else {
             this.activeModal.close();
           }

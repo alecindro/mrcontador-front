@@ -28,7 +28,6 @@ export class OnboardComponent implements OnInit, OnDestroy {
   parceiro!: IParceiro;
   parceiros!: IParceiro[];
   agenciaListener!: Subscription;
-  contaListener!: Subscription;
 
   constructor(
     public parceiroService: ParceiroService,
@@ -71,7 +70,6 @@ export class OnboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.eventManager.destroy(this.agenciaListener);
-    this.eventManager.destroy(this.contaListener);
   }
   onChangeParceiro(event: NgbTypeaheadSelectItemEvent): void {
     this.loadParceiro(event.item);
