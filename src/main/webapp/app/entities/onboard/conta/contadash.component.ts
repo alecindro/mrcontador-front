@@ -156,7 +156,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     if (this.progressInfo.file) {
       this.spinner.show();
       const queryParam: any = {
-        parceiroCNPJ: this.parceiro?.parCnpjcpf,
+        parceiroId: this.parceiro?.id,
       };
       this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl, queryParam).subscribe(
         event => {
@@ -182,5 +182,9 @@ export class ContaDashComponent implements OnInit, OnDestroy {
 
   carregar(): void {
     this.atualiza = !this.atualiza;
+  }
+
+  remove(): void {
+    this.progressInfo = {};
   }
 }

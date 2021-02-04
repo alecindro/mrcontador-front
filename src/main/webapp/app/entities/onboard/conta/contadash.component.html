@@ -82,8 +82,10 @@
                 [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
         </div>
     </div>
-    <div *ngIf="atualiza">
+    <div *ngIf="atualiza">       
+
     <div (drop)="drop($event)" (dragover)="allowDrop($event)">
+            <jhi-alert-error></jhi-alert-error>
         <div class="uploadimage-dragndrop uploadimage-pos" id="dragndropimage">
             <div class="uploadimage-text">Arraste o aquivo do Plano de Contas aqui</div>
             <div class="mb-2" *ngIf="progressInfo.file">
@@ -106,12 +108,13 @@
                     accept="application/pdf" />
                 <label class="custom-file-label" for="customFileLang">Selecionar Arquivo</label>
             </div>
-            <button class="btn btn-success" [disabled]="!progressInfo.file" (click)="upload()">
+            <button type="button" id="cancel-save" class="btn btn-danger" (click)="carregar()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+            <button class="btn btn-info" [disabled]="!progressInfo.file" (click)="upload()">
                 Upload
             </button>
-            <button type="button" id="cancel-save" class="btn btn-secondary" (click)="carregar()">
-                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
-            </button>
+           
             
         </div>
     </div>
