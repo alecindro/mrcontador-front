@@ -45,6 +45,7 @@
     "parceiro.notequals": "O parceiro não corresponde ao selecionado.",
     "extrato.itau.notdate": "Extrato do Itaú inválido. Não possue período (ano) da informação.",
     "doc.not.comprovante": "Não identificamos esse documento como um comprovante de pagamento.",
-    "comprovante.notimported.all": "Não foi possível cadastrar os comprovantes"
+    "comprovante.notimported.all": "Não foi possível cadastrar os comprovantes",
+    "comprovante.notallimported": "Alguns comprovantes já haviam sido importados"
   }
 }

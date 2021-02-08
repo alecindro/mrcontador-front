@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subscription } from 'rxjs';
 import { IParceiro } from '../../../model/parceiro.model';
 import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
 import { ParceiroService } from '../../../services/parceiro.service';
@@ -10,7 +10,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
 import { Router, ActivatedRoute, ParamMap, Data } from '@angular/router';
 import { UploadService } from '../../../services/file-upload.service';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent, JhiAlertService } from 'ng-jhipster';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ContaUploadComponent } from './conta-upload.component';
 
 @Component({
   selector: 'jhi-dash-conta',
@@ -18,7 +20,6 @@ import { JhiEventManager } from 'ng-jhipster';
   styleUrls: ['./contadash.component.scss'],
 })
 export class ContaDashComponent implements OnInit, OnDestroy {
-  progressInfo: any = {};
   message = '';
   mesAno!: MesAnoDTO;
   contas?: IConta[];
@@ -31,7 +32,7 @@ export class ContaDashComponent implements OnInit, OnDestroy {
   parceiro?: IParceiro;
   pesquisa?: any;
   selected = 'conClassificacao.contains';
-  atualiza = false;
+  eventSubscriber?: Subscription;
 
   constructor(
     private parceiroService: ParceiroService,
@@ -40,7 +41,9 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected activatedRoute: ActivatedRoute,
     protected uploadService: UploadService,
-    public eventManager: JhiEventManager
+    public eventManager: JhiEventManager,
+    private alertService: JhiAlertService,
+    protected modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
@@ -109,9 +112,6 @@ export class ContaDashComponent implements OnInit, OnDestroy {
     }
     this.spinner.hide();
     this.contas = data || [];
-    if (this.contas.length === 0) {
-      this.atualiza = true;
-    }
     this.ngbPaginationPage = this.page;
   }
 
@@ -131,60 +131,17 @@ export class ContaDashComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-  removeFile(): void {
-    this.progressInfo.file = undefined;
-    this.progressInfo = {};
-  }
-
-  allowDrop(ev: any): void {
-    ev.preventDefault();
-  }
-
-  drop(ev: any): void {
-    ev.preventDefault();
-    ev.target.files = ev.dataTransfer.files;
-    this.selectFile(ev);
-  }
-
-  selectFile(event: any): void {
-    event.preventDefault();
-    this.progressInfo = { value: 0, fileName: event.target.files[0].name, file: event.target.files[0] };
-  }
-
   upload(): void {
-    this.message = '';
-    if (this.progressInfo.file) {
-      this.spinner.show();
-      const queryParam: any = {
-        parceiroId: this.parceiro?.id,
-      };
-      this.uploadService.uploadFiles(this.progressInfo.file, this.uploadService.planocontasUrl, queryParam).subscribe(
-        event => {
-          if (event && event.type === HttpEventType.UploadProgress) {
-            this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
-            this.progressInfo.file = undefined;
-          } else if (event instanceof HttpResponse) {
-            this.message = event.status.toString();
-            this.eventManager.broadcast('contasaved');
-            this.spinner.hide();
-            this.loadPage();
-            this.atualiza = false;
-          }
-        },
-        err => {
-          this.message = 'Não foi possivel carregar o arquivo: ' + err;
-          this.progressInfo.value = 0;
-          this.spinner.hide();
-        }
-      );
-    }
+    const modalRef = this.modalService.open(ContaUploadComponent, { size: 'xl', backdrop: 'static', scrollable: true });
+    modalRef.componentInstance.parceiro = this.parceiro;
   }
 
-  carregar(): void {
-    this.atualiza = !this.atualiza;
-  }
-
-  remove(): void {
-    this.progressInfo = {};
+  registerChangeInComprovantes(): void {
+    this.eventSubscriber = this.eventManager.subscribe('contaUpload', (response: JhiEventWithContent<string>) => {
+      if (response.content != '') {
+        this.alertService.success('mrcontadorFrontApp.conta.uploaded');
+      }
+      this.loadPage();
+    });
   }
 }

@@ -7,6 +7,7 @@
         "createOrEditLabel": "Criar ou editar Conta",
         "notFound": "Nenhuma Conta cadastrada"
       },
+      "uploaded": "Plano de contas importado com sucesso.",
       "created": "Um novo Conta foi criado com o identificador {{ param }}",
       "updated": "Um Conta foi atualizado com o identificador {{ param }}",
       "deleted": "Um Conta foi excluído com o identificador {{ param }}",
@@ -14,7 +15,8 @@
         "question": "Tem certeza de que deseja excluir Conta {{ id }}?"
       },
       "detail": {
-        "title": "Conta"
+        "title": "Conta",
+        "modalTitle": "Plano de Contas"
       },
       "con_conta": "Conta",
       "con_classificacao": "Classificação",
