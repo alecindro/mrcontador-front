@@ -286,7 +286,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.inteligentService.update(inteligent).subscribe(
       resp => {
-        inteligent = resp.body;
+        inteligent = resp.body || {};
         this.histFinalElement.parentElement.removeAttribute('class');
         this.histFinalElement.parentElement.nextElementSibling.setAttribute('class', 'no_show');
         this.spinner.hide();
