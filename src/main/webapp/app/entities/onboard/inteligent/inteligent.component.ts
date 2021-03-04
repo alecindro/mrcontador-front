@@ -64,6 +64,8 @@ export class InteligentComponent implements OnInit, OnDestroy {
   popoverNotaFiscal?: NgbPopover;
   activeTab = 1;
   notafiscals: INotafiscal[] = [];
+  histFinalElement?: any;
+  histFinal?: string;
 
   constructor(
     private eventManager: JhiEventManager,
@@ -264,6 +266,41 @@ export class InteligentComponent implements OnInit, OnDestroy {
     }
   }
 
+  selectHistFinal(inteligent: IInteligent, event: any): void {
+    if (this.histFinalElement) {
+      this.cancelHistFinal();
+    }
+    this.histFinal = inteligent.historicofinal;
+    this.histFinalElement = event.currentTarget;
+    this.histFinalElement.parentElement.nextElementSibling.removeAttribute('class');
+    this.histFinalElement.parentElement.setAttribute('class', 'no_show');
+  }
+  cancelHistFinal(): void {
+    this.histFinal = '';
+    this.histFinalElement.parentElement.removeAttribute('class');
+    this.histFinalElement.parentElement.nextElementSibling.setAttribute('class', 'no_show');
+  }
+  saveHistFinal(inteligent: IInteligent): void {
+    const histFinalCopy = this.histFinal;
+    inteligent.historicofinal = this.histFinal;
+    this.spinner.show();
+    this.inteligentService.update(inteligent).subscribe(
+      resp => {
+        inteligent = resp.body;
+        this.histFinalElement.parentElement.removeAttribute('class');
+        this.histFinalElement.parentElement.nextElementSibling.setAttribute('class', 'no_show');
+        this.spinner.hide();
+      },
+      err => {
+        console.log(err);
+        this.spinner.hide();
+        inteligent.historicofinal = histFinalCopy;
+        this.histFinalElement.parentElement.removeAttribute('class');
+        this.histFinalElement.parentElement.nextElementSibling.setAttribute('class', 'no_show');
+      }
+    );
+  }
+
   selectInteligent(inteligent: IInteligent, popover: NgbPopover): void {
     this.regra = new Regra();
     this.regra.regHistorico = '';
@@ -305,11 +342,11 @@ export class InteligentComponent implements OnInit, OnDestroy {
       inteligent.comprovante?.tipoComprovante === TipoComprovante[TipoComprovante.TITULO]
     ) {
       const queryParam = {
-        cnpj: `${inteligent?.cnpj}`,
-        valor: inteligent?.debito,
-        dataInicial: inteligent?.datalancamento ? inteligent?.datalancamento.format('YYYY-MM-DD') : '',
+        'processado.equals': false,
+        'notCnpj.contains': `${inteligent?.cnpj}`.substring(0, 8),
+        'notDataparcela.lessThanOrEqual': inteligent?.datalancamento ? inteligent?.datalancamento.format('YYYY-MM-DD') : '',
       };
-      this.notafiscalService.findNear(queryParam).subscribe(response => {
+      this.notafiscalService.query(queryParam).subscribe(response => {
         this.notafiscals = response.body || [];
         this.selectNota(popover);
       });

@@ -25,6 +25,12 @@ export class InteligentService {
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
   }
 
+  update(inteligent: IInteligent): Observable<EntityResponseType> {
+    return this.http
+      .put<IInteligent>(this.resourceUrl, inteligent, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
   find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<IInteligent>(`${this.resourceUrl}/${id}`, { observe: 'response' })

@@ -218,9 +218,9 @@
                                             <u placement="top" ngbTooltip="Associar nota fiscal">Associar nota fiscal</u>
                                         </a>
                                 <a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.notafiscal?.notNumero }}</u></span></a>
-                               
+
                             </td>
-                            <td>{{ inteligent.beneficiario }}</td>
+                            <td>  {{ inteligent.beneficiario }}</td>
                             <td>{{ inteligent.extrato?.infoAdicional }}</td>
                         </tr>
                     </tbody>
@@ -272,8 +272,15 @@
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
                             <td>{{ inteligent.beneficiario }}</td>
-                            <td>{{ inteligent.historicofinal }}</td>
-                         
+                            <td><span>{{ inteligent.historicofinal }}
+                                    <a *ngIf="inteligent?.historicofinal" (click)="selectHistFinal(inteligent,$event)" class="text-info no_show">
+                                        <fa-icon icon="pencil-alt" class="text-sucess"></fa-icon></a></span>
+                                        <div class="no_show">
+                                        <input [(ngModel)]="histFinal">
+                                                <a  (click)="cancelHistFinal()"><fa-icon icon="times" class="text-danger" placement="top" ngbTooltip="Cancelar"></fa-icon></a>
+                                                <a  (click)="saveHistFinal(inteligent)"><fa-icon icon="check"  class="text-sucess" placement="top" ngbTooltip="Salvar"></fa-icon></a>
+                                            </div>
+                                    </td>
                         </tr>
                     </tbody>
                 </table>
