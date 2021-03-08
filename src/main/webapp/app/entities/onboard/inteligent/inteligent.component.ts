@@ -252,7 +252,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
       this.inteligentSelected.parceiro = this.parceiro;
       this.inteligentSelected.agenciabancaria = this.agenciaSelected;
       this.inteligentSelected.conta = this.contaSelected;
-      this.inteligentService.create(this.inteligentSelected).subscribe(() => {
+      this.inteligentService.update(this.inteligentSelected).subscribe(() => {
         this.cancelConta();
         this.loadData();
       });
