@@ -5,7 +5,7 @@
         "title": "Notas fiscais",
         "createLabel": "Criar novo Notafiscal",
         "createOrEditLabel": "Criar ou editar Notafiscal",
-        "notFound": "Nenhuma Notafiscal cadastrada"
+        "notFound": "Nenhuma Nota Fiscal encontrada"
       },
       "uploaded": "Nota fiscal importada com sucesso. Os arquivos assim que processados serão disponibilizados no número da Nota Fiscal.",
       "created": "Um novo Notafiscal foi criado com o identificador {{ param }}",

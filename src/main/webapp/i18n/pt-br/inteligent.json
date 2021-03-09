@@ -5,7 +5,8 @@
         "title": "Consolidação",
         "createLabel": "Criar novo Inteligent",
         "createOrEditLabel": "Criar ou editar Inteligent",
-        "notFound": "Nenhuma informação encontrada"
+        "notFound": "Nenhuma informação encontrada",
+        "nfAssociate": "Associar nota fiscal"
       },
       "function.process": "A consolidação foi processada",
       "created": "Um novo Inteligent foi criado com o identificador {{ param }}",

@@ -25,6 +25,7 @@ import { RegraDeleteDialogComponent } from './regra/regra-delete-dialog.componen
 import { CaixaComponent } from './caixa/caixa.component';
 import { CadDashDialogComponent } from './cadastro/caddash-diaolog.component';
 import { ContaUploadComponent } from './conta/conta-upload.component';
+import { NfDialogComponent } from './inteligent/nf-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ContaUploadComponent } from './conta/conta-upload.component';
     AgenciabancariaDeleteDialogComponent,
     CaixaComponent,
     ContaUploadComponent,
+    NfDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,7 @@ import { ContaUploadComponent } from './conta/conta-upload.component';
     AgenciabancariaDeleteDialogComponent,
     CadDashDialogComponent,
     ContaUploadComponent,
+    NfDialogComponent,
   ],
 })
 export class OnboardModule {}

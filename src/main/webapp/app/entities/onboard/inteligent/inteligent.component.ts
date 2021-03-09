@@ -19,7 +19,7 @@ import { INotafiscal } from '../../../model/notafiscal.model';
 import { ContaService } from '../../../services/conta.service';
 import { IConta } from '../../../model/conta.model';
 import { TipoRegra } from '../../../shared/constants/TipoRegra.constants';
-import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPopover, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegraService } from '../../../services/regra.service';
 import { AuthServerProvider } from '../../../core/auth/auth-jwt.service';
 import { TipoSistema } from '../../../shared/constants/TipoSistema';
@@ -27,6 +27,7 @@ import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 import { NotafiscalService } from '../../../services/notafiscal.service';
 import { TipoComprovante } from '../../../shared/constants/TipoComprovante.constants';
 import { TipoValor } from '../../../shared/constants/TipoValor.constants';
+import { NfDialogComponent } from './nf-dialog.component';
 
 type EntityArrayResponseType = HttpResponse<IConta[]>;
 
@@ -77,7 +78,8 @@ export class InteligentComponent implements OnInit, OnDestroy {
     public fileService: UploadService,
     public contaService: ContaService,
     public regraService: RegraService,
-    public authServerProvider: AuthServerProvider
+    public authServerProvider: AuthServerProvider,
+    protected modalService: NgbModal
   ) {
     this.registerParceiroListener();
   }
@@ -335,22 +337,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
     );
   }
 
-  public loadNotas(inteligent: IInteligent, popover: NgbPopover): void {
-    if (
-      inteligent.tipoValor === TipoValor[TipoValor.PRINCIPAL] &&
-      inteligent?.comprovante &&
-      inteligent.comprovante?.tipoComprovante === TipoComprovante[TipoComprovante.TITULO]
-    ) {
-      const queryParam = {
-        'processado.equals': false,
-        'notCnpj.contains': `${inteligent?.cnpj}`.substring(0, 8),
-        'notDataparcela.lessThanOrEqual': inteligent?.datalancamento ? inteligent?.datalancamento.format('YYYY-MM-DD') : '',
-      };
-      this.notafiscalService.query(queryParam).subscribe(response => {
-        this.notafiscals = response.body || [];
-        this.selectNota(popover);
-      });
-    }
+  loadNotas(inteligent: IInteligent): void {
+    const modalRef = this.modalService.open(NfDialogComponent, { size: 'lg', backdrop: 'static', scrollable: true });
+    modalRef.componentInstance.inteligent = inteligent;
   }
 
   selectNota(popover: NgbPopover): void {

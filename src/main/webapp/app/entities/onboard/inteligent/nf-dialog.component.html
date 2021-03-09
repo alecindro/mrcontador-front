@@ -1,0 +1,74 @@
+<div class="modal-header bg-primary pb-1 pt-1 pr-1">
+        <h4 class="modal-title text-center text-light" jhiTranslate="mrcontadorFrontApp.inteligent.home.nfAssociate"></h4>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()" aria-hidden="true">&times;</button>
+</div>
+
+<div class="modal-body">
+        <div class="table-responsive">
+                <table class="table table-sm table-striped" aria-describedby="page-heading">
+                    <thead>
+                        <tr>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.datalancamento"></span>
+                            </th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historico"></span></th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.numdocumento"></span></th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito"></span></th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj"></span></th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
+                            <td>{{ inteligent.historico }}</td>
+                            <td ><span class="font-weight-normal text-truncate text-info" >{{inteligent.numerodocumento}}</span></td>
+                            <td><span class="text-danger"> {{inteligent.debito  | currency:"BRL"}}</span></td>
+                            <td>{{ inteligent.cnpj }}</td>
+                            <td>  {{ inteligent.beneficiario }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>    
+<div class="overflow-auto">
+        <div class="table-responsive" id="entities">
+                <table class="table table-sm table-striped" aria-describedby="page-heading">
+                    <thead>
+                        <tr>
+                        <th scope="col">
+                        </th>
+                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero"></span>
+                        </th>
+                        <th scope="col"><span
+                                jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa"></span>
+                        </th>
+                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela"></span>
+                        </th>
+                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota"></span>
+                        </th>
+                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela"></span>
+                        </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="notafiscals?.length === 0">
+                            <td colspan="6" class="text-center"><span jhiTranslate="mrcontadorFrontApp.notafiscal.home.notFound"></span></td>
+                        </tr>
+                        <tr *ngFor="let nf of notafiscals;let i=index; " >
+                                <td><input  type="checkbox" value="{{nf.selected}}" [(ngModel)]="notafiscals[i].selected" style="cursor: pointer">
+                                </td>
+                                <td> <span>{{ nf.notafiscal.notNumero }}</span></td>
+                                    <td><span class="font-weight-normal text-truncate">{{ nf.notafiscal.notEmpresa }}</span></td>
+                                    <td><span>{{ nf.notafiscal.notDataparcela | date:'dd/MM/yyyy' }}</span></td>
+                                    <td><span>{{ nf.notafiscal.notValorparcela | currency:"BRL" }}</span></td>
+                                    <td><span>{{ nf.notafiscal.notParcela }}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</div>
+<div class="modal-footer">
+        <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="cancel()">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.close"></span>
+            </button>
+</div>
