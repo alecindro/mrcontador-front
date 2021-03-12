@@ -29,7 +29,7 @@
                     </tbody>
                 </table>
             </div>    
-<div class="overflow-auto">
+<div *ngIf="!proximo">
         <div class="table-responsive" id="entities">
                 <table class="table table-sm table-striped" aria-describedby="page-heading">
                     <thead>
@@ -54,7 +54,7 @@
                             <td colspan="6" class="text-center"><span jhiTranslate="mrcontadorFrontApp.notafiscal.home.notFound"></span></td>
                         </tr>
                         <tr *ngFor="let nf of notafiscals;let i=index; " >
-                                <td><input  type="checkbox" value="{{nf.selected}}" [(ngModel)]="notafiscals[i].selected" style="cursor: pointer">
+                                <td><input  [disabled]="!nf.enabled" type="checkbox" (change)="check(nf)" value="{{nf.selected}}" [(ngModel)]="notafiscals[i].selected" style="cursor: pointer" >
                                 </td>
                                 <td> <span>{{ nf.notafiscal.notNumero }}</span></td>
                                     <td><span class="font-weight-normal text-truncate">{{ nf.notafiscal.notEmpresa }}</span></td>
@@ -66,9 +66,61 @@
                 </table>
             </div>
         </div>
+
+        <div *ngIf="proximo">
+                <div class="table-responsive">
+                        <table class="table table-sm table-striped" aria-describedby="page-heading">
+                            <thead>
+                                <tr>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_numero"></span>
+                                </th>
+                                <th scope="col"><span
+                                        jhiTranslate="mrcontadorFrontApp.notafiscal.not_empresa"></span>
+                                </th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_dataparcela"></span>
+                                </th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_valornota"></span>
+                                </th>
+                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.notafiscal.not_parcela"></span>
+                                </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="notafiscalSelecteds?.length === 0">
+                                    <td colspan="6" class="text-center"><span jhiTranslate="mrcontadorFrontApp.notafiscal.home.notFound"></span></td>
+                                </tr>
+                                <tr *ngFor="let nf of notafiscalSelecteds;let i=index; " >
+                                        <td> <span>{{ nf.notafiscal.notNumero }}</span></td>
+                                            <td><span class="font-weight-normal text-truncate">{{ nf.notafiscal.notEmpresa }}</span></td>
+                                            <td><span>{{ nf.notafiscal.notDataparcela | date:'dd/MM/yyyy' }}</span></td>
+                                            <td><span>{{ nf.notafiscal.notValorparcela | currency:"BRL" }}</span></td>
+                                            <td><span>{{ nf.notafiscal.notParcela }}</span></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3"><label class="mr-sm-2" >Taxa de boleto</label></td>
+                                    <td> <input [value]= "taxa  | currency:'BRL'" [attr.disabled]="showTaxa ? null : ''" #itaxa></td>
+                                        <td><button class="btn btn-primary btn-sm" type="button" [disabled]="!showTaxa" (click)="atualizarTaxa(itaxa)">Atualizar</button></td>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div >
+                            
+                           
+                    </div>
+                </div>
 </div>
 <div class="modal-footer">
-        <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="cancel()">
-                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.close"></span>
+        <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="back()" *ngIf="proximo">
+                <fa-icon icon="angle-double-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"></span>
+            </button>
+            <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="back()" *ngIf="proximo">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save"></span>
+                </button>
+        <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="next()" *ngIf="showNext">
+                <fa-icon icon="angle-double-right"></fa-icon>&nbsp;<span jhiTranslate="entity.action.next"></span>
             </button>
 </div>
