@@ -26,6 +26,7 @@ import { CaixaComponent } from './caixa/caixa.component';
 import { CadDashDialogComponent } from './cadastro/caddash-diaolog.component';
 import { ContaUploadComponent } from './conta/conta-upload.component';
 import { NfDialogComponent } from './inteligent/nf-dialog.component';
+import { NfDeleteComponent } from './inteligent/nf-delete.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { NfDialogComponent } from './inteligent/nf-dialog.component';
     CaixaComponent,
     ContaUploadComponent,
     NfDialogComponent,
+    NfDeleteComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +72,7 @@ import { NfDialogComponent } from './inteligent/nf-dialog.component';
     CadDashDialogComponent,
     ContaUploadComponent,
     NfDialogComponent,
+    NfDeleteComponent,
   ],
 })
 export class OnboardModule {}

@@ -28,6 +28,7 @@ import { NotafiscalService } from '../../../services/notafiscal.service';
 import { TipoComprovante } from '../../../shared/constants/TipoComprovante.constants';
 import { TipoValor } from '../../../shared/constants/TipoValor.constants';
 import { NfDialogComponent } from './nf-dialog.component';
+import { NfDeleteComponent } from './nf-delete.component';
 
 type EntityArrayResponseType = HttpResponse<IConta[]>;
 
@@ -38,6 +39,7 @@ type EntityArrayResponseType = HttpResponse<IConta[]>;
 })
 export class InteligentComponent implements OnInit, OnDestroy {
   parceiroListener!: Subscription;
+  nfListener!: Subscription;
   divergencias?: IInteligent[] = [];
   conciliados?: IInteligent[] = [];
   regra: IRegra = {};
@@ -82,6 +84,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal
   ) {
     this.registerParceiroListener();
+    this.registerNFListener();
   }
 
   ngOnInit(): void {
@@ -105,6 +108,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.parceiroListener) {
       this.eventManager.destroy(this.parceiroListener);
+    }
+    if (this.nfListener) {
+      this.eventManager.destroy(this.nfListener);
     }
   }
 
@@ -201,6 +207,12 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.meses = Array.from(new Set(this.meses));
     this.anoSelected = this.anos[0];
     this.mesSelected = this.meses[0];
+  }
+
+  private registerNFListener(): void {
+    this.nfListener = this.eventManager.subscribe('nfassociate', (response: any) => {
+      this.loadData();
+    });
   }
 
   private registerParceiroListener(): void {
@@ -391,5 +403,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
     } else {
       alert('Cadastrar código do sistema do parceiro.');
     }
+  }
+  public removeNf(inteligent: IInteligent): void {
+    const modalRef = this.modalService.open(NfDeleteComponent, { size: 'lg', backdrop: 'static', scrollable: true });
+    modalRef.componentInstance.inteligent = inteligent;
   }
 }

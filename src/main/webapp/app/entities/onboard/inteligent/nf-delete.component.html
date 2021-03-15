@@ -1,0 +1,20 @@
+<form *ngIf="inteligent" name="deleteForm" (ngSubmit)="confirmDelete()">
+<div class="modal-header bg-primary pb-1 pt-1 pr-1">
+        <h4 class="modal-title text-center text-light" jhiTranslate="mrcontadorFrontApp.inteligent.home.nfAssociate"></h4>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()" aria-hidden="true">&times;</button>
+</div>
+<div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+
+        <p id="jhi-delete-nf-heading" jhiTranslate="mrcontadorFrontApp.notafiscal.delete.question" [translateValues]="{ id: inteligent.notafiscal?.notNumero }"></p>
+</div>
+<div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+    
+            <button id="jhi-confirm-delete-arquivoerro" type="submit" class="btn btn-danger">
+                <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Delete</span>
+            </button>
+</div>
+</form>

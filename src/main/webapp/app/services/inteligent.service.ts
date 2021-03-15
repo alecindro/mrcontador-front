@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IInteligent } from 'app/model/inteligent.model';
+import { InteligentNfDTO } from '../model/inteligentNFDto';
 
 type EntityResponseType = HttpResponse<IInteligent>;
 type EntityArrayResponseType = HttpResponse<IInteligent[]>;
@@ -16,6 +17,7 @@ export class InteligentService {
   public resourceUrl = SERVER_API_URL + 'api/inteligents';
   public periodoUrl = SERVER_API_URL + 'api/inteligents/periodo';
   public resourceUrlFunction = SERVER_API_URL + 'api/inteligents/function';
+  private associateNFUrl = SERVER_API_URL + 'api/inteligents/nf';
 
   constructor(protected http: HttpClient) {}
 
@@ -29,6 +31,13 @@ export class InteligentService {
     return this.http
       .put<IInteligent>(this.resourceUrl, inteligent, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  associateNf(inteligentNfDTO: InteligentNfDTO): Observable<any> {
+    return this.http.post(this.associateNFUrl, inteligentNfDTO);
+  }
+  removeNf(inteligent: IInteligent): Observable<any> {
+    return this.http.put(this.associateNFUrl, inteligent);
   }
 
   find(id: number): Observable<EntityResponseType> {

@@ -244,6 +244,8 @@
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.conta"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj"></span></th>
+                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.notafiscal"></span>
+                            </th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
                             </th>
@@ -269,7 +271,13 @@
                             <td>{{ inteligent.credito  | currency:"BRL"}}</td>
                             <td>{{ inteligent.conta?.conConta}}</td>
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
-                            <td><span *ngIf="!inteligent?.notafiscal">{{ inteligent.cnpj }}</span><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.cnpj }}</u></span></a></td>
+                            <td>{{ inteligent.cnpj }}</td>
+                             <td><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" 
+                                target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal">
+                                <span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.notafiscal?.notNumero }}</u>  
+                                    <a *ngIf="inteligent?.notafiscal" (click)="removeNf(inteligent)" class="text-info no_show">
+                                            <fa-icon icon="times" class="text-danger"></fa-icon></a> </span></a> 
+                             </td>   
                             <td>{{ inteligent.beneficiario }}</td>
                             <td><span>{{ inteligent.historicofinal }}
                                     <a *ngIf="inteligent?.historicofinal" (click)="selectHistFinal(inteligent,$event)" class="text-info no_show">

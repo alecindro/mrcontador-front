@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { NotafiscalService } from '../../../services/notafiscal.service';
 import { IInteligent } from '../../../model/inteligent.model';
 import { TipoValor } from '../../../shared/constants/TipoValor.constants';
 import { TipoComprovante } from '../../../shared/constants/TipoComprovante.constants';
 import { INotafiscal } from '../../../model/notafiscal.model';
+import { InteligentNfDTO } from '../../../model/inteligentNFDto';
+import { InteligentService } from '../../../services/inteligent.service';
 
 @Component({
   templateUrl: './nf-dialog.component.html',
@@ -15,7 +17,6 @@ export class NfDialogComponent implements OnInit {
     notafiscal: INotafiscal;
     selected: boolean;
     enabled: boolean;
-    parcela: boolean = false;
   }[] = [];
   notafiscalSelecteds: any = [];
   inteligent: IInteligent = {};
@@ -23,8 +24,14 @@ export class NfDialogComponent implements OnInit {
   proximo: boolean = false;
   showNext: boolean = false;
   showTaxa: boolean = false;
+  inteligentNfDTO: InteligentNfDTO = new InteligentNfDTO();
 
-  constructor(public activeModal: NgbActiveModal, protected eventManager: JhiEventManager, private notaFiscalService: NotafiscalService) {}
+  constructor(
+    public activeModal: NgbActiveModal,
+    protected eventManager: JhiEventManager,
+    private notaFiscalService: NotafiscalService,
+    private inteligentService: InteligentService
+  ) {}
 
   ngOnInit(): void {
     this.loadNotas(this.inteligent);
@@ -49,9 +56,10 @@ export class NfDialogComponent implements OnInit {
       this.notaFiscalService.query(queryParam).subscribe(response => {
         const nfs = response.body || [];
         for (const item in nfs) {
-          const _nf = { notafiscal: nfs[item], selected: false, enabled: true, parcela: false };
+          const _nf = { notafiscal: nfs[item], selected: false, enabled: true };
           this.notafiscals.push(_nf);
         }
+        this.inteligent = JSON.parse(JSON.stringify(this.inteligent));
       });
     }
   }
@@ -66,7 +74,7 @@ export class NfDialogComponent implements OnInit {
     let total = this.getTotal();
     const nfs = this.notafiscals.filter(value => !value.selected);
     for (const item in nfs) {
-      const value = total + nfs[item].notafiscal.notValorparcela + this.inteligent.debito;
+      const value = total + (nfs[item].notafiscal.notValorparcela || 0) + (this.inteligent.debito || 0);
       if (value > 0) {
         nfs[item].enabled = false;
       } else {
@@ -84,20 +92,22 @@ export class NfDialogComponent implements OnInit {
 
   private generateParcela(): void {
     this.notafiscalSelecteds = JSON.parse(JSON.stringify(this.notafiscals.filter(n => n.selected)));
-    if (this.notafiscalSelecteds.length === 1 && this.getTotal() > this.inteligent.debito * -1) {
+    if (this.notafiscalSelecteds.length === 1 && this.getTotal() > (this.inteligent.debito || 0) * -1) {
       let newNF = JSON.parse(JSON.stringify(this.notafiscalSelecteds[0]));
       newNF.notafiscal.id = null;
       newNF.notafiscal.notParcela = '00' + (+newNF.notafiscal.notParcela + 1);
       newNF.notafiscal.processado = false;
-      newNF.notafiscal.notValorparcela = this.notafiscalSelecteds[0].notafiscal.notValorparcela + this.inteligent.debito;
+      newNF.notafiscal.notValorparcela = Number(
+        this.notafiscalSelecteds[0].notafiscal.notValorparcela + (this.inteligent.debito || 0)
+      ).toFixed(2);
       this.notafiscalSelecteds.push(newNF);
-      this.notafiscalSelecteds[0].notafiscal.notValorparcela = this.inteligent.debito * -1;
+      this.notafiscalSelecteds[0].notafiscal.notValorparcela = (this.inteligent.debito || 0) * -1;
       this.showTaxa = true;
     }
   }
 
   private generateTaxa(): void {
-    const value = (this.inteligent.debito + this.getTotal()) * -1;
+    const value = ((this.inteligent.debito || 0) + this.getTotal()) * -1;
     if (value > 0) {
       this.taxa = value;
     }
@@ -109,16 +119,115 @@ export class NfDialogComponent implements OnInit {
     this.showTaxa = false;
     this.notafiscalSelecteds = [];
     this.taxa = 0;
+    this.inteligentNfDTO.inteligents = [];
+    this.inteligentNfDTO.notafiscals = [];
   }
 
   private getTotal(): number {
     let valueBegin = 0;
-    return this.notafiscals.filter(value => value.selected).reduce((accum, value) => accum + value.notafiscal.notValorparcela, valueBegin);
+    return this.notafiscals
+      .filter(value => value.selected)
+      .reduce((accum, value) => accum + (value.notafiscal.notValorparcela || 0), valueBegin);
   }
 
   public atualizarTaxa(inputTaxa: any): void {
-    const newTaxa = +inputTaxa.value.trim().replace(/[,]/g, '.').replace(/[R$]/g, '');
-    this.notafiscalSelecteds[0].notafiscal.notValorparcela = this.notafiscalSelecteds[0].notafiscal.notValorparcela + this.taxa - newTaxa;
+    let newTaxa = +inputTaxa.value.trim().replace(/[,]/g, '.').replace(/[R$]/g, '');
+    if (newTaxa > 0) {
+      newTaxa = newTaxa - this.taxa;
+    } else {
+      newTaxa = this.taxa * -1;
+      this.taxa = 0;
+    }
+    this.notafiscalSelecteds[0].notafiscal.notValorparcela = Number(
+      (this.notafiscalSelecteds[0].notafiscal.notValorparcela || 0) - newTaxa
+    ).toFixed(2);
     this.taxa = newTaxa;
+  }
+
+  public save(): void {
+    this.updateInteligente();
+    this.gerarTaxa();
+    this.newInteligent();
+    this.inteligentService.associateNf(this.inteligentNfDTO).subscribe(
+      success => {
+        this.eventManager.broadcast('nfassociate');
+        this.activeModal.close();
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  private updateInteligente(): void {
+    let inteligentCopy = JSON.parse(JSON.stringify(this.inteligent));
+    this.notafiscalSelecteds[0].notafiscal.processado = true;
+    inteligentCopy.notafiscal = this.notafiscalSelecteds[0].notafiscal;
+    inteligentCopy.debito = +Number((this.notafiscalSelecteds[0].notafiscal.notValorparcela || 0) * -1).toFixed(2);
+    inteligentCopy.historicofinal =
+      'Pagto. NFe ' +
+      this.notafiscalSelecteds[0].notafiscal.notNumero +
+      '/' +
+      this.notafiscalSelecteds[0].notafiscal.notParcela +
+      ' de ' +
+      this.notafiscalSelecteds[0].notafiscal.notEmpresa;
+    inteligentCopy.associado = false;
+    inteligentCopy.cnpj = this.notafiscalSelecteds[0].notafiscal?.notCnpj;
+    inteligentCopy.tipoInteligent = 'x';
+    if (this.taxa > 0) {
+      inteligentCopy.tipoInteligent = 'C';
+    }
+    this.inteligentNfDTO.inteligents.push(inteligentCopy);
+    this.inteligentNfDTO.notafiscals = this.notafiscalSelecteds
+      .filter((nfs: any) => nfs.notafiscal.id !== null)
+      .map((nfs: any) => {
+        return nfs.notafiscal;
+      });
+  }
+
+  private newInteligent(): void {
+    if (this.notafiscalSelecteds.length > 1) {
+      for (let i = 1; i < this.notafiscalSelecteds.length; i++) {
+        this.notafiscalSelecteds[i].notafiscal.processado = true;
+        let newInteligent = JSON.parse(JSON.stringify(this.inteligent));
+        newInteligent.id = null;
+        newInteligent.debito = +Number((this.notafiscalSelecteds[i].notafiscal.notValorparcela || 0) * -1).toFixed(2);
+        newInteligent.associado = false;
+        newInteligent.cnpj = this.notafiscalSelecteds[i].notafiscal?.notCnpj;
+        newInteligent.tipoInteligent = 'x';
+        newInteligent.notafiscal = this.notafiscalSelecteds[i].notafiscal;
+        newInteligent.historicofinal =
+          'Pagto. NFe ' +
+          this.notafiscalSelecteds[i].notafiscal.notNumero +
+          '/' +
+          this.notafiscalSelecteds[i].notafiscal.notParcela +
+          ' de ' +
+          this.notafiscalSelecteds[i].notafiscal.notEmpresa;
+        this.inteligentNfDTO.inteligents.push(newInteligent);
+      }
+    }
+  }
+
+  private gerarTaxa(): void {
+    if (this.taxa > 0) {
+      const historicoFinal =
+        'Pagto. de taxa bancária ref. ' +
+        this.notafiscalSelecteds[0].notafiscal.notNumero +
+        '/' +
+        this.notafiscalSelecteds[0].notafiscal.notParcela +
+        ' de ' +
+        this.notafiscalSelecteds[0].notafiscal.notEmpresa;
+      let inteligentTaxa = JSON.parse(JSON.stringify(this.inteligent));
+      inteligentTaxa.id = null;
+      inteligentTaxa.historico = 'Pagto. de Taxa bancária';
+      inteligentTaxa.tipoValor = 'TAXA';
+      inteligentTaxa.debito = +Number(this.taxa * -1).toFixed(2);
+      inteligentTaxa.associado = false;
+      inteligentTaxa.tipoInteligent = 'C';
+      inteligentTaxa.cnpj = this.notafiscalSelecteds[0].notafiscal?.notCnpj;
+      inteligentTaxa.historicofinal = historicoFinal;
+      inteligentTaxa.notafiscal = this.notafiscalSelecteds[0].notafiscal;
+      this.inteligentNfDTO.inteligents.push(inteligentTaxa);
+    }
   }
 }

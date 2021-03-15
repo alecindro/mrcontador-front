@@ -12,7 +12,7 @@
       "updated": "Um Notafiscal foi atualizado com o identificador {{ param }}",
       "deleted": "Um Notafiscal foi excluído com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Notafiscal {{ id }}?"
+        "question": "Tem certeza de que deseja remover a Notafiscal {{ id }} do inteligente?"
       },
       "detail": {
         "title": "Nota Fiscal",

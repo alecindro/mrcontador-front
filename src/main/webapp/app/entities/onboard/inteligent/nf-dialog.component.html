@@ -100,9 +100,13 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="3"><label class="mr-sm-2" >Taxa de boleto</label></td>
-                                    <td> <input [value]= "taxa  | currency:'BRL'" [attr.disabled]="showTaxa ? null : ''" #itaxa></td>
-                                        <td><button class="btn btn-primary btn-sm" type="button" [disabled]="!showTaxa" (click)="atualizarTaxa(itaxa)">Atualizar</button></td>
-
+                                    <td> <input [value]= "taxa  | currency:'BRL'" [attr.disabled]="showTaxa ? null : ''" #itaxa (blur)='atualizarTaxa(itaxa)'></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4"><span class="text-danger" *ngIf="taxa > 0 || notafiscalSelecteds.length > 1">
+                                        Atenção essa operação não poderá ser desfeita após finalizada.
+                                    </span></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -114,13 +118,13 @@
                 </div>
 </div>
 <div class="modal-footer">
-        <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="back()" *ngIf="proximo">
+        <button type="button" id="back-taxa" class="btn btn-primary btn-sm" (click)="back()" *ngIf="proximo">
                 <fa-icon icon="angle-double-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"></span>
             </button>
-            <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="back()" *ngIf="proximo">
+            <button type="button" id="save-taxa" class="btn btn-primary btn-sm" (click)="save()" *ngIf="proximo">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save"></span>
                 </button>
-        <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="next()" *ngIf="showNext">
+        <button type="button" id="next-taxa" class="btn btn-primary btn-sm" (click)="next()" *ngIf="showNext">
                 <fa-icon icon="angle-double-right"></fa-icon>&nbsp;<span jhiTranslate="entity.action.next"></span>
             </button>
 </div>
