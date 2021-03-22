@@ -246,9 +246,10 @@
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.cnpj"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.notafiscal"></span>
                             </th>
+                            <th scope="col"></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
                             <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historicofinal"></span>
-                            </th>
+                            </th>                           
                         </tr>
                     </thead>
                     <tbody>
@@ -273,17 +274,18 @@
                             <td>{{ inteligent.conta?.conClassificacao}}</td>
                             <td>{{ inteligent.cnpj }}</td>
                              <td><a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" 
-                                target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal">
-                                <span class="font-weight-normal text-truncate text-info" ><u>{{ inteligent.notafiscal?.notNumero }}</u>  
-                                    <a *ngIf="inteligent?.notafiscal" (click)="removeNf(inteligent)" class="text-info no_show">
-                                            <fa-icon icon="times" class="text-danger"></fa-icon></a> </span></a> 
-                             </td>   
+                                target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><u>{{ inteligent.notafiscal?.notNumero }}</u></a> 
+                             </td> 
+                             <td>
+                                <a *ngIf="inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === 'TITULO'" (click)="removeNf(inteligent)" class="text-info no_show">
+                                        <fa-icon icon="times" class="text-danger"></fa-icon></a> 
+                                    </td>  
                             <td>{{ inteligent.beneficiario }}</td>
                             <td><span>{{ inteligent.historicofinal }}
                                     <a *ngIf="inteligent?.historicofinal" (click)="selectHistFinal(inteligent,$event)" class="text-info no_show">
                                         <fa-icon icon="pencil-alt" class="text-sucess"></fa-icon></a></span>
                                         <div class="no_show">
-                                        <input [(ngModel)]="histFinal">
+                                        <input [(ngModel)]="histFinal" class="w90">
                                                 <a  (click)="cancelHistFinal()"><fa-icon icon="times" class="text-danger" placement="top" ngbTooltip="Cancelar"></fa-icon></a>
                                                 <a  (click)="saveHistFinal(inteligent)"><fa-icon icon="check"  class="text-sucess" placement="top" ngbTooltip="Salvar"></fa-icon></a>
                                             </div>
