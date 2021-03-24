@@ -277,7 +277,7 @@
                                 target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><u>{{ inteligent.notafiscal?.notNumero }}</u></a> 
                              </td> 
                              <td>
-                                <a *ngIf="inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === 'TITULO'" (click)="removeNf(inteligent)" class="text-info no_show">
+                                <a *ngIf="inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === 'TITULO'" (click)="removeNf(inteligent)" class="text-info">
                                         <fa-icon icon="times" class="text-danger"></fa-icon></a> 
                                     </td>  
                             <td>{{ inteligent.beneficiario }}</td>
