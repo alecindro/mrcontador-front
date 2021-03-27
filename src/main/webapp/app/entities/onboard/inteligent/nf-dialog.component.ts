@@ -178,31 +178,29 @@ export class NfDialogComponent implements OnInit {
       inteligentCopy.tipoInteligent = 'C';
     }
     this.inteligentNfDTO.inteligents.push(inteligentCopy);
-    this.inteligentNfDTO.notafiscals = this.notafiscalSelecteds
+    this.inteligentNfDTO.notafiscals = this.notafiscalSelecteds.map((nfs: any) => {
+      return nfs.notafiscal;
+    });
+  }
+
+  private newInteligent(): void {
+    const notas = this.notafiscalSelecteds
       .filter((nfs: any) => nfs.notafiscal.id !== null)
       .map((nfs: any) => {
         return nfs.notafiscal;
       });
-  }
-
-  private newInteligent(): void {
-    if (this.notafiscalSelecteds.length > 1) {
-      for (let i = 1; i < this.notafiscalSelecteds.length; i++) {
-        this.notafiscalSelecteds[i].notafiscal.processado = true;
+    if (notas.length > 1) {
+      for (let i = 1; i < notas.length; i++) {
+        notas[i].notafiscal.processado = true;
         let newInteligent = JSON.parse(JSON.stringify(this.inteligent));
         newInteligent.id = null;
-        newInteligent.debito = +Number((this.notafiscalSelecteds[i].notafiscal.notValorparcela || 0) * -1).toFixed(2);
+        newInteligent.debito = +Number((notas[i].notafiscal.notValorparcela || 0) * -1).toFixed(2);
         newInteligent.associado = false;
-        newInteligent.cnpj = this.notafiscalSelecteds[i].notafiscal?.notCnpj;
+        newInteligent.cnpj = notas[i].notafiscal?.notCnpj;
         newInteligent.tipoInteligent = 'x';
-        newInteligent.notafiscal = this.notafiscalSelecteds[i].notafiscal;
+        newInteligent.notafiscal = notas[i].notafiscal;
         newInteligent.historicofinal =
-          'Pagto. NFe ' +
-          this.notafiscalSelecteds[i].notafiscal.notNumero +
-          '/' +
-          this.notafiscalSelecteds[i].notafiscal.notParcela +
-          ' de ' +
-          this.notafiscalSelecteds[i].notafiscal.notEmpresa;
+          'Pagto. NFe ' + notas[i].notafiscal.notNumero + '/' + notas[i].notafiscal.notParcela + ' de ' + notas[i].notafiscal.notEmpresa;
         this.inteligentNfDTO.inteligents.push(newInteligent);
       }
     }
