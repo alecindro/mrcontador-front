@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<INotafiscal[]>;
 @Injectable({ providedIn: 'root' })
 export class NotafiscalService {
   public resourceUrl = SERVER_API_URL + 'api/notafiscals';
+  public allUrl = SERVER_API_URL + 'api/notafiscals/all';
   public periodoUrl = SERVER_API_URL + 'api/notafiscals/periodo';
 
   constructor(protected http: HttpClient) {}
@@ -48,6 +49,13 @@ export class NotafiscalService {
     const options = createRequestOption(req);
     return this.http
       .get<INotafiscal[]>(this.resourceUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
+  queryAll(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<INotafiscal[]>(this.allUrl, { params: options, observe: 'response' })
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 

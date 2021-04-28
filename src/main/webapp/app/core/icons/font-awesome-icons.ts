@@ -40,6 +40,7 @@ import {
   faCheck,
   faAngleDoubleRight,
   faAngleDoubleLeft,
+  faMinus,
 
   // jhipster-needle-add-icon-import
 } from '@fortawesome/free-solid-svg-icons';
@@ -86,5 +87,6 @@ export const fontAwesomeIcons = [
   faCheck,
   faAngleDoubleRight,
   faAngleDoubleLeft,
+  faMinus,
   // jhipster-needle-add-icon-import
 ];

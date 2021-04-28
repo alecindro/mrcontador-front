@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
+<nav class="navbar navbar-expand-lg bg-info justify-content-end border border-secondary p-1">
     <form class="form-inline" action="">
         <input class="form-control mr-sm-2" placeholder="Pesquisar..." [(ngModel)]="pesquisa" (search)="pesquisar()" name="pesquisa"
             type="search">
@@ -21,7 +21,7 @@
                 <option value="conGrau.equals"><span jhiTranslate="mrcontadorFrontApp.conta.con_grau"></span>
                 </option>
             </select>
-        <button class="btn btn-primary form-control mr-sm-2" (click)="upload()">
+        <button class="btn btn-info form-control mr-sm-2" (click)="upload()">
             <fa-icon icon="cloud-upload-alt"></fa-icon>
             <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>
         </button>

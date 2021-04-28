@@ -40,8 +40,8 @@ type EntityArrayResponseType = HttpResponse<IConta[]>;
 export class InteligentComponent implements OnInit, OnDestroy {
   parceiroListener!: Subscription;
   nfListener!: Subscription;
-  divergencias?: IInteligent[] = [];
-  conciliados?: IInteligent[] = [];
+  divergencias: IInteligent[] = [];
+  conciliados: IInteligent[] = [];
   regra: IRegra = {};
   mesAno!: MesAnoDTO;
   meses: number[] = [];

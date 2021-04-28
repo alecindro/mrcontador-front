@@ -1,9 +1,10 @@
 <!-- MultiStep Form -->
-<div class="modal-header bg-primary pb-1 pt-1 pr-1">
-        <h4 jhiTranslate="mrcontadorFrontApp.parceiro.home.createOrEditLabel" *ngIf="step !== 4" class="text-light"></h4>
-        <h4 jhiTranslate="mrcontadorFrontApp.parceiro.home.createSucesso" *ngIf="step === 4" class="text-light"></h4>
+<div class="modal-header bg-dark pb-1 pt-1 pr-1">
+        <h4 class="modal-title  text-light" jhiTranslate="mrcontadorFrontApp.parceiro.home.createOrEditLabel" *ngIf="step !== 4" class="text-light"></h4>
+        <h4 class="modal-title text-center text-light" jhiTranslate="mrcontadorFrontApp.parceiro.home.createSucesso" *ngIf="step === 4" class="text-light"></h4>
     <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="closeModal()" aria-hidden="true">&times;</button>
 </div>
+
 <div class="modal-body">
     <div class="container-fluid" id="grad1">
         <div class="row justify-content-center mt-0">
@@ -32,7 +33,7 @@
                                         <input type="text" [mask]="mask" [showMaskTyped]="true" name="par_cnpjcpf"
                                             class="form-control default-input" [(ngModel)]="cnpj" id="par_cnpjcpf"
                                             (keyup.enter)="onCnpj()"/>
-                                    </div> <button type="button" name="next" class="btn btn-primary"
+                                    </div> <button type="button" name="next" class="btn btn-info"
                                         (click)="next($event)" [disabled]="!cnpj"><span
                                             jhiTranslate="entity.action.next"></span></button>
                                 </fieldset>
@@ -58,7 +59,7 @@
                                             </div>
                                             <div class="d-flex">
                                                 <div class="custom-file" *ngIf="!progressInfo.file">
-                                                    <label for="customFileLang" class="btn btn-primary">ou Selecione o
+                                                    <label for="customFileLang" class="btn btn-info">ou Selecione o
                                                         Arquivo</label>
                                                     <input type="file" class="custom-file-input"
                                                         [disabled]="progressInfo.file" lang="pt" id="customFileLang"
@@ -67,7 +68,7 @@
                                             </div>
                                             <div class="d-flex">
                                                 <div class="w-100">
-                                                    <button class="btn btn-primary" *ngIf="progressInfo.file"
+                                                    <button class="btn btn-info" *ngIf="progressInfo.file"
                                                         (click)="next($event)">
                                                         Upload
                                                     </button>
@@ -177,7 +178,7 @@
                                                 </div>
                                             </div>
                                             <div class="text-center">
-                                            <button type="button" name="next" class="btn btn-primary"
+                                            <button type="button" name="next" class="btn btn-info"
                                                 (click)="next($event)" [disabled]="!caixaConta || !codExt"><span
                                                     jhiTranslate="entity.action.next"></span></button>
                                              </div>
@@ -188,7 +189,7 @@
                                     <div class="form-card">
                                         <jhi-agencia [parceiro]="parceiro!"></jhi-agencia>
                                         <div class="text-center">
-                                        <button type="button" name="next" class="btn btn-primary" [disabled] ="!agenciaSaved"
+                                        <button type="button" name="next" class="btn btn-info" [disabled] ="!agenciaSaved"
                                             (click)="next($event)"><span
                                                 jhiTranslate="entity.action.next"></span></button>
                                             </div>
@@ -459,7 +460,7 @@
                                         </div>
                                     </form>
                                     <div class="text-center">
-                                        <button type="button" id="save-entity" class="btn btn-primary"
+                                        <button type="button" id="save-entity" class="btn btn-info"
                                             (click)="next($event)">
                                             <fa-icon icon="save"></fa-icon>&nbsp;<span
                                                 jhiTranslate="entity.action.save"></span>

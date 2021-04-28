@@ -1,3 +1,7 @@
+@import '~bootswatch/dist/flatly/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/flatly/bootswatch';
+@import '../../../content/scss/_bootstrap-variables';
 #msform {
   text-align: center;
   position: relative;
@@ -184,7 +188,7 @@ select.list-dt:focus {
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-  background: skyblue;
+  background-color: theme-color('info');
 }
 
 .radio-group {

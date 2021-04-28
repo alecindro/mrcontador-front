@@ -1,121 +1,63 @@
 <nav class="navbar navbar-expand-lg bg-light justify-content-end border border-secondary p-1">
-    <form class="form-inline" action="">
-        <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial" for="field_par_razaosocial"
-            class="mr-sm-2"></label>
-        <input style="width: 20rem;" id="typeahead-focus" name="par_razaosocial" type="text"
-            class="form-control mr-sm-2" [(ngModel)]="parceiro" [inputFormatter]="formatter" [ngbTypeahead]="search"
-            [resultFormatter]="resultFormatter" (focus)="focus$.next($any($event).target.value)"
-            (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead"
-            (selectItem)="onChangeParceiro($event)" />
-        <label jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_cnpjcpf" class="mr-sm-2"></label>
-        <input id="field_cnpjcpf" class="form-control mr-sm-2" style="font-size: 100%;" disabled name="parCnpjcpf"
-            [(ngModel)]="parceiro.parCnpjcpf" />
-    </form>
-</nav>
-<div class="wrapper">
-    <nav id="sidebar" class="pr-0 pl-0 navbar-collapse sidemenu mr-1" *ngIf="!isMenu">
-        <ul class="list-unstyled components" id="menu">
-            <li class="active">
-                <a (click)="isCadastro = !isCadastro" [attr.aria-expanded]="!isCadastro" aria-controls="homeSubmenu"
-                    class="btn btn-primary active w-100" role="button"><span
-                        jhiTranslate="mrcontadorFrontApp.onboard.cadastro"></span></a>
-                <ul class="list-unstyled" id="homeSubmenu" [ngbCollapse]="isCadastro">
-                    <li>
-                        <a [routerLink]="'cadastro'" class="btn btn-outline w-100 text-left border-bottom"
-                            role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></a>
-                    </li>
-                    <li>
-                     
-                        <a [routerLink]="'agencia'" class="btn btn-outline w-100 text-left border-bottom" role="button"
-                           >
-                            <span jhiTranslate="mrcontadorFrontApp.onboard.agencia"></span></a>
-                    </li>
-                    <li>
-                        <a [routerLink]="'conta'" class="btn btn-outline w-100 text-left border-bottom"
-                            role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"></span></a>
-                    </li>
-                    <li>
-                        <a [routerLink]="'caixa'" class="btn btn-outline w-100 text-left border-bottom"
-                            role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.caixa"></span></a>
-                    </li>
-                    <li>
-                        <a [routerLink]="'regra'" class="btn btn-outline w-100 text-left border-bottom"
-                            role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.regra"></span></a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a (click)="isImportacao = !isImportacao" [attr.aria-expanded]="!isImportacao"
-                    aria-controls="pageSubmenu" class="btn btn-primary active w-100" role="button"><span
-                        jhiTranslate="mrcontadorFrontApp.onboard.importacao"></span></a>
-                <ul class="list-unstyled" id="pageSubmenu" [ngbCollapse]="isImportacao">
-                    <li>                       
-                        <a [routerLink]="'extrato'" class="btn btn-outline w-100 text-left border-bottom"
-                           >
-                            <span jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span></a>
-                    </li>
-                    <li>
-                    
-                        <a [routerLink]="'comprovante'" class="btn btn-outline w-100 text-left border-bottom"
-                            >
-                            <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span></a>
-                    </li>
-                    <li>
-                        
-                        <a [routerLink]="'nfe'" class="btn btn-outline w-100 text-left border-bottom" role="button"
-                           >
-                            <span jhiTranslate="mrcontadorFrontApp.onboard.nfe"></span></a>
-                    </li>
-                    <li>
-                        <a class="disabled btn btn-outline w-100 text-left border-bottom" role="button"><span
-                                jhiTranslate="mrcontadorFrontApp.onboard.ns"></span></a>
-                    </li>
-                    <li>
-                        <a class="disabled btn btn-outline w-100 text-left border-bottom"><span
-                                jhiTranslate="mrcontadorFrontApp.onboard.cte"></span></a>
-                    </li>
-                    <li>
-                        <a class="disabled btn btn-outline w-100 text-left border-bottom"><span
-                                jhiTranslate="mrcontadorFrontApp.onboard.nfce"></span></a>
-                    </li>
-                    <li>
-                        <a class="disabled btn btn-outline w-100 text-left border-bottom"><span
-                                jhiTranslate="mrcontadorFrontApp.onboard.sintegra"></span></a>
-                    </li>
-                    <li>
-                        <a class="disabled btn btn-outline w-100 text-left border-bottom"><span
-                                jhiTranslate="mrcontadorFrontApp.onboard.cobranca"></span></a>
-                    </li>
-                    <li>
-                        <a class="disabled btn btn-outline w-100 text-left border-bottom"><span
-                                jhiTranslate="mrcontadorFrontApp.onboard.cartao"></span></a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-              
-                <a [routerLink]="'consolida'" class="btn btn-primary active w-100" role="button">
-                    <span jhiTranslate="mrcontadorFrontApp.onboard.processamento"></span>
-                </a>
-            </li>
-            <li>
-                <a (click)="isMenu = !isMenu" class="btn btn-primary active w-100" role="button">
-                    <fa-icon icon="arrow-right" *ngIf="isMenu"></fa-icon>
-                    <fa-icon icon="arrow-left" *ngIf="!isMenu"></fa-icon>
-                </a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="isMenu"
+        aria-label="Toggle navigation" (click)="isMenu = !isMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse" [class.collapse]="!isMenu" id="navbarContent">
+        <ul class="navbar-nav">
+            <li class="nav-item" ngbDropdown>
+                <button class="btn btn-info" id="navbarDropdown1" ngbDropdownToggle>Menu</button>
+                <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+                        <a ngbDropdownItem [routerLink]="'consolida'" class="btn btn-info active w-100" role="button">
+                                <span jhiTranslate="mrcontadorFrontApp.onboard.processamento" class="text-light"></span>
+                            </a>
+                         
+                    <a ngbDropdownItem [routerLink]="'extrato'" class="btn btn-info w-100 text-left border-bottom">
+                        <span jhiTranslate="mrcontadorFrontApp.onboard.extrato" class="text-light"></span></a>
+                    <a ngbDropdownItem [routerLink]="'comprovante'" class="btn btn-info w-100 text-left border-bottom">
+                        <span jhiTranslate="mrcontadorFrontApp.onboard.comprovante" class="text-light"></span></a>
+                    <a ngbDropdownItem [routerLink]="'nfe'" class="btn btn-info w-100 text-left border-bottom"
+                        role="button">
+                        <span jhiTranslate="mrcontadorFrontApp.onboard.nfe" class="text-light"></span></a>
+                    <a [routerLink]="'cadastro'" class="btn btn-info w-100 text-left border-bottom" role="button"
+                        ngbDropdownItem><span class="text-light"
+                            jhiTranslate="mrcontadorFrontApp.onboard.dados"></span></a>
+                           
+                    <a [routerLink]="'agencia'" class="btn btn-info w-100 text-left border-bottom" role="button"
+                        ngbDropdownItem>
+                        <span jhiTranslate="mrcontadorFrontApp.onboard.agencia" class="text-light"></span></a>
+                    <a [routerLink]="'conta'" class="btn btn-info w-100 text-left border-bottom" ngbDropdownItem
+                        role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.planoconta"
+                            class="text-light"></span></a>
+                    <a [routerLink]="'caixa'" class="btn btn-info w-100 text-left border-bottom" ngbDropdownItem
+                        role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.caixa"
+                            class="text-light"></span></a>
+                    <a [routerLink]="'regra'" class="btn btn-info w-100 text-left border-bottom" ngbDropdownItem
+                        role="button"><span jhiTranslate="mrcontadorFrontApp.onboard.regra"
+                            class="text-light"></span></a>
+                </div>
             </li>
         </ul>
-   
-    </nav>
-    <div class="sidebar-header bg-primary" (click)="isMenu = !isMenu">
-            <div class="sidebar-subheader">
-                <a class="btn active w-100" role="button" aria-pressed="true" *ngIf="isMenu">
-                    <fa-icon icon="arrow-right" style="color:white"></fa-icon>
-                </a>
-            </div>
-        </div>
+        <form class="form-inline ml-auto" action="">
+            <label jhiTranslate="mrcontadorFrontApp.parceiro.par_razaosocial" for="field_par_razaosocial"
+                class="mr-sm-2"></label>
+            <input style="width: 20rem;" id="typeahead-focus" name="par_razaosocial" type="text"
+                class="form-control mr-sm-2" [(ngModel)]="parceiro" [inputFormatter]="formatter" [ngbTypeahead]="search"
+                [resultFormatter]="resultFormatter" (focus)="focus$.next($any($event).target.value)"
+                (click)="click$.next($any($event).target.value)" #instance="ngbTypeahead"
+                (selectItem)="onChangeParceiro($event)" />
+            <label jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf" for="field_cnpjcpf" class="mr-sm-2"></label>
+            <input id="field_cnpjcpf" class="form-control mr-sm-2" style="font-size: 100%;" disabled name="parCnpjcpf"
+                [(ngModel)]="parceiro.parCnpjcpf" />
+        </form>
 
-    <div id="content">
-        <router-outlet></router-outlet>
     </div>
+</nav>
+
+
+
+
+<div id="content">
+    <router-outlet></router-outlet>
+</div>
 </div>

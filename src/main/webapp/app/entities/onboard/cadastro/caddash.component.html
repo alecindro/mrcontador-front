@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-header bg-primary text-center text-white">
+    <div class="card-header bg-info text-center text-white">
         <span jhiTranslate="global.form.cadastro.parceiro"></span>
       </div>
     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="pl-1 pr-1">
@@ -297,7 +297,7 @@
                 <fa-icon icon="ban" *ngIf="!editForm.disabled"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel" *ngIf="!editForm.disabled"></span>
             </button>
 
-            <button type="button" id="save-entity" [disabled]="editForm.invalid || isSaving || editForm.disabled" class="btn btn-primary"
+            <button type="button" id="save-entity" [disabled]="editForm.invalid || isSaving || editForm.disabled" class="btn btn-info"
                 (click)="saveClick()">
                 <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>

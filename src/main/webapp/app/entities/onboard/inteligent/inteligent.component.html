@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
+<nav class="navbar navbar-expand-lg bg-dark justify-content-end border border-secondary p-1">
     <form class="form-inline" action="">
-        <label for="field_agencia"  class="mr-sm-2" >Agência bancária</label>
+        <label for="field_agencia"  class="mr-sm-2 text-light" >Agência bancária</label>
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
             <option *ngFor="let agencia of parceiro?.agenciabancarias" [ngValue]="agencia">
@@ -9,21 +9,21 @@
                <span *ngIf="agencia.tipoAgencia === 'CAIXA'">{{ agencia.ageAgencia }}</span>
             </option>
         </select>
-        <label for="field_mes" class="mr-sm-2">Mês</label>
+        <label for="field_mes" class="mr-sm-2 text-light">Mês</label>
         <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
             (change)="onChangeMes()">
             <option *ngFor="let id of meses" [ngValue]="id">
                 {{ mesLabels[id] }}
             </option>
         </select>
-        <label for="field_ano" class="mr-sm-2">Ano</label>
+        <label for="field_ano" class="mr-sm-2 text-light">Ano</label>
         <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
             (change)="onChangeAno()">
             <option *ngFor="let ano of anos" [ngValue]="ano">
                 {{ ano }}
             </option>
         </select>
-        <button class="btn btn-primary" (click)="downloadLancamento()">Exportar Lançamento</button>
+        <button class="btn btn-info" (click)="downloadLancamento()" [disabled]="divergencias.length > 0">Exportar Lançamento</button>
     </form>
 </nav>
 
@@ -55,7 +55,7 @@
                 <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
 
-            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveRegra()" [disabled]="!contaSelected || tipoRegraSelected.tipoRegra === undefined">
+            <button type="submit" id="save-entity" class="btn btn-info" (click)="saveRegra()" [disabled]="!contaSelected || tipoRegraSelected.tipoRegra === undefined">
                 <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>
         </div>
@@ -78,7 +78,7 @@
                 <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
             </button>
 
-            <button type="submit" id="save-entity" class="btn btn-primary" (click)="saveConta()" [disabled]="!contaSelected  || !inteligentSelected.historicofinal">
+            <button type="submit" id="save-entity" class="btn btn-info" (click)="saveConta()" [disabled]="!contaSelected  || !inteligentSelected.historicofinal">
                 <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
             </button>
         </div>
@@ -117,7 +117,7 @@
                         </div> 
                         <div class="row mt-2">
                             <div class="col-sm text-right">
-                                    <button type="button" id="close-taxa" class="btn btn-primary btn-sm" (click)="closeNota()">
+                                    <button type="button" id="close-taxa" class="btn btn-info btn-sm" (click)="closeNota()">
                                             <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.close"></span>
                                         </button>
                             </div>   
@@ -149,7 +149,7 @@
                     <span class="form-control" name="field_taxa_taxa" id="field_taxa_taxa">{{inteligentSelected.debito  | currency:"BRL"}}</span>
                 </div>
                 <div>
-            <button type="button" id="close-taxa" class="btn btn-primary" (click)="closeTaxa()">
+            <button type="button" id="close-taxa" class="btn btn-info" (click)="closeTaxa()">
                 <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.close"></span>
             </button>
         </div>
@@ -278,7 +278,7 @@
                              </td> 
                              <td>
                                 <a *ngIf="inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === 'TITULO'" (click)="removeNf(inteligent)" class="text-info">
-                                        <fa-icon icon="times" class="text-danger"></fa-icon></a> 
+                                        <fa-icon icon="minus" class="text-sucess"></fa-icon></a> 
                                     </td>  
                             <td>{{ inteligent.beneficiario }}</td>
                             <td><span>{{ inteligent.historicofinal }}

@@ -53,7 +53,7 @@ export class NfDialogComponent implements OnInit {
         'notDataparcela.lessThanOrEqual': inteligent?.datalancamento ? inteligent?.datalancamento.format('YYYY-MM-DD') : '',
         sort: ['notDataparcela,desc'],
       };
-      this.notaFiscalService.query(queryParam).subscribe(response => {
+      this.notaFiscalService.queryAll(queryParam).subscribe(response => {
         const nfs = response.body || [];
         for (const item in nfs) {
           const _nf = { notafiscal: nfs[item], selected: false, enabled: true };

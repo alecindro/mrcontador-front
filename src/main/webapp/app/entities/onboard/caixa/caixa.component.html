@@ -2,7 +2,7 @@
 <jhi-alert></jhi-alert>
 
 <div class="card">
-    <div class="card-header bg-primary text-center text-light">
+    <div class="card-header bg-info text-center text-light">
         <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.caixaLabel"></span>
       </div>
 <form>
@@ -16,7 +16,7 @@
             </div>
         <div>
                 <button (click)="cancel()" class="btn btn-primary" *ngIf="editable">Cancelar</button>
-    <button (click)="save()" class="btn btn-primary" *ngIf="editable">Salvar</button>
-    <button (click)="edit()" class="btn btn-primary" *ngIf="!editable">Editar</button>
+    <button (click)="save()" class="btn btn-info" *ngIf="editable">Salvar</button>
+    <button (click)="edit()" class="btn btn-info" *ngIf="!editable">Editar</button>
 </div>
   </form>

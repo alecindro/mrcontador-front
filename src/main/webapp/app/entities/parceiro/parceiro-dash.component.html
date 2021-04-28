@@ -13,7 +13,7 @@
                         jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
                 </option>
             </select>
-            <button id="jh-create-entity" class="btn btn-primary form-control mr-sm-2" type="button"
+            <button id="jh-create-entity" class="btn btn-info form-control mr-sm-2" type="button"
             (click)="newParceiro()">
             <fa-icon icon="plus"></fa-icon>
             <span jhiTranslate="mrcontadorFrontApp.parceiro.home.createLabel">
@@ -37,7 +37,7 @@
         <div class="row row-cols-1 row-cols-md-3 mt-3" *ngIf="parceiros && parceiros.length > 0">
             <div class="col mb-4" *ngFor="let parceiro of parceiros">
                 <div class="card shadow-sm h-100">
-                    <div [ngClass]="parceiro?.cadastroStatus !== 4 ? 'card-header text-center bg-warning' : 'card-header text-center bg-secondary'">
+                    <div [ngClass]="parceiro?.cadastroStatus !== 4 ? 'card-header text-center bg-warning' : 'card-header text-center bg-info'">
                         <h6 class="my-0 font-weight-normal text-truncate" placement="top" ngbTooltip="{{parceiro.parRazaosocial}}">{{ parceiro.parRazaosocial }}</h6>
                     </div>
                     <div class="card-body">
@@ -91,12 +91,11 @@
                                 </div>
                             </div>
                         </div>
-                        <h6 class="text-center bg-secondary rounded-sm"><span
-                            jhiTranslate="mrcontadorFrontApp.parceiro.home.lastPeriod"></span> 00/00/0000</h6>
+                   
                     </div>
                     <div class="card-footer p-0">
                         <button type="submit" [routerLink]="['/onboard',parceiro.id]" *ngIf="parceiro?.cadastroStatus === 4"
-                        class="btn btn-block btn-primary">
+                        class="btn btn-block btn-info">
                         <fa-icon icon="eye"></fa-icon>
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                     </button>                    
@@ -115,9 +114,11 @@
             </div>
 
             <div class="row justify-content-center">
+                
                 <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
                     [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)">
                 </ngb-pagination>
+        
             </div>
         </div>
         

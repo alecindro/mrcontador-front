@@ -1,4 +1,4 @@
-<div class="modal-header bg-primary pb-1 pt-1 pr-1">
+<div class="modal-header bg-info pb-1 pt-1 pr-1">
         <h4 class="modal-title text-center text-light" jhiTranslate="mrcontadorFrontApp.inteligent.home.nfAssociate"></h4>
         <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="cancel()" aria-hidden="true">&times;</button>
 </div>
@@ -118,13 +118,13 @@
                 </div>
 </div>
 <div class="modal-footer">
-        <button type="button" id="back-taxa" class="btn btn-primary btn-sm" (click)="back()" *ngIf="proximo">
+        <button type="button" id="back-taxa" class="btn btn-info btn-sm" (click)="back()" *ngIf="proximo">
                 <fa-icon icon="angle-double-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back"></span>
             </button>
-            <button type="button" id="save-taxa" class="btn btn-primary btn-sm" (click)="save()" *ngIf="proximo">
+            <button type="button" id="save-taxa" class="btn btn-info btn-sm" (click)="save()" *ngIf="proximo">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save"></span>
                 </button>
-        <button type="button" id="next-taxa" class="btn btn-primary btn-sm" (click)="next()" *ngIf="showNext">
+        <button type="button" id="next-taxa" class="btn btn-info btn-sm" (click)="next()" *ngIf="showNext">
                 <fa-icon icon="angle-double-right"></fa-icon>&nbsp;<span jhiTranslate="entity.action.next"></span>
             </button>
 </div>
