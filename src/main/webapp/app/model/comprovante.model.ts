@@ -20,6 +20,7 @@ export interface IComprovante {
   arquivo?: IArquivo;
   processado?: boolean;
   tipoComprovante?: string;
+  periodo?: string;
 }
 
 export class Comprovante implements IComprovante {
@@ -40,6 +41,7 @@ export class Comprovante implements IComprovante {
     public agenciabancaria?: IAgenciabancaria,
     public arquivo?: IArquivo,
     public processado?: boolean,
-    public tipoComprovante?: string
+    public tipoComprovante?: string,
+    public periodo?: string
   ) {}
 }

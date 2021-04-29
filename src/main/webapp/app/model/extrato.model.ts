@@ -17,10 +17,12 @@ export interface IExtrato {
   agenciabancaria?: IAgenciabancaria;
   arquivo?: IArquivo;
   processado?: boolean;
+  periodo: string;
 }
 
 export class Extrato implements IExtrato {
   constructor(
+    public periodo: string,
     public id?: number,
     public extDatalancamento?: Moment,
     public extHistorico?: string,

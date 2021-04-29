@@ -18,6 +18,7 @@ export interface INotafiscal {
   arquivo?: IArquivo;
   arquivoPDF?: IArquivo;
   processado?: boolean;
+  periodo?: string;
 }
 
 export class Notafiscal implements INotafiscal {
@@ -36,6 +37,7 @@ export class Notafiscal implements INotafiscal {
     public parceiro?: IParceiro,
     public arquivo?: IArquivo,
     public arquivoPDF?: IArquivo,
-    public processado?: boolean
+    public processado?: boolean,
+    public periodo?: string
   ) {}
 }

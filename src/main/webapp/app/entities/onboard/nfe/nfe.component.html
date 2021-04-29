@@ -5,22 +5,9 @@
     </div>
     <nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
         <form class="form-inline" action="">
-            <label class="mr-sm-2" for="field_mes">Mês</label>
-            <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
-                (change)="onChangeMes()">
-                <option> </option>
-                <option *ngFor="let id of meses" [ngValue]="id">
-                    {{ mesLabels[id] }}
-                </option>
-            </select>
-            <label class="mr-sm-2" for="field_ano">Ano</label>
-            <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
-                (change)="onChangeAno()">
-                <option> </option>
-                <option *ngFor="let ano of anos" [ngValue]="ano">
-                    {{ ano }}
-                </option>
-            </select>
+                <label for="field_data" class="mr-sm-2 ">Período:</label>
+                <jhi-periodo type="month" [periodo]="periodo"  [name]="'field_data'" [clazz]="'form-control mr-sm-2'" (periodoSelected)=selectPeriodo($event)>
+              </jhi-periodo>
             <button class="btn btn-info" (click)="upload()">
                 <fa-icon icon="cloud-upload-alt"></fa-icon>
                 <span class="d-none d-md-inline" jhiTranslate="entity.action.upload"></span>

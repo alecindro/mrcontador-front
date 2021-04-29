@@ -38,12 +38,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   parceiro!: IParceiro;
   agenciaSelected?: IAgenciabancaria;
   agencias?: IAgenciabancaria[];
-  mesAno!: MesAnoDTO;
-  readonly meses = MESES;
-  readonly mesLabels = MESLABELS;
-  anos: number[] = [];
-  anoSelected?: number;
-  mesSelected?: number;
+  periodo = '';
   resourceUrl = SERVER_API_URL + 'api/downloadFile/extrato/';
 
   constructor(
@@ -73,21 +68,8 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     if (this.agenciaSelected) {
       queryParam['agenciabancariaId.equals'] = this.agenciaSelected?.id;
     }
-    const _begin = moment();
-    const _end = moment();
-    if (this.anoSelected && this.mesSelected && this.mesSelected !== 0) {
-      _begin.set('year', this.anoSelected).format();
-      _begin.set('month', 0).format();
-      _begin.set('date', 1).format();
-      _end.set('year', this.anoSelected).format();
-      _end.set('month', 11).format();
-      _end.set('date', 31).format();
-      _begin.set('month', this.mesSelected - 1).format();
-      _end.set('month', this.mesSelected).format();
-      _end.set('date', 1).format();
-      _end.add(-1, 'days').format();
-      queryParam['extDatalancamento.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
-      queryParam['extDatalancamento.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
+    if (this.periodo !== '') {
+      queryParam['periodo.equals'] = this.periodo;
     }
     this.extratoService.query(queryParam).subscribe(
       (res: HttpResponse<IExtrato[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -96,7 +78,6 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initDate();
     this.activatedRoute.data.subscribe(({ parceiro }) => {
       this.parceiro = parceiro;
       if (!parceiro) {
@@ -109,7 +90,6 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
         this.agenciaSelected = this.agencias[0];
       }
     }
-    this.mesSelected = MESES[0];
     this.handleNavigation();
   }
 
@@ -144,8 +124,6 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   registerChangeInExtratoes(): void {
     this.eventSubscriber = this.eventManager.subscribe('extratoUpload', (response: JhiEventWithContent<string>) => {
       this.alertService.success('mrcontadorFrontApp.extrato.uploaded');
-      this.anoSelected = undefined;
-      this.mesSelected = MESES[0];
       this.loadPage();
     });
   }
@@ -171,6 +149,7 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.periodo = data?.length > 0 ? data[0].periodo : '';
     this.extratoes = data || [];
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
@@ -186,26 +165,14 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     this.loadPage(this.page, true);
   }
 
-  onChangeMes(): void {
-    this.page = 0;
+  public selectPeriodo(value: string): void {
+    this.periodo = value;
     this.loadPage(this.page, true);
-  }
-  onChangeAno(): void {
-    this.page = 0;
-    this.loadPage(this.page, true);
-  }
-
-  private initDate(): void {
-    const data = new Date();
-    for (let i = 0; i < 5; i++) {
-      this.anos.push(data.getFullYear() - i);
-    }
   }
 
   private registerParceiroListener(): void {
     this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
       this.parceiro = response.content;
-      this.initDate();
       if (this.parceiro?.agenciabancarias) {
         this.agencias = this.parceiro?.agenciabancarias.filter(ag => ag.tipoAgencia === TipoAgencia[TipoAgencia.CONTA]);
         if (this.agencias.length > 0) {

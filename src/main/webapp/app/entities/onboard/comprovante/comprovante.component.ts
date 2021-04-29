@@ -38,12 +38,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   ngbPaginationPage = 1;
   parceiro!: IParceiro;
   agenciaSelected?: IAgenciabancaria;
-  mesAno!: MesAnoDTO;
-  readonly meses = MESES;
-  readonly mesLabels = MESLABELS;
-  anos: number[] = [];
-  anoSelected?: number;
-  mesSelected?: number;
+  periodo = '';
   agencias?: IAgenciabancaria[];
 
   constructor(
@@ -70,21 +65,8 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     if (this.agenciaSelected) {
       queryParam['agenciabancariaId.equals'] = this.agenciaSelected?.id;
     }
-    const _begin = moment();
-    const _end = moment();
-    if (this.anoSelected && this.mesSelected && this.mesSelected !== 0) {
-      _begin.set('year', this.anoSelected).format();
-      _begin.set('month', 0).format();
-      _begin.set('date', 1).format();
-      _end.set('year', this.anoSelected).format();
-      _end.set('month', 11).format();
-      _end.set('date', 31).format();
-      _begin.set('month', this.mesSelected - 1).format();
-      _end.set('month', this.mesSelected).format();
-      _end.set('date', 1).format();
-      _end.add(-1, 'days').format();
-      queryParam['comDatapagamento.lessThanOrEqual'] = _end.format('YYYY-MM-DD');
-      queryParam['comDatapagamento.greaterThanOrEqual'] = _begin.format('YYYY-MM-DD');
+    if (this.periodo !== '') {
+      queryParam['periodo.equals'] = this.periodo;
     }
     this.comprovanteService.query(queryParam).subscribe(
       (res: HttpResponse<IComprovante[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
@@ -93,8 +75,6 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initDate();
-    this.mesSelected = MESES[0];
     this.activatedRoute.data.subscribe(({ parceiro }) => {
       this.parceiro = parceiro;
       if (!parceiro) {
@@ -144,8 +124,6 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       if (response.content != '') {
         this.alertService.success('mrcontadorFrontApp.comprovante.uploaded');
       }
-      this.anoSelected = undefined;
-      this.mesSelected = MESES[0];
       this.loadPage();
     });
   }
@@ -167,6 +145,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
         },
       });
     }
+    this.periodo = data?.length > 0 ? data[0].periodo : '';
     this.comprovantes = data || [];
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
@@ -186,20 +165,9 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     this.loadPage(this.page, true);
   }
 
-  onChangeMes(): void {
-    this.page = 0;
+  public selectPeriodo(value: string): void {
+    this.periodo = value;
     this.loadPage(this.page, true);
-  }
-  onChangeAno(): void {
-    this.page = 0;
-    this.loadPage(this.page, true);
-  }
-
-  private initDate(): void {
-    const data = new Date();
-    for (let i = 0; i < 5; i++) {
-      this.anos.push(data.getFullYear() - i);
-    }
   }
 
   public downloadComprovante(comprovante: IComprovante): void {

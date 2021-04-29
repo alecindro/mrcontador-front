@@ -22,7 +22,6 @@ import { TipoRegra } from '../../../shared/constants/TipoRegra.constants';
 import { NgbPopover, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RegraService } from '../../../services/regra.service';
 import { AuthServerProvider } from '../../../core/auth/auth-jwt.service';
-import { TipoSistema } from '../../../shared/constants/TipoSistema';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 import { NotafiscalService } from '../../../services/notafiscal.service';
 import { TipoComprovante } from '../../../shared/constants/TipoComprovante.constants';
@@ -43,15 +42,11 @@ export class InteligentComponent implements OnInit, OnDestroy {
   divergencias: IInteligent[] = [];
   conciliados: IInteligent[] = [];
   regra: IRegra = {};
-  mesAno!: MesAnoDTO;
-  meses: number[] = [];
   readonly mesLabels = MESLABELS;
   readonly regras = TipoRegra;
   readonly tipoComprovante = TipoComprovante;
   readonly tipoValor = TipoValor;
-  anos: number[] = [];
-  anoSelected?: number;
-  mesSelected?: number;
+
   parceiro?: IParceiro;
   agenciaSelected?: IAgenciabancaria;
   resourceUrl = SERVER_API_URL + 'api/downloadFile/comprovante/';
@@ -69,6 +64,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   notafiscals: INotafiscal[] = [];
   histFinalElement?: any;
   histFinal?: string;
+  periodo = '';
 
   constructor(
     private eventManager: JhiEventManager,
@@ -123,7 +119,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
         })
         .subscribe(response => {
           if (response.body) {
-            this.initDate(response.body);
+            this.periodo = response.body ? response.body[0] : response.body;
             this.loadData();
           }
         });
@@ -134,7 +130,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     const queryParam = {
       'parceiroId.equals': this.parceiro?.id,
       'agenciabancariaId.equals': this.agenciaSelected?.id,
-      'periodo.equals': this.mesSelected + '' + this.anoSelected,
+      'periodo.equals': this.periodo,
       sort: ['datalancamento,asc', 'comprovante,asc'],
     };
     this.spinner.show();
@@ -188,25 +184,6 @@ export class InteligentComponent implements OnInit, OnDestroy {
     if (this.agenciaSelected && this.agenciaSelected?.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
       this.activeTab = 3;
     }
-  }
-
-  onChangeMes(): void {
-    this.loadData();
-  }
-  onChangeAno(): void {
-    this.loadData();
-  }
-  private initDate(periodos: string[]): void {
-    periodos.forEach(periodo => {
-      const _ano = periodo.substring(periodo.length - 4);
-      const _month = periodo.split(_ano)[0];
-      this.anos.push(+_ano);
-      this.meses.push(+_month);
-    });
-    this.anos = Array.from(new Set(this.anos));
-    this.meses = Array.from(new Set(this.meses));
-    this.anoSelected = this.anos[0];
-    this.mesSelected = this.meses[0];
   }
 
   private registerNFListener(): void {
@@ -381,16 +358,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     const sistema = this.authServerProvider.getSistema();
     if (this.parceiro?.codExt) {
       const _url =
-        this.resourceUrlLancamento +
-        this.mesSelected +
-        '' +
-        this.anoSelected +
-        '/' +
-        this.agenciaSelected?.id +
-        '/' +
-        this.parceiro?.id +
-        '/' +
-        this.parceiro?.codExt;
+        this.resourceUrlLancamento + this.periodo + '/' + this.agenciaSelected?.id + '/' + this.parceiro?.id + '/' + this.parceiro?.codExt;
       this.fileService.downloadFile(_url).subscribe(
         response => {
           const blob: any = new Blob([response], { type: 'application/octet-stream' });
@@ -407,5 +375,10 @@ export class InteligentComponent implements OnInit, OnDestroy {
   public removeNf(inteligent: IInteligent): void {
     const modalRef = this.modalService.open(NfDeleteComponent, { size: 'lg', backdrop: 'static', scrollable: true });
     modalRef.componentInstance.inteligent = inteligent;
+  }
+
+  public selectPeriodo(value: string): void {
+    this.periodo = value;
+    this.loadData();
   }
 }

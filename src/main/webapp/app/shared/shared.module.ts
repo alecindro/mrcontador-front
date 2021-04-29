@@ -7,6 +7,7 @@ import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { FileComponent } from './file/file.component';
 import { ContaSelectComponent } from './select/conta-select.component';
+import { PeriodoComponent } from './periodo/periodo.component';
 
 @NgModule({
   imports: [MrcontadorFrontSharedLibsModule],
@@ -18,6 +19,7 @@ import { ContaSelectComponent } from './select/conta-select.component';
     HasAnyAuthorityDirective,
     FileComponent,
     ContaSelectComponent,
+    PeriodoComponent,
   ],
   entryComponents: [LoginModalComponent],
   exports: [
@@ -29,6 +31,7 @@ import { ContaSelectComponent } from './select/conta-select.component';
     HasAnyAuthorityDirective,
     FileComponent,
     ContaSelectComponent,
+    PeriodoComponent,
   ],
 })
 export class MrcontadorFrontSharedModule {}

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-dark justify-content-end border border-secondary p-1">
     <form class="form-inline" action="">
-        <label for="field_agencia"  class="mr-sm-2 text-light" >Agência bancária</label>
+        <label for="field_agencia"  class="mr-sm-2 text-light" >Agência bancária:</label>
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
             <option *ngFor="let agencia of parceiro?.agenciabancarias" [ngValue]="agencia">
@@ -9,21 +9,10 @@
                <span *ngIf="agencia.tipoAgencia === 'CAIXA'">{{ agencia.ageAgencia }}</span>
             </option>
         </select>
-        <label for="field_mes" class="mr-sm-2 text-light">Mês</label>
-        <select id="field_mes" [(ngModel)]="mesSelected" class="form-control mr-sm-2" name="field_mes"
-            (change)="onChangeMes()">
-            <option *ngFor="let id of meses" [ngValue]="id">
-                {{ mesLabels[id] }}
-            </option>
-        </select>
-        <label for="field_ano" class="mr-sm-2 text-light">Ano</label>
-        <select id="field_ano" [(ngModel)]="anoSelected" class="form-control mr-sm-2" name="field_ano"
-            (change)="onChangeAno()">
-            <option *ngFor="let ano of anos" [ngValue]="ano">
-                {{ ano }}
-            </option>
-        </select>
-        <button class="btn btn-info" (click)="downloadLancamento()" [disabled]="divergencias.length > 0">Exportar Lançamento</button>
+        <label for="field_data" class="mr-sm-2 text-light">Período:</label>
+        <jhi-periodo type="month" [periodo]="periodo"  [name]="'field_data'" [clazz]="'form-control mr-sm-2'" (periodoSelected)=selectPeriodo($event)>
+            </jhi-periodo>
+        <button class="btn btn-dark" (click)="downloadLancamento()" [disabled]="divergencias.length > 0">Exportar Lançamento</button>
     </form>
 </nav>
 
