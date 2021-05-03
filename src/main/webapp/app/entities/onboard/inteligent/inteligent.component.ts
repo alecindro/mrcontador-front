@@ -111,19 +111,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   private loadPeriodo(): void {
-    if (this.agenciaSelected) {
-      this.inteligentService
-        .queryPeriodo({
-          parceiroId: this.parceiro?.id,
-          agenciabancariaId: this.agenciaSelected.id,
-        })
-        .subscribe(response => {
-          if (response.body) {
-            this.periodo = response.body ? response.body[0] : response.body;
-            this.loadData();
-          }
-        });
-    }
+    const _date = new Date();
+    this.periodo = _date.getMonth() + '' + _date.getFullYear();
+    this.loadData();
   }
 
   private loadData(): void {

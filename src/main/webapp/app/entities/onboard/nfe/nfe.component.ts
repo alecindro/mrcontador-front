@@ -104,7 +104,7 @@ export class NfeComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInNotafiscals(): void {
-    this.eventSubscriber = this.eventManager.subscribe('nfeUpload', (response: JhiEventWithContent<string>) => {
+    this.eventSubscriber = this.eventManager.subscribe('fileUpload', (response: JhiEventWithContent<string>) => {
       this.alertService.success('mrcontadorFrontApp.notafiscal.uploaded');
       this.loadPage();
     });
@@ -112,7 +112,7 @@ export class NfeComponent implements OnInit, OnDestroy {
 
   upload(): void {
     const modalRef = this.modalService.open(NfeUploadComponent, { size: 'xl', backdrop: 'static', scrollable: true });
-    modalRef.componentInstance.parceiro = this.parceiro;
+    modalRef.componentInstance.parceiroId = this.parceiro.id;
   }
 
   sort(): string[] {
@@ -135,8 +135,9 @@ export class NfeComponent implements OnInit, OnDestroy {
         },
       });
     }
-    this.periodo = data?.length > 0 ? data[0].periodo : '';
+
     this.notafiscals = data || [];
+    this.periodo = this.notafiscals.length > 0 ? this.notafiscals[0].periodo || '' : '';
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }

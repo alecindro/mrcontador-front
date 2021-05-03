@@ -11,14 +11,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ParceiroService } from '../../../services/parceiro.service';
 import { HttpResponse, HttpHeaders } from '@angular/common/http';
 import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
-import * as moment from 'moment';
-import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
-import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SERVER_API_URL } from '../../../app.constants';
 import { UploadService } from '../../../services/file-upload.service';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
-import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-comprovante',
@@ -120,10 +117,11 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInComprovantes(): void {
-    this.eventSubscriber = this.eventManager.subscribe('comprovateUpload', (response: JhiEventWithContent<string>) => {
+    this.eventSubscriber = this.eventManager.subscribe('fileUpload', (response: JhiEventWithContent<string>) => {
       if (response.content != '') {
         this.alertService.success('mrcontadorFrontApp.comprovante.uploaded');
       }
+      this.periodo = '';
       this.loadPage();
     });
   }
@@ -145,8 +143,9 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
         },
       });
     }
-    this.periodo = data?.length > 0 ? data[0].periodo : '';
+
     this.comprovantes = data || [];
+    this.periodo = this.comprovantes.length > 0 ? this.comprovantes[0].periodo || '' : '';
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
@@ -158,7 +157,8 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
 
   upload(): void {
     const modalRef = this.modalService.open(ComprovanteUploadComponent, { size: 'xl', backdrop: 'static', scrollable: true });
-    modalRef.componentInstance.parceiro = this.parceiro;
+    modalRef.componentInstance.parceiroId = this.parceiro?.id;
+    modalRef.componentInstance.agenciaId = this.agenciaSelected?.id;
   }
   onChangeAgencia(): void {
     this.page = 0;

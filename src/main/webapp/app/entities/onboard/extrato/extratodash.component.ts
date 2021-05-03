@@ -12,13 +12,9 @@ import { IParceiro } from '../../../model/parceiro.model';
 import { ExtratoUploadComponent } from './extrato-upload.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { IAgenciabancaria } from '../../../model/agenciabancaria.model';
-import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
-import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
-import * as moment from 'moment';
 import { UploadService } from '../../../services/file-upload.service';
 import { SERVER_API_URL } from '../../../app.constants';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
-import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-dash-extrato',
@@ -122,8 +118,11 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   }
 
   registerChangeInExtratoes(): void {
-    this.eventSubscriber = this.eventManager.subscribe('extratoUpload', (response: JhiEventWithContent<string>) => {
-      this.alertService.success('mrcontadorFrontApp.extrato.uploaded');
+    this.eventSubscriber = this.eventManager.subscribe('fileUpload', (response: JhiEventWithContent<string>) => {
+      if (response.content != '') {
+        this.alertService.success('mrcontadorFrontApp.extrato.uploaded');
+      }
+      this.periodo = '';
       this.loadPage();
     });
   }
@@ -149,8 +148,8 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
         },
       });
     }
-    this.periodo = data?.length > 0 ? data[0].periodo : '';
     this.extratoes = data || [];
+    this.periodo = this.extratoes.length > 0 ? this.extratoes[0].periodo || '' : '';
     this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
@@ -185,7 +184,8 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
 
   upload(): void {
     const modalRef = this.modalService.open(ExtratoUploadComponent, { size: 'xl', backdrop: 'static', scrollable: true });
-    modalRef.componentInstance.parceiro = this.parceiro;
+    modalRef.componentInstance.parceiroId = this.parceiro?.id;
+    modalRef.componentInstance.agenciaId = this.agenciaSelected?.id;
   }
 
   public download(extrato: IExtrato): void {
