@@ -1,9 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
+import { JhiEventManager } from 'ng-jhipster';
 import { IInteligent } from '../../../model/inteligent.model';
-import { MESLABELS } from '../../../shared/constants/input.constants';
 import { InteligentService } from '../../../services/inteligent.service';
 import { ParceiroService } from '../../../services/parceiro.service';
 import { IParceiro } from '../../../model/parceiro.model';
@@ -28,8 +26,7 @@ import { TipoComprovante } from '../../../shared/constants/TipoComprovante.const
 import { TipoValor } from '../../../shared/constants/TipoValor.constants';
 import { NfDialogComponent } from './nf-dialog.component';
 import { NfDeleteComponent } from './nf-delete.component';
-
-type EntityArrayResponseType = HttpResponse<IConta[]>;
+import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
 
 @Component({
   selector: 'jhi-inteligent',
@@ -42,7 +39,6 @@ export class InteligentComponent implements OnInit, OnDestroy {
   divergencias: IInteligent[] = [];
   conciliados: IInteligent[] = [];
   regra: IRegra = {};
-  readonly mesLabels = MESLABELS;
   readonly regras = TipoRegra;
   readonly tipoComprovante = TipoComprovante;
   readonly tipoValor = TipoValor;
@@ -71,6 +67,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     protected inteligentService: InteligentService,
     protected parceiroService: ParceiroService,
     protected notafiscalService: NotafiscalService,
+    protected agenciabancariaService: AgenciabancariaService,
     public spinner: NgxSpinnerService,
     public activatedRoute: ActivatedRoute,
     public fileService: UploadService,
@@ -84,21 +81,32 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ parceiro }) => {
-      this.parceiro = parceiro;
-      if (!parceiro) {
-        this.parceiro = this.parceiroService.getParceiroSelected();
-      }
-      if (this.parceiro) {
-        const agencias = this.parceiro.agenciabancarias?.filter(agencia => {
+    this.parceiro = this.parceiroService.getParceiroSelected();
+    this.loadAgencias();
+  }
+
+  private loadAgencias() {
+    if (this.parceiro) {
+      const queryParam = {
+        'parceiroId.equals': this.parceiro?.id,
+        'ageSituacao.equals': 1,
+      };
+      this.agenciabancariaService.query(queryParam).subscribe((res: HttpResponse<IAgenciabancaria[]>) => {
+        const _agencias = res.body || [];
+        const agencias = _agencias?.filter(agencia => {
           return agencia.ageSituacao === true && agencia.tipoAgencia === TipoAgencia[TipoAgencia.CONTA];
         });
-        if (agencias && agencias.length > 0) {
+        this.parceiro?.agenciabancarias = agencias;
+        this.agenciaSelected = agencias.filter(agencia => {
+          return agencia.id === this.agenciabancariaService.getAgenciaSelected();
+        })[0];
+        if (agencias && agencias.length > 0 && !this.agenciaSelected) {
           this.agenciaSelected = agencias[0];
+          this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected);
         }
         this.loadPeriodo();
-      }
-    });
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -174,6 +182,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     if (this.agenciaSelected && this.agenciaSelected?.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
       this.activeTab = 3;
     }
+    this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected);
   }
 
   private registerNFListener(): void {
@@ -183,15 +192,9 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   private registerParceiroListener(): void {
-    this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
-      this.parceiro = response.content;
-      const agencias = this.parceiro.agenciabancarias?.filter(agencia => {
-        return agencia.ageSituacao === true && agencia.tipoAgencia === TipoAgencia[TipoAgencia.CONTA];
-      });
-      if (agencias && agencias.length > 0) {
-        this.agenciaSelected = agencias[0];
-      }
-      this.loadPeriodo();
+    this.parceiroListener = this.eventManager.subscribe('parceiroSelected', () => {
+      this.parceiro = this.parceiroService.getParceiroSelected();
+      this.loadAgencias();
     });
   }
 

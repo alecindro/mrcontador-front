@@ -3,14 +3,11 @@ import { ParceiroService } from '../../services/parceiro.service';
 import { IParceiro } from '../../model/parceiro.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
-import { Subscription, Subject, Observable, merge } from 'rxjs';
-import { AgenciabancariaService } from '../../services/agenciabancaria.service';
-import { IAgenciabancaria } from '../../model/agenciabancaria.model';
-import { HttpResponse } from '@angular/common/http';
+import { Subject, Observable, merge } from 'rxjs';
 import { NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
 import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { ContaService } from '../../services/conta.service';
+import { JhiEventManager } from 'ng-jhipster';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-onboard',
@@ -27,63 +24,40 @@ export class OnboardComponent implements OnInit, OnDestroy {
 
   parceiro!: IParceiro;
   parceiros!: IParceiro[];
-  agenciaListener!: Subscription;
 
   constructor(
     public parceiroService: ParceiroService,
     public activatedRoute: ActivatedRoute,
     public spinner: NgxSpinnerService,
-    public eventManager: JhiEventManager,
     protected router: Router,
-    protected agenciabancariaService: AgenciabancariaService,
-    protected contaService: ContaService
-  ) {
-    this.agenciaListener = eventManager.subscribe('agenciasaved', () => {
-      this.loadAgencias(this.parceiro);
-    });
-  }
+    public eventManager: JhiEventManager,
+    private $localStorage: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.spinner.show();
-    this.activatedRoute.data.subscribe(({ parceiro }) => {
-      this.parceiro = parceiro;
-      this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
-      this.parceiroService.setParceiroSelected(parceiro);
-      this.loadAgencias(parceiro);
-      this.parceiroService.get().subscribe(response => {
-        this.parceiros = response.body || [parceiro];
-        this.spinner.hide();
-      });
+    this.parceiro = this.parceiroService.getParceiroSelected();
+    this.eventManager.broadcast('parceiroSelected');
+    this.parceiroService.get().subscribe(response => {
+      this.parceiros = response.body || [this.parceiro];
+      this.spinner.hide();
     });
   }
 
   private loadParceiro(parceiro: IParceiro): void {
     this.parceiro = parceiro;
-    if (this.parceiro.agenciabancarias) {
-      const value = this.parceiro.agenciabancarias.find(agencia => {
-        return agencia.ageSituacao === true;
-      });
-    }
     this.parceiroService.setParceiroSelected(parceiro);
-    this.eventManager.broadcast(new JhiEventWithContent('parceiroSelected', parceiro));
+    this.eventManager.broadcast('parceiroSelected');
   }
 
   ngOnDestroy(): void {
-    this.eventManager.destroy(this.agenciaListener);
-  }
-  onChangeParceiro(event: NgbTypeaheadSelectItemEvent): void {
-    this.loadParceiro(event.item);
-    this.router.navigate([`/onboard/${this.parceiro.id}`]);
+    this.$localStorage.clear('agencia');
+    this.$localStorage.clear('parceiro');
   }
 
-  private loadAgencias(parceiro: IParceiro): void {
-    const queryParam = {
-      'parceiroId.equals': parceiro.id,
-    };
-    this.agenciabancariaService.query(queryParam).subscribe((res: HttpResponse<IAgenciabancaria[]>) => {
-      parceiro.agenciabancarias = res.body || [];
-      this.loadParceiro(parceiro);
-    });
+  onChangeParceiro(event: NgbTypeaheadSelectItemEvent): void {
+    this.loadParceiro(event.item);
+    this.router.navigate(['/onboard']);
   }
 
   search = (text$: Observable<string>) => {

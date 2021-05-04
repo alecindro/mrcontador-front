@@ -5,7 +5,7 @@ import { Subscription, combineLatest } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { IParceiro } from '../../model/parceiro.model';
+import { IParceiro, Parceiro } from '../../model/parceiro.model';
 
 import { ITEMS_DASH_PARCEIRO } from '../../shared/constants/pagination.constants';
 import { ParceiroService } from '../../services/parceiro.service';
@@ -122,6 +122,11 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
     this.spinner.hide();
     this.parceiros = data || [];
     this.ngbPaginationPage = this.page;
+  }
+
+  public selectParceiro(parceiro: Parceiro): void {
+    this.parceiroService.setParceiroSelected(parceiro);
+    this.router.navigate(['/onboard']);
   }
 
   protected onError(): void {

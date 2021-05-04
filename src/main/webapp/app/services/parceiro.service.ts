@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IParceiro } from 'app/model/parceiro.model';
+import { LocalStorageService } from 'ngx-webstorage';
 
 type EntityResponseType = HttpResponse<IParceiro>;
 type EntityArrayResponseType = HttpResponse<IParceiro[]>;
@@ -13,8 +14,7 @@ type EntityArrayResponseType = HttpResponse<IParceiro[]>;
 @Injectable({ providedIn: 'root' })
 export class ParceiroService {
   public resourceUrl = SERVER_API_URL + 'api/parceiros';
-  private parceiroSelected!: IParceiro;
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, private $localStorage: LocalStorageService) {}
 
   create(parceiro: IParceiro): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(parceiro);
@@ -24,10 +24,10 @@ export class ParceiroService {
   }
 
   getParceiroSelected(): IParceiro {
-    return this.parceiroSelected;
+    return JSON.parse(this.$localStorage.retrieve('parceiro'));
   }
   setParceiroSelected(parceiro: IParceiro): void {
-    this.parceiroSelected = parceiro;
+    this.$localStorage.store('parceiro', JSON.stringify(parceiro));
   }
 
   update(parceiro: IParceiro): Observable<EntityResponseType> {

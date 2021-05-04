@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SERVER_API_URL } from '../../../app.constants';
 import { UploadService } from '../../../services/file-upload.service';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
+import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
 
 @Component({
   selector: 'jhi-comprovante',
@@ -47,7 +48,8 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     protected parceiroService: ParceiroService,
     public spinner: NgxSpinnerService,
     public fileService: UploadService,
-    private alertService: JhiAlertService
+    private alertService: JhiAlertService,
+    private agenciabancariaService: AgenciabancariaService
   ) {}
 
   loadPage(page?: number, dontNavigate?: boolean): void {
@@ -72,20 +74,29 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ parceiro }) => {
-      this.parceiro = parceiro;
-      if (!parceiro) {
-        this.parceiro = this.parceiroService.getParceiroSelected();
-      }
-    });
-    if (this.parceiro?.agenciabancarias) {
-      this.agencias = this.parceiro?.agenciabancarias.filter(ag => ag.tipoAgencia === TipoAgencia[TipoAgencia.CONTA]);
-      if (this.agencias.length > 0) {
-        this.agenciaSelected = this.agencias[0];
-      }
-    }
-    this.handleNavigation();
+    this.parceiro = this.parceiroService.getParceiroSelected();
     this.registerChangeInComprovantes();
+    this.loadAgencias();
+  }
+
+  private loadAgencias() {
+    if (this.parceiro) {
+      const queryParam = {
+        'parceiroId.equals': this.parceiro?.id,
+        'ageSituacao.equals': 1,
+      };
+      this.agenciabancariaService.query(queryParam).subscribe((res: HttpResponse<IAgenciabancaria[]>) => {
+        const _agencias = res.body || [];
+        const agencias = _agencias?.filter(agencia => {
+          return agencia.ageSituacao === true && agencia.tipoAgencia === TipoAgencia[TipoAgencia.CONTA];
+        });
+        this.agencias = agencias;
+        this.agenciaSelected = agencias.filter(agencia => {
+          return agencia.id === this.agenciabancariaService.getAgenciaSelected();
+        })[0];
+        this.handleNavigation();
+      });
+    }
   }
 
   protected handleNavigation(): void {
@@ -135,7 +146,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate([`/onboard/${this.parceiro.id}/comprovante`], {
+      this.router.navigate(['/onboard/comprovante'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
@@ -162,6 +173,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
   onChangeAgencia(): void {
     this.page = 0;
+    this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected);
     this.loadPage(this.page, true);
   }
 

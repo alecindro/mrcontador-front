@@ -37,6 +37,8 @@ export class AuthServerProvider {
       this.$sessionStorage.clear('tenant_uuid');
       this.$localStorage.clear('sistema');
       this.$sessionStorage.clear('sistema');
+      this.$localStorage.clear('agencia');
+      this.$localStorage.clear('parceiro');
       return this._login(credentials);
     } else {
       return this._login(credentials);
@@ -56,6 +58,8 @@ export class AuthServerProvider {
       this.$sessionStorage.clear('tenant_uuid');
       this.$localStorage.clear('sistema');
       this.$sessionStorage.clear('sistema');
+      this.$localStorage.clear('parceiro');
+      this.$localStorage.clear('agencia');
       observer.complete();
     });
   }
@@ -68,6 +72,7 @@ export class AuthServerProvider {
       this.$localStorage.store('authenticationToken', jwt);
       this.$localStorage.store('tenant_uuid', tenantUuid);
       this.$localStorage.store('sistema', sistema);
+      this.$localStorage.clear('parceiro');
     } else {
       this.$sessionStorage.store('authenticationToken', jwt);
       this.$sessionStorage.store('tenant_uuid', tenantUuid);

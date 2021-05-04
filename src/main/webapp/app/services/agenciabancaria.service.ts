@@ -7,6 +7,7 @@ import { createRequestOption } from 'app/shared/util/request-util';
 import { IAgenciabancaria } from 'app/model/agenciabancaria.model';
 import { AgenciabancariaAplicacao } from 'app/shared/dto/agenciabancariaAplicacao';
 import { IConta } from 'app/model/conta.model';
+import { LocalStorageService } from 'ngx-webstorage';
 
 type EntityResponseType = HttpResponse<IAgenciabancaria>;
 type EntityArrayResponseType = HttpResponse<IAgenciabancaria[]>;
@@ -14,8 +15,7 @@ type EntityArrayResponseType = HttpResponse<IAgenciabancaria[]>;
 @Injectable({ providedIn: 'root' })
 export class AgenciabancariaService {
   public resourceUrl = SERVER_API_URL + 'api/agenciabancarias';
-  private agenciaSelected!: IAgenciabancaria;
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, private $localStorage: LocalStorageService) {}
 
   create(agenciabancaria: IAgenciabancaria): Observable<EntityResponseType> {
     return this.http.post<IAgenciabancaria>(this.resourceUrl, agenciabancaria, { observe: 'response' });
@@ -30,10 +30,10 @@ export class AgenciabancariaService {
   }
 
   setAgenciaSelected(agenciaSelected: IAgenciabancaria): void {
-    this.agenciaSelected = agenciaSelected;
+    this.$localStorage.store('agencia', agenciaSelected.id);
   }
-  getAgenciaSelected(): IAgenciabancaria {
-    return this.agenciaSelected;
+  getAgenciaSelected(): number {
+    return this.$localStorage.retrieve('agencia');
   }
 
   update(agenciabancaria: IAgenciabancaria): Observable<EntityResponseType> {

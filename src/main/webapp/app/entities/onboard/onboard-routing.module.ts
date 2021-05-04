@@ -18,11 +18,8 @@ import { CaixaComponent } from './caixa/caixa.component';
 
 const routes: Routes = [
   {
-    path: ':id',
+    path: '',
     component: OnboardComponent,
-    resolve: {
-      parceiro: ParceiroResolve,
-    },
     children: [
       {
         path: '',

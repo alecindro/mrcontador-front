@@ -94,7 +94,7 @@
                    
                     </div>
                     <div class="card-footer p-0">
-                        <button type="submit" [routerLink]="['/onboard',parceiro.id]" *ngIf="parceiro?.cadastroStatus === 4"
+                        <button type="submit" (click)="selectParceiro(parceiro)" *ngIf="parceiro?.cadastroStatus === 4"
                         class="btn btn-block btn-info">
                         <fa-icon icon="eye"></fa-icon>
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
