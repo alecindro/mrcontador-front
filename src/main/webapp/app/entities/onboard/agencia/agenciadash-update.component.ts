@@ -56,19 +56,21 @@ export class AgenciaDashUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
-    const agenciabancaria = this.agenciabancariaService.getAgenciaSelected();
-    if (agenciabancaria?.id) {
-      agenciabancaria.ageSituacao = true;
-    }
-    if (agenciabancaria) {
-      this.contemAplicacao = agenciabancaria.possueAplicacao || false;
-      if (agenciabancaria.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
-        this.contemAplicacao = true;
+    this.agenciabancariaService.find(this.agenciabancariaService.getAgenciaSelected()).subscribe(resp => {
+      const agenciabancaria = resp.body || {};
+      if (agenciabancaria?.id) {
+        agenciabancaria.ageSituacao = true;
       }
-    }
+      if (agenciabancaria) {
+        this.contemAplicacao = agenciabancaria.possueAplicacao || false;
+        if (agenciabancaria.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
+          this.contemAplicacao = true;
+        }
+      }
 
-    this.updateForm(agenciabancaria);
-    this.loadBancos();
+      this.updateForm(agenciabancaria);
+      this.loadBancos();
+    });
   }
 
   updateForm(agenciabancaria: IAgenciabancaria): void {

@@ -173,7 +173,7 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   }
   onChangeAgencia(): void {
     this.page = 0;
-    this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected);
+    this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected || {});
     this.loadPage(this.page, true);
   }
 

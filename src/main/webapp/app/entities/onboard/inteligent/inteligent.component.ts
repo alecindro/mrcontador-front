@@ -96,13 +96,15 @@ export class InteligentComponent implements OnInit, OnDestroy {
         const agencias = _agencias?.filter(agencia => {
           return agencia.ageSituacao === true && agencia.tipoAgencia === TipoAgencia[TipoAgencia.CONTA];
         });
-        this.parceiro?.agenciabancarias = agencias;
+        if (this.parceiro) {
+          this.parceiro.agenciabancarias = agencias || [];
+        }
         this.agenciaSelected = agencias.filter(agencia => {
           return agencia.id === this.agenciabancariaService.getAgenciaSelected();
         })[0];
         if (agencias && agencias.length > 0 && !this.agenciaSelected) {
           this.agenciaSelected = agencias[0];
-          this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected);
+          this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected || {});
         }
         this.loadPeriodo();
       });
@@ -182,7 +184,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
     if (this.agenciaSelected && this.agenciaSelected?.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
       this.activeTab = 3;
     }
-    this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected);
+    this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected || {});
   }
 
   private registerNFListener(): void {
