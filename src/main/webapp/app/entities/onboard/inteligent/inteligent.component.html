@@ -4,7 +4,7 @@
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
             <option *ngFor="let agencia of parceiro?.agenciabancarias" [ngValue]="agencia">
-               <span *ngIf="agencia.tipoAgencia === 'CONTA'">{{ 'CONTA '+agencia.ageAgencia + '/' + agencia.ageNumero }}</span>
+               <span *ngIf="agencia.tipoAgencia === 'CONTA'">{{ agencia.ageDescricao +': '+ agencia.ageAgencia + '/' + agencia.ageNumero }}</span>
                <span *ngIf="agencia.tipoAgencia === 'APLICACAO'">{{ 'APLICACAO '+agencia.ageAgencia + '/' + agencia.ageNumero }}</span>
                <span *ngIf="agencia.tipoAgencia === 'CAIXA'">{{ agencia.ageAgencia }}</span>
             </option>

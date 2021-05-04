@@ -9,7 +9,7 @@
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
             <option *ngFor="let agencia of agencias" [ngValue]="agencia">
-                {{ agencia.ageNumero + '/' + agencia.ageAgencia }}
+                {{ agencia.ageDescricao +': ' + agencia.ageNumero + '/' + agencia.ageAgencia }}
             </option>
         </select>
         <label for="field_data" class="mr-sm-2 ">Período:</label>
