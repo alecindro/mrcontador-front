@@ -127,7 +127,7 @@ export class NfeComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate([`/onboard/${this.parceiro.id}/nfe`], {
+      this.router.navigate(['/onboard/nfe'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,

@@ -98,7 +98,7 @@ export class AgenciaDashComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate([`/onboard/${this.parceiro.id}/agencia`], {
+      this.router.navigate(['/onboard/agencia'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
@@ -120,10 +120,10 @@ export class AgenciaDashComponent implements OnInit, OnDestroy {
 
   public newAgencia(): void {
     this.agenciabancariaService.setAgenciaSelected(new Agenciabancaria());
-    this.router.navigate([`/onboard/${this.parceiro.id}/agenciaNew`]);
+    this.router.navigate(['/onboard/agenciaNew']);
   }
   public edit(agenciabancaria: IAgenciabancaria): void {
     this.agenciabancariaService.setAgenciaSelected(agenciabancaria);
-    this.router.navigate([`/onboard/${this.parceiro.id}/agenciaNew`]);
+    this.router.navigate(['/onboard/agenciaNew']);
   }
 }

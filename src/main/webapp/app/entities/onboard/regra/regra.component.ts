@@ -107,7 +107,7 @@ export class RegraComponent implements OnInit, OnDestroy {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
-      this.router.navigate([`onboard/${this.parceiro.id}/regra`], {
+      this.router.navigate(['/onboard/regra'], {
         queryParams: {
           page: this.page,
           size: this.itemsPerPage,
