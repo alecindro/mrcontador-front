@@ -290,7 +290,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
               if (event && event.type === HttpEventType.UploadProgress) {
                 this.progressInfo.value = Math.round((100 * event.loaded) / event.total);
               } else if (event instanceof HttpResponse) {
-                this.parceiroService.find(this.parceiro!.id).subscribe(
+                this.parceiroService.find(this.parceiro?.id || 0).subscribe(
                   response => {
                     this.spinner.hide();
                     this.eventManager.broadcast('parceiroListModification');
@@ -307,7 +307,7 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
               }
             },
             err => {
-              this.parceiroService.find(this.parceiro!.id).subscribe(response => {
+              this.parceiroService.find(this.parceiro?.id || 0).subscribe(response => {
                 this.parceiro = response.body || {};
                 this.progressInfo.value = 0;
                 this.isSaving = false;

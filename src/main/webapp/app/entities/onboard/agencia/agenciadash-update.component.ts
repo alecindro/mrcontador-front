@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -13,6 +13,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { IConta } from '../../../model/conta.model';
 import { AgenciabancariaAplicacao } from 'app/shared/dto/agenciabancariaAplicacao';
 import { TipoAgencia } from 'app/shared/constants/TipoAgencia';
+import { LocalStorageService } from 'ngx-webstorage';
 
 type SelectableEntity = IBanco | IParceiro;
 
@@ -20,7 +21,7 @@ type SelectableEntity = IBanco | IParceiro;
   selector: 'jhi-agenciadash-update',
   templateUrl: './agenciadash-update.component.html',
 })
-export class AgenciaDashUpdateComponent implements OnInit {
+export class AgenciaDashUpdateComponent implements OnInit, OnDestroy {
   isSaving = false;
   contemAplicacao = false;
   searchingBanco = false;
@@ -51,26 +52,33 @@ export class AgenciaDashUpdateComponent implements OnInit {
     protected parceiroService: ParceiroService,
     protected activatedRoute: ActivatedRoute,
     protected eventManager: JhiEventManager,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private $localStorage: LocalStorageService
   ) {}
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
-    this.agenciabancariaService.find(this.agenciabancariaService.getAgenciaSelected()).subscribe(resp => {
-      const agenciabancaria = resp.body || {};
-      if (agenciabancaria?.id) {
-        agenciabancaria.ageSituacao = true;
-      }
-      if (agenciabancaria) {
-        this.contemAplicacao = agenciabancaria.possueAplicacao || false;
-        if (agenciabancaria.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
-          this.contemAplicacao = true;
+    const idagencia = this.agenciabancariaService.getAgenciaSelected();
+    if (idagencia) {
+      this.agenciabancariaService.find(idagencia).subscribe(resp => {
+        const agenciabancaria = resp.body || {};
+        if (agenciabancaria?.id) {
+          agenciabancaria.ageSituacao = true;
         }
-      }
+        if (agenciabancaria) {
+          this.contemAplicacao = agenciabancaria.possueAplicacao || false;
+          if (agenciabancaria.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
+            this.contemAplicacao = true;
+          }
+          this.updateForm(agenciabancaria);
+        }
+      });
+    }
+    this.loadBancos();
+  }
 
-      this.updateForm(agenciabancaria);
-      this.loadBancos();
-    });
+  ngOnDestroy(): void {
+    this.$localStorage.clear('agencia');
   }
 
   updateForm(agenciabancaria: IAgenciabancaria): void {
@@ -106,7 +114,7 @@ export class AgenciaDashUpdateComponent implements OnInit {
       const agenciabancariaAplicacao = new AgenciabancariaAplicacao(agenciabancaria, this.contaAplicacao, true);
       this.subscribeToSaveResponse(this.agenciabancariaService.createAplicao(agenciabancariaAplicacao));
     } else {
-      if (agenciabancaria.id !== undefined) {
+      if (agenciabancaria.id) {
         this.subscribeToSaveResponse(this.agenciabancariaService.update(agenciabancaria));
       } else {
         this.subscribeToSaveResponse(this.agenciabancariaService.create(agenciabancaria));
