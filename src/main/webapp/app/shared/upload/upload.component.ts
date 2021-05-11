@@ -4,7 +4,6 @@ import { UploadService } from '../../services/file-upload.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { JhiEventManager, JhiEventWithContent } from 'ng-jhipster';
 import { TranslateService } from '@ngx-translate/core';
-
 @Component({
   selector: 'jhi-upload',
   templateUrl: './upload.component.html',

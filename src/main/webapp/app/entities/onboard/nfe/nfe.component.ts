@@ -11,12 +11,8 @@ import { IParceiro } from '../../../model/parceiro.model';
 import { ParceiroService } from '../../../services/parceiro.service';
 import { NfeUploadComponent } from './nfe-upload.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MesAnoDTO } from '../../../shared/dto/mesAnoDTO';
-import { MESES, MESLABELS } from '../../../shared/constants/input.constants';
-import * as moment from 'moment';
 import { UploadService } from '../../../services/file-upload.service';
 import { SERVER_API_URL } from '../../../app.constants';
-import { Moment } from 'moment';
 
 @Component({
   selector: 'jhi-nfe',
@@ -24,7 +20,6 @@ import { Moment } from 'moment';
   styleUrls: ['./nfe.component.scss'],
 })
 export class NfeComponent implements OnInit, OnDestroy {
-  parceiroListener!: Subscription;
   notafiscals?: INotafiscal[];
   eventSubscriber?: Subscription;
   totalItems = 0;
@@ -48,7 +43,6 @@ export class NfeComponent implements OnInit, OnDestroy {
     public fileService: UploadService,
     private alertService: JhiAlertService
   ) {
-    this.registerParceiroListener();
     this.registerChangeInNotafiscals();
   }
 
@@ -93,9 +87,6 @@ export class NfeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.eventSubscriber) {
       this.eventManager.destroy(this.eventSubscriber);
-    }
-    if (this.parceiroListener) {
-      this.eventManager.destroy(this.parceiroListener);
     }
   }
 
@@ -146,23 +137,10 @@ export class NfeComponent implements OnInit, OnDestroy {
     this.ngbPaginationPage = this.page ?? 1;
     this.spinner.hide();
   }
-  onChangeAgencia(): void {
-    this.page = 0;
-    this.loadPage(this.page, true);
-  }
 
   public selectPeriodo(value: string): void {
     this.periodo = value;
     this.loadPage(this.page, true);
-  }
-
-  private registerParceiroListener(): void {
-    this.parceiroListener = this.eventManager.subscribe('parceiroSelected', (response: JhiEventWithContent<IParceiro>) => {
-      this.parceiro = response.content;
-      if (this.parceiro?.agenciabancarias) {
-        this.onChangeAgencia();
-      }
-    });
   }
 
   public download(nfe: INotafiscal): void {

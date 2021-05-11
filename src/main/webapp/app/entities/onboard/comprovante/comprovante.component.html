@@ -27,7 +27,11 @@
         <table class="table table-sm table-striped" aria-describedby="page-heading">         
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col" jhiSortBy="comBeneficiario"><span
+                    <th scope="col" jhiSortBy="comDatapagamento"><span
+                        jhiTranslate="mrcontadorFrontApp.comprovante.com_datapagamento">Com Datapagamento</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col" jhiSortBy="comBeneficiario"><span
                             jhiTranslate="mrcontadorFrontApp.comprovante.com_beneficiario">Com Beneficiario</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
@@ -36,10 +40,6 @@
                     </th>
                     <th scope="col" jhiSortBy="comDatavencimento"><span
                             jhiTranslate="mrcontadorFrontApp.comprovante.com_datavencimento">Com Datavencimento</span>
-                        <fa-icon icon="sort"></fa-icon>
-                    </th>
-                    <th scope="col" jhiSortBy="comDatapagamento"><span
-                            jhiTranslate="mrcontadorFrontApp.comprovante.com_datapagamento">Com Datapagamento</span>
                         <fa-icon icon="sort"></fa-icon>
                     </th>
                     <th scope="col" jhiSortBy="comValordocumento"><span
@@ -66,6 +66,7 @@
                     </td>
                 </tr>
                 <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
+                    <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="font-weight-normal text-truncate">{{ comprovante.comBeneficiario }}</span></td>
                     <td><a *ngIf="comprovante.arquivo" (click)="downloadComprovante(comprovante)" target="_blank" >
                         <span class="font-weight-normal text-truncate text-info" ><u placement="top" ngbTooltip="Click para Visualizar documento">{{ comprovante.comDocumento }}</u></span>
@@ -75,24 +76,12 @@
                     <span *ngIf="!comprovante.arquivo">{{ comprovante.comDocumento }}</span>
                 </td>
                     <td>{{ comprovante.comDatavencimento | date:'dd/MM/yyyy' }}</td>
-                    <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="text-info">{{ comprovante.comValordocumento | currency:"BRL"}}</span></td>
                     <td><span class="text-info">{{ comprovante.comValorpagamento| currency:"BRL" }}</span></td>
                     <td><span class="font-weight-normal text-truncate" placement="left" ngbTooltip="{{comprovante.comObservacao}}">{{ comprovante.comObservacao }}</span></td>
                 </tr>
             </tbody>
         </table>
-    </div>
-
-    <div *ngIf="comprovantes && comprovantes.length > 0">
-        <div class="row justify-content-center">
-            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
-        </div>
-
-        <div class="row justify-content-center">
-            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
-                [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
-        </div>
     </div>
 </div>
 </div>

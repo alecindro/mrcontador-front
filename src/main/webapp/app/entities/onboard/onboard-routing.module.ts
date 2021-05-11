@@ -41,7 +41,7 @@ const routes: Routes = [
         component: ExtratoDashComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'extDatalancamento,desc',
+          defaultSort: 'extDatalancamento,asc',
           pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
@@ -61,7 +61,7 @@ const routes: Routes = [
         component: NfeComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'notDataparcela,desc',
+          defaultSort: 'notDataparcela,asc',
           pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],
@@ -111,7 +111,7 @@ const routes: Routes = [
         component: ComprovanteComponent,
         data: {
           authorities: [Authority.USER],
-          defaultSort: 'comDatapagamento,desc',
+          defaultSort: 'comDatapagamento,asc',
           pageTitle: 'global.title',
         },
         canActivate: [UserRouteAccessService],

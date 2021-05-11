@@ -16,6 +16,7 @@ import { UploadService } from '../../../services/file-upload.service';
 import { SERVER_API_URL } from '../../../app.constants';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
+import { LocalStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'jhi-dash-extrato',
@@ -26,12 +27,8 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   extratoes?: IExtrato[];
   parceiroListener!: Subscription;
   eventSubscriber?: Subscription;
-  totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
-  page!: number;
   predicate!: string;
   ascending!: boolean;
-  ngbPaginationPage = 1;
   parceiro!: IParceiro;
   agenciaSelected?: IAgenciabancaria;
   agencias?: IAgenciabancaria[];
@@ -49,18 +46,16 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     public spinner: NgxSpinnerService,
     public fileService: UploadService,
     private alertService: JhiAlertService,
-    private agenciabancariaService: AgenciabancariaService
+    private agenciabancariaService: AgenciabancariaService,
+    private $localStorage: LocalStorageService
   ) {
     this.registerParceiroListener();
     this.registerChangeInExtratoes();
   }
 
-  loadPage(page?: number, dontNavigate?: boolean): void {
-    const pageToLoad: number = page || this.page || 1;
+  loadPage(dontNavigate?: boolean): void {
     this.spinner.show();
     const queryParam = {
-      page: pageToLoad - 1,
-      size: this.itemsPerPage,
       sort: this.sort(),
       'parceiroId.equals': this.parceiro.id,
     };
@@ -71,13 +66,14 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
       queryParam['periodo.equals'] = this.periodo;
     }
     this.extratoService.query(queryParam).subscribe(
-      (res: HttpResponse<IExtrato[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+      (res: HttpResponse<IExtrato[]>) => this.onSuccess(res.body, res.headers, !dontNavigate),
       () => this.onError()
     );
   }
 
   ngOnInit(): void {
     this.parceiro = this.parceiroService.getParceiroSelected();
+    this.periodo = this.$localStorage.retrieve('periodo');
     this.loadAgencias();
   }
   private loadAgencias() {
@@ -102,15 +98,13 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
 
   protected handleNavigation(): void {
     combineLatest(this.activatedRoute.data, this.activatedRoute.queryParamMap, (data: Data, params: ParamMap) => {
-      const page = params.get('page');
-      const pageNumber = page !== null ? +page : 1;
       const sort = (params.get('sort') ?? data['defaultSort']).split(',');
       const predicate = sort[0];
       const ascending = sort[1] === 'asc';
-      if (pageNumber !== this.page || predicate !== this.predicate || ascending !== this.ascending) {
+      if (predicate !== this.predicate || ascending !== this.ascending) {
         this.predicate = predicate;
         this.ascending = ascending;
-        this.loadPage(pageNumber, true);
+        this.loadPage(true);
       }
     }).subscribe();
   }
@@ -133,7 +127,6 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
       if (response.content != '') {
         this.alertService.success('mrcontadorFrontApp.extrato.uploaded');
       }
-      this.periodo = '';
       this.loadPage();
     });
   }
@@ -146,39 +139,32 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected onSuccess(data: IExtrato[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
-    this.totalItems = Number(headers.get('X-Total-Count'));
-    this.page = page;
+  protected onSuccess(data: IExtrato[] | null, headers: HttpHeaders, navigate: boolean): void {
     if (navigate) {
       this.router.navigate(['onboard/extrato'], {
         queryParams: {
-          page: this.page,
-          size: this.itemsPerPage,
           sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc'),
           'parceiroId.equals': this.parceiro.id,
         },
       });
     }
     this.extratoes = data || [];
-    this.periodo = this.extratoes.length > 0 ? this.extratoes[0].periodo || '' : '';
-    this.ngbPaginationPage = this.page;
     this.spinner.hide();
   }
 
   protected onError(): void {
-    this.ngbPaginationPage = this.page ?? 1;
     this.spinner.hide();
   }
 
   onChangeAgencia(): void {
-    this.page = 0;
     this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected || {});
-    this.loadPage(this.page, true);
+    this.loadPage(true);
   }
 
   public selectPeriodo(value: string): void {
     this.periodo = value;
-    this.loadPage(this.page, true);
+    this.$localStorage.store('periodo', this.periodo);
+    this.loadPage(true);
   }
 
   private registerParceiroListener(): void {

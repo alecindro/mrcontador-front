@@ -3,7 +3,7 @@
         <button type="button" class="btn btn-danger" data-dismiss="modal" aria-hidden="true"
         (click)="cancelar()">&times;</button>
       </div>
-    <div class="modal-body">
+    <div class="modal-body" style="overflow-y: scroll;max-height: 300px;">
       
       <div class="row uploadimage-dragndrop" id="dragndropimagemodal" (drop)="drop($event)" (dragover)="allowDrop($event)">
         <div class="col-12">

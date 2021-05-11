@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy, PipeTransform } from '@angular/core';
+import { Subscription, Observable } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
 import { IInteligent } from '../../../model/inteligent.model';
 import { InteligentService } from '../../../services/inteligent.service';
@@ -27,21 +27,28 @@ import { TipoValor } from '../../../shared/constants/TipoValor.constants';
 import { NfDialogComponent } from './nf-dialog.component';
 import { NfDeleteComponent } from './nf-delete.component';
 import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
+import { LocalStorageService } from 'ngx-webstorage';
+import { FormControl } from '@angular/forms';
+import { DecimalPipe, DatePipe } from '@angular/common';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-inteligent',
   templateUrl: './inteligent.component.html',
   styleUrls: ['./inteligent.component.scss'],
+  providers: [DecimalPipe],
 })
 export class InteligentComponent implements OnInit, OnDestroy {
   parceiroListener!: Subscription;
   nfListener!: Subscription;
-  divergencias: IInteligent[] = [];
-  conciliados: IInteligent[] = [];
+  inteligents: IInteligent[] = [];
+  inteligentsFilter: Observable<IInteligent[]>;
+  enableExport = false;
   regra: IRegra = {};
   readonly regras = TipoRegra;
   readonly tipoComprovante = TipoComprovante;
   readonly tipoValor = TipoValor;
+  filter = new FormControl('');
 
   parceiro?: IParceiro;
   agenciaSelected?: IAgenciabancaria;
@@ -74,10 +81,29 @@ export class InteligentComponent implements OnInit, OnDestroy {
     public contaService: ContaService,
     public regraService: RegraService,
     public authServerProvider: AuthServerProvider,
-    protected modalService: NgbModal
+    private $localStorage: LocalStorageService,
+    protected modalService: NgbModal,
+    public pipeDecimal: DecimalPipe,
+    public pipeDate: DatePipe
   ) {
     this.registerParceiroListener();
     this.registerNFListener();
+  }
+
+  search(text: string): IInteligent[] {
+    return this.inteligents.filter(inteligent => {
+      const term = text.toLowerCase();
+      return (
+        inteligent.historicofinal?.toLowerCase().includes(term) ||
+        inteligent.cnpj?.toLowerCase().includes(term) ||
+        inteligent.numerodocumento?.toLowerCase().includes(term) ||
+        inteligent.beneficiario?.toLowerCase().includes(term) ||
+        this.pipeDate.transform(inteligent.datalancamento, 'dd/MM/yyyy').includes(term) ||
+        (inteligent.debito
+          ? this.pipeDecimal.transform(inteligent.debito).includes(term)
+          : this.pipeDecimal.transform(inteligent.credito).includes(term))
+      );
+    });
   }
 
   ngOnInit(): void {
@@ -121,8 +147,12 @@ export class InteligentComponent implements OnInit, OnDestroy {
   }
 
   private loadPeriodo(): void {
-    const _date = new Date();
-    this.periodo = _date.getMonth() + '' + _date.getFullYear();
+    this.periodo = this.$localStorage.retrieve('periodo');
+    if (!this.periodo) {
+      const _date = new Date();
+      this.periodo = _date.getMonth() + '' + _date.getFullYear();
+      this.$localStorage.store('periodo', this.periodo);
+    }
     this.loadData();
   }
 
@@ -136,13 +166,16 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.inteligentService.query(queryParam).subscribe(
       (res: HttpResponse<IInteligent[]>) => {
-        const inteligents = res.body || [];
-        this.conciliados = inteligents.filter(function (item) {
-          return item.associado === true;
-        });
-        this.divergencias = inteligents.filter(function (item) {
-          return item.associado === false;
-        });
+        this.inteligents = res.body || [];
+        this.enableExport = true;
+        if (this.inteligents.some(i => !i.associado)) {
+          this.enableExport = false;
+        }
+        this.inteligentsFilter = this.filter.valueChanges.pipe(
+          startWith(''),
+          map(text => this.search(text))
+        );
+
         this.spinner.hide();
       },
       (err: any) => {
@@ -179,10 +212,10 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.loadPeriodo();
     this.activeTab = 1;
     if (this.agenciaSelected && this.agenciaSelected?.tipoAgencia === TipoAgencia[TipoAgencia.CAIXA]) {
-      this.activeTab = 4;
+      this.activeTab = 3;
     }
     if (this.agenciaSelected && this.agenciaSelected?.tipoAgencia === TipoAgencia[TipoAgencia.APLICACAO]) {
-      this.activeTab = 3;
+      this.activeTab = 2;
     }
     this.agenciabancariaService.setAgenciaSelected(this.agenciaSelected || {});
   }
@@ -374,6 +407,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
 
   public selectPeriodo(value: string): void {
     this.periodo = value;
+    this.$localStorage.store('periodo', this.periodo);
     this.loadData();
   }
 }

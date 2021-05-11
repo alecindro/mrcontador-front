@@ -60,6 +60,7 @@ export class AuthServerProvider {
       this.$sessionStorage.clear('sistema');
       this.$localStorage.clear('parceiro');
       this.$localStorage.clear('agencia');
+      this.$localStorage.clear('periodo');
       observer.complete();
     });
   }

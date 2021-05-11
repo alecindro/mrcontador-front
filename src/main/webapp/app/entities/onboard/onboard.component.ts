@@ -50,10 +50,7 @@ export class OnboardComponent implements OnInit, OnDestroy {
     this.eventManager.broadcast('parceiroSelected');
   }
 
-  ngOnDestroy(): void {
-    this.$localStorage.clear('agencia');
-    this.$localStorage.clear('parceiro');
-  }
+  ngOnDestroy(): void {}
 
   onChangeParceiro(event: NgbTypeaheadSelectItemEvent): void {
     this.loadParceiro(event.item);
