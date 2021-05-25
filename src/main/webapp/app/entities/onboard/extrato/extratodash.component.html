@@ -4,7 +4,16 @@
             jhiTranslate="mrcontadorFrontApp.onboard.extrato"></span>
         </div>
 <nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
-
+    <div class="form-inline">
+        <label for="filter"  class="mr-sm-2 text-black" >Filtro:</label>
+    <input class="form-control ml-2" type="text" [formControl]="filter" type="search" id="filter"/>
+    <select id="field_filter" [(ngModel)]="filterAssociado" class="form-control ml-2" name="field_filter"
+    (change)="onChangeAssociado()">
+    <option value="2">Todos</option>
+    <option value="true">Associados</option>
+    <option value="false">Não Associados</option>
+</select>
+    </div>
     <form class="form-inline ml-auto" action="">
         <label for="field_agencia" class="mr-sm-2" >Agência bancária</label>
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
@@ -26,7 +35,7 @@
         <jhi-alert></jhi-alert>
 <div class="table-responsive" id="entities">
     <table class="table table-sm table-striped table-hover" aria-describedby="page-heading">
-        <thead>
+        <thead class="thead-light">
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                 <th scope="col" jhiSortBy="extDatalancamento"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_datalancamento"></span>  <fa-icon icon="sort"></fa-icon></th>
                 <th scope="col"><span jhiTranslate="mrcontadorFrontApp.extrato.ext_debito"></span></th>
@@ -44,7 +53,7 @@
                     </div>
                 </td>
             </tr>
-            <tr *ngFor="let extrato of extratoes ;trackBy: trackId">
+            <tr *ngFor="let extrato of extratosFilter | async ;trackBy: trackId">
                 <td>{{ extrato.extDatalancamento | date:'dd/MM/yyyy' }}</td>
                 <td><span class="text-danger">{{ extrato.extDebito | currency:"BRL" }} </span></td>
                 <td><span class="text-info">{{ extrato.extCredito  | currency:"BRL"}}</span></td>

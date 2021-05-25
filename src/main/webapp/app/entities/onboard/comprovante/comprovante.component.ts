@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComprovanteUploadComponent } from './comprovante-upload.component';
 import { IComprovante } from '../../../model/comprovante.model';
 import { ComprovanteService } from '../../../services/comprovante.service';
-import { Subscription, combineLatest } from 'rxjs';
+import { Subscription, combineLatest, Observable } from 'rxjs';
 import { IParceiro } from '../../../model/parceiro.model';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager, JhiEventWithContent, JhiAlertService } from 'ng-jhipster';
@@ -16,15 +16,19 @@ import { UploadService } from '../../../services/file-upload.service';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
 import { LocalStorageService } from 'ngx-webstorage';
+import { FormControl } from '@angular/forms';
+import { DecimalPipe, DatePipe } from '@angular/common';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-comprovante',
   templateUrl: './comprovante.component.html',
   styleUrls: ['./comprovante.component.scss'],
+  providers: [DecimalPipe, DatePipe],
 })
 export class ComprovanteComponent implements OnInit, OnDestroy {
   resourceUrl = SERVER_API_URL + 'api/downloadFile/comprovante/';
-  comprovantes?: IComprovante[];
+  comprovantes: IComprovante[] = [];
   eventSubscriber?: Subscription;
   predicate!: string;
   ascending!: boolean;
@@ -32,6 +36,9 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
   agenciaSelected?: IAgenciabancaria;
   periodo = '';
   agencias?: IAgenciabancaria[];
+  filter = new FormControl('');
+  filterAssociado = '2';
+  comprovantesFilter!: Observable<IComprovante[]>;
 
   constructor(
     protected comprovanteService: ComprovanteService,
@@ -44,8 +51,34 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
     public fileService: UploadService,
     private alertService: JhiAlertService,
     private agenciabancariaService: AgenciabancariaService,
-    private $localStorage: LocalStorageService
+    private $localStorage: LocalStorageService,
+    public pipeDecimal: DecimalPipe,
+    public pipeDate: DatePipe
   ) {}
+
+  public onChangeAssociado(): void {
+    this.filter.patchValue('');
+  }
+
+  search(text: string): IComprovante[] {
+    return this.comprovantes.filter(comprovante => {
+      const term = text.toLowerCase();
+      return (
+        (this.filterAssociado !== '2' ? comprovante.processado?.toString() === this.filterAssociado : true) &&
+        (comprovante.comObservacao?.toLowerCase().includes(term) ||
+          comprovante.comBeneficiario?.toLowerCase().includes(term) ||
+          comprovante.comDocumento?.toLowerCase().includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          this.pipeDate.transform(comprovante.comDatapagamento, 'dd/MM/yyyy').includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          this.pipeDate.transform(comprovante.comDatavencimento, 'dd/MM/yyyy').includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          this.pipeDecimal.transform(comprovante.comValordocumento).includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          this.pipeDecimal.transform(comprovante.comValorpagamento).includes(term))
+      );
+    });
+  }
 
   loadPage(dontNavigate?: boolean): void {
     this.spinner.show();
@@ -138,6 +171,12 @@ export class ComprovanteComponent implements OnInit, OnDestroy {
       });
     }
     this.comprovantes = data || [];
+    this.filterAssociado = '2';
+    this.filter.patchValue('');
+    this.comprovantesFilter = this.filter.valueChanges.pipe(
+      startWith(''),
+      map(text => this.search(text))
+    );
     this.spinner.hide();
   }
 

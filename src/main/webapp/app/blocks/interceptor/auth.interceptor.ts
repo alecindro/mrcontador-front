@@ -16,11 +16,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const token = this.localStorage.retrieve('authenticationToken') || this.sessionStorage.retrieve('authenticationToken');
     const tenant = this.localStorage.retrieve('tenant_uuid') || this.sessionStorage.retrieve('tenant_uuid');
-    const headers = new HttpHeaders({
+    let headers = new HttpHeaders({
       Authorization: 'Bearer ' + token,
       'tenant-uuid': tenant,
     });
-
+    if (request.url.includes('api/upload')) {
+      headers = headers.append('timeout', '300000');
+    }
     if (token) {
       request = request.clone({ headers });
     }

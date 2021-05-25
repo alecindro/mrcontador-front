@@ -39,6 +39,7 @@ export class AuthServerProvider {
       this.$sessionStorage.clear('sistema');
       this.$localStorage.clear('agencia');
       this.$localStorage.clear('parceiro');
+      this.$localStorage.clear('periodo');
       return this._login(credentials);
     } else {
       return this._login(credentials);

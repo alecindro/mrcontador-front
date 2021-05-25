@@ -2,6 +2,12 @@
         <div class="form-inline">
                 <label for="field_agencia"  class="mr-sm-2 text-light" >Filtro:</label>
             <input class="form-control ml-2" type="text" [formControl]="filter" type="search"/>
+            <select id="field_filter" [(ngModel)]="filterAssociado" class="form-control ml-2" name="field_filter"
+            (change)="onChangeAssociado()">
+            <option value="2">Todos</option>
+            <option value="false">Divergentes</option>
+            <option value="true">Conciliados</option>
+        </select>
             </div>
     <form class="form-inline ml-auto" action="">
         <label for="field_agencia"  class="mr-sm-2 text-light" >Agência bancária:</label>
@@ -152,6 +158,8 @@
 <ng-template #popTaxaTitle><b>Detalhes</b></ng-template>
 <ng-template #popContaTitle><b>Associar conta</b></ng-template>
 <ng-template #popTitle><b>Associar regra</b></ng-template>
+
+
 <ul ngbNav #nav="ngbNav" [destroyOnHide]="false" class="nav-tabs" [(activeId)]="activeTab">
     <li [ngbNavItem]="1" *ngIf="agenciaSelected?.tipoAgencia === 'CONTA'">
         <a ngbNavLink>
@@ -159,66 +167,89 @@
         <span class="badge badge-pill badge-light ml-2">{{inteligents?.length}}</span>
         </a>
         <ng-template ngbNavContent>
-            <div class="table-responsive" id="divergencia">
-                <table class="table table-sm" aria-describedby="page-heading">
-                    <thead>
-                        <tr>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.datalancamento"></span>
-                            </th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historico"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.numdocumento"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.credito"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.conta"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.notafiscal"></span></th>
-                            <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
-                                <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.infoAdicional"></span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngIf="inteligents?.length === 0">                           
-                            <td colspan="11">
-                                <div class="alert alert-light text-center">
-                                <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">No inteligents
-                                    found</span>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr *ngFor="let inteligent of inteligentsFilter | async">
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''" >{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><a *ngIf="!inteligent.associado" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #popOver="ngbPopover" triggers="manual" (click)="selectInteligent(inteligent,popOver)" class="link-dark"><u placement="top" ngbTooltip="Associar regra">{{ inteligent.historico }}</u></a>
-                                <span *ngIf="inteligent.associado" class="text-info">{{ inteligent.historicofinal }}</span>
-                            </td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><span *ngIf="!inteligent?.comprovante">{{ inteligent.numerodocumento }}</span><a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante">
-                                <span class="font-weight-normal text-truncate link-dark" ><u>{{inteligent.numerodocumento}}</u></span></a></td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><span  [ngClass]="!inteligent.associado ? 'text-light' : 'text-danger'" *ngIf="inteligent.tipoValor !== 'TAXA'"> {{inteligent.debito  | currency:"BRL"}}</span>
-                                <a *ngIf="inteligent.tipoValor === 'TAXA'" [ngbPopover]="popTaxa" [popoverTitle]="popTaxaTitle" [autoClose]="false" #ptaxa="ngbPopover" triggers="manual" (click)="selectTaxa(inteligent,ptaxa)"  [ngClass]="!inteligent.associado ? 'text-light' : 'text-danger'">
-                                        <u placement="top" ngbTooltip="Visualizar detalhes">{{inteligent.debito  | currency:"BRL"}}</u>
-                                    </a>
-                            </td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">{{ inteligent.credito  | currency:"BRL"}}</td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><span>{{ inteligent.conta?.conConta}}</span>
-                            <div>
-                                <a *ngIf="!inteligent.associado" [ngbPopover]="popConta" [popoverTitle]="popContaTitle" [autoClose]="false" #p1="ngbPopover" triggers="manual" (click)="selectConta(inteligent,p1)" class="link-dark">
-                                    <u placement="top" ngbTooltip="Associar conta">Associar conta</u>
-                                </a>
-                            </div>
-                            </td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">{{ inteligent.conta?.conClassificacao}}</td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">
-                                    <a  (click)="loadNotas(inteligent)" class="link-dark" *ngIf="inteligent.tipoValor && inteligent.tipoValor === tipoValor[tipoValor.PRINCIPAL] && inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === tipoComprovante[tipoComprovante.TITULO] && !inteligent.notafiscal?.notNumero">
-                                            <u placement="top" ngbTooltip="Associar nota fiscal">Associar nota fiscal</u>
+                <div class="table-responsive" id="divergencia">
+                        <table class="table table-sm" aria-describedby="page-heading">
+                            <thead>
+                                <tr>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.datalancamento"></span>
+                                    </th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.historico"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.debito"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.credito"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.numdocumento"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.conta"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.classificacao"></span></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.notafiscal"></span></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.beneficiario"></span></th>
+                                        <th scope="col"><span jhiTranslate="mrcontadorFrontApp.inteligent.infoAdicional"></span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="inteligents?.length === 0">                           
+                                    <td colspan="12">
+                                        <div class="alert alert-light text-center">
+                                        <span jhiTranslate="mrcontadorFrontApp.inteligent.home.notFound">No inteligents
+                                            found</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let inteligent of inteligentsFilter | async">
+                                     
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''" >{{ inteligent.datalancamento | date:'dd/MM/yyyy' }}</td>
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">
+                                        <a *ngIf="!inteligent.associado" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="false" #popOver="ngbPopover" triggers="manual" (click)="selectInteligent(inteligent,popOver)" class="link-dark"><u placement="top" ngbTooltip="Associar regra">{{ inteligent.historico }}</u></a>
+                                        <span *ngIf="inteligent.associado" class="text-info text-truncate">{{ inteligent.historicofinal }}
+                                                <a *ngIf="inteligent?.historicofinal" (click)="selectHistFinal(inteligent,$event)" class="text-info no_show">
+                                                        <fa-icon icon="pencil-alt" class="text-sucess"></fa-icon>
+                                                </a>
+                                        </span>
+                                        <div class="no_show">
+                                                        <input [(ngModel)]="histFinal" class="w90">
+                                                                <a  (click)="cancelHistFinal()"><fa-icon icon="times" class="text-danger" placement="top" ngbTooltip="Cancelar"></fa-icon></a>
+                                                                <a  (click)="saveHistFinal(inteligent)"><fa-icon icon="check"  class="text-sucess" placement="top" ngbTooltip="Salvar"></fa-icon></a>
+                                        </div>
+                                    </td> 
+                        
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">
+                                        <span  [ngClass]="!inteligent.associado ? 'text-light text-truncate' : 'text-danger text-truncate'" *ngIf="inteligent.tipoValor !== 'TAXA'"> {{inteligent.debito  | currency:"BRL"}}</span>
+                                        <a *ngIf="inteligent.tipoValor === 'TAXA'" [ngbPopover]="popTaxa" [popoverTitle]="popTaxaTitle" [autoClose]="false" #ptaxa="ngbPopover" triggers="manual" (click)="selectTaxa(inteligent,ptaxa)"  [ngClass]="!inteligent.associado ? 'text-light' : 'text-danger'">
+                                                <u placement="top" ngbTooltip="Visualizar detalhes" class="text-truncate">{{inteligent.debito  | currency:"BRL"}}</u>
+                                            </a>
+                                    </td>
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><span class="text-truncate">{{ inteligent.credito  | currency:"BRL"}}</span></td>
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">
+                                            <span *ngIf="!inteligent?.comprovante" class="text-truncate">{{ inteligent.numerodocumento }}</span>
+                                            <a  (click)="downloadComprovante(inteligent?.comprovante || {})" *ngIf="inteligent?.comprovante" target="_blank" placement="top" ngbTooltip="Click para Visualizar Comprovante">
+                                            <span class="font-weight-normal text-truncate link-dark" ><u class="text-truncate">{{inteligent.numerodocumento}}</u></span>
+                                            </a>
+                                        </td>
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">
+                                        <div>
+                                        <a  [ngbPopover]="popConta" [popoverTitle]="popContaTitle" [autoClose]="false" #p1="ngbPopover" triggers="manual" (click)="selectConta(inteligent,p1)" class="link-dark">
+                                            <u placement="top" ngbTooltip="Associar conta" *ngIf="!inteligent.associado">Associar conta</u>
+                                            <u placement="top" ngbTooltip="Editar conta" *ngIf="inteligent.associado">{{ inteligent.conta?.conConta}}</u>
                                         </a>
-                                <a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate link-dark" ><u>{{ inteligent.notafiscal?.notNumero }}</u></span></a>
-                             </td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">  {{ inteligent.beneficiario }} {{ inteligent.cnpj }}</td>
-                            <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">{{ inteligent.extrato?.infoAdicional }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                                    </div>
+                                    </td>
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><span class="text-truncate">{{inteligent.conta?.conClassificacao}}</span></td>
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''">
+                                            <a  (click)="loadNotas(inteligent)" class="link-dark" *ngIf="!inteligent.associado && inteligent.tipoValor && inteligent.tipoValor === tipoValor[tipoValor.PRINCIPAL] && inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === tipoComprovante[tipoComprovante.TITULO] && !inteligent.notafiscal?.notNumero">
+                                                    <u placement="top" ngbTooltip="Associar nota fiscal">Associar nota fiscal</u>
+                                                </a>
+                                        <a  (click)="downloadNfe(inteligent?.notafiscal || {})" *ngIf="inteligent?.notafiscal" target="_blank" placement="top" ngbTooltip="Click para Visualizar Nota Fiscal"><span class="font-weight-normal text-truncate link-dark" ><u>{{ inteligent.notafiscal?.notNumero }}</u></span></a>
+                              
+                                     </td>
+                                     <td [ngClass]="!inteligent.associado ? 'bg-danger' : ''">          <a *ngIf="inteligent.associado && inteligent?.comprovante && inteligent.comprovante?.tipoComprovante === 'TITULO'" (click)="removeNf(inteligent)" class="text-info" placement="top" ngbTooltip="Remover Nota Fiscal">
+                                            <fa-icon icon="minus" class="text-sucess"></fa-icon></a> 
+                                    </td> 
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><span class="text-truncate">  {{ inteligent.beneficiario }} {{ inteligent.cnpj }}</span></td>
+                                    <td [ngClass]="!inteligent.associado ? 'bg-danger text-light' : ''"><span class="text-truncate">{{ inteligent.extrato?.infoAdicional }}</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> 
         </ng-template>
     </li>
 

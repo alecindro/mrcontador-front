@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IExtrato } from '../../../model/extrato.model';
-import { Subscription, combineLatest } from 'rxjs';
-import { ITEMS_PER_PAGE } from '../../../shared/constants/pagination.constants';
+import { Subscription, combineLatest, Observable } from 'rxjs';
 import { ExtratoService } from '../../../services/extrato.service';
 import { ActivatedRoute, Router, Data, ParamMap } from '@angular/router';
 import { JhiEventManager, JhiEventWithContent, JhiAlertService } from 'ng-jhipster';
@@ -17,14 +16,18 @@ import { SERVER_API_URL } from '../../../app.constants';
 import { TipoAgencia } from '../../../shared/constants/TipoAgencia';
 import { AgenciabancariaService } from '../../../services/agenciabancaria.service';
 import { LocalStorageService } from 'ngx-webstorage';
+import { FormControl } from '@angular/forms';
+import { DecimalPipe, DatePipe } from '@angular/common';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-dash-extrato',
   templateUrl: './extratodash.component.html',
   styleUrls: ['./extratodash.component.scss'],
+  providers: [DecimalPipe, DatePipe],
 })
 export class ExtratoDashComponent implements OnInit, OnDestroy {
-  extratoes?: IExtrato[];
+  extratoes: IExtrato[] = [];
   parceiroListener!: Subscription;
   eventSubscriber?: Subscription;
   predicate!: string;
@@ -34,7 +37,9 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
   agencias?: IAgenciabancaria[];
   periodo = '';
   resourceUrl = SERVER_API_URL + 'api/downloadFile/extrato/';
-  public isCollapsed = false;
+  filter = new FormControl('');
+  filterAssociado = '2';
+  extratosFilter!: Observable<IExtrato[]>;
 
   constructor(
     protected extratoService: ExtratoService,
@@ -47,10 +52,34 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
     public fileService: UploadService,
     private alertService: JhiAlertService,
     private agenciabancariaService: AgenciabancariaService,
-    private $localStorage: LocalStorageService
+    private $localStorage: LocalStorageService,
+    public pipeDecimal: DecimalPipe,
+    public pipeDate: DatePipe
   ) {
     this.registerParceiroListener();
     this.registerChangeInExtratoes();
+  }
+
+  public onChangeAssociado(): void {
+    this.filter.patchValue('');
+  }
+
+  search(text: string): IExtrato[] {
+    return this.extratoes.filter(extrato => {
+      const term = text.toLowerCase();
+      return (
+        (this.filterAssociado !== '2' ? extrato.processado?.toString() === this.filterAssociado : true) &&
+        (extrato.infoAdicional?.toLowerCase().includes(term) ||
+          extrato.extNumerodocumento?.toLowerCase().includes(term) ||
+          extrato.extHistorico?.toLowerCase().includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          this.pipeDate.transform(extrato.extDatalancamento, 'dd/MM/yyyy').includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          (extrato.extDebito
+            ? this.pipeDecimal.transform(extrato.extDebito).includes(term)
+            : this.pipeDecimal.transform(extrato.extCredito).includes(term)))
+      );
+    });
   }
 
   loadPage(dontNavigate?: boolean): void {
@@ -149,6 +178,12 @@ export class ExtratoDashComponent implements OnInit, OnDestroy {
       });
     }
     this.extratoes = data || [];
+    this.filterAssociado = '2';
+    this.filter.patchValue('');
+    this.extratosFilter = this.filter.valueChanges.pipe(
+      startWith(''),
+      map(text => this.search(text))
+    );
     this.spinner.hide();
   }
 

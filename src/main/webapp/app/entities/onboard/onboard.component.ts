@@ -28,19 +28,16 @@ export class OnboardComponent implements OnInit, OnDestroy {
   constructor(
     public parceiroService: ParceiroService,
     public activatedRoute: ActivatedRoute,
-    public spinner: NgxSpinnerService,
     protected router: Router,
     public eventManager: JhiEventManager,
     private $localStorage: LocalStorageService
   ) {}
 
   ngOnInit(): void {
-    this.spinner.show();
     this.parceiro = this.parceiroService.getParceiroSelected();
     this.eventManager.broadcast('parceiroSelected');
     this.parceiroService.get().subscribe(response => {
       this.parceiros = response.body || [this.parceiro];
-      this.spinner.hide();
     });
   }
 

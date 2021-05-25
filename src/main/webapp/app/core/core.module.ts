@@ -19,6 +19,7 @@ import { ErrorHandlerInterceptor } from 'app/blocks/interceptor/errorhandler.int
 import { NotificationInterceptor } from 'app/blocks/interceptor/notification.interceptor';
 
 import { fontAwesomeIcons } from './icons/font-awesome-icons';
+import { TimeoutInterceptor, DEFAULT_TIMEOUT } from '../blocks/interceptor/timeoutInterceptor';
 
 @NgModule({
   imports: [
@@ -73,6 +74,12 @@ import { fontAwesomeIcons } from './icons/font-awesome-icons';
       useClass: NotificationInterceptor,
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TimeoutInterceptor,
+      multi: true,
+    },
+    { provide: DEFAULT_TIMEOUT, useValue: 120000 },
   ],
 })
 export class MrcontadorFrontCoreModule {

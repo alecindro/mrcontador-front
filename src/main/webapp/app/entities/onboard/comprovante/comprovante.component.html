@@ -4,7 +4,17 @@
         jhiTranslate="mrcontadorFrontApp.onboard.comprovante"></span>
     </div>
 <nav class="navbar navbar-expand-lg bg-secondary justify-content-end border border-secondary p-1">
-    <form class="form-inline" action="">
+    <div class="form-inline">
+        <label for="filter"  class="mr-sm-2 text-black" >Filtro:</label>
+    <input class="form-control ml-2" type="text" [formControl]="filter" type="search" id="filter"/>
+    <select id="field_filter" [(ngModel)]="filterAssociado" class="form-control ml-2" name="field_filter"
+    (change)="onChangeAssociado()">
+    <option value="2">Todos</option>
+    <option value="true">Associados</option>
+    <option value="false">Não Associados</option>
+</select>
+    </div>
+    <form class="form-inline ml-auto" action="">
             <label for="field_agencia" class="mr-sm-2" >Agência bancária</label>
         <select id="field_agencia" [(ngModel)]="agenciaSelected" class="form-control mr-sm-2" name="field_agencia"
             (change)="onChangeAgencia()">
@@ -25,7 +35,7 @@
         <jhi-alert></jhi-alert>
     <div class="table-responsive" id="entities">
         <table class="table table-sm table-striped" aria-describedby="page-heading">         
-            <thead>
+            <thead class="thead-light">
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
                     <th scope="col" jhiSortBy="comDatapagamento"><span
                         jhiTranslate="mrcontadorFrontApp.comprovante.com_datapagamento">Com Datapagamento</span>
@@ -65,7 +75,7 @@
                         </div>
                     </td>
                 </tr>
-                <tr *ngFor="let comprovante of comprovantes ;trackBy: trackId">
+                <tr *ngFor="let comprovante of comprovantesFilter | async ;trackBy: trackId">
                     <td>{{ comprovante.comDatapagamento | date:'dd/MM/yyyy' }}</td>
                     <td><span class="font-weight-normal text-truncate">{{ comprovante.comBeneficiario }}</span></td>
                     <td><a *ngIf="comprovante.arquivo" (click)="downloadComprovante(comprovante)" target="_blank" >

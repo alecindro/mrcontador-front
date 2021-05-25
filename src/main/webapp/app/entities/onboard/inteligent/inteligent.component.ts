@@ -36,13 +36,13 @@ import { startWith, map } from 'rxjs/operators';
   selector: 'jhi-inteligent',
   templateUrl: './inteligent.component.html',
   styleUrls: ['./inteligent.component.scss'],
-  providers: [DecimalPipe],
+  providers: [DecimalPipe, DatePipe],
 })
 export class InteligentComponent implements OnInit, OnDestroy {
   parceiroListener!: Subscription;
   nfListener!: Subscription;
   inteligents: IInteligent[] = [];
-  inteligentsFilter: Observable<IInteligent[]>;
+  inteligentsFilter!: Observable<IInteligent[]>;
   enableExport = false;
   regra: IRegra = {};
   readonly regras = TipoRegra;
@@ -68,6 +68,7 @@ export class InteligentComponent implements OnInit, OnDestroy {
   histFinalElement?: any;
   histFinal?: string;
   periodo = '';
+  filterAssociado = '2';
 
   constructor(
     private eventManager: JhiEventManager,
@@ -90,18 +91,26 @@ export class InteligentComponent implements OnInit, OnDestroy {
     this.registerNFListener();
   }
 
+  public onChangeAssociado(): void {
+    this.filter.patchValue('');
+  }
+
   search(text: string): IInteligent[] {
     return this.inteligents.filter(inteligent => {
       const term = text.toLowerCase();
       return (
-        inteligent.historicofinal?.toLowerCase().includes(term) ||
-        inteligent.cnpj?.toLowerCase().includes(term) ||
-        inteligent.numerodocumento?.toLowerCase().includes(term) ||
-        inteligent.beneficiario?.toLowerCase().includes(term) ||
-        this.pipeDate.transform(inteligent.datalancamento, 'dd/MM/yyyy').includes(term) ||
-        (inteligent.debito
-          ? this.pipeDecimal.transform(inteligent.debito).includes(term)
-          : this.pipeDecimal.transform(inteligent.credito).includes(term))
+        (this.filterAssociado !== '2' ? inteligent.associado?.toString() === this.filterAssociado : true) &&
+        (inteligent.historico?.toLowerCase().includes(term) ||
+          inteligent.historicofinal?.toLowerCase().includes(term) ||
+          inteligent.cnpj?.toLowerCase().includes(term) ||
+          inteligent.numerodocumento?.toLowerCase().includes(term) ||
+          inteligent.beneficiario?.toLowerCase().includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          this.pipeDate.transform(inteligent?.datalancamento, 'dd/MM/yyyy').includes(term) ||
+          // @ts-ignore: Object is possibly 'null'.
+          (inteligent.debito
+            ? this.pipeDecimal.transform(inteligent.debito).includes(term)
+            : this.pipeDecimal.transform(inteligent.credito).includes(term)))
       );
     });
   }
@@ -168,9 +177,11 @@ export class InteligentComponent implements OnInit, OnDestroy {
       (res: HttpResponse<IInteligent[]>) => {
         this.inteligents = res.body || [];
         this.enableExport = true;
-        if (this.inteligents.some(i => !i.associado)) {
+        if (!this.inteligents || this.inteligents.some(i => !i.associado)) {
           this.enableExport = false;
         }
+        this.filterAssociado = '2';
+        this.filter.patchValue('');
         this.inteligentsFilter = this.filter.valueChanges.pipe(
           startWith(''),
           map(text => this.search(text))
@@ -229,12 +240,16 @@ export class InteligentComponent implements OnInit, OnDestroy {
   private registerParceiroListener(): void {
     this.parceiroListener = this.eventManager.subscribe('parceiroSelected', () => {
       this.parceiro = this.parceiroService.getParceiroSelected();
+      this.$localStorage.clear('periodo');
       this.loadAgencias();
     });
   }
 
   selectConta(inteligent: IInteligent, popover: NgbPopover): void {
     this.inteligentSelected = inteligent;
+    if (this.inteligentSelected.conta) {
+      this.contaSelected = this.inteligentSelected.conta;
+    }
     if (this.popoverConta?.isOpen()) {
       this.popoverConta.close();
     }
