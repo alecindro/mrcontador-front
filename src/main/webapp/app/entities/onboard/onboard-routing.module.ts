@@ -9,12 +9,12 @@ import { OnboardComponent } from './onboard.component';
 import { NsDashComponent } from './notaservico/nsdash.component';
 import { AgenciaDashComponent } from './agencia/agenciadash.component';
 import { CadDashComponent } from './cadastro/caddash.component';
-import { ParceiroResolve } from '../parceiro/parceiro.route';
 import { AgenciaDashUpdateComponent } from './agencia/agenciadash-update.component';
 import { ComprovanteComponent } from './comprovante/comprovante.component';
 import { InteligentComponent } from './inteligent/inteligent.component';
 import { RegraComponent } from './regra/regra.component';
 import { CaixaComponent } from './caixa/caixa.component';
+import { StatsComponent } from './stats/stats.component';
 
 const routes: Routes = [
   {
@@ -23,8 +23,18 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'consolida',
+        redirectTo: 'stats',
         pathMatch: 'full',
+      },
+      {
+        path: 'stats',
+        component: StatsComponent,
+        data: {
+          authorities: [Authority.USER],
+          defaultSort: 'id,asc',
+          pageTitle: 'global.title',
+        },
+        canActivate: [UserRouteAccessService],
       },
       {
         path: 'consolida',

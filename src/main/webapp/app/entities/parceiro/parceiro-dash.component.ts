@@ -13,13 +13,15 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ParceiroCreateComponent } from './parceiro-create.component';
 import { ContadorService } from '../../services/contador.service';
 import { AuthServerProvider } from '../../core/auth/auth-jwt.service';
+import { InteligentService } from 'app/services/inteligent.service';
+import { StatsLine } from 'app/model/inteligentStats.model';
 
 @Component({
   selector: 'jhi-parceiro-dash',
   templateUrl: './parceiro-dash.component.html',
 })
 export class ParceiroDashComponent implements OnInit, OnDestroy {
-  parceiros!: IParceiro[];
+  inteligentStatsLines!: StatsLine[];
   eventSubscriber?: Subscription;
   totalItems = 0;
   itemsPerPage = ITEMS_DASH_PARCEIRO;
@@ -33,6 +35,7 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
   constructor(
     protected parceiroService: ParceiroService,
     protected contadorService: ContadorService,
+    protected inteligentService: InteligentService,
     protected authServerProvider: AuthServerProvider,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
@@ -53,8 +56,8 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
       queryParam[this.selected] = this.pesquisa;
     }
     this.spinner.show();
-    this.parceiroService.query(queryParam).subscribe(
-      (res: HttpResponse<IParceiro[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
+    this.inteligentService.queryStats(queryParam).subscribe(
+      (res: HttpResponse<StatsLine[]>) => this.onSuccess(res.body, res.headers, pageToLoad, !dontNavigate),
       () => this.onError()
     );
   }
@@ -95,7 +98,7 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
   }
 
   newParceiro(parceiro?: IParceiro): void {
-    const modalRef = this.modalService.open(ParceiroCreateComponent, { size: 'lg', backdrop: 'static', scrollable: true });
+    const modalRef = this.modalService.open(ParceiroCreateComponent, { size: 'xl', backdrop: 'static', scrollable: true });
     modalRef.componentInstance.parceiro = parceiro;
   }
 
@@ -107,7 +110,7 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  protected onSuccess(data: IParceiro[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
+  protected onSuccess(data: StatsLine[] | null, headers: HttpHeaders, page: number, navigate: boolean): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
     if (navigate) {
@@ -120,7 +123,7 @@ export class ParceiroDashComponent implements OnInit, OnDestroy {
       });
     }
     this.spinner.hide();
-    this.parceiros = data || [];
+    this.inteligentStatsLines = data || [];
     this.ngbPaginationPage = this.page;
   }
 

@@ -38,7 +38,7 @@ export class AgenciaComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     age_numero: [null, [Validators.maxLength(20), Validators.required]],
-    age_digito: [null, [Validators.maxLength(20), Validators.required]],
+    age_digito: [null, [Validators.maxLength(20)]],
     age_agencia: [null, [Validators.maxLength(6), Validators.required]],
     age_descricao: [null, [Validators.maxLength(30)]],
     age_situacao: [],

@@ -8,7 +8,11 @@
             <li class="nav-item" ngbDropdown>
                 <button class="btn btn-dark" id="navbarDropdown1" ngbDropdownToggle>Menu</button>
                 <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
-                        <a ngbDropdownItem [routerLink]="'consolida'" class="btn btn-dark active w-100" role="button">
+                    <a ngbDropdownItem [routerLink]="'stats'" class="btn btn-dark active w-100" role="button">
+                        <span jhiTranslate="mrcontadorFrontApp.onboard.stats" class="text-light"></span>
+                    </a>
+                    
+                    <a ngbDropdownItem [routerLink]="'consolida'" class="btn btn-dark active w-100" role="button">
                                 <span jhiTranslate="mrcontadorFrontApp.onboard.processamento" class="text-light"></span>
                             </a>
                          

@@ -130,8 +130,9 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
                 // If this URL is left empty (""), then it will be relative to the current context.
                 // If you use an API server, in `prod` mode, you will need to enable CORS
                 // (see the `jhipster.cors` common JHipster property in the `application-*.yml` configurations)
-                //SERVER_API_URL: `'http://ec2-34-224-6-165.compute-1.amazonaws.com:8180/'`
-                SERVER_API_URL: `''`
+                SERVER_API_URL: `'http://ec2-34-224-6-165.compute-1.amazonaws.com:8180/'`
+                //SERVER_API_URL: `''`
+
             }
         }),
     ].filter(Boolean),

@@ -163,6 +163,7 @@
                                                         [conta]="despesaTarifaConta" required></jhi-conta-select>
                                                 </div>
                                             </div>
+                                            <!--
                                             <div class="form-row">
                                                 <div class="form-group col-md-12 row">
                                                     <label class="form-control-label col-3"
@@ -176,10 +177,10 @@
                                                         This field is required.
                                                     </small>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                             <div class="text-center">
                                             <button type="button" name="next" class="btn btn-info"
-                                                (click)="next($event)" [disabled]="!caixaConta || !codExt"><span
+                                                (click)="next($event)" [disabled]="!caixaConta"><span
                                                     jhiTranslate="entity.action.next"></span></button>
                                              </div>
                                         </form>
@@ -188,8 +189,8 @@
                                 <fieldset [ngClass]="step === 3 ? '' : 'display_fieldset'">
                                     <div class="form-card">
                                         <jhi-agencia [parceiro]="parceiro!"></jhi-agencia>
-                                        <div class="text-center">
-                                        <button type="button" name="next" class="btn btn-info" [disabled] ="!agenciaSaved"
+                                        <div class="text-center"  *ngIf ="!agenciaSaved">
+                                        <button type="button" name="next" class="btn btn-info"
                                             (click)="next($event)"><span
                                                 jhiTranslate="entity.action.next"></span></button>
                                             </div>

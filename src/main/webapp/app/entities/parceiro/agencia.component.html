@@ -95,16 +95,16 @@
                 <div class="form-row" *ngIf="!contemAplicacao">
                         <div class="form-group col-md-4">
                                 <div class="custom-control custom-switch mb-4">
-                                        <input type="checkbox" class="custom-control-input" name="possueAplicacao"
-                                        id="field_age_possueAplicacao" formControlName="possueAplicacao" />
-                                        <label class="custom-control-label" for="field_age_possueAplicacao">
-                                                <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.possueAplicacao"></span>
-                                </label>
+                                            
+                                    <input type="checkbox" class="custom-control-input" name="possueAplicacao"
+                                    id="field_age_possueAplicacao" formControlName="possueAplicacao" />
+                                   
+                                    <label class="custom-control-label" for="field_age_possueAplicacao">
+                                        <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.possueAplicacao"></span>
+                        </label>      
                             </div>
                         </div>
                             <div class="form-group col-md-8" *ngIf="editForm.get(['possueAplicacao'])?.value">
-                                    <label class="form-control-label" jhiTranslate="mrcontadorFrontApp.agenciabancaria.conconta"
-                                    for="field_conContaAplicacao"></label>
                                     <jhi-conta-select [parceiro]="parceiro?.id" name="contaIdAplicacao" id="field_conContaAplicacao" (contaSelected)="selectedContaAplicacao($event)" [conta]="contaAplicacao"></jhi-conta-select>
                                     
                                     <small class="form-text text-danger" *ngIf="!conta"
@@ -121,7 +121,7 @@
         </div>
         </form>
         <jhi-alert-error></jhi-alert-error>
-        <div class="table-responsive" id="entities">
+        <div class="table-responsive" id="entities"  *ngIf="agencias && agencias!.length > 0"> 
         <table class="table table-striped table-sm" aria-describedby="page-heading">
         <thead>
             <tr>
@@ -138,13 +138,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngIf="agencias?.length === 0">
-        <td colspan="8">
-        <div class="alert alert-light text-center" id="no-result" >
-            <span jhiTranslate="mrcontadorFrontApp.agenciabancaria.home.notFound">No agenciabancarias found</span>
-            </div>
-        </td>
-            </tr>
             <tr *ngFor="let agenciabancaria of agencias">
                 <td>{{ agenciabancaria.ageNumero }}</td>
                 <td>{{ agenciabancaria.ageDigito }}</td>

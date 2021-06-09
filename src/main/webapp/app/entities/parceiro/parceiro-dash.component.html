@@ -25,7 +25,7 @@
 <div class="col-12 justify-content-center">
     <div class="container">
             <jhi-alert></jhi-alert>
-        <div class="card-deck mb-3 text-center" *ngIf="!parceiros || parceiros.length === 0">
+        <div class="card-deck mb-3 text-center" *ngIf="!inteligentStatsLines || inteligentStatsLines.length === 0">
             <div class="card mb-4 shadow-sm">
                 <div class="card-body">
                     <div class="alert alert-danger" id="no-result">
@@ -34,72 +34,39 @@
                 </div>
             </div>
         </div>
-        <div class="row row-cols-1 row-cols-md-3 mt-3" *ngIf="parceiros && parceiros.length > 0">
-            <div class="col mb-4" *ngFor="let parceiro of parceiros">
+        <div class="row row-cols-1 row-cols-md-3 mt-3" *ngIf="inteligentStatsLines && inteligentStatsLines.length > 0">
+            <div class="col mb-4" *ngFor="let inteligentStatsLine of inteligentStatsLines">
                 <div class="card shadow-sm h-100">
-                    <div [ngClass]="parceiro?.cadastroStatus !== 4 ? 'card-header text-center bg-warning' : 'card-header text-center bg-info'">
-                        <h6 class="my-0 font-weight-normal text-truncate" placement="top" ngbTooltip="{{parceiro.parRazaosocial}}">{{ parceiro.parRazaosocial }}</h6>
+                    <div [ngClass]="inteligentStatsLine.parceiro?.cadastroStatus !== 4 ? 'card-header text-center bg-warning' : 'card-header text-center bg-info'">
+                        <h6 class="my-0 font-weight-normal text-truncate" placement="top" ngbTooltip="{{inteligentStatsLine.parceiro.parRazaosocial}}">{{ inteligentStatsLine.parceiro.parRazaosocial }}</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body bg-info">
                         <div class="container">
                             <div class="row">
-                                <div class="col-md-5">
-                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.par_cnpjcpf"></span>
+                                <div class="col-md-12" *ngIf="inteligentStatsLine.lineChartData && inteligentStatsLine.lineChartData.length >0">
+                                    <canvas baseChart class="chart"
+                                    [datasets]="inteligentStatsLine.lineChartData"                                    
+                                    [labels]="inteligentStatsLine.lineChartLabels || []"
+                                    [options]="inteligentStatsLine.lineChartOptions"
+                                    [colors]="inteligentStatsLine.lineChartColors || []"
+                                    [legend]="inteligentStatsLine.lineChartLegend || false"
+                                    chartType="bar"
+                                   ></canvas>
                                 </div>
-                                <div class="col-md-7 text-left">
-                                    <span *ngIf="parceiro.parCnpjcpf">{{ parceiro.parCnpjcpf | mask: '00.000.000/0000-00'}}</span> 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.email"></span>
-                                </div>
-                                <div class="col-md-7 text-left">
-                                    {{ parceiro.email }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.telefone"></span>
-                                </div>
-                                <div class="col-md-7 text-left">
-                                    {{ parceiro.telefone }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.par_datacadastro"></span>
-                                </div>
-                                <div class="col-md-7 text-left">
-                                    {{ parceiro.parDatacadastro |  date: 'dd/MM/yyyy' }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.cidade"></span>
-                                </div>
-                                <div class="col-md-7 text-left">
-                                    {{ parceiro.cidade }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <span jhiTranslate="mrcontadorFrontApp.parceiro.estado"></span>
-                                </div>
-                                <div class="col-md-7 text-left">
-                                    {{ parceiro.estado }}
+                                <div class="col-md-12" *ngIf="!inteligentStatsLine.lineChartData || inteligentStatsLine.lineChartData.length == 0">
+                                    Não existe informação disponivel
                                 </div>
                             </div>
                         </div>
                    
                     </div>
                     <div class="card-footer p-0">
-                        <button type="submit" (click)="selectParceiro(parceiro)" *ngIf="parceiro?.cadastroStatus === 4"
+                        <button type="submit" (click)="selectParceiro(inteligentStatsLine.parceiro)" *ngIf="inteligentStatsLine.parceiro?.cadastroStatus === 4"
                         class="btn btn-block btn-info">
                         <fa-icon icon="eye"></fa-icon>
                         <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                     </button>                    
-                    <button type="submit"  *ngIf="parceiro?.cadastroStatus !== 4" (click)="newParceiro(parceiro)"
+                    <button type="submit"  *ngIf="inteligentStatsLine.parceiro?.cadastroStatus !== 4" (click)="newParceiro(inteligentStatsLine.parceiro)"
                     class="btn btn-block btn-warning">
                     <fa-icon icon="eye"></fa-icon>
                     <span class="d-none d-md-inline" jhiTranslate="entity.action.new"></span>
@@ -108,7 +75,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="parceiros && parceiros.length > 0">
+        <div *ngIf="inteligentStatsLines && inteligentStatsLines.length > 0">
             <div class="row justify-content-center">
                 <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
             </div>

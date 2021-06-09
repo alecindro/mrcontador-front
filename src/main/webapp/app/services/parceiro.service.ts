@@ -24,7 +24,7 @@ export class ParceiroService {
   }
 
   getParceiroSelected(): IParceiro {
-    return JSON.parse(this.$localStorage.retrieve('parceiro'));
+    return this.convertDateFromJson(JSON.parse(this.$localStorage.retrieve('parceiro')));
   }
   setParceiroSelected(parceiro: IParceiro): void {
     this.$localStorage.store('parceiro', JSON.stringify(parceiro));
@@ -78,6 +78,13 @@ export class ParceiroService {
       res.body.parDatacadastro = res.body.parDatacadastro ? moment(res.body.parDatacadastro) : undefined;
     }
     return res;
+  }
+
+  public convertDateFromJson(parceiro: IParceiro): IParceiro {
+    if (parceiro) {
+      parceiro.parDatacadastro = parceiro.parDatacadastro ? moment(parceiro.parDatacadastro) : undefined;
+    }
+    return parceiro;
   }
 
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {

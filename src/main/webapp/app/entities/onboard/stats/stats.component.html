@@ -1,0 +1,67 @@
+<div class="card">
+  <div class="card-header bg-info text-center text-light">
+    <span jhiTranslate="mrcontadorFrontApp.onboard.stats"></span>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <div [class]="bgInteligent">
+          <div class="card-body pb-0">
+            <h4 class="font-weight-bold">{{stastsDTO.inteligentCount}}</h4>
+            <h6>Inteligente processados</h6>
+          </div>
+          <div class="chart-wrapper mt-3 mx-3"
+            *ngIf="statsInteligent.lineChartData && statsInteligent.lineChartData.length >0">
+            <canvas baseChart class="chart" [datasets]="statsInteligent.lineChartData"
+              [labels]="statsInteligent.lineChartLabels || []" [options]="statsInteligent.lineChartOptions"
+              [colors]="statsInteligent.lineChartColors || []" [legend]="statsInteligent.lineChartLegend || false"
+              chartType="bar" (chartClick)="inteligentClicked($event)" (chartHover)="chartHover($event)"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div [class]="bgExtrato">
+          <div class="card-body pb-0">
+            <h4 class="font-weight-bold">{{stastsDTO.extratoCount}}</h4>
+            <h6>Extratos importados</h6>
+          </div>
+          <div class="chart-wrapper mt-3 mx-3"
+            *ngIf="statsExtrato.lineChartData && statsExtrato.lineChartData.length >0">
+            <canvas baseChart class="chart" [datasets]="statsExtrato.lineChartData"
+              [labels]="statsExtrato.lineChartLabels || []" [options]="statsExtrato.lineChartOptions"
+              [colors]="statsExtrato.lineChartColors || []" [legend]="statsExtrato.lineChartLegend || false"
+              chartType="bar" (chartClick)="extratoClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div [class]="bgComprovante">
+          <div class="card-body pb-0">
+            <h4 class="font-weight-bold">{{stastsDTO.comprovanteCount}}</h4>
+            <h6>Comprovantes importados</h6>
+          </div>
+          <div class="chart-wrapper mt-3 mx-3"
+            *ngIf="statsComprovante.lineChartData && statsComprovante.lineChartData.length >0">
+            <canvas baseChart class="chart" [datasets]="statsComprovante.lineChartData"
+              [labels]="statsComprovante.lineChartLabels || []" [options]="statsComprovante.lineChartOptions"
+              [colors]="statsComprovante.lineChartColors || []" [legend]="statsComprovante.lineChartLegend || false"
+              chartType="bar" (chartClick)="comprovanteClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div [class]="bgNf">
+          <div class="card-body pb-0">
+            <h4 class="font-weight-bold">{{stastsDTO.notafiscalCount}}</h4>
+            <h6>Notas Fiscais importados</h6>
+          </div>
+          <div class="chart-wrapper mt-3 mx-3" *ngIf="statsNF.lineChartData && statsNF.lineChartData.length >0">
+            <canvas baseChart class="chart" [datasets]="statsNF.lineChartData" [labels]="statsNF.lineChartLabels || []"
+              [options]="statsNF.lineChartOptions" [colors]="statsNF.lineChartColors || []"
+              [legend]="statsNF.lineChartLegend || false" chartType="bar" (chartClick)="nfClicked($event)"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 
-<input type="text" class="form-control" (selectItem)="selectedConta($event)" [ngbTypeahead]="search" placeholder="Digite a Conta"  [(ngModel)]="conta" name="field_reg_conta"
+<input type="text" class="form-control" (selectItem)="selectedConta($event)" [ngbTypeahead]="search" placeholder="Digite o Plano de Conta"  [(ngModel)]="conta" name="field_reg_conta"
 [inputFormatter]="inputcontaFormatter"
 [resultFormatter]="contaFormatter"
 [disabled]='disabled'/>

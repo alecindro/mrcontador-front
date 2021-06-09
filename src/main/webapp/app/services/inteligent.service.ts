@@ -8,9 +8,13 @@ import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IInteligent } from 'app/model/inteligent.model';
 import { InteligentNfDTO } from '../model/inteligentNFDto';
+import { StatsLine, InteligentStatsUtil, IStats } from 'app/model/inteligentStats.model';
+import { ParceiroService } from './parceiro.service';
 
 type EntityResponseType = HttpResponse<IInteligent>;
 type EntityArrayResponseType = HttpResponse<IInteligent[]>;
+
+type StatsArrayResponseType = HttpResponse<StatsLine[]>;
 
 @Injectable({ providedIn: 'root' })
 export class InteligentService {
@@ -18,8 +22,9 @@ export class InteligentService {
   public periodoUrl = SERVER_API_URL + 'api/inteligents/periodo';
   public resourceUrlFunction = SERVER_API_URL + 'api/inteligents/function';
   private associateNFUrl = SERVER_API_URL + 'api/inteligents/nf';
+  private statsUrl = SERVER_API_URL + 'api/inteligents/stats';
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient, protected parceiroService: ParceiroService) {}
 
   create(inteligent: IInteligent): Observable<EntityResponseType> {
     return this.http
@@ -58,6 +63,13 @@ export class InteligentService {
     return this.http.get<string[]>(this.periodoUrl, { params: options, observe: 'response' });
   }
 
+  queryStats(req?: any): Observable<StatsArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<StatsLine[]>(this.statsUrl, { params: options, observe: 'response' })
+      .pipe(map((res: StatsArrayResponseType) => this.convertStatsFromServer(res)));
+  }
+
   queryFuntion(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
     return this.http.get<IInteligent[]>(this.resourceUrlFunction, { params: options, observe: 'response' });
@@ -87,6 +99,19 @@ export class InteligentService {
         inteligent.datalancamento = inteligent.datalancamento ? moment(inteligent.datalancamento) : undefined;
         inteligent.datainicio = inteligent.datainicio ? moment(inteligent.datainicio) : undefined;
         inteligent.datafim = inteligent.datafim ? moment(inteligent.datafim) : undefined;
+      });
+    }
+    return res;
+  }
+
+  protected convertStatsFromServer(res: StatsArrayResponseType): StatsArrayResponseType {
+    if (res.body) {
+      res.body.forEach((_stats: StatsLine) => {
+        _stats.inteligentStats.forEach((dto: IStats) => {
+          dto.maxDate = moment(dto.maxDate);
+        });
+        _stats.parceiro = this.parceiroService.convertDateFromJson(_stats.parceiro);
+        InteligentStatsUtil.processDataBar(_stats);
       });
     }
     return res;

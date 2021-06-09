@@ -256,7 +256,6 @@ export class ParceiroCreateComponent implements OnInit, OnDestroy {
   }
 
   updateParceiroConta(): Observable<EntityResponseType> {
-    this.parceiro!.codExt = this.codExt;
     return this.parceiroService.update(this.parceiro!);
   }
 
